@@ -4,6 +4,7 @@ import 'dotenv/config'
 const { Pool } = pkg
 let conn
 
+/*
 if (!conn) {
   conn = new Pool({
     user: process.env.DB_USER,
@@ -11,6 +12,14 @@ if (!conn) {
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
     database: process.env.DB_NAME
+  })
+}
+*/
+
+if (!conn) {
+  conn = new Pool({
+    connectionString: process.env.DATABASE_URL,
+    ssl: true
   })
 }
 
@@ -27,17 +36,13 @@ export class MovieModel {
         console.log(genres.length)
         return []
       }
-
       const [{ id }] = genres
-
-      console.log(id)
-
       const resultMovies = await conn.query('SELECT title, year, director, duration, poster, rate, id FROM movie INNER JOIN movie_genres ON movie.id = movie_genres.movie_id WHERE movie_genres.genre_id = $1;', [id])
       const movies = resultMovies.rows
       return movies
     }
-
-    const res = await conn.query('SELECT title, year, director, duration, poster, rate, id FROM movie;')
+    const res = await conn.query('SELECT NOW()')
+    // const res = await conn.query('SELECT title, year, director, duration, poster, rate, id FROM movie;')
     console.log(res.rows)
     return res.rows
   }

@@ -6,6 +6,9 @@ const app = express()
 app.use(json())
 app.use(corsMiddleware())
 app.disable('x-powered-by')
+app.get('/', (req, res) => {
+  res.send('Hello API')
+})
 app.use('/movies', moviesRouter)
 
 app.use((req, res) => {
