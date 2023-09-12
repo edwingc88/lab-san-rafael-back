@@ -1,0 +1,52 @@
+[
+  {
+    "id": "abcd1",
+    "title": "Nyckeln till 1",
+    "year": 1994,
+    "director": "frank",
+    "duration": 142,
+    "poster": "https://cdn.pixabay.com/photo/2023/07/22/05/50/wolf-8142720_1280.png",
+    "genre": ["Drama","Action"],
+    "rate": 9.3
+  },
+  {
+    "id": "abcd2",
+    "title": "Nyckeln til 2",
+    "year": 1994,
+    "director": "frank",
+    "duration": 142,
+    "poster": "https://cdn.pixabay.com/photo/2023/07/22/05/50/wolf-8142720_1280.png",
+    "genre": ["Drama"],
+    "rate": 9.3
+  },
+  {
+    "id": "abcd3",
+    "title": "Nyckeln till3t",
+    "year": 1994,
+    "director": "frank",
+    "duration": 142,
+    "poster": "https://cdn.pixabay.com/photo/2023/07/22/05/50/wolf-8142720_1280.png",
+    "genre": ["Drama"],
+    "rate": 9.3
+  },
+  {
+    "id": "abcd4",
+    "title": "Nyckeln till frihe4t",
+    "year": 1994,
+    "director": "frank",
+    "duration": 142,
+    "poster": "https://cdn.pixabay.com/photo/2023/07/22/05/50/wolf-8142720_1280.png",
+    "genre": ["Drama"],
+    "rate": 9.3
+  },
+  {
+    "id": "abcd5",
+    "title": "Nyckeln till 5",
+    "year": 1994,
+    "director": "frank",
+    "duration": 142,
+    "poster": "https://cdn.pixabay.com/photo/2023/07/22/05/50/wolf-8142720_1280.png",
+    "genre": ["Drama"],
+    "rate": 9.3
+  }
+]
