@@ -5,6 +5,8 @@ const { Pool } = pkg
 let conn
 
 /*
+// CODIGO INTERNO con .ENV
+
 if (!conn) {
   conn = new Pool({
     user: process.env.DB_USER,
@@ -41,8 +43,8 @@ export class MovieModel {
       const movies = resultMovies.rows
       return movies
     }
-    const res = await conn.query('SELECT NOW()')
-    // const res = await conn.query('SELECT title, year, director, duration, poster, rate, id FROM movie;')
+    // const res = await conn.query('SELECT NOW()')
+    const res = await conn.query('SELECT title, year, director, duration, poster, rate, id FROM movie;')
     console.log(res.rows)
     return res.rows
   }
