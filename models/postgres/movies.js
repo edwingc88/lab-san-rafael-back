@@ -20,8 +20,8 @@ if (!conn) {
 
 if (!conn) {
   conn = new Pool({
-    connectionString: process.env.DATABASE_URL,
-    ssl: true
+    connectionString: process.env.DATABASE_URL
+    // ssl: true
   })
 }
 
