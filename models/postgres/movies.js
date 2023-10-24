@@ -4,7 +4,6 @@ import 'dotenv/config'
 const { Pool } = pkg
 let conn
 
-/*
 // CODIGO INTERNO con .ENV
 
 if (!conn) {
@@ -16,14 +15,14 @@ if (!conn) {
     database: process.env.DB_NAME
   })
 }
-*/
 
+/*
 if (!conn) {
   conn = new Pool({
     connectionString: process.env.DATABASE_URL
     // ssl: true
   })
-}
+} */
 
 export class MovieModel {
   static async getAll ({ genre }) {

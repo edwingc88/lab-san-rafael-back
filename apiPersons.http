@@ -1,0 +1,60 @@
+###  API PELICULAS
+GET http://localhost:1234/persons/
+
+
+###Recuperar todas por genero
+GET http://localhost:1234/person?role=admin
+
+###Recuperar por id peliculas
+GET http://localhost:1234/person/504015aa-b
+
+
+### Crear pelicuas Post
+POST http://localhost:1234/movies/
+Content-Type: application/json
+
+{
+  "title": "El padrino 9",
+  "year": 1999,
+  "director": "frank",
+  "duration": 142,
+  "poster": "https://cdn.pixabay.com/photo/2023/07/22/05/50/wolf-8142720_1280.png",
+  "genre": [
+    "drama"
+    ]
+}
+
+### Crear en externo
+POST https://api-render-postgres.onrender.com/movies
+Content-Type: application/json
+
+{
+  "title": "El padrino 9",
+  "year": 1999,
+  "director": "frank",
+  "duration": 142,
+  "poster": "https://cdn.pixabay.com/photo/2023/07/22/05/50/wolf-8142720_1280.png",
+  "genre": [
+    "drama"
+    ]
+}
+
+
+### ACTUALIZAR pelicuas 
+PATCH http://localhost:1234/movies/504015aa-bd8f-4cde-8654-801aad35569a
+Content-Type: application/json
+
+{
+  "title": "Robinhut",
+  "year": 2000,
+  "director": "christopher Nolan",
+  "duration": 142,
+  "poster": "https://images.freeimages.com/images/large-previews/ddf/tour-d-eiffel-1447025.jpg",   
+  "rate": 5.0
+}
+
+###Borrar pelicula
+DELETE  http://localhost:1234/movies/f65d92e6-e04d-4eb4-a782-1d33db7e7191
+
+### BOrrar Externo
+DELETE  https://api-render-postgres.onrender.com/movies/916b6ff5-535c-47f4-b224-8a05219995cb

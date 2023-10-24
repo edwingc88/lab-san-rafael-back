@@ -1,0 +1,20 @@
+[
+  {
+    "id": "abcd1234",
+    "dni": "9876543",
+    "password":"12345", 
+    "firstname": "Isaac",
+    "lastname": "Brock",
+    "email":"isaac.brock@example.com",
+    "gender": "Masculino",
+    "birthdate": "10/10/2000",
+    "addres": "Puerto Ordaz",
+    "mobilephone":"555-415-1337",
+    "homephone":"555-415-1337",
+    "blood_typing":"O+",
+    "created": "10/10/2023",
+    "picture_url": "https://cdn.pixabay.com/photo/2023/07/22/05/50/wolf-8142720_1280.png",
+    "role_id":1
+  }
+
+]

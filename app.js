@@ -1,5 +1,6 @@
 import express, { json } from 'express'
-import { moviesRouter } from './router/movies.js'
+// import { moviesRouter } from './router/movies.js'
+import { personsRouter } from './router/persons.js'
 import { corsMiddleware } from './middlewares/cors.js'
 
 const app = express()
@@ -9,7 +10,9 @@ app.disable('x-powered-by')
 app.get('/', (req, res) => {
   res.send('Hello API')
 })
-app.use('/movies', moviesRouter)
+// app.use('/movies', moviesRouter)
+
+app.use('/persons', personsRouter)
 
 app.use((req, res) => {
   res.status(404).json({ error: 'Not found' })
