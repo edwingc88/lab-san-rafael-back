@@ -1,16 +1,21 @@
 import { Router } from 'express'
+
 import { PersonController } from '../controllers/persons.js'
 
-export const personsRouter = Router()
+export const createPersonRouter = ({ personModel }) => {
+  const personsRouter = Router()
 
-personsRouter.get('/', PersonController.getAll)
+  const personController = new PersonController({ personModel })
 
-/*
-personsRouter.get('/:id', PersonController.getById)
+  personsRouter.get('/', personController.getAll)
 
-personsRouter.post('/', PersonController.create)
+  personsRouter.get('/:id', personController.getById)
 
-personsRouter.delete('/:id', PersonController.delete)
+  personsRouter.post('/', personController.create)
 
-personsRouter.patch('/:id', PersonController.update)
-*/
+  personsRouter.patch('/:id', personController.update)
+
+  personsRouter.delete('/:id', personController.delete)
+
+  return personsRouter
+}

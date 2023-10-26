@@ -1,24 +1,26 @@
 import express, { json } from 'express'
 // import { moviesRouter } from './router/movies.js'
-import { personsRouter } from './router/persons.js'
+import { createPersonRouter } from './router/persons.js'
 import { corsMiddleware } from './middlewares/cors.js'
 
-const app = express()
-app.use(json())
-app.use(corsMiddleware())
-app.disable('x-powered-by')
-app.get('/', (req, res) => {
-  res.send('Hello API')
-})
-// app.use('/movies', moviesRouter)
+export const createApp = ({ personModel }) => {
+  const app = express()
+  app.use(json())
+  app.use(corsMiddleware())
+  app.disable('x-powered-by')
+  app.get('/', (req, res) => {
+    res.send('Hello API')
+  })
+  // app.use('/movies', moviesRouter)
 
-app.use('/persons', personsRouter)
+  app.use('/persons', createPersonRouter({ personModel }))
 
-app.use((req, res) => {
-  res.status(404).json({ error: 'Not found' })
-})
+  app.use((req, res) => {
+    res.status(404).json({ error: 'Not found' })
+  })
 
-const PORT = process.env.PORT ?? 1234
-app.listen(PORT, () => {
-  console.log(`Example app listening on port ${PORT}`)
-})
+  const PORT = process.env.PORT ?? 1234
+  app.listen(PORT, () => {
+    console.log(`Example app listening on port ${PORT}`)
+  })
+}

@@ -5,23 +5,21 @@ const personSchema = z.object({
     invalid_type_error: 'Person DNI must be a string',
     required_error: 'Person DNI is required'
   }),
-  year: z.number().int().min(1900).max(2024),
-  director: z.string(),
-  duration: z.number().int().positive(),
-  email: z.string().email({}),
-  gender: z.array(z.enum(['Masculino', 'Femenino']), {
-    required_error: 'Person gender is required',
-    invalid_type_error: 'Person gender must be an array of strings'
-  }),
-  birthdate: z.date().default(new Date()),
+  password: z.string().min(1, { message: 'This field has to be filled.' }),
+  firstname: z.string().min(1, { message: 'This field has to be filled.' }),
+  lastname: z.string().min(1, { message: 'This field has to be filled.' }),
+  email: z.string().min(1, { message: 'This field has to be filled.' }).email('This is not a valid email.'),
+  birthdate: z.string().transform((str) => new Date(str)),
+  gender: z.enum(['Masculino', 'Femenino']),
   address: z.string(),
-  mobilePhone: z.string().regex(/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/),
-  homePhone: z.string().regex(/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/),
-  bloodType: z.enum(['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-']),
-  created: z.date().default(new Date()),
-  pictureURL: z.string().url({
+  mobilephone: z.string(),
+  homephone: z.string(),
+  blood_typing: z.enum(['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-']),
+  created: z.string().transform((str) => new Date(str)),
+  picture_url: z.string().url({
     message: 'Picture must be a valid URL'
-  })
+  }),
+  role_id: z.number([1, 2])
 })
 
 export function validatePerson (object) {

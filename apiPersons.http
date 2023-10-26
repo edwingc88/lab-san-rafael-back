@@ -1,60 +1,56 @@
-###  API PELICULAS
+###  API Personas
 GET http://localhost:1234/persons/
 
 
-###Recuperar todas por genero
-GET http://localhost:1234/person?role=admin
+###Recuperar por Rol
+GET http://localhost:1234/persons?role=admin
 
 ###Recuperar por id peliculas
-GET http://localhost:1234/person/504015aa-b
+GET http://localhost:1234/persons/504015aa-b
 
 
-### Crear pelicuas Post
-POST http://localhost:1234/movies/
+### Crear Persona
+POST http://localhost:1234/persons/
 Content-Type: application/json
 
 {
-  "title": "El padrino 9",
-  "year": 1999,
-  "director": "frank",
-  "duration": 142,
-  "poster": "https://cdn.pixabay.com/photo/2023/07/22/05/50/wolf-8142720_1280.png",
-  "genre": [
-    "drama"
-    ]
+  "dni": "72345678",
+  "password": "72345678",
+  "firstname": "Mario",
+  "lastname": "Uno",
+  "email": "edwin@gmail.com",
+  "birthdate": "2017-03-08T12:28:16.381Z",
+  "gender": "Masculino",
+  "address": "Calle 1 # 2-3",
+  "mobilephone": "+514143857975",
+  "homephone": "1234567890",
+  "blood_typing": "A+",
+  "created": "2020-01-01T04:00:00.000Z",
+  "picture_url": "https://images.freeimages.com/images/large-previews/ddf/tour-d-eiffel-1447025.jpg",
+  "role_id": 1
 }
-
-### Crear en externo
-POST https://api-render-postgres.onrender.com/movies
-Content-Type: application/json
-
-{
-  "title": "El padrino 9",
-  "year": 1999,
-  "director": "frank",
-  "duration": 142,
-  "poster": "https://cdn.pixabay.com/photo/2023/07/22/05/50/wolf-8142720_1280.png",
-  "genre": [
-    "drama"
-    ]
-}
-
 
 ### ACTUALIZAR pelicuas 
-PATCH http://localhost:1234/movies/504015aa-bd8f-4cde-8654-801aad35569a
+PATCH http://localhost:1234/persons/510f2108-a6e9-47f2-a856-1161941851ef
 Content-Type: application/json
 
 {
-  "title": "Robinhut",
-  "year": 2000,
-  "director": "christopher Nolan",
-  "duration": 142,
-  "poster": "https://images.freeimages.com/images/large-previews/ddf/tour-d-eiffel-1447025.jpg",   
-  "rate": 5.0
+  "dni": "72345678",
+  "password": "72345678",
+  "firstname": "Mario Editado",
+  "lastname": "Uno",
+  "email": "edwin@gmail.com",
+  "birthdate": "1988-03-08T12:28:16.381Z",
+  "gender": "Masculino",
+  "address": "Calle 1 # 2-3",
+  "mobilephone": "+514143857975",
+  "homephone": "1234567890",
+  "blood_typing": "A+",
+  "created": "2020-01-01T04:00:00.000Z",
+  "picture_url": "https://images.freeimages.com/images/large-previews/ddf/tour-d-eiffel-1447025.jpg",
+  "role_id": 1
 }
 
 ###Borrar pelicula
-DELETE  http://localhost:1234/movies/f65d92e6-e04d-4eb4-a782-1d33db7e7191
+DELETE  http://localhost:1234/persons/510f2108-a6e9-47f2-a856-1161941851ef
 
-### BOrrar Externo
-DELETE  https://api-render-postgres.onrender.com/movies/916b6ff5-535c-47f4-b224-8a05219995cb

@@ -29,14 +29,11 @@ CREATE TABLE IF NOT EXISTS person (
     role_id INT references role(id)
 );
 
-
-
 ---
 CREATE TABLE role (
 id serial PRIMARY KEY,
 name VARCHAR(255) NOT NULL UNIQUE
 );
-
 
 INSERT INTO role (name) VALUES
 ('super-admin'),
