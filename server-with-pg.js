@@ -1,5 +1,5 @@
 import { createApp } from './app.js'
 
-import { PersonModel } from './models/postgres/persons.js'
+import { PersonModel, RoleModel, AuthModel } from './models/postgres/laboratory.js'
 
-createApp({ personModel: PersonModel })
+createApp({ personModel: PersonModel, roleModel: RoleModel, authModel: AuthModel })

@@ -1,7 +1,3 @@
-// import { PersonModel } from '../models/local-file-system/Person.js'
-// import { PersonModel } from '../models/mysql/Person.js'
-// import { PersonModel } from '../models/postgres/persons.js'
-
 import { validatePerson, validatePartialPerson } from '../schemas/persons.js'
 
 export class PersonController {
@@ -11,6 +7,8 @@ export class PersonController {
 
   getAll = async (req, res) => {
     const { role } = req.query
+    console.log(req.userRole)
+    console.log('ariba ROl')
     const Persons = await this.personModel.getAll({ role })
     if (Persons.length === 0) return res.status(404).json({ error: 'Not found Person' })
     res.json(Persons)

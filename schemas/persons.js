@@ -19,7 +19,7 @@ const personSchema = z.object({
   picture_url: z.string().url({
     message: 'Picture must be a valid URL'
   }),
-  role_id: z.number([1, 2])
+  role_id: z.number([1, 2, 3, 4])
 })
 
 export function validatePerson (object) {

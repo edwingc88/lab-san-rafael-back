@@ -1,7 +1,7 @@
 {
-  "name": "rest-api",
+  "name": "rest-api-laboratory",
   "version": "1.0.0",
-  "description": "",
+  "description": "La API REST es una interfaz de programación de aplicaciones que permite a los desarrolladores interactuar con un sistema de laboratorio clínico. A través de la API, los desarrolladores pueden acceder a los datos del laboratorio, como los resultados de las pruebas y los informes de los pacientes, y realizar operaciones en ellos. La API REST también permite a los desarrolladores crear aplicaciones personalizadas que se integren con el sistema de laboratorio clínico.",
   "main": "index.js",
   "type": "module",
   "scripts": {
@@ -9,7 +9,7 @@
     "start:postgre": "node server-with-pg.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "GrupoTesis",
   "license": "ISC",
   "devDependencies": {
     "nodemon": "^3.0.1",
@@ -19,9 +19,11 @@
     "extends": "standard"
   },
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "cors": "2.8.5",
     "dotenv": "^16.3.1",
     "express": "4.18.2",
+    "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
     "mysql2": "^3.6.0",
     "pg": "^8.11.3",
