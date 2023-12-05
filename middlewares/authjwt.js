@@ -20,8 +20,8 @@ export const verifyToken = async (req, res, next) => {
       return res.status(401).json({ message: 'Unauthorized verifi TIME OUT' })
     }
     console.log('Decoded Arriba')
-    req.userId = decoded.person[0]
-    req.userRole = decoded.person[1]
+    req.userId = decoded.client[0]
+    req.userRole = decoded.client[1]
 
     const findIDEmail = await AuthModel.getByID(req.userId)
 

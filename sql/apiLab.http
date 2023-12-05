@@ -1,0 +1,39 @@
+###  API Labas
+GET http://localhost:1234/lab/
+
+###Recuperar por id labs
+GET http://localhost:1234/lab/0ec5d03b-68cf-43b0-92cf-7611c0e663dd
+
+### Crear Lab
+POST http://localhost:1234/lab/
+Content-Type: application/json
+
+{
+  "name":"Centro Médico Ambulatorio San Rafael",
+  "rif":"J-12345",
+  "slogan":"Los resultados en los que puede confiar",
+  "description":" Un laboratorio clínico es una especialidad médica que permite contribuir al estudio, prevención, diagnóstico y tratamiento de las enfermedades humanas.",
+  "address":"65JG+H7V, Ciudad Guayana 8050, Bolívar. Urb Gran Sabana",
+  "phone":"0286-9530505",
+  "email":"lab@gmail.com",
+  "logo":"https://www.adslzone.net/app/uploads-adslzone.net/2019/04/borrar-fondo-imagen.jpg"
+}
+
+### ACTUALIZAR Labs 
+PATCH http://localhost:1234/labs/510f2108-a6e9-47f2-a856-1161941851ef
+Content-Type: application/json
+{
+  "name":"Centro Médico Ambulatorio San Rafael",
+  "rif":"J-12345",
+  "slogan":"Los resultados en los que puede confiar",
+  "description":" Un laboratorio clínico es una especialidad médica que permite contribuir al estudio, prevención, diagnóstico y tratamiento de las enfermedades humanas.",
+  "address":"65JG+H7V, Ciudad Guayana 8050, Bolívar. Urb Gran Sabana",
+  "phone":"0286-9530505",
+  "email":"lab@gmail.com",
+  "logo":"https://www.adslzone.net/app/uploads-adslzone.net/2019/04/borrar-fondo-imagen.jpg"
+}
+
+
+###Borrar pelicula
+DELETE  http://localhost:1234/lab/{ID}
+

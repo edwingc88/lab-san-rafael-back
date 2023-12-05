@@ -1,0 +1,22 @@
+### Crear Auth  signup
+POST http://localhost:1234/auth/signup
+Content-Type: application/json
+
+{
+  "firstname": "edwin",
+  "lastname": "3",
+  "email": "edwin@gmail.com",
+  "password": "1234",
+  "mobilephone": "041424981",
+  "created": "2020-01-01T04:00:00.000Z",
+  "role_id": 4
+}
+
+### Crear Auth signin
+POST http://localhost:1234/auth/signin
+Content-Type: application/json
+
+{
+  "password": "1234",
+  "email": "edwin@gmail.com"
+}

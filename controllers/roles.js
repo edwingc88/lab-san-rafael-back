@@ -1,4 +1,4 @@
-import { validateRole, validatePartialRole } from '../schemas/role.js'
+import { validateRole, validatePartialRole } from '../schemas/roles.js'
 
 export class RoleController {
   constructor ({ roleModel }) {

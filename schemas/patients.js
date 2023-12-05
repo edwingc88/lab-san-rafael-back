@@ -1,6 +1,6 @@
 import z from 'zod'
 
-const personSchema = z.object({
+const patientSchema = z.object({
   dni: z.string({
     invalid_type_error: 'Person DNI must be a string',
     required_error: 'Person DNI is required'
@@ -14,18 +14,16 @@ const personSchema = z.object({
   address: z.string(),
   mobilephone: z.string(),
   homephone: z.string(),
+  relationship: z.string(),
   blood_typing: z.enum(['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-']),
   created: z.string().transform((str) => new Date(str)),
-  picture_url: z.string().url({
-    message: 'Picture must be a valid URL'
-  }),
-  role_id: z.number([1, 2, 3, 4])
+  client_id: z.string().uuid()
 })
 
-export function validatePerson (object) {
-  return personSchema.safeParse(object)
+export function validatePatient (object) {
+  return patientSchema.safeParse(object)
 }
 
-export function validatePartialPerson (object) {
-  return personSchema.partial().safeParse(object)
+export function validatePartialPatient (object) {
+  return patientSchema.partial().safeParse(object)
 }
