@@ -6,7 +6,7 @@ GET http://localhost:1234/lab/0ec5d03b-68cf-43b0-92cf-7611c0e663dd
 
 ### Crear Lab
 POST http://localhost:1234/lab/
-Content-Type: application/json
+Content-Type: a
 
 {
   "name":"Centro Médico Ambulatorio San Rafael",

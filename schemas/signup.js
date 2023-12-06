@@ -7,7 +7,7 @@ const signupSchema = z.object({
   email: z.string().min(1, { message: 'This field has to be filled.' }).email('This is not a valid email.'),
   mobilephone: z.string(),
   created: z.string().transform((str) => new Date(str)),
-  role_id: z.number([4])
+  id_role: z.number([4])
 })
 
 export function validateSignup (object) {

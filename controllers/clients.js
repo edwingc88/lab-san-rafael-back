@@ -7,17 +7,17 @@ export class ClientController {
 
   getAll = async (req, res) => {
     const { role } = req.query
-    const Clients = await this.clientModel.getAll({ role })
-    if (Clients.length === 0) return res.status(404).json({ error: 'Not found Client' })
-    res.json(Clients)
+    const clients = await this.clientModel.getAll({ role })
+    if (clients.length === 0) return res.status(404).json({ error: 'Not found client' })
+    res.json(clients)
   }
 
   getById = async (req, res) => {
     const { id } = req.params
-    const Client = await this.clientModel.getById(id)
-    console.log(Client)
-    if (Client) return res.json(Client)
-    res.status(404).json({ error: 'Not found Client' })
+    const client = await this.clientModel.getById(id)
+    console.log(client)
+    if (client) return res.json(client)
+    res.status(404).json({ error: 'Not found client' })
   }
 
   create = async (req, res) => {
@@ -27,9 +27,9 @@ export class ClientController {
       return res.status(400).json({ error: JSON.parse(result.error.message) })
     }
 
-    const newClient = await this.clientModel.create({ input: result.data })
+    const newclient = await this.clientModel.create({ input: result.data })
 
-    res.status(201).json(newClient)
+    res.status(201).json(newclient)
   }
 
   update = async (req, res) => {
@@ -38,15 +38,15 @@ export class ClientController {
       return res.status(400).json({ error: JSON.parse(result.error.message) })
     }
     const { id } = req.params
-    const updatedClient = await this.clientModell.update({ id, input: result.data })
-    if (!updatedClient) return res.status(404).json({ error: 'Not found Client' })
-    return res.json(updatedClient)
+    const updatedclient = await this.clientModell.update({ id, input: result.data })
+    if (!updatedclient) return res.status(404).json({ error: 'Not found client' })
+    return res.json(updatedclient)
   }
 
   delete = async (req, res) => {
     const { id } = req.params
     const result = await this.clientModel.delete({ id })
-    if (result === false) return res.status(404).json({ error: 'Not found Client' })
-    return res.json({ message: 'Client deleted' })
+    if (result === false) return res.status(404).json({ error: 'Not found client' })
+    return res.json({ message: 'client deleted' })
   }
 }

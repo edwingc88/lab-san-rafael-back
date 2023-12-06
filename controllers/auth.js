@@ -10,6 +10,7 @@ export class AuthController {
   }
 
   signUp = async (req, res) => {
+    console.log(req.body)
     const result = validateSignup(req.body)
 
     if (result.error) {
@@ -46,7 +47,7 @@ export class AuthController {
     }
 
     const clientId = findUserByEmail[0].id
-    const roleId = findUserByEmail[0].role_id
+    const roleId = findUserByEmail[0].id_role
 
     const token = jwt.sign({ client: [clientId, roleId] }, process.env.SECRET, { expiresIn: 840 })
 

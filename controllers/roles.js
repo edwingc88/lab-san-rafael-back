@@ -6,17 +6,17 @@ export class RoleController {
   }
 
   getAll = async (req, res) => {
-    const Roles = await this.roleModel.getAll()
-    if (Roles.length === 0) return res.status(404).json({ error: 'Not found Role' })
-    res.json(Roles)
+    const roles = await this.roleModel.getAll()
+    if (roles.length === 0) return res.status(404).json({ error: 'Not found roles' })
+    res.json(roles)
   }
 
   getById = async (req, res) => {
     const { id } = req.params
-    const Role = await this.roleModel.getById(id)
-    console.log(Role)
-    if (Role) return res.json(Role)
-    res.status(404).json({ error: 'Not found Role' })
+    const roles = await this.roleModel.getById(id)
+    console.log(roles)
+    if (roles) return res.json(roles)
+    res.status(404).json({ error: 'Not found roles' })
   }
 
   create = async (req, res) => {
@@ -27,9 +27,9 @@ export class RoleController {
       return res.status(400).json({ error: JSON.parse(result.error.message) })
     }
 
-    const newRole = await this.roleModel.create({ input: result.data })
+    const newroles = await this.roleModel.create({ input: result.data })
 
-    res.status(201).json(newRole)
+    res.status(201).json(newroles)
   }
 
   update = async (req, res) => {
@@ -38,15 +38,15 @@ export class RoleController {
       return res.status(400).json({ error: JSON.parse(result.error.message) })
     }
     const { id } = req.params
-    const updatedRole = await this.roleModell.update({ id, input: result.data })
-    if (!updatedRole) return res.status(404).json({ error: 'Not found Role' })
-    return res.json(updatedRole)
+    const updatedroles = await this.roleModell.update({ id, input: result.data })
+    if (!updatedroles) return res.status(404).json({ error: 'Not found roles' })
+    return res.json(updatedroles)
   }
 
   delete = async (req, res) => {
     const { id } = req.params
     const result = await this.roleModel.delete({ id })
-    if (result === false) return res.status(404).json({ error: 'Not found Role' })
-    return res.json({ message: 'Role deleted' })
+    if (result === false) return res.status(404).json({ error: 'Not found roles' })
+    return res.json({ message: 'roles deleted' })
   }
 }

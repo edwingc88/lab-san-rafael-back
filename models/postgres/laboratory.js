@@ -67,7 +67,7 @@ export class ClientModel {
 
   static async create ({ input }) {
     // eslint-disable-next-line camelcase
-    const { dni, password, firstname, lastname, email, birthdate, gender, address, mobilephone, homephone, blood_typing, created, picture_url, role_id } = input
+    const { dni, password, firstname, lastname, email, birthdate, gender, address, mobilephone, homephone, blood_typing, created, picture_url, id_role } = input
 
     const passwordHash = await bc.hash(password, 10)
 
@@ -77,7 +77,7 @@ export class ClientModel {
 
     try {
       // eslint-disable-next-line camelcase
-      const resultID = await conn.query('INSERT INTO client( id,dni , password,firstname,lastname ,email ,birthdate,gender,address,mobilephone,homephone, blood_typing, created, picture_url,role_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12 , $13, $14 , $15  ) RETURNING *;', [uuid, dni, passwordHash, firstname, lastname, email, birthdate, gender, address, mobilephone, homephone, blood_typing, created, picture_url, role_id])
+      const resultID = await conn.query('INSERT INTO client( id,dni , password,firstname,lastname ,email ,birthdate,gender,address,mobilephone,homephone, blood_typing, created, picture_url,id_role) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12 , $13, $14 , $15  ) RETURNING *;', [uuid, dni, passwordHash, firstname, lastname, email, birthdate, gender, address, mobilephone, homephone, blood_typing, created, picture_url, id_role])
       return (resultID.rows)
     } catch (e) {
       throw new Error('Errro creating client')
@@ -238,13 +238,14 @@ export class LabModel {
   }
 
   static async create ({ input }) {
-    console.log(input.data)
+    console.log(input)
+    console.log('en el  DB LAB entro, INPUT ARRIBA')
     // eslint-disable-next-line camelcase
-    const { name, rif, slogan, description, email, address, phone, logo } = input.data
+    const { name, rif, slogan, description, email, address, phone, objetive, mission, vision, logo } = input
 
     try {
       // eslint-disable-next-line camelcase
-      const result = await conn.query('INSERT INTO lab(name,rif,slogan,description,email,address,phone,logo) VALUES ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING *;', [name, rif, slogan, description, email, address, phone, logo])
+      const result = await conn.query('INSERT INTO lab(name,rif,slogan,description,email,address,phone,objetive,mission, vision,logo) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING *;', [name, rif, slogan, description, email, address, phone, objetive, mission, vision, logo])
       console.log('en el  DB LAB entro tambien')
       // console.log(input)
       return (result.rows)
@@ -330,10 +331,122 @@ export class ExamModel {
   }
 }
 
+export class CategoryModel {
+  static async getAll () {
+    try {
+      const res = await conn.query('SELECT * FROM category;')
+      console.log(res.rows)
+      return res.rows
+    } catch (e) {
+      return null
+    }
+  }
+
+  static async getById (id) {
+    try {
+      const result = await conn.query('SELECT * FROM category WHERE id = $1;', [id])
+      const [clients] = result.rows
+
+      if (clients.length === 0) return null
+      return clients
+    } catch (e) {
+      return null
+    }
+  }
+
+  static async create ({ input }) {
+    // eslint-disable-next-line camelcase
+    const { id, name } = input
+
+    try {
+      // eslint-disable-next-line camelcase
+      const resultID = await conn.query('INSERT INTO category( id,name ) VALUES ($1, $2 ) RETURNING *;', [id, name])
+      return (resultID.rows)
+    } catch (e) {
+      throw new Error('Errro creating client')
+    }
+  }
+
+  static async update ({ idupdate, input }) {
+    // eslint-disable-next-line camelcase
+    const { id, name } = input
+
+    // eslint-disable-next-line camelcase
+    const result = await conn.query('UPDATE category SET id = $1, name = $2  WHERE id = $3 RETURNING *;', [id, name, idupdate])
+    console.log(result.rows)
+    return result.rows
+  }
+
+  static async delete ({ id }) {
+    console.log(id)
+    const result = await conn.query('DELETE FROM category WHERE id = $1 returning *;', [id])
+
+    console.log(result.rows)
+
+    return result.rows
+  }
+}
+
+export class SubCategoryModel {
+  static async getAll () {
+    try {
+      const res = await conn.query('SELECT * FROM sub_category;')
+      console.log(res.rows)
+      return res.rows
+    } catch (e) {
+      return null
+    }
+  }
+
+  static async getById (id) {
+    try {
+      const result = await conn.query('SELECT * FROM sub_category WHERE id = $1;', [id])
+      const [clients] = result.rows
+
+      if (clients.length === 0) return null
+      return clients
+    } catch (e) {
+      return null
+    }
+  }
+
+  static async create ({ input }) {
+    // eslint-disable-next-line camelcase
+    const { id, name } = input
+
+    try {
+      // eslint-disable-next-line camelcase
+      const resultID = await conn.query('INSERT INTO sub_category( id,name ) VALUES ($1, $2 ) RETURNING *;', [id, name])
+      return (resultID.rows)
+    } catch (e) {
+      throw new Error('Errro creating client')
+    }
+  }
+
+  static async update ({ idupdate, input }) {
+    // eslint-disable-next-line camelcase
+    const { id, name } = input
+
+    // eslint-disable-next-line camelcase
+    const result = await conn.query('UPDATE sub_category SET id = $1, name = $2  WHERE id = $3 RETURNING *;', [id, name, idupdate])
+    console.log(result.rows)
+    return result.rows
+  }
+
+  static async delete ({ id }) {
+    console.log(id)
+    const result = await conn.query('DELETE FROM sub_category WHERE id = $1 returning *;', [id])
+
+    console.log(result.rows)
+
+    return result.rows
+  }
+}
+
 export class AuthModel {
   static async create ({ input }) {
     // eslint-disable-next-line camelcase
-    const { firstname, lastname, email, password, mobilephone, created, role_id } = input
+    const { firstname, lastname, email, password, mobilephone, created, id_role } = input
 
     const passwordHash = await bc.hash(password, 10)
 
@@ -344,7 +457,7 @@ export class AuthModel {
 
     try {
       // eslint-disable-next-line camelcase
-      const resultID = await conn.query('INSERT INTO client( id, password,firstname,lastname ,email ,mobilephone, created,role_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *;', [uuid, passwordHash, firstname, lastname, email, mobilephone, created, role_id])
+      const resultID = await conn.query('INSERT INTO client( id, password,firstname,lastname ,email ,mobilephone, created,id_role) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *;', [uuid, passwordHash, firstname, lastname, email, mobilephone, created, id_role])
       return (resultID.rows)
     } catch (e) {
       throw new Error('Errro creating client')

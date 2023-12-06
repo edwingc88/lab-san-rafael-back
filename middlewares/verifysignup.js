@@ -6,7 +6,7 @@ export const checkDuplicatedEmail = async (req, res, next) => {
   const user = await AuthModel.find(req.body.email)
   console.log(user)
   console.log('Arriba email duplicado')
-  if (user) return res.status(401).json({ message: 'Email Duplicado' })
+  if (user === 0) return res.status(401).json({ message: 'Email Duplicado' })
   next()
 }
 

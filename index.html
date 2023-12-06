@@ -6,20 +6,20 @@
   <title>API LABORATORY</title>
 </head>
 <body style="color: rgb(11, 11, 11);">
-  <h1 style="padding: .5rem;align-items: center; margin: auto;text-align: center;">API Laboratorio Clinico "San Rafael"</h1>
+  <h1 style="padding: 1rem;align-items: center; margin: auto;text-align: center;">API Laboratorio Clinico "San Rafael"</h1>
   <section style="display: flex;padding: .5rem; gap: 2rem;border-top: 2px solid rgb(32, 32, 32);">
 
     <!-- Cliente , Patiente , Role -->
-    <article id="colum1" style="max-width: 33%;">
+    <article id="colum1" style="width:50%;border-right: 2px solid  rgb(11, 11, 11);">
       <!-- API Client-->
       <div>
-        <h2>API client</h2>
+        <h2>API Client</h2>
         <ul>
           <li> 
             <div style="display:flex;gap: 2rem;">
                 <p>GET</p> 
                 <p>/person</p>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. In suscipit nostrum ex ipsa fugit nisi vero.</p>
+                <p>Lorem  elit. In suscipit nostrum ex ipsa fugit nisi vero.</p>
             </div>
           </li>
           <li>
@@ -116,87 +116,32 @@
        </ul>
       </div>
     </article>
-
-    <article id="colum2" style="max-width: 33%;">
-      
+    
     <!-- Signin , Signup  -->
+    <article id="colum2" style="width:50%;border-right: 2px solid rgb(11, 11, 11);">
+      <!-- API Auth-->
       <div>
-        <h2>API Signin</h2>
+        <h2>API Auth</h2>
         <ul>
           <li> 
           <div style="display:flex;gap: 2rem;">
-            <p>GET</p> 
+            <p>POST</p> 
             <p>/signin</p>
-            <p>Consulta todas las clients</p>
+            <p>Iniciar Sesion</p>
           </div>
-        </li>
-        <li>
-        <div style="display:flex;gap: 2rem;">
-          <p>POST</p> 
-          <p>/signin</p>
-          <p>Consulta todas las clients</p>
-        </div>
-      </li>
-      <li>
-        <div style="display:flex;gap: 2rem;">
-          <p>PATH</p> 
-          <p>/lab</p>
-          <p>Consulta todas las clients</p>
-        </div>
-      </li>
-      <li>
-        <div style="display:flex;gap: 2rem;">
-          <p>DELETE</p> 
-          <p>/lab</p>
-          <p>Consulta todas las clients</p>
-        </div>
-      </li>
-        </ul>
-      </div> 
-      <!-- API Role-->
-      <div>
-        <h2>API Signup</h2>
-        <ul>
-          <li> 
-              <div style="display:flex;gap: 2rem;">
-                <p>GET</p> 
-                <p>/signup</p>
-                <p>Consulta todas las clients</p>
-              </div>
           </li>
-          <li>
+          <li> 
             <div style="display:flex;gap: 2rem;">
               <p>POST</p> 
-              <p>/exam</p>
-              <p>Consulta todas las clients</p>
+              <p>/signup</p>
+              <p>Registrar Cliente</p>
             </div>
-          </li>
-          <li>
-            <div style="display:flex;gap: 2rem;">
-              <p>PATH</p> 
-              <p>/exam</p>
-              <p>Consulta todas las clients</p>
-            </div>
-          </li>
-          <li>
-            <div style="display:flex;gap: 2rem;">
-              <p>DELETE</p> 
-              <p>/exam</p>
-              <p>Consulta todas las clients</p>
-            </div>
-          </li>
+        </li>
         </ul>
-      </div>
-      <!-- API Next-->
-      <div>   
-      </div>
-   
-    </article>
-
-    <article id="colum3" style="max-width:33%;">
-        <!-- API Next-->
-        <div> 
-          <h2>API Source</h2>
+      </div> 
+      <!-- API Source-->
+      <div> 
+        <h2>API Source</h2>
           <ul>
             <li> 
                 <div style="display:flex;gap: 2rem;">
@@ -216,33 +161,41 @@
        <!-- sourceRouter.get('/images/:id', sourceController.getByIdImg)
           sourceRouter.get('/pdf/:id', sourceController.getByIdPdf)  
         -->
-        </div>
-      <!-- API Client-->
-      <div>
+      </div>
+      <!-- API Lab-->
         <h2>API Lab</h2>
-        <ul>
-          <li> 
-          <div style="display:flex;gap: 2rem;">
-            <p>GET</p> 
+        <ul >
+          <li>    
+            <p style="font-weight: bold;">GET :<span style="font-weight:normal;">Consulta todos los Laboratorios</span></p> 
+            <span>https://lab-san-rafael-api.onrender.com/lab</span>
+          </li>
+          <li>
+            <p style="font-weight: bold;">POST :<span style="font-weight:normal;">Crear Laboratorio</span></p> 
+            <span>https://lab-san-rafael-api.onrender.com/lab</span> 
+            <pre style="margin-left:-20px;box-sizing: border-box;overflow-x: scroll;">
+            {
+              "name":"Centro Médico Ambulatorio San Rafael",
+              "rif":"J-12345",
+              "slogan":"Los resultados en los que puede confiar",
+              "description":" Un laboratorio clínico es una especialidad médica que permite contribuir al estudio, prevención, diagnóstico y tratamiento de las enfermedades humanas.",
+              "address":"65JG+H7V, Ciudad Guayana 8050, Bolívar. Urb Gran Sabana",
+              "phone":"0286-9530505",
+              "email":"lab@gmail.com",
+              "logo":"https://www.adslzone.net/app/uploads-adslzone.net/2019/04/borrar-fondo-imagen.jpg",
+              "objetive":"objetivos de lab",
+              "mission":"misiones de lab",
+              "vision":"vision de lab"
+            }
+            </pre>
+          </li>
+          <li>
+            <div style="display:flex;gap: 2rem;">
+            <p>PATH</p> 
             <p>/lab</p>
             <p>Consulta todas las clients</p>
-          </div>
-        </li>
-        <li>
-        <div style="display:flex;gap: 2rem;">
-          <p>POST</p> 
-          <p>/lab</p>
-          <p>Consulta todas las clients</p>
-        </div>
-      </li>
-      <li>
-        <div style="display:flex;gap: 2rem;">
-          <p>PATH</p> 
-          <p>/lab</p>
-          <p>Consulta todas las clients</p>
-        </div>
-      </li>
-      <li>
+            </div>
+          </li>
+         <li>
         <div style="display:flex;gap: 2rem;">
           <p>DELETE</p> 
           <p>/lab</p>
@@ -251,7 +204,7 @@
       </li>
         </ul>
       </div> 
-      <!-- API Role-->
+      <!-- API Exam-->
       <div>
         <h2>API Exam</h2>
         <ul>
@@ -285,9 +238,51 @@
           </li>
         </ul>
       </div>
-    
-      
-   
+      <!-- API Category-->
+      <div>
+        <h2>API Category</h2>
+        <ul>
+          <li> 
+              <div style="display:flex;gap: 2rem;">
+                <p>GET</p> 
+                <p>/category</p>
+                <p>Consulta todas las clients</p>
+                Content-Type: application/json
+
+{
+  "firstname": "edwin",
+  "lastname": "3",
+  "email": "edwin@gmail.com",
+  "password": "1234",
+  "mobilephone": "041424981",
+  "created": "2020-01-01T04:00:00.000Z",
+  "id_role": 4
+}
+              </div>
+          </li>
+          <li>
+            <div style="display:flex;gap: 2rem;">
+              <p>POST</p> 
+              <p>/exam</p>
+              <p>Consulta todas las clients</p>
+            </div>
+          </li>
+          <li>
+            <div style="display:flex;gap: 2rem;">
+              <p>PATH</p> 
+              <p>/exam</p>
+              <p>Consulta todas las clients</p>
+            </div>
+          </li>
+          <li>
+            <div style="display:flex;gap: 2rem;">
+              <p>DELETE</p> 
+              <p>/exam</p>
+              <p>Consulta todas las clients</p>
+            </div>
+          </li>
+        </ul>
+      </div>
     </article>
   </section>
 </body>

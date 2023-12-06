@@ -9,17 +9,17 @@ export class PatientController {
     const { role } = req.query
     console.log(req.userRole)
     console.log('ariba ROl')
-    const Patient = await this.patientModel.getAll({ role })
-    if (Patient.length === 0) return res.status(404).json({ error: 'Not found Patient' })
-    res.json(Patient)
+    const patient = await this.patientModel.getAll({ role })
+    if (patient.length === 0) return res.status(404).json({ error: 'Not found patient' })
+    res.json(patient)
   }
 
   getById = async (req, res) => {
     const { id } = req.params
-    const Patient = await this.patientModel.getById(id)
-    console.log(Patient)
-    if (Patient) return res.json(Patient)
-    res.status(404).json({ error: 'Not found Patient' })
+    const patient = await this.patientModel.getById(id)
+    console.log(patient)
+    if (patient) return res.json(patient)
+    res.status(404).json({ error: 'Not found patient' })
   }
 
   create = async (req, res) => {
@@ -29,9 +29,9 @@ export class PatientController {
       return res.status(400).json({ error: JSON.parse(result.error.message) })
     }
 
-    const newPatient = await this.patientModel.create({ input: result.data })
+    const newpatient = await this.patientModel.create({ input: result.data })
 
-    res.status(201).json(newPatient)
+    res.status(201).json(newpatient)
   }
 
   update = async (req, res) => {
@@ -40,15 +40,15 @@ export class PatientController {
       return res.status(400).json({ error: JSON.parse(result.error.message) })
     }
     const { id } = req.params
-    const updatedPatient = await this.patientModell.update({ id, input: result.data })
-    if (!updatedPatient) return res.status(404).json({ error: 'Not found Patient' })
-    return res.json(updatedPatient)
+    const updatedpatient = await this.patientModell.update({ id, input: result.data })
+    if (!updatedpatient) return res.status(404).json({ error: 'Not found patient' })
+    return res.json(updatedpatient)
   }
 
   delete = async (req, res) => {
     const { id } = req.params
     const result = await this.patientModel.delete({ id })
-    if (result === false) return res.status(404).json({ error: 'Not found Patient' })
-    return res.json({ message: 'Patient deleted' })
+    if (result === false) return res.status(404).json({ error: 'Not found patient' })
+    return res.json({ message: 'patient deleted' })
   }
 }

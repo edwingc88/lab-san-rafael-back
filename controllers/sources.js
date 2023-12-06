@@ -5,8 +5,8 @@
 
 import multiparty from 'multiparty'
 */
-
 import { resolve, join } from 'path'
+import fs from 'fs'
 // import { fileURLToPath } from 'url'
 // const __filename = fileURLToPath(import.meta.url)
 // const __dirname = dirname(__filename)
@@ -37,6 +37,21 @@ export class SourceController {
 
     // if (id) return res.json(id)
     if (id) return res.sendFile(join(resolve('sources', 'images'), id))
+    res.status(404).json({ error: 'Source: No Content' })
+  }
+
+  getByIdImgPublic = async (req, res) => {
+    const { id } = req.params
+    // const Source = await this.sourceModel.getById(id)
+
+    /* console.log(id)
+    console.log(__dirname)
+    console.log(join(resolve('sources', 'images'), id))
+    console.log('filname y dirname arriba')
+    */
+
+    // if (id) return res.json(id)
+    if (id) return res.sendFile(join(resolve('sources', 'images', 'public'), id))
     res.status(404).json({ error: 'Source: No Content' })
   }
 
@@ -108,8 +123,15 @@ export class SourceController {
 
   delete = async (req, res) => {
     const { id } = req.params
-    const result = await this.sourceModel.delete({ id })
-    if (result === false) return res.status(404).json({ error: 'Not found Source' })
+    console.log(id)
+    // const result = await this.sourceModel.delete({ id })
+
+    fs.unlink('sources/images/' + id, function (err) {
+      if (err) { console.error(err) }
+      console.log('File deleted!')
+    })
+
+    // (result === false) return res.status(404).json({ error: 'Not found Source' })
     return res.json({ message: 'Source deleted' })
   }
 }

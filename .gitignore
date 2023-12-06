@@ -3,4 +3,3 @@ node_modules
 db.sql
 pg.sql
 laboratory.sql
-api.http
