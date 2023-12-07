@@ -7,7 +7,7 @@ const { Pool } = pkg
 let conn
 
 // .ENV
-/*
+
 if (!conn) {
   conn = new Pool({
     user: process.env.DB_USER,
@@ -17,15 +17,15 @@ if (!conn) {
     database: process.env.DB_NAME
   })
 }
-*/
 
+/*
 if (!conn) {
   conn = new Pool({
     connectionString: process.env.DATABASE_URL
     // ssl: true
   })
 }
-
+*/
 export class ClientModel {
   static async getAll ({ role }) {
     try {

@@ -64,6 +64,8 @@ export class LabController {
 
       const linkRutaBorrar = 'sources/images/public/' + nameImagenNula
 
+      // const linkRutaBorrar = nameImagenNula
+
       fs.unlink(linkRutaBorrar, function (err) {
         if (err) { console.error(err) }
         console.log('File deleted!')
@@ -82,14 +84,14 @@ export class LabController {
       // const imageURLCompleta = join(resolve('sources', 'images') + imageFileName)
 
       // console.log(JSON.stringify(fields, null, 2))
-      console.log(JSON.stringify(files, null, 2))
+      // console.log(JSON.stringify(files, null, 2))
       // console.log(typeof (imageURLCompleta))
 
       // const resultURL = imageURLCompleta.split('\\').join('/')
       const dataObject = { name: fields.name[0], description: fields.description[0], email: fields.email[0], address: fields.address[0], phone: fields.phone[0], rif: fields.rif[0], slogan: fields.slogan[0], objetive: fields.objetive[0], mission: fields.mission[0], vision: fields.vision[0], logo: rutaFinalArchivo }
 
-      console.log(dataObject)
-      console.log('Arriba Dataobject')
+      // console.log(dataObject)
+      // console.log('Arriba Dataobject')
 
       const result = validateLab(dataObject)
 
