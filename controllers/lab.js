@@ -2,6 +2,7 @@ import { validateLab, validatePartialLab } from '../schemas/lab.js'
 // import { validatePartiallab } from '../schemas/lab.js'
 import multiparty from 'multiparty'
 import 'dotenv/config'
+import fs from 'fs'
 
 // import { resolve, join } from 'path'
 
@@ -52,12 +53,21 @@ export class LabController {
       console.log(Object.keys(files)[0])
 
       const key = Object.keys(files)[0]
-
+      const rutaLink = files[key][0].path
       if (files[key][0].originalFilename !== '') {
-        const rutaLink = files[key][0].path
         const rutaArchivo = rutaLink.replaceAll('\\', '/')
         rutaFinalArchivo = process.env.WEB_URL + rutaArchivo
       }
+
+      console.log()
+      const nameImagenNula = rutaLink.slice(rutaLink.lastIndexOf('\\') + 1)
+
+      const linkRutaBorrar = 'sources/images/public/' + nameImagenNula
+
+      fs.unlink(linkRutaBorrar, function (err) {
+        if (err) { console.error(err) }
+        console.log('File deleted!')
+      })
 
       // console.log(rutaArchivo)
       // console.log(process.env.WEB_URL)
@@ -72,7 +82,7 @@ export class LabController {
       // const imageURLCompleta = join(resolve('sources', 'images') + imageFileName)
 
       // console.log(JSON.stringify(fields, null, 2))
-      // console.log(JSON.stringify(files, null, 2))
+      console.log(JSON.stringify(files, null, 2))
       // console.log(typeof (imageURLCompleta))
 
       // const resultURL = imageURLCompleta.split('\\').join('/')
@@ -111,7 +121,24 @@ export class LabController {
     const { id } = req.params
     const result = await this.labModel.delete({ id })
     if (result === false) return res.status(404).json({ error: 'Not found lab' })
-    console.log(result)
+    const separar = result[0].logo.split(process.env.WEB_URL)
+    // console.log(separar.split(process.env.WEB_URL))
+
+    /* if (separar[1].indexOf('default') === 0) {
+      console.log(separar[1].indexOf('default'))
+    } */
+
+    if (separar[1].indexOf('default') === -1) {
+      fs.unlink(separar[1], function (err) {
+        if (err) { console.error(err) }
+        console.log('File deleted!')
+      })
+    }
+
+    // console.log(separar[1].indexOf('default'))
+    // console.log('resultado arriba del separador , buscando default si encuentra es 0 ')
+
+    console.log('Delete result')
     return res.json({ message: 'lab deleted' })
   }
 }

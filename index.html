@@ -4,18 +4,75 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>API LABORATORY</title>
+  <style>
+
+    .proceso{
+      color: brown;
+    }
+
+    .listo{
+      color: green;
+    }
+
+    .normal{
+      color: rgb(11, 10, 10);
+    }
+
+  </style>
 </head>
 <body style="color: rgb(11, 11, 11);">
   <h1 style="padding: 1rem;align-items: center; margin: auto;text-align: center;">API Laboratorio Clinico "San Rafael"</h1>
   <section style="display: flex;padding: .5rem; gap: 2rem;border-top: 2px solid rgb(32, 32, 32);">
 
-    <!-- Cliente , Patiente , Role -->
+    <!-- Lab, Cliente , Patiente , Role -->
     <article id="colum1" style="width:50%;border-right: 2px solid  rgb(11, 11, 11);">
+      <!-- API Lab-->
+      <div>
+              <h2>API Lab</h2>
+        
+                <ul style="padding-bottom: 2rem;" >
+                  <li >    
+                    <p class="listo" style="font-weight: bold;">GET : <span style="color: black;">Consulta todos los Laboratorios</span></p> 
+                    <span>https://lab-san-rafael-api.onrender.com/lab</span>
+                  </li>
+                  <li>
+                    <p class="listo" style="font-weight: bold;">POST :<span style="font-weight:bold;" class="normal" >Crear Laboratorio</span></p> 
+                    <span>https://lab-san-rafael-api.onrender.com/lab</span> 
+                    <pre style="margin-left:-20px;box-sizing: border-box;overflow-x: scroll;">
+                    {
+                      "name":"Centro Médico Ambulatorio San Rafael",
+                      "rif":"J-12345",
+                      "slogan":"Los resultados en los que puede confiar",
+                      "description":" Un laboratorio clínico es una especialidad médica que permite contribuir al estudio, prevención, diagnóstico y tratamiento de las enfermedades humanas.",
+                      "address":"65JG+H7V, Ciudad Guayana 8050, Bolívar. Urb Gran Sabana",
+                      "phone":"0286-9530505",
+                      "email":"lab@gmail.com",
+                      "logo":"https://www.adslzone.net/app/uploads-adslzone.net/2019/04/borrar-fondo-imagen.jpg",
+                      "objetive":"objetivos de lab",
+                      "mission":"misiones de lab",
+                      "vision":"vision de lab"
+                    }
+                    </pre>
+                  </li>
+                  <li >
+                    <div style="display:flex;gap: 2rem;">
+                    <p class="proceso">PATH</p> 
+                    <p>/lab</p>
+                    <p>Consulta todas las clients</p>
+                    </div>
+                  </li>
+                 <li>
+                  <p class="listo" style="font-weight: bold;">DELETE : <span class="normal">Eliminar Lab por ID</span></p> 
+                  <span>https://lab-san-rafael-api.onrender.com/lab/:id</span>
+                 </li>
+                </ul>
+      </div> 
+
       <!-- API Client-->
       <div>
         <h2>API Client</h2>
-        <ul>
-          <li> 
+        <ul style="padding-bottom: 2rem;">
+          <li>
             <div style="display:flex;gap: 2rem;">
                 <p>GET</p> 
                 <p>/person</p>
@@ -117,12 +174,12 @@
       </div>
     </article>
     
-    <!-- Signin , Signup  -->
+    <!-- Auth, Source,  Exam , Category , SubCategory  -->
     <article id="colum2" style="width:50%;border-right: 2px solid rgb(11, 11, 11);">
       <!-- API Auth-->
       <div>
         <h2>API Auth</h2>
-        <ul>
+        <ul style="padding-bottom: 2rem;">
           <li> 
           <div style="display:flex;gap: 2rem;">
             <p>POST</p> 
@@ -162,48 +219,6 @@
           sourceRouter.get('/pdf/:id', sourceController.getByIdPdf)  
         -->
       </div>
-      <!-- API Lab-->
-        <h2>API Lab</h2>
-        <ul >
-          <li>    
-            <p style="font-weight: bold;">GET :<span style="font-weight:normal;">Consulta todos los Laboratorios</span></p> 
-            <span>https://lab-san-rafael-api.onrender.com/lab</span>
-          </li>
-          <li>
-            <p style="font-weight: bold;">POST :<span style="font-weight:normal;">Crear Laboratorio</span></p> 
-            <span>https://lab-san-rafael-api.onrender.com/lab</span> 
-            <pre style="margin-left:-20px;box-sizing: border-box;overflow-x: scroll;">
-            {
-              "name":"Centro Médico Ambulatorio San Rafael",
-              "rif":"J-12345",
-              "slogan":"Los resultados en los que puede confiar",
-              "description":" Un laboratorio clínico es una especialidad médica que permite contribuir al estudio, prevención, diagnóstico y tratamiento de las enfermedades humanas.",
-              "address":"65JG+H7V, Ciudad Guayana 8050, Bolívar. Urb Gran Sabana",
-              "phone":"0286-9530505",
-              "email":"lab@gmail.com",
-              "logo":"https://www.adslzone.net/app/uploads-adslzone.net/2019/04/borrar-fondo-imagen.jpg",
-              "objetive":"objetivos de lab",
-              "mission":"misiones de lab",
-              "vision":"vision de lab"
-            }
-            </pre>
-          </li>
-          <li>
-            <div style="display:flex;gap: 2rem;">
-            <p>PATH</p> 
-            <p>/lab</p>
-            <p>Consulta todas las clients</p>
-            </div>
-          </li>
-         <li>
-        <div style="display:flex;gap: 2rem;">
-          <p>DELETE</p> 
-          <p>/lab</p>
-          <p>Consulta todas las clients</p>
-        </div>
-      </li>
-        </ul>
-      </div> 
       <!-- API Exam-->
       <div>
         <h2>API Exam</h2>
