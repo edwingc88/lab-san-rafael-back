@@ -447,7 +447,7 @@ export class SubCategoryModel {
 export class AuthModel {
   static async create ({ input }) {
     // eslint-disable-next-line camelcase
-    const { firstname, lastname, email, password, mobilephone, created, id_role } = input
+    const { firstname, lastname, email, password, dni, mobilephone, created, id_role } = input
 
     const passwordHash = await bc.hash(password, 10)
 
@@ -458,7 +458,7 @@ export class AuthModel {
 
     try {
       // eslint-disable-next-line camelcase
-      const resultID = await conn.query('INSERT INTO client( id, password,firstname,lastname ,email ,mobilephone, created,id_role) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *;', [uuid, passwordHash, firstname, lastname, email, mobilephone, created, id_role])
+      const resultID = await conn.query('INSERT INTO client( id, password,firstname,lastname ,email ,dni, mobilephone, created,id_role) VALUES ($1, $2, $3, $4, $5, $6, $7, $8,$9) RETURNING *;', [uuid, passwordHash, firstname, lastname, email, dni, mobilephone, created, id_role])
       return (resultID.rows)
     } catch (e) {
       throw new Error('Errro creating client')

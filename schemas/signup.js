@@ -1,10 +1,11 @@
 import z from 'zod'
 
 const signupSchema = z.object({
-  password: z.string().min(1, { message: 'This field has to be filled.' }),
   firstname: z.string().min(1, { message: 'This field has to be filled.' }),
   lastname: z.string().min(1, { message: 'This field has to be filled.' }),
+  password: z.string().min(1, { message: 'This field has to be filled.' }),
   email: z.string().min(1, { message: 'This field has to be filled.' }).email('This is not a valid email.'),
+  dni: z.string(),
   mobilephone: z.string(),
   created: z.string().transform((str) => new Date(str)),
   id_role: z.number([4])

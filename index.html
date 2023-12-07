@@ -29,7 +29,6 @@
       <!-- API Lab-->
       <div>
               <h2>API Lab</h2>
-        
                 <ul style="padding-bottom: 2rem;" >
                   <li >    
                     <p class="listo" style="font-weight: bold;">GET : <span style="color: black;">Consulta todos los Laboratorios</span></p> 
@@ -38,21 +37,21 @@
                   <li>
                     <p class="listo" style="font-weight: bold;">POST :<span style="font-weight:bold;" class="normal" >Crear Laboratorio</span></p> 
                     <span>https://lab-san-rafael-api.onrender.com/lab</span> 
-                    <pre style="margin-left:-20px;box-sizing: border-box;overflow-x: scroll;">
-                    {
-                      "name":"Centro Médico Ambulatorio San Rafael",
-                      "rif":"J-12345",
-                      "slogan":"Los resultados en los que puede confiar",
-                      "description":" Un laboratorio clínico es una especialidad médica que permite contribuir al estudio, prevención, diagnóstico y tratamiento de las enfermedades humanas.",
-                      "address":"65JG+H7V, Ciudad Guayana 8050, Bolívar. Urb Gran Sabana",
-                      "phone":"0286-9530505",
-                      "email":"lab@gmail.com",
-                      "logo":"https://www.adslzone.net/app/uploads-adslzone.net/2019/04/borrar-fondo-imagen.jpg",
-                      "objetive":"objetivos de lab",
-                      "mission":"misiones de lab",
-                      "vision":"vision de lab"
-                    }
-                    </pre>
+<pre style="box-sizing: border-box;overflow-x: scroll;">
+{
+ "name":"Centro Médico Ambulatorio San Rafael",
+ "rif":"J-12345",
+ "slogan":"Los resultados en los que puede confiar",
+ "description":" Un laboratorio clínico es una especialidad médica que permite contribuir al estudio, prevención, diagnóstico y tratamiento de las enfermedades humanas.",
+ "address":"65JG+H7V, Ciudad Guayana 8050, Bolívar. Urb Gran Sabana",
+ "phone":"0286-9530505",
+ "email":"lab@gmail.com",
+ "logo":"https://www.adslzone.net/app/uploads-adslzone.net/2019/04/borrar-fondo-imagen.jpg",
+ "objetive":"objetivos de lab",
+ "mission":"misiones de lab",
+ "vision":"vision de lab"
+}
+</pre>
                   </li>
                   <li >
                     <div style="display:flex;gap: 2rem;">
@@ -180,20 +179,32 @@
       <div>
         <h2>API Auth</h2>
         <ul style="padding-bottom: 2rem;">
-          <li> 
-          <div style="display:flex;gap: 2rem;">
-            <p>POST</p> 
-            <p>/signin</p>
-            <p>Iniciar Sesion</p>
-          </div>
+          <li>    
+            <p class="listo" style="font-weight: bold;">POST : <span style="color: black;">Iniciar Sesion</span></p> 
+            <span>https://lab-san-rafael-api.onrender.com/signin</span>
+<pre style="box-sizing: border-box;overflow-x: scroll;">
+{
+  "email":"edwin@gmail.com",
+  "password":"1234"
+}
+</pre>
           </li>
-          <li> 
-            <div style="display:flex;gap: 2rem;">
-              <p>POST</p> 
-              <p>/signup</p>
-              <p>Registrar Cliente</p>
-            </div>
-        </li>
+          <li>    
+            <p class="listo" style="font-weight: bold;">POST : <span style="color: black;">Registrarse como cliente</span></p> 
+            <span>https://lab-san-rafael-api.onrender.com/signup</span>
+<pre style="box-sizing: border-box;overflow-x: scroll;">
+{
+ "firstname":"edwin",
+ "lastname":"mendez",
+ "email":"edwin@gmail.com",
+ "password":"1234",
+ mobilephone:"0414359",
+ "dni":"V-123456",
+ "created":"2020-01-01T04:00:00.000Z"
+ id_role:4
+}
+</pre>
+          </li>
         </ul>
       </div> 
       <!-- API Source-->
