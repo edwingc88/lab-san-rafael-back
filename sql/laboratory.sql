@@ -84,14 +84,19 @@ CREATE TABLE IF NOT EXISTS lab (
    rif VARCHAR(255) NOT NULL UNIQUE,
    slogan VARCHAR(255) null,
    description VARCHAR(255) null,
-   objetive VARCHAR(255) null,
-   mission VARCHAR(255) null,
-   vision VARCHAR(255) null,
-   email VARCHAR(255) null,  
+   objetive VARCHAR(500) null,
+   mission VARCHAR(300) null,
+   vision VARCHAR(300) null,
+   email VARCHAR(255) null,
    address VARCHAR(255) null,
    phone VARCHAR(255) null,
    logo VARCHAR(255) null
 );
+
+
+INSERT INTO lab (name,rif,slogan,description,objetive,mission,vision,email,address,phone,logo) VALUES
+('Centro Medico Ambulatorio San Rafael','J-1234562','Para nosotros no hay nada mas importante que tu salud.','servicio de laboratorio','Somos una empresa que cuenta con personal altamente calificado y que trabaja con altos estandares de calidad y servicio en el area de analisis clinicos.Nuestros Pacientes son nuestra razon de ser y es por ello que para satisfacerlos utilizamos tecnologia de vanguardia y lo mas exigentes controles de calidad , para poder brindarles la mayor confiabilidad en sus resultados','mision','vision','email','core 8','02864566','https://lab-san-rafael-api.onrender.com/sources/images/public/logo.jpeg');
+
 
 CREATE TABLE IF NOT EXISTS exam (
    id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -115,8 +120,5 @@ CREATE TABLE IF NOT EXISTS category (
    FOREIGN KEY (id_sub_category) REFERENCES sub_category(id),
    FOREIGN KEY (id_exam) REFERENCES exam(id)
 );
-
-
-
 
 

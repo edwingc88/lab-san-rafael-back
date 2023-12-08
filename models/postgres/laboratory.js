@@ -5,8 +5,6 @@ import bc from 'bcrypt'
 
 const { Pool } = pkg
 let conn
-
-// .ENV
 /*
 if (!conn) {
   conn = new Pool({
@@ -18,7 +16,6 @@ if (!conn) {
   })
 }
 */
-
 if (!conn) {
   conn = new Pool({
     connectionString: process.env.DATABASE_URL
