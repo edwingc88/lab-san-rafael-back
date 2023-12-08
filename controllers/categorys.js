@@ -1,4 +1,4 @@
-import { validatecategory, validatePartialcategory } from '../schemas/categorys.js'
+import { validateCategory, validatePartialCategory } from '../schemas/categorys.js'
 
 export class CategoryController {
   constructor ({ categoryModel }) {
@@ -20,7 +20,7 @@ export class CategoryController {
   }
 
   create = async (req, res) => {
-    const result = validatecategory(req.body)
+    const result = validateCategory(req.body)
 
     if (result.error) {
       return res.status(400).json({ error: JSON.parse(result.error.message) })
@@ -32,12 +32,12 @@ export class CategoryController {
   }
 
   update = async (req, res) => {
-    const result = validatePartialcategory(req.body)
+    const result = validatePartialCategory(req.body)
     if (!result.success) {
       return res.status(400).json({ error: JSON.parse(result.error.message) })
     }
     const { id } = req.params
-    const updatedcategory = await this.categoryModell.update({ id, input: result.data })
+    const updatedcategory = await this.categoryModel.update({ id, input: result.data })
     if (!updatedcategory) return res.status(404).json({ error: 'Not found category' })
     return res.json(updatedcategory)
   }

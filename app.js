@@ -6,7 +6,8 @@ import { createRoleRouter } from './router/roles.js'
 import { createLabRouter } from './router/lab.js'
 import { createPatientRouter } from './router/patients.js'
 import { createSourceRouter } from './router/sources.js'
-
+import { createCategoryRouter } from './router/categorys.js'
+import { createSubCategoryRouter } from './router/subcategorys.js'
 // Cors
 import { corsMiddleware } from './middlewares/cors.js'
 
@@ -25,7 +26,7 @@ const __dirname = dirname(__filename)
 
 const pkg = JSON.parse(readFileSync('./package.json'))
 
-export const createApp = ({ clientModel, roleModel, patientModel, labModel, examModel, authModel }) => {
+export const createApp = ({ clientModel, roleModel, patientModel, labModel, examModel, categoryModel, subcategoryModel, authModel }) => {
   const app = express()
   app.set('pkg', pkg)
   app.use(json())
@@ -52,6 +53,8 @@ export const createApp = ({ clientModel, roleModel, patientModel, labModel, exam
   app.use('/roles', createRoleRouter({ roleModel }))
   app.use('/auth', createAuthRouter({ authModel }))
   app.use('/exams', createExamRouter({ examModel }))
+  app.use('/categorys', createCategoryRouter({ categoryModel }))
+  app.use('/subcategorys', createSubCategoryRouter({ subcategoryModel }))
   app.use('/lab', createLabRouter({ labModel }))
   app.use('/patients', createPatientRouter({ patientModel }))
 

@@ -202,24 +202,11 @@
       <div> 
         <h2>API Source</h2>
           <ul>
-            <li> 
-                <div style="display:flex;gap: 2rem;">
-                  <p>GET</p> 
-                  <p>/sources/images/:name</p>
-                  <p>consulta imagen por su</p>
-                </div>
+            <li >    
+              <p class="listo" style="font-weight: bold;">GET : <span style="color: black;">Ver imagen por nombre</span></p> 
+              <span>https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg</span>
             </li>
-            <li> 
-              <div style="display:flex;gap: 2rem;">
-                <p>GET</p> 
-                <p>/sources/pdf/:name</p>
-                <p>consulta pdf por su</p>
-              </div>
-          </li>
           </ul>
-       <!-- sourceRouter.get('/images/:id', sourceController.getByIdImg)
-          sourceRouter.get('/pdf/:id', sourceController.getByIdPdf)  
-        -->
       </div>
       <!-- API Exam-->
       <div>
@@ -256,23 +243,9 @@
       <div>
         <h2>API Category</h2>
         <ul>
-          <li> 
-              <div style="display:flex;gap: 2rem;">
-                <p>GET</p> 
-                <p>/category</p>
-                <p>Consulta todas las clients</p>
-                Content-Type: application/json
-
-{
-  "firstname": "edwin",
-  "lastname": "3",
-  "email": "edwin@gmail.com",
-  "password": "1234",
-  "mobilephone": "041424981",
-  "created": "2020-01-01T04:00:00.000Z",
-  "id_role": 4
-}
-              </div>
+          <li>    
+            <p class="listo" style="font-weight: bold;">GET : <span style="color: black;">Ver Categorias</span></p> 
+            <span>https://lab-san-rafael-api.onrender.com/categorys</span>
           </li>
           <li>
             <div style="display:flex;gap: 2rem;">
@@ -297,6 +270,39 @@
           </li>
         </ul>
       </div>
+
+      <!-- API Sub-Category-->
+      <div>
+        <h2>API Sub-Category</h2>
+        <ul>
+          <li>    
+            <p class="listo" style="font-weight: bold;">GET : <span style="color: black;">Ver SubCategorias</span></p> 
+            <span>https://lab-san-rafael-api.onrender.com/subcategorys</span>
+          </li>
+          <li>
+            <div style="display:flex;gap: 2rem;">
+              <p>POST</p> 
+              <p>/exam</p>
+              <p>Consulta todas las clients</p>
+            </div>
+          </li>
+          <li>
+            <div style="display:flex;gap: 2rem;">
+              <p>PATH</p> 
+              <p>/exam</p>
+              <p>Consulta todas las clients</p>
+            </div>
+          </li>
+          <li>
+            <div style="display:flex;gap: 2rem;">
+              <p>DELETE</p> 
+              <p>/exam</p>
+              <p>Consulta todas las clients</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+      
     </article>
   </section>
 </body>

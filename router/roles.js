@@ -10,7 +10,7 @@ export const createRoleRouter = ({ roleModel }) => {
 
   const roleController = new RoleController({ roleModel })
 
-  rolesRouter.get('/', [verifyToken, isSuperAdmin], roleController.getAll)
+  rolesRouter.get('/', roleController.getAll)
 
   rolesRouter.get('/:id', [verifyToken, isSuperAdmin], roleController.getById)
 

@@ -5,8 +5,8 @@ import bc from 'bcrypt'
 
 const { Pool } = pkg
 let conn
-/*
-if (!conn) {
+
+/* if (!conn) {
   conn = new Pool({
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
@@ -14,8 +14,8 @@ if (!conn) {
     port: process.env.DB_PORT,
     database: process.env.DB_NAME
   })
-}
-*/
+} */
+
 if (!conn) {
   conn = new Pool({
     connectionString: process.env.DATABASE_URL
@@ -65,7 +65,7 @@ export class ClientModel {
 
   static async create ({ input }) {
     // eslint-disable-next-line camelcase
-    const { dni, password, firstname, lastname, email, birthdate, gender, address, mobilephone, homephone, blood_typing, created, picture_url, id_role } = input
+    const { dni, email, password, firstname, lastname, address, mobilephone, created, picture_url, id_role } = input
 
     const passwordHash = await bc.hash(password, 10)
 
@@ -75,7 +75,7 @@ export class ClientModel {
 
     try {
       // eslint-disable-next-line camelcase
-      const resultID = await conn.query('INSERT INTO client( id,dni , password,firstname,lastname ,email ,birthdate,gender,address,mobilephone,homephone, blood_typing, created, picture_url,id_role) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12 , $13, $14 , $15  ) RETURNING *;', [uuid, dni, passwordHash, firstname, lastname, email, birthdate, gender, address, mobilephone, homephone, blood_typing, created, picture_url, id_role])
+      const resultID = await conn.query('INSERT INTO client( id,dni , password,firstname,lastname ,email ,address,mobilephone,created, picture_url,id_role) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11 ) RETURNING *;', [uuid, dni, passwordHash, firstname, lastname, email, address, mobilephone, created, picture_url, id_role])
       return (resultID.rows)
     } catch (e) {
       throw new Error('Errro creating client')

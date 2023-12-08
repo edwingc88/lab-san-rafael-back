@@ -11,7 +11,8 @@ const cLientSchema = z.object({
   email: z.string().min(1, { message: 'This field has to be filled.' }).email('This is not a valid email.'),
   address: z.string(),
   mobilephone: z.string(),
-  created: z.string().transform((str) => new Date(str)),
+  // created: z.string().transform((str) => new Date(str)),
+  created: z.date().safeParse(new Date()),
   picture_url: z.string().url({
     message: 'Picture must be a valid URL'
   }),

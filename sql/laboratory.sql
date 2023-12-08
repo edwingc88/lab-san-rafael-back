@@ -54,11 +54,16 @@ CREATE TABLE IF NOT EXISTS client (
     lastname VARCHAR(255) NOT NULL,
     address VARCHAR(255) ,
     mobilephone VARCHAR(255) NOT NULL,
-    created DATE,
+    created DATE DEFAULT VALUES,
     picture_url VARCHAR(255),
     id_role INT NOT NULL,
     FOREIGN KEY (id_role) REFERENCES role(id)
 );
+
+
+INSERT INTO client (dni,email,password,firstname,lastname,address,mobilePhone, created,picture_url,id_role) VALUES
+('j-1234','admin@gmail.com','1234','admin','super','core 8','041432','1900-01-01','http://localhost:1234/sources/images/public/default.jpg',1);
+
 
 CREATE TABLE IF NOT EXISTS patient (
     id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
