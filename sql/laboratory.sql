@@ -11,7 +11,7 @@
 --
 -- postgres://admin:p6ojFg5VZwQW2sbHCR6fRR5MzEvBtwFs@dpg-ck09konhdsdc73813vjg-a.oregon-postgres.render.com/labdb_ydvc
 
--- postgres://admin:p6ojFg5VZwQW2sbHCR6fRR5MzEvBtwFs@dpg-ck09konhdsdc73813vjg-a.oregon-postgres.render.com/labdb_ydvc
+-- p6ojFg5VZwQW2sbHCR6fRR5MzEvBtwFs
 --
 TRUNCATE TABLE role CASCADE;
 DROP TABLE IF EXISTS role CASCADE;
@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS client (
     lastname VARCHAR(255) NOT NULL,
     address VARCHAR(255) ,
     mobilephone VARCHAR(255) NOT NULL,
-    created DATE DEFAULT VALUES,
+    created DATE,
     picture_url VARCHAR(255),
     id_role INT NOT NULL,
     FOREIGN KEY (id_role) REFERENCES role(id)
@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS client (
 
 
 INSERT INTO client (dni,email,password,firstname,lastname,address,mobilePhone, created,picture_url,id_role) VALUES
-('j-1234','admin@gmail.com','1234','admin','super','core 8','041432','1900-01-01','http://localhost:1234/sources/images/public/default.jpg',1);
+('j-1234','admin@gmail.com','1234','admin','super','core 8','041432','1900-01-01','https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',1);
 
 
 CREATE TABLE IF NOT EXISTS patient (
@@ -100,7 +100,7 @@ CREATE TABLE IF NOT EXISTS lab (
 
 
 INSERT INTO lab (name,rif,slogan,description,objetive,mission,vision,email,address,phone,logo) VALUES
-('Centro Medico Ambulatorio San Rafael','J-1234562','Para nosotros no hay nada mas importante que tu salud.','servicio de laboratorio','Somos una empresa que cuenta con personal altamente calificado y que trabaja con altos estandares de calidad y servicio en el area de analisis clinicos.Nuestros Pacientes son nuestra razon de ser y es por ello que para satisfacerlos utilizamos tecnologia de vanguardia y lo mas exigentes controles de calidad , para poder brindarles la mayor confiabilidad en sus resultados','mision','vision','email','core 8','02864566','https://lab-san-rafael-api.onrender.com/sources/images/public/logo.jpeg');
+('Centro Medico Ambulatorio San Rafael','J-1234562','Para nosotros no hay nada mas importante que tu salud.','servicio de laboratorio','Somos una empresa que cuenta con personal altamente calificado y que trabaja con altos estandares de calidad y servicio en el area de analisis clinicos.Nuestros Pacientes son nuestra razon de ser y es por ello que para satisfacerlos utilizamos tecnologia de vanguardia y lo mas exigentes controles de calidad , para poder brindarles la mayor confiabilidad en sus resultados','Ofrecer un servcio de laboratorio clinico excepcional , donde nuestros usuarios se sientan satisfechos','vision','email','core 8','02864566','https://lab-san-rafael-api.onrender.com/sources/images/public/logo.jpeg');
 
 
 CREATE TABLE IF NOT EXISTS exam (
@@ -114,6 +114,10 @@ CREATE TABLE IF NOT EXISTS sub_category (
    id serial PRIMARY KEY ,
    name VARCHAR(255) NOT NULL UNIQUE
 );
+
+INSERT INTO sub_category (name) VALUES
+('HEMATOLOGIA Y BIOQUIMICA SANGUINEA'),
+('HEMOSTASIA Y TROMBOSIS');
 
 
 CREATE TABLE IF NOT EXISTS category (
