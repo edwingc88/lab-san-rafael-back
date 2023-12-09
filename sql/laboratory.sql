@@ -23,6 +23,10 @@ DROP TABLE IF EXISTS client CASCADE;
 DROP TABLE IF EXISTS patient;
 DROP TABLE IF EXISTS category CASCADE;
 DROP TABLE IF EXISTS sub_category;
+DROP TABLE IF EXISTS movie;
+DROP TABLE IF EXISTS genre;
+
+
 
 
 -- crear la tabla postgress
@@ -103,31 +107,41 @@ INSERT INTO lab (name,rif,slogan,description,objetive,mission,vision,email,addre
 ('Centro Medico Ambulatorio San Rafael','J-1234562','Para nosotros no hay nada mas importante que tu salud.','servicio de laboratorio','Somos una empresa que cuenta con personal altamente calificado y que trabaja con altos estandares de calidad y servicio en el area de analisis clinicos.Nuestros Pacientes son nuestra razon de ser y es por ello que para satisfacerlos utilizamos tecnologia de vanguardia y lo mas exigentes controles de calidad , para poder brindarles la mayor confiabilidad en sus resultados','Ofrecer un servcio de laboratorio clinico excepcional , donde nuestros usuarios se sientan satisfechos','vision','email','core 8','02864566','https://lab-san-rafael-api.onrender.com/sources/images/public/logo.jpeg');
 
 
-CREATE TABLE IF NOT EXISTS exam (
-   id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
-   name VARCHAR(255) NOT NULL UNIQUE,
-   description VARCHAR(255) null,
-   price FLOAT null
-);
-
 CREATE TABLE IF NOT EXISTS sub_category (
    id serial PRIMARY KEY ,
    name VARCHAR(255) NOT NULL UNIQUE
 );
 
-INSERT INTO sub_category (name) VALUES
-('HEMATOLOGIA Y BIOQUIMICA SANGUINEA'),
-('HEMOSTASIA Y TROMBOSIS');
+INSERT INTO sub_category (id,name) VALUES
+(1,'EXAM'),
+(2,'PERFIL');
 
 
 CREATE TABLE IF NOT EXISTS category (
-   id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
+   id serial PRIMARY KEY ,
    name VARCHAR(255) NOT NULL UNIQUE,
    description VARCHAR(255) null,
-   id_exam uuid NOT NULL,
    id_sub_category serial NOT NULL,
-   FOREIGN KEY (id_sub_category) REFERENCES sub_category(id),
-   FOREIGN KEY (id_exam) REFERENCES exam(id)
+   FOREIGN KEY (id_sub_category) REFERENCES sub_category(id)
 );
 
+INSERT INTO category (name,id_sub_category) VALUES
+('HEMATOLOGÍA Y BIOQUÍMICA SANGUÍNEA',1),
+('HEMOSTASIA Y TROMBOSIS',1),
+('ENDOCRINO - METABÓLICO',1),
+('UROLOGIA - NEFROLOGIA',1),
+('HECES',1),
+('PERFIL ARTRITIS',2);
+
+CREATE TABLE IF NOT EXISTS exam (
+   id serial PRIMARY KEY ,
+   name VARCHAR(255) NOT NULL UNIQUE,
+   price FLOAT null,
+   id_categoy serial NOT NULL,
+   FOREIGN KEY (id_categoy) REFERENCES category(id)
+);
+
+INSERT INTO exam (name, price,id_categoy) VALUES
+('Hematologia Completa',2,1),
+('VSG',3,1);
 

@@ -5,8 +5,8 @@ import bc from 'bcrypt'
 
 const { Pool } = pkg
 let conn
-
-/* if (!conn) {
+/*
+if (!conn) {
   conn = new Pool({
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
@@ -14,8 +14,8 @@ let conn
     port: process.env.DB_PORT,
     database: process.env.DB_NAME
   })
-} */
-
+}
+*/
 if (!conn) {
   conn = new Pool({
     connectionString: process.env.DATABASE_URL
@@ -298,11 +298,11 @@ export class ExamModel {
 
   static async create ({ input }) {
     // eslint-disable-next-line camelcase
-    const { id, name } = input
+    const { name, id_category } = input
 
     try {
       // eslint-disable-next-line camelcase
-      const resultID = await conn.query('INSERT INTO exam( id,name ) VALUES ($1, $2 ) RETURNING *;', [id, name])
+      const resultID = await conn.query('INSERT INTO exam( name ,id_category ) VALUES ($1, $2 ) RETURNING *;', [name, id_category])
       return (resultID.rows)
     } catch (e) {
       throw new Error('Errro creating client')
