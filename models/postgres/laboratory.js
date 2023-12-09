@@ -5,7 +5,7 @@ import bc from 'bcrypt'
 
 const { Pool } = pkg
 let conn
-
+/*
 if (!conn) {
   conn = new Pool({
     user: process.env.DB_USER,
@@ -15,15 +15,14 @@ if (!conn) {
     database: process.env.DB_NAME
   })
 }
-
-/* if (!conn) {
+*/
+if (!conn) {
   conn = new Pool({
     connectionString: process.env.DATABASE_URL
     // ssl: true
   })
 }
 console.log(conn)
-*/
 
 export class ClientModel {
   static async getAll ({ role }) {
