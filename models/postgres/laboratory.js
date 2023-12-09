@@ -16,12 +16,15 @@ if (!conn) {
   })
 }
 */
+
 if (!conn) {
   conn = new Pool({
     connectionString: process.env.DATABASE_URL
     // ssl: true
   })
 }
+
+console.log(conn)
 
 export class ClientModel {
   static async getAll ({ role }) {

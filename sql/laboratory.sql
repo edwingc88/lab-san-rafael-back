@@ -15,7 +15,7 @@
 --
 TRUNCATE TABLE role CASCADE;
 DROP TABLE IF EXISTS role CASCADE;
-DROP TABLE IF EXISTS relationship;
+DROP TABLE IF EXISTS relationship CASCADE;
 DROP TABLE IF EXISTS person;
 DROP TABLE IF EXISTS exam CASCADE;
 DROP TABLE IF EXISTS lab;
@@ -23,8 +23,8 @@ DROP TABLE IF EXISTS client CASCADE;
 DROP TABLE IF EXISTS patient;
 DROP TABLE IF EXISTS category CASCADE;
 DROP TABLE IF EXISTS sub_category;
-DROP TABLE IF EXISTS movie;
-DROP TABLE IF EXISTS genre;
+DROP TABLE IF EXISTS genre CASCADE;
+DROP TABLE IF EXISTS movie CASCADE;
 
 
 
@@ -94,8 +94,8 @@ CREATE TABLE IF NOT EXISTS lab (
    slogan VARCHAR(255) null,
    description VARCHAR(255) null,
    objetive VARCHAR(500) null,
-   mission VARCHAR(300) null,
-   vision VARCHAR(300) null,
+   mission VARCHAR(500) null,
+   vision VARCHAR(500) null,
    email VARCHAR(255) null,
    address VARCHAR(255) null,
    phone VARCHAR(255) null,
@@ -104,7 +104,7 @@ CREATE TABLE IF NOT EXISTS lab (
 
 
 INSERT INTO lab (name,rif,slogan,description,objetive,mission,vision,email,address,phone,logo) VALUES
-('Centro Medico Ambulatorio San Rafael','J-1234562','Para nosotros no hay nada mas importante que tu salud.','servicio de laboratorio','Somos una empresa que cuenta con personal altamente calificado y que trabaja con altos estandares de calidad y servicio en el area de analisis clinicos.Nuestros Pacientes son nuestra razon de ser y es por ello que para satisfacerlos utilizamos tecnologia de vanguardia y lo mas exigentes controles de calidad , para poder brindarles la mayor confiabilidad en sus resultados','Ofrecer un servcio de laboratorio clinico excepcional , donde nuestros usuarios se sientan satisfechos','vision','email','core 8','02864566','https://lab-san-rafael-api.onrender.com/sources/images/public/logo.jpeg');
+('Centro Medico Ambulatorio San Rafael','J-1234562','Para nosotros no hay nada mas importante que tu salud.','servicio de laboratorio','Somos una empresa que cuenta con personal altamente calificado y que trabaja con altos estándares de calidad y servicio en el área de análisis clínicos. Nuestros pacientes son nuestra razón de ser y es por ello que para satisfacerlos utilizamos tecnología de vanguardia y los más exigentes controles de calidad, para poder brindarles la mayor confiabilidad en sus resultados.','Ofrecer un servicio de Laboratorio Clínico excepcional,  donde nuestros usuarios se sientan satisfechos y plenos por la atención ofrecida en todos nuestros departamentos. Distinguirnos como un laboratorio extraordinario donde la excelencia de nuestros procedimientos y atención  al cliente nos distinga.','Posicionarnos como un Laboratorio Clínico innovador y de alta calidad, que ofrezca a sus pacientes soluciones que permitan el preciso diagnóstico médico y oportuno tratamiento. Queremos ser una empresa referente en el sector salud, que la excelencia sea nuestro estandarte.','email','core 8','02864566','https://lab-san-rafael-api.onrender.com/sources/images/public/logo.jpeg');
 
 
 CREATE TABLE IF NOT EXISTS sub_category (
@@ -131,6 +131,10 @@ INSERT INTO category (name,id_sub_category) VALUES
 ('ENDOCRINO - METABÓLICO',1),
 ('UROLOGIA - NEFROLOGIA',1),
 ('HECES',1),
+('MARCADORES TUMORALES',1),
+('BIOLOGÍA MOLECULAR',1),
+('MICROBIOLOGÍA',1),
+('PERFIL LES DIAGNÓSTICO',2),
 ('PERFIL ARTRITIS',2);
 
 CREATE TABLE IF NOT EXISTS exam (
@@ -142,6 +146,10 @@ CREATE TABLE IF NOT EXISTS exam (
 );
 
 INSERT INTO exam (name, price,id_categoy) VALUES
-('Hematologia Completa',2,1),
-('VSG',3,1);
+('Hematologia Completa',20,1),
+('Hematologia Especial',30,1),
+('VSG',30,1),
+('Reticulocitos',10,1),
+('Grupo Sanguíneo y RH',10,1),
+('Tp. Tempo de protrombina',10,2);
 
