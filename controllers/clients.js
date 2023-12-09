@@ -6,8 +6,7 @@ export class ClientController {
   }
 
   getAll = async (req, res) => {
-    const { role } = req.query
-    const clients = await this.clientModel.getAll({ role })
+    const clients = await this.clientModel.getAll()
     if (clients.length === 0) return res.status(404).json({ error: 'Not found client' })
     res.json(clients)
   }

@@ -3,7 +3,7 @@ GET http://localhost:1234/exams/
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwZXJzb24iOlsiMGVjNWQwM2ItNjhjZi00M2IwLTkyY2YtNzYxMWMwZTY2M2RkIiwxXSwiaWF0IjoxNzAxMzE1OTU1LCJleHAiOjE3MDEzMTY3OTV9.DoGRptNlcyaG0i_y3_FDIKv9QE2moNSsd-e-n4YiDDw
 
 ###Recuperar por Rol
-GET http://localhost:1234/exams?role=admin
+GET http://localhost:1234/exams?_category=1
 
 ###Recuperar por id examens
 GET http://localhost:1234/exams/0ec5d03b-68cf-43b0-92cf-7611c0e663dd

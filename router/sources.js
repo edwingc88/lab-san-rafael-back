@@ -9,9 +9,8 @@ export const createSourceRouter = () => {
 
   // sourceRouter.get('/', sourceController.getAll)
 
-  sourceRouter.get('/images/:id', sourceController.getByIdImg)
+  sourceRouter.get('/images/private/:id', sourceController.getByIdImgPrivate)
   sourceRouter.get('/images/public/:id', sourceController.getByIdImgPublic)
-  sourceRouter.get('/pdf/:id', sourceController.getByIdPdf)
 
   // sourceRouter.post('/', sourceController.create)
 

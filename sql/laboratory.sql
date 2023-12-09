@@ -141,11 +141,11 @@ CREATE TABLE IF NOT EXISTS exam (
    id serial PRIMARY KEY ,
    name VARCHAR(255) NOT NULL UNIQUE,
    price FLOAT null,
-   id_categoy serial NOT NULL,
-   FOREIGN KEY (id_categoy) REFERENCES category(id)
+   id_category serial NOT NULL,
+   FOREIGN KEY (id_category) REFERENCES category(id)
 );
 
-INSERT INTO exam (name, price,id_categoy) VALUES
+INSERT INTO exam (name, price,id_category) VALUES
 ('Hematologia Completa',20,1),
 ('Hematologia Especial',30,1),
 ('VSG',30,1),

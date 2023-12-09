@@ -5,7 +5,7 @@ import bc from 'bcrypt'
 
 const { Pool } = pkg
 let conn
-/*
+
 if (!conn) {
   conn = new Pool({
     user: process.env.DB_USER,
@@ -15,16 +15,15 @@ if (!conn) {
     database: process.env.DB_NAME
   })
 }
-*/
 
-if (!conn) {
+/* if (!conn) {
   conn = new Pool({
     connectionString: process.env.DATABASE_URL
     // ssl: true
   })
 }
-
 console.log(conn)
+*/
 
 export class ClientModel {
   static async getAll ({ role }) {
@@ -277,8 +276,14 @@ export class LabModel {
 }
 
 export class ExamModel {
-  static async getAll () {
+  static async getAll ({ _category }) {
     try {
+      if (_category) {
+        const loweCaseCategoryID = _category.toLowerCase()
+        const result = await conn.query('SELECT * FROM exam WHERE id_category = $1;', [loweCaseCategoryID])
+
+        return result.rows
+      }
       const res = await conn.query('SELECT * FROM exam;')
       console.log(res.rows)
       return res.rows
