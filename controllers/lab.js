@@ -3,6 +3,7 @@ import { validateLab, validatePartialLab } from '../schemas/lab.js'
 import multiparty from 'multiparty'
 import 'dotenv/config'
 import fs from 'fs'
+import { join } from 'path'
 
 // import { resolve, join } from 'path'
 
@@ -46,11 +47,10 @@ export class LabController {
 
       console.log(JSON.stringify(fields, null, 2))
       console.log(JSON.stringify(files, null, 2))
+      // Obteniendo la ruta de la imagen por default
+      let rutaFinalArchivo = process.env.WEB_URL + join('sources', 'images', 'public', 'default.png')
 
-      let rutaFinalArchivo = process.env.WEB_URL + 'sources/images/public/default.jpg'
-      // Obteniendo la ruta de la imagen
-
-      console.log(Object.keys(files)[0])
+      // console.log(Object.keys(files)[0])
 
       const key = Object.keys(files)[0]
       const rutaLink = files[key][0].path
@@ -59,10 +59,11 @@ export class LabController {
         rutaFinalArchivo = process.env.WEB_URL + rutaArchivo
       }
 
-      console.log()
+      console.log(rutaFinalArchivo)
+      console.log('Arriba RutaFinal')
       const nameImagenNula = rutaLink.slice(rutaLink.lastIndexOf('\\') + 1)
 
-      const linkRutaBorrar = 'sources/images/public/' + nameImagenNula
+      const linkRutaBorrar = join('sources', 'images', 'public', nameImagenNula)
 
       // const linkRutaBorrar = nameImagenNula
 

@@ -98,29 +98,4 @@ export class AuthController {
       // return res.status(200).json({ dataObject })
     })
   }
-
-  // const { email, password } = req.body
-  // console.log(email)
-
-  // const findUserByEmail = await this.authModel.find(email)
-
-  /* if (findUserByEmail.length === 0) {
-      return res.status(404).json({ error: 'Not found ID por EMAIL' })
-    } */
-
-  /* const passwordIsValid = findUserByEmail === null ? false : await bc.compare(password, findUserByEmail[0].password)
-
-    if (!passwordIsValid) {
-      return res.status(404).json({ error: 'Not found ID por PASSWORD' })
-    }
-
-    const clientId = findUserByEmail[0].id
-    const roleId = findUserByEmail[0].id_role
-
-    const token = jwt.sign({ client: [clientId, roleId] }, process.env.SECRET, { expiresIn: 840 }) */
-
-  // console.log(findIDEmail[0])
-  // console.log('ID ARRIBA')
-  /*   return res.status(200).json({ id_client: clientId, id_role: roleId, token })
-  } */
 }
