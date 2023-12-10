@@ -21,7 +21,7 @@ if (!conn) {
     // ssl: true
   })
 }
- 
+
 export class ClientModel {
   static async getAll () {
     try {

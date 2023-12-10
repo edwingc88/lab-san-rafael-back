@@ -61,16 +61,16 @@ export class LabController {
 
       console.log(rutaFinalArchivo)
       console.log('Arriba RutaFinal')
-      const nameImagenNula = rutaLink.slice(rutaLink.lastIndexOf('\\') + 1)
-
-      const linkRutaBorrar = join('sources', 'images', 'public', nameImagenNula)
+      const nameImagenDefault = rutaLink.slice(rutaLink.lastIndexOf('\\') + 1)
+      console.log(nameImagenDefault)
+      // const linkRutaBorrar = join('sources', 'images', 'public', nameImagenNula)
 
       // const linkRutaBorrar = nameImagenNula
 
-      fs.unlink(linkRutaBorrar, function (err) {
+      /* fs.unlink(linkRutaBorrar, function (err) {
         if (err) { console.error(err) }
         console.log('File deleted!')
-      })
+      }) */
 
       // console.log(rutaArchivo)
       // console.log(process.env.WEB_URL)
