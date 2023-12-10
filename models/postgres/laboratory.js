@@ -14,7 +14,8 @@ let conn
     database: process.env.DB_NAME
   })
 }
- */
+*/
+
 if (!conn) {
   conn = new Pool({
     connectionString: process.env.DATABASE_URL
@@ -280,7 +281,7 @@ export class ExamModel {
 
         return result.rows
       }
-      const res = await conn.query('SELECT * FROM exam INNER JOIN category ON exam.exam_id_category = category.category_id')
+      const res = await conn.query('SELECT * FROM exam INNER JOIN category ON exam.exam_id_category = category.category_id INNER JOIN sub_category ON category.category_id_sub_category = sub_category.sub_category_id;')
       // const res = await conn.query('SELECT * FROM exam;')
       console.log(res.rows)
       console.log('entro a Exam Model')
