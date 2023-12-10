@@ -5,8 +5,7 @@ import bc from 'bcrypt'
 
 const { Pool } = pkg
 let conn
-/*
-if (!conn) {
+/* if (!conn) {
   conn = new Pool({
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
@@ -15,22 +14,20 @@ if (!conn) {
     database: process.env.DB_NAME
   })
 }
-*/
+ */
 if (!conn) {
   conn = new Pool({
     connectionString: process.env.DATABASE_URL
     // ssl: true
   })
 }
-console.log(conn)
 
 export class ClientModel {
-  static async getAll ({ role }) {
+  static async getAll () {
     try {
-      if (role) {
-        // console.log(role)
+      //  console.log(role)
+      /*   if (role) {
         const loweCaseRole = role.toLowerCase()
-        // console.log(loweCaseRole)
         const result = await conn.query('SELECT id,name FROM role WHERE LOWER(name) = $1;', [loweCaseRole])
         const roles = result.rows
 
@@ -40,10 +37,10 @@ export class ClientModel {
         }
         const [{ id }] = roles
 
-        const resultRoles = await conn.query('SELECT * FROM client INNER JOIN role ON client.role_id = role.id WHERE role.id = $1;', [id])
+        const resultRoles = await conn.query('SELECT * FROM client INNER JOIN role ON client.client_id_role = role.id WHERE role.id = $1;', [id])
         const clients = resultRoles.rows
         return clients
-      }
+      } */
       const res = await conn.query('SELECT * FROM client;')
       // console.log(res.rows)
       return res.rows
@@ -76,7 +73,7 @@ export class ClientModel {
 
     try {
       // eslint-disable-next-line camelcase
-      const resultID = await conn.query('INSERT INTO client( id,dni , password,firstname,lastname ,email ,address,mobilephone,created, picture_url,id_role) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11 ) RETURNING *;', [uuid, dni, passwordHash, firstname, lastname, email, address, mobilephone, created, picture_url, id_role])
+      const resultID = await conn.query('INSERT INTO client( client_id,client_dni , client_password,client_firstname,client_lastname ,client_email ,client_address,client_mobilephone,client_created, client_picture_url,client_id_role) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11 ) RETURNING *;', [uuid, dni, passwordHash, firstname, lastname, email, address, mobilephone, created, picture_url, id_role])
       return (resultID.rows)
     } catch (e) {
       throw new Error('Errro creating client')
@@ -279,12 +276,14 @@ export class ExamModel {
     try {
       if (_category) {
         const loweCaseCategoryID = _category.toLowerCase()
-        const result = await conn.query('SELECT * FROM exam WHERE id_category = $1;', [loweCaseCategoryID])
+        const result = await conn.query('SELECT * FROM exam WHERE exam_id_category = $1;', [loweCaseCategoryID])
 
         return result.rows
       }
-      const res = await conn.query('SELECT * FROM exam;')
+      const res = await conn.query('SELECT * FROM exam INNER JOIN category ON exam.exam_id_category = category.category_id')
+      // const res = await conn.query('SELECT * FROM exam;')
       console.log(res.rows)
+      console.log('entro a Exam Model')
       return res.rows
     } catch (e) {
       return null
@@ -293,7 +292,7 @@ export class ExamModel {
 
   static async getById (id) {
     try {
-      const result = await conn.query('SELECT * FROM exam WHERE id = $1;', [id])
+      const result = await conn.query('SELECT * FROM exam WHERE id_exam = $1;', [id])
       const [clients] = result.rows
 
       if (clients.length === 0) return null
@@ -462,7 +461,7 @@ export class AuthModel {
 
     try {
       // eslint-disable-next-line camelcase
-      const resultID = await conn.query('INSERT INTO client( id, password,firstname,lastname ,email ,dni, mobilephone, created,id_role) VALUES ($1, $2, $3, $4, $5, $6, $7, $8,$9) RETURNING *;', [uuid, passwordHash, firstname, lastname, email, dni, mobilephone, created, id_role])
+      const resultID = await conn.query('INSERT INTO client( client_id, client_password,client_firstname,client_lastname ,client_email ,client_dni, client_mobilephone, client_created,client_id_role) VALUES ($1, $2, $3, $4, $5, $6, $7, $8,$9) RETURNING *;', [uuid, passwordHash, firstname, lastname, email, dni, mobilephone, created, id_role])
       return (resultID.rows)
     } catch (e) {
       throw new Error('Errro creating client')
@@ -472,7 +471,7 @@ export class AuthModel {
   static async find (email) {
     // eslint-disable-next-line camelcase
     try {
-      const result = await conn.query('SELECT * FROM client WHERE email = $1 ;', [email])
+      const result = await conn.query('SELECT * FROM client WHERE client_email = $1 ;', [email])
       // console.log(result.rows)
       return (result.rows)
     } catch (e) {

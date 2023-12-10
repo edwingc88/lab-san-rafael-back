@@ -3,7 +3,7 @@ import 'dotenv/config'
 
 import { validateSignup } from '../schemas/signup.js'
 import jwt from 'jsonwebtoken'
-import bc from 'bcrypt'
+import bcrypt from 'bcrypt'
 import multiparty from 'multiparty'
 
 export class AuthController {
@@ -82,14 +82,14 @@ export class AuthController {
 
       console.log(findUserByEmail)
 
-      const passwordIsValid = findUserByEmail === null ? false : await bc.compare(dataObject.password, findUserByEmail[0].password)
+      const passwordIsValid = findUserByEmail === null ? false : await bcrypt.compare(dataObject.password, findUserByEmail[0].client_password)
 
       if (!passwordIsValid) {
         return res.status(404).json({ error: 'Not found ID por PASSWORD' })
       }
 
-      const clientId = findUserByEmail[0].id
-      const roleId = findUserByEmail[0].id_role
+      const clientId = findUserByEmail[0].client_id
+      const roleId = findUserByEmail[0].client_id_role
 
       const token = jwt.sign({ client: [clientId, roleId] }, process.env.SECRET, { expiresIn: 840 })
 

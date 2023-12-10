@@ -1,6 +1,5 @@
 import express, { json } from 'express'
 import { createExamRouter } from './router/exams.js'
-
 import { createClientRouter } from './router/clients.js'
 import { createRoleRouter } from './router/roles.js'
 import { createLabRouter } from './router/lab.js'

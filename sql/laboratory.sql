@@ -50,22 +50,22 @@ INSERT INTO role (id,name) VALUES
 ---
 
 CREATE TABLE IF NOT EXISTS client (
-    id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
-    dni VARCHAR(255) UNIQUE,
-    email VARCHAR(255) NOT NULL UNIQUE, 
-    password VARCHAR(255) NOT NULL,
-    firstname VARCHAR(255) NOT NULL,
-    lastname VARCHAR(255) NOT NULL,
-    address VARCHAR(255) ,
-    mobilephone VARCHAR(255) NOT NULL,
-    created DATE,
-    picture_url VARCHAR(255),
-    id_role INT NOT NULL,
-    FOREIGN KEY (id_role) REFERENCES role(id)
+    client_id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
+    client_dni VARCHAR(255) UNIQUE,
+    client_email VARCHAR(255) NOT NULL UNIQUE, 
+    client_password VARCHAR(255) NOT NULL,
+    client_firstname VARCHAR(255) NOT NULL,
+    client_lastname VARCHAR(255) NOT NULL,
+    client_address VARCHAR(255) ,
+    client_mobilephone VARCHAR(255) NOT NULL,
+    client_created DATE,
+    client_picture_url VARCHAR(255),
+    client_id_role INT NOT NULL,
+    FOREIGN KEY (client_id_role) REFERENCES role(id)
 );
 
 
-INSERT INTO client (dni,email,password,firstname,lastname,address,mobilePhone, created,picture_url,id_role) VALUES
+INSERT INTO client (client_dni,client_email,client_password,client_firstname,client_lastname,client_address,client_mobilePhone, client_created,client_picture_url,client_id_role) VALUES
 ('j-1234','admin@gmail.com','1234','admin','super','core 8','041432','1900-01-01','https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',1);
 
 
@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS patient (
     relationship VARCHAR(255) null,
     created DATE,
     id_client uuid NOT NULL,
-    FOREIGN KEY (id_client) REFERENCES client(id)
+    FOREIGN KEY (id_client) REFERENCES client(client_id)
 );
 
 CREATE TABLE IF NOT EXISTS lab (
@@ -108,24 +108,24 @@ INSERT INTO lab (name,rif,slogan,description,objetive,mission,vision,email,addre
 
 
 CREATE TABLE IF NOT EXISTS sub_category (
-   id serial PRIMARY KEY ,
-   name VARCHAR(255) NOT NULL UNIQUE
+   sub_category_id serial PRIMARY KEY ,
+   sub_category_name VARCHAR(255) NOT NULL UNIQUE
 );
 
-INSERT INTO sub_category (id,name) VALUES
+INSERT INTO sub_category (sub_category_id,sub_category_name) VALUES
 (1,'EXAM'),
 (2,'PERFIL');
 
 
 CREATE TABLE IF NOT EXISTS category (
-   id serial PRIMARY KEY ,
-   name VARCHAR(255) NOT NULL UNIQUE,
-   description VARCHAR(255) null,
-   id_sub_category serial NOT NULL,
-   FOREIGN KEY (id_sub_category) REFERENCES sub_category(id)
+   category_id serial PRIMARY KEY ,
+   category_name VARCHAR(255) NOT NULL UNIQUE,
+   category_description VARCHAR(255) null,
+   category_id_sub_category serial NOT NULL,
+   FOREIGN KEY (category_id_sub_category) REFERENCES sub_category(sub_category_id)
 );
 
-INSERT INTO category (name,id_sub_category) VALUES
+INSERT INTO category (category_name,category_id_sub_category) VALUES
 ('HEMATOLOGÍA Y BIOQUÍMICA SANGUÍNEA',1),
 ('HEMOSTASIA Y TROMBOSIS',1),
 ('ENDOCRINO - METABÓLICO',1),
@@ -138,14 +138,14 @@ INSERT INTO category (name,id_sub_category) VALUES
 ('PERFIL ARTRITIS',2);
 
 CREATE TABLE IF NOT EXISTS exam (
-   id serial PRIMARY KEY ,
-   name VARCHAR(255) NOT NULL UNIQUE,
-   price FLOAT null,
-   id_category serial NOT NULL,
-   FOREIGN KEY (id_category) REFERENCES category(id)
+   exam_id serial PRIMARY KEY ,
+   exam_name VARCHAR(255) NOT NULL UNIQUE,
+   exam_price FLOAT null,
+   exam_id_category serial NOT NULL,
+   FOREIGN KEY (exam_id_category) REFERENCES category(category_id)
 );
 
-INSERT INTO exam (name, price,id_category) VALUES
+INSERT INTO exam (exam_name, exam_price,exam_id_category) VALUES
 ('Hematologia Completa',20,1),
 ('Hematologia Especial',30,1),
 ('VSG',30,1),
