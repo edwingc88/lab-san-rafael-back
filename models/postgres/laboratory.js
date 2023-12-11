@@ -237,14 +237,14 @@ export class LabModel {
     console.log(input)
     console.log('en el  DB LAB entro, INPUT ARRIBA')
     // eslint-disable-next-line camelcase
-    const { name, rif, slogan, description, email, address, phone, objetive, mission, vision, logo } = input
-
+    const { name, rif, slogan, description, objetive, mission, vision, email, address, phone, logo } = input
+    console.log(email)
     try {
       // eslint-disable-next-line camelcase
-      const result = await conn.query('INSERT INTO lab(name,rif,slogan,description,email,address,phone,objetive,mission, vision,logo) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING *;', [name, rif, slogan, description, email, address, phone, objetive, mission, vision, logo])
+      const res = await conn.query('INSERT INTO lab (name,rif,slogan,description,objetive,mission,vision,email,address,phone,logo) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING *;', [name, rif, slogan, description, objetive, mission, vision, email, address, phone, logo])
       console.log('en el  DB LAB entro tambien')
-      // console.log(input)
-      return (result.rows)
+      console.log(res.rows)
+      return (res.rows)
       // return ({ input })
     } catch (e) {
       throw new Error('Error DB creating Lab')
@@ -276,15 +276,14 @@ export class ExamModel {
     try {
       if (_category) {
         const loweCaseCategoryID = _category.toLowerCase()
-        const result = await conn.query('SELECT * FROM exam WHERE exam_id_category = $1;', [loweCaseCategoryID])
-
-        return result.rows
+        const res = await conn.query('SELECT * FROM exam WHERE exam_id_category = $1;', [loweCaseCategoryID])
+        return res.rows
       }
-      const res = await conn.query('SELECT * FROM exam INNER JOIN category ON exam.exam_id_category = category.category_id INNER JOIN sub_category ON category.category_id_sub_category = sub_category.sub_category_id;')
+      const result = await conn.query('SELECT * FROM exam INNER JOIN category ON exam.exam_id_category = category.category_id INNER JOIN sub_category ON category.category_id_sub_category = sub_category.sub_category_id;')
       // const res = await conn.query('SELECT * FROM exam;')
-      console.log(res.rows)
+      console.log(result.rows)
       console.log('entro a Exam Model')
-      return res.rows
+      return result.rows
     } catch (e) {
       return null
     }

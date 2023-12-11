@@ -3,7 +3,7 @@ import { validateLab, validatePartialLab } from '../schemas/lab.js'
 import multiparty from 'multiparty'
 import 'dotenv/config'
 import fs from 'fs'
-import { join } from 'path'
+import { extname, join } from 'path'
 
 // import { resolve, join } from 'path'
 
@@ -48,21 +48,54 @@ export class LabController {
       console.log(JSON.stringify(fields, null, 2))
       console.log(JSON.stringify(files, null, 2))
       // Obteniendo la ruta de la imagen por default
-      let rutaFinalArchivo = process.env.WEB_URL + join('sources', 'images', 'public', 'default.png')
+      let rutaFinalArchivo = process.env.WEB_URL + 'sources/images/public/default.jpg'
 
+      console.log(rutaFinalArchivo)
+      console.log('Arriba y abajo RutaFinal')
       // console.log(Object.keys(files)[0])
 
       const key = Object.keys(files)[0]
       const rutaLink = files[key][0].path
+      const rutaArchivo = rutaLink.replaceAll('\\', '/')
       if (files[key][0].originalFilename !== '') {
-        const rutaArchivo = rutaLink.replaceAll('\\', '/')
         rutaFinalArchivo = process.env.WEB_URL + rutaArchivo
+        console.log(rutaFinalArchivo)
       }
 
-      console.log(rutaFinalArchivo)
-      console.log('Arriba RutaFinal')
+      console.log('Abajo default imagen sacada de multipartys y despues ruta Archivo')
       const nameImagenDefault = rutaLink.slice(rutaLink.lastIndexOf('\\') + 1)
       console.log(nameImagenDefault)
+      console.log(rutaArchivo)
+
+      console.log(extname(rutaArchivo))
+
+      if (extname(rutaArchivo) === '') {
+        fs.unlink(rutaArchivo, function (err) {
+          if (err) {
+            console.error(err)
+            fs.unlink(join('sources', 'public', 'images', nameImagenDefault), function (err) {
+              if (err) { console.error(err) }
+              console.log('File deleted Local!')
+            })
+          } else {
+            console.log('File deleted Render!')
+          }
+        })
+      }
+
+      /* fs.unlink('sources/images/public/' + nameImagenDefault, function (err) {
+        if (err) {
+          console.error(err)
+        }
+        console.log('File deleted Render!')
+      })
+
+      fs.unlink(join('sources', 'public', 'images', nameImagenDefault), function (err) {
+        if (err) { console.error(err) }
+        console.log('File deleted Local!')
+      })
+      */
+
       // const linkRutaBorrar = join('sources', 'images', 'public', nameImagenNula)
 
       // const linkRutaBorrar = nameImagenNula

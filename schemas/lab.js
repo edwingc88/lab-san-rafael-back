@@ -11,7 +11,7 @@ const labSchema = z.object({
   address: z.string().min(1, { message: 'This field has to be filled.' }),
   phone: z.string().min(1, { message: 'This field has to be filled.' }),
   email: z.string().min(1, { message: 'This field has to be filled.' }).email('This is not a valid email.'),
-  logo: z.string().min(1, { message: 'This field has to be filled.' })
+  logo: z.string()
 })
 
 export function validateLab (object) {
