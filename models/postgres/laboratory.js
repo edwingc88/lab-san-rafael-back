@@ -3,6 +3,8 @@ import 'dotenv/config'
 import bc from 'bcrypt'
 // const bcrypt = require('bcrypt')
 
+// import { basename } from 'path'
+
 const { Pool } = pkg
 let conn
 /* if (!conn) {
@@ -253,12 +255,32 @@ export class LabModel {
 
   static async update ({ idupdate, input }) {
     // eslint-disable-next-line camelcase
-    const { id, name } = input
+    const { name, rif, slogan, description, objetive, mission, vision, email, address, phone, logo } = input
+    // console.log(input)
+    // console.log(idupdate)
+    console.log('entro en bd update')
+    console.log(logo)
 
-    // eslint-disable-next-line camelcase
-    const result = await conn.query('UPDATE lab SET id = $1, name = $2  WHERE id = $3 RETURNING *;', [id, name, idupdate])
-    console.log(result.rows)
-    return result.rows
+    /* const consultaImg = await conn.query('SELECT logo FROM lab WHERE id = $1;', [idupdate])
+
+    const nombreImg = basename(consultaImg.rows[0].logo)
+    console.log(nombreImg)
+    console.log('arriba consulta URL imagen') */
+
+    if (logo === '') {
+      console.log('default NO hacer nada con Imagen')
+      // eslint-disable-next-line camelcase
+      const result = await conn.query('UPDATE lab SET name=$1,rif=$2,slogan=$3,description=$4,objetive=$5,mission=$6,vision=$7,email=$8,address=$9,phone=$10 WHERE id = $11 RETURNING *;', [name, rif, slogan, description, objetive, mission, vision, email, address, phone, idupdate])
+      console.log(result.rows)
+      return result.rows
+    } else {
+      console.log(logo)
+      console.log('logo HAY que cambiar el logo')
+      // eslint-disable-next-line camelcase
+      const result = await conn.query('UPDATE lab SET name=$1,rif=$2,slogan=$3,description=$4,objetive=$5,mission=$6,vision=$7,email=$8,address=$9,phone=$10,logo=$11 WHERE id = $12 RETURNING *;', [name, rif, slogan, description, objetive, mission, vision, email, address, phone, logo, idupdate])
+      console.log(result.rows)
+      return result.rows
+    }
   }
 
   static async delete ({ id }) {
@@ -509,6 +531,27 @@ export class AuthModel {
       return (result.rows)
     } catch (e) {
       throw new Error('Errro en Modelo Find Role')
+    }
+  }
+}
+export class ClientsDbModel {
+  static async create () {
+    // eslint-disable-next-line camelcase
+    const input = { firstname: 'gerente', lastname: 'lab', email: 'admin@gmail.com', password: '1234', dni: '123456', mobilephone: '024869541', created: '2020-01-01T04:00:00.000Z', id_role: 1 }
+
+    const passwordHash = await bc.hash(input.password, 10)
+
+    const result = await conn.query('SELECT uuid_generate_v4() uuid;')
+
+    const [{ uuid }] = result.rows
+    console.log(uuid)
+
+    try {
+      // eslint-disable-next-line camelcase
+      const resultID = await conn.query('INSERT INTO client( client_id, client_password,client_firstname,client_lastname ,client_email ,client_dni, client_mobilephone, client_created,client_id_role) VALUES ($1, $2, $3, $4, $5, $6, $7, $8,$9) RETURNING *;', [uuid, passwordHash, input.firstname, input.lastname, input.email, input.dni, input.mobilephone, input.created, input.id_role])
+      return (resultID.rows)
+    } catch (e) {
+      throw new Error('Errro creating client')
     }
   }
 }

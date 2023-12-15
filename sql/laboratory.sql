@@ -8,7 +8,8 @@
 
 -- INSERT INTO person (id ,dni, password, firstname, lastname, email, birthdate, gender, address, mobilePhone, homePhone, blood_typing, created, picture_url, role_id) VALUES (uuid_generate_v4(),'12345678','1234','Juan','Perez','juan@gmail.com','2000-01-01','Masculino','Calle 1 # 2-3','1234567890','1234567890','O+','2020-01-01','https://images.freeimages.com/images/large-previews/ddf/tour-d-eiffel-1447025.jpg',1);
 
---
+--NEW
+--postgres://lab_san_rafael_db_user:ftpPHRPljW2IQhDdodugAOgzbteg2Su9@dpg-clropq4m7d1c73f3kp30-a.oregon-postgres.render.com/lab_san_rafael_db
 -- postgres://admin:p6ojFg5VZwQW2sbHCR6fRR5MzEvBtwFs@dpg-ck09konhdsdc73813vjg-a.oregon-postgres.render.com/labdb_ydvc
 
 -- p6ojFg5VZwQW2sbHCR6fRR5MzEvBtwFs
@@ -120,7 +121,7 @@ CREATE TABLE IF NOT EXISTS category (
    category_name VARCHAR(255) NOT NULL UNIQUE,
    category_description VARCHAR(255) null,
    category_id_sub_category serial NOT NULL,
-   FOREIGN KEY (category_id_sub_category) REFERENCES sub_category(sub_category_id)
+   FOREIGN KEY (category_id_sub_category) REFERENCES sub_category(sub_category_id) ON DELETE CASCADE
 );
 
 INSERT INTO category (category_name,category_id_sub_category) VALUES
@@ -130,6 +131,7 @@ INSERT INTO category (category_name,category_id_sub_category) VALUES
 ('UROLOGIA - NEFROLOGIA',1),
 ('HECES',1),
 ('MARCADORES TUMORALES',1),
+('INMUNO - DIAGNÓSTICO',1),
 ('BIOLOGÍA MOLECULAR',1),
 ('MICROBIOLOGÍA',1),
 ('INFECCIOSAS',1),
@@ -151,7 +153,7 @@ INSERT INTO category (category_name,category_id_sub_category) VALUES
 
 CREATE TABLE IF NOT EXISTS exam (
    exam_id serial PRIMARY KEY ,
-   exam_name VARCHAR(255) NOT NULL UNIQUE,
+   exam_name VARCHAR(255) NOT NULL,
    exam_price FLOAT null,
    exam_id_category serial NOT NULL,
    FOREIGN KEY (exam_id_category) REFERENCES category(category_id)
@@ -161,20 +163,53 @@ INSERT INTO exam (exam_name, exam_price,exam_id_category) VALUES
 ('Hematologia Completa',20,1),
 ('Hematologia Especial',30,1),
 ('VSG',30,1),
-('Reticulocitos',9.5,1),
+('Reticulocítos',9.5,1),
 ('Grupo Sanguíneo y RH',10,1),
+('Coombs directo',10,1),
+('Coombs indirecto',10,1),
+('Gora Gruesa',10,1),
+('Test de Drepanocitos',10,1),
+('Glicemia',10,1),
+('Glicemia Basal y Postprandial',10,1),
+('Curva Tolerancia Glocosa 0-30-60 120',10,1),
+('Utea en Suero',10,1),
+('Creatinina en Suero',10,1),
 ('Tp. Tempo de protrombina',10,2),
 ('INR. COntrol anticoagulados',10,2),
 ('TTPa. Tiempo de Tromboplastina parcial activada',10,2),
 ('TSH (Estimulante de Tiroides)',10,3),
 ('T3. Libre ',10,3),
 ('T4 Libre',1.5,3),
+('Insulina Basal',1.5,3),
+('Insulina Pre y Postprandial',1.5,3),
 ('Orina General',10,4),
 ('Depueracion de Creatinina',10,4),
+('Proteinuria',10,4),
+('Calcio',10,4),
+('Fósforo',10,4),
+('Oxalato',10,4),
+('Citrato',10,4),
 ('Heces General',13,5),
 ('Azucar Reductores',6.5,5),
-('Antic . Anti-Nucleares(cel Hep2)',18,15),
-('Factor Reumatoide',20,15),
-('Panel 45 Alimentos igG',25,24);
+('Antigeno prostatico total (PSA total)',10,6),
+('Antigeno prostatico libre (PSA libre)',10,6),
+('Alfa fetoproteína (AFP)',10,6),
+('Antic. Anti-Nucleares(cel Hep2) Dil: 1/140-1/160',10,7),
+('Antic. Anti DNA (Crithindia lucialae)',10,7),
+('Helicobacter pylori',10,8),
+('Antic. Anti-Nucleares(cel Hep2) Dil: 1/140-1/160',18,16),
+('Factor Reumatoide',20,16),
+('CH50',20,16),
+('Panel 45 Alimentos igG',25,25),
+('Panel Alimento IgE',25,25);
 
 
+-- CREATE TABLE IF NOT EXISTS reference (
+  --- ref_id serial PRIMARY KEY ,
+ --  ref_item VARCHAR(255),
+ --  ref_field VARCHAR(255) NOT NULL UNIQUE,
+  -- ref_min INT,
+  -- ref_max INT,
+  -- ref_id_exam serial NOT NULL,
+ --  FOREIGN KEY (ref_id_exam) REFERENCES exam(exam_id)
+--);

@@ -121,13 +121,36 @@ export class LabController {
       // console.log(JSON.stringify(files, null, 2))
       // console.log(typeof (imageURLCompleta))
 
+      console.log(fields)
+
+      console.log('arrinba field y abajo lo iterado ')
+      /// RECUPERANDO DATOS ITERANDO OBJETO
+      const claves = Object.keys(fields) // claves = ["nombre", "color", "macho", "edad"]
+      let newvalue = {}
+
+      console.log(claves)
+
+      for (let i = 0; i < claves.length; i++) {
+        const clave = claves[i]
+        const valor = { [clave]: fields[clave][0] }
+        console.log(clave)
+        console.log(valor)
+        newvalue = { ...newvalue, ...valor }
+      }
+
+      newvalue.logo = rutaFinalArchivo
+
+      console.log(newvalue)
+
       // const resultURL = imageURLCompleta.split('\\').join('/')
-      const dataObject = { name: fields.name[0], description: fields.description[0], email: fields.email[0], address: fields.address[0], phone: fields.phone[0], rif: fields.rif[0], slogan: fields.slogan[0], objetive: fields.objetive[0], mission: fields.mission[0], vision: fields.vision[0], logo: rutaFinalArchivo }
+      /* const dataObject = { name: fields.name[0], description: fields.description[0], email: fields.email[0], address: fields.address[0], phone: fields.phone[0], rif: fields.rif[0], slogan: fields.slogan[0], objetive: fields.objetive[0], mission: fields.mission[0], vision: fields.vision[0], logo: rutaFinalArchivo }
+*/
+      // Corrigiendo cambiando dataObjetc por newvalue
 
       // console.log(dataObject)
       // console.log('Arriba Dataobject')
 
-      const result = validateLab(dataObject)
+      const result = validateLab(newvalue)
 
       if (result.error) {
         return res.status(400).json({ error: JSON.parse(result.error.message) })
@@ -143,14 +166,122 @@ export class LabController {
   }
 
   update = async (req, res) => {
-    const result = validatePartialLab(req.body)
+    const form = new multiparty.Form({ uploadDir: IMAGEN_UPLOAD_DIR })
+
+    form.parse(req, async (err, fields, files) => {
+      if (err) {
+        console.error(err)
+        return res.status(500).json({ error: 'Error msj formdata Update' })
+      }
+
+      console.log(JSON.stringify(fields, null, 2))
+      console.log(JSON.stringify(files, null, 2))
+      // console.log(Object.keys(files)[0])
+
+      // Creando la ruta de la imagen por default
+      /* rutaFinalArchivo = process.env.WEB_URL + 'sources/images/public/default.jpg'
+      console.log(rutaFinalArchivo)
+      console.log('Arriba RutaFinal') */
+      let rutaFinalArchivo = ''
+      // Obteniendo la ruta de la imagen
+      const key = Object.keys(files)[0]
+      const rutaLink = files[key][0].path
+      const rutaArchivo = rutaLink.replaceAll('\\', '/')
+      console.log(files[key][0].originalFilename)
+      console.log('Arriba OriginalFAliName sacado de Multi part')
+      if (files[key][0].originalFilename !== '') {
+        rutaFinalArchivo = process.env.WEB_URL + rutaArchivo
+        console.log(rutaFinalArchivo)
+      }
+
+      console.log('Abajo default imagen sacada de multipartys y despues ruta Archivo')
+      const nameImagenDefault = rutaLink.slice(rutaLink.lastIndexOf('\\') + 1)
+      console.log(nameImagenDefault)
+
+      console.log(rutaArchivo)
+
+      console.log(extname(rutaArchivo))
+
+      /// RECUPERANDO DATOS ITERANDO OBJETO
+      const claves = Object.keys(fields) // claves = ["nombre", "color", "macho", "edad"]
+      let newvalue = {}
+
+      console.log(claves)
+
+      for (let i = 0; i < claves.length; i++) {
+        const clave = claves[i]
+        const valor = { [clave]: fields[clave][0] }
+        // console.log(clave)
+        // console.log(valor)
+        newvalue = { ...newvalue, ...valor }
+      }
+
+      console.log(newvalue)
+      console.log('Arriba NewValiue')
+
+      // para actulizar una nueva imagen debe ingresar uno nuevo si no no hace nada
+
+      if (extname(rutaArchivo) === '') {
+        fs.unlink(rutaArchivo, function (err) {
+          if (err) {
+            console.error(err)
+            fs.unlink(join('sources', 'public', 'images', nameImagenDefault), function (err) {
+              if (err) { console.error(err) }
+              console.log('File deleted Local!')
+            })
+          } else {
+            console.log('File deleted Render UPDATE!')
+          }
+        })
+      }
+
+      newvalue.logo = rutaFinalArchivo
+      console.log(newvalue.logo)
+      console.log('Arriba NewValue logo')
+
+      const result = validatePartialLab(newvalue)
+
+      if (result.error) {
+        return res.status(400).json({ error: JSON.parse(result.error.message) })
+      }
+
+      console.log(result.data)
+      console.log('resulta.DATA arriba')
+      const { id } = req.params
+      console.log(id)
+      console.log('id arriba que pasar para actulizar')
+      const updatedlab = await this.labModel.update({ idupdate: id, input: result.data })
+
+      res.status(201).json(updatedlab)
+
+      /* else {
+        let result = {}
+        newvalue.logo = rutaFinalArchivo
+
+        result = validatePartialLab(newvalue)
+
+        if (result.error) {
+          return res.status(400).json({ error: JSON.parse(result.error.message) })
+        }
+
+        console.log(result.data)
+        const { id } = req.params
+        const updatedlab = await this.labModell.update({ id, input: result.data })
+
+        res.status(201).json(updatedlab)
+      } */
+    })
+
+    /// ///
+
+    /* const result = validatePartialLab(req.body)
     if (!result.success) {
       return res.status(400).json({ error: JSON.parse(result.error.message) })
     }
     const { id } = req.params
     const updatedlab = await this.labModell.update({ id, input: result.data })
     if (!updatedlab) return res.status(404).json({ error: 'Not found lab' })
-    return res.json(updatedlab)
+    return res.json(updatedlab) */
   }
 
   delete = async (req, res) => {
