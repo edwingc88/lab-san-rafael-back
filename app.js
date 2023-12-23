@@ -1,4 +1,5 @@
 import express, { json } from 'express'
+import cors from 'cors'
 import { createExamRouter } from './router/exams.js'
 import { createClientRouter } from './router/clients.js'
 import { createRoleRouter } from './router/roles.js'
@@ -12,7 +13,7 @@ import { createInvoiceRouter } from './router/invoices.js'
 import { createInvoiceExamRouter } from './router/invoices_exams.js'
 
 // Cors
-import { corsMiddleware } from './middlewares/cors.js'
+// import { corsMiddleware } from './middlewares/cors.js'
 
 // jswt
 import { createAuthRouter } from './router/auth.js'
@@ -33,7 +34,8 @@ export const createApp = ({ clientModel, roleModel, patientModel, labModel, invo
   const app = express()
   app.set('pkg', pkg)
   app.use(json())
-  app.use(corsMiddleware())
+  app.use(cors())
+  // app.use(corsMiddleware())
   // app.use(express.static(join(__dirname, './public')))
   app.disable('x-powered-by')
   /* app.get('/', (req, res) => {
