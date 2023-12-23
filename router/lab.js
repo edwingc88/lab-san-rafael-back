@@ -15,6 +15,8 @@ export const createLabRouter = ({ labModel }) => {
 
   labRouter.patch('/:id', labController.update)
 
+  labRouter.patch('/', labController.deleteImg)
+
   labRouter.delete('/:id', labController.delete)
 
   return labRouter

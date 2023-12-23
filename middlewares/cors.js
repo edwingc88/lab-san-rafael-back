@@ -4,7 +4,8 @@ export const corsMiddleware = () => cors({
     const ACEEPTED_ORIGINS = [
       'http://localhost:8080',
       'http://localhost:1234',
-      'http://movies.com'
+      'http://movies.com',
+      '*'
     ]
 
     if (ACEEPTED_ORIGINS.includes(origin)) {

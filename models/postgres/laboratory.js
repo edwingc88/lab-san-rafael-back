@@ -2,8 +2,8 @@ import pkg from 'pg'
 import 'dotenv/config'
 import bc from 'bcrypt'
 // const bcrypt = require('bcrypt')
-
-// import { basename } from 'path'
+import fs from 'fs'
+import { join, basename } from 'path'
 
 const { Pool } = pkg
 let conn
@@ -266,20 +266,37 @@ export class LabModel {
     const nombreImg = basename(consultaImg.rows[0].logo)
     console.log(nombreImg)
     console.log('arriba consulta URL imagen') */
-
-    if (logo === '') {
-      console.log('default NO hacer nada con Imagen')
-      // eslint-disable-next-line camelcase
-      const result = await conn.query('UPDATE lab SET name=$1,rif=$2,slogan=$3,description=$4,objetive=$5,mission=$6,vision=$7,email=$8,address=$9,phone=$10 WHERE id = $11 RETURNING *;', [name, rif, slogan, description, objetive, mission, vision, email, address, phone, idupdate])
-      console.log(result.rows)
-      return result.rows
-    } else {
-      console.log(logo)
-      console.log('logo HAY que cambiar el logo')
-      // eslint-disable-next-line camelcase
-      const result = await conn.query('UPDATE lab SET name=$1,rif=$2,slogan=$3,description=$4,objetive=$5,mission=$6,vision=$7,email=$8,address=$9,phone=$10,logo=$11 WHERE id = $12 RETURNING *;', [name, rif, slogan, description, objetive, mission, vision, email, address, phone, logo, idupdate])
-      console.log(result.rows)
-      return result.rows
+    try {
+      if (logo === '') {
+        console.log('default NO hacer nada con Imagen')
+        // eslint-disable-next-line camelcase
+        const result = await conn.query('UPDATE lab SET name=$1,rif=$2,slogan=$3,description=$4,objetive=$5,mission=$6,vision=$7,email=$8,address=$9,phone=$10 WHERE id = $11 RETURNING *;', [name, rif, slogan, description, objetive, mission, vision, email, address, phone, idupdate])
+        console.log(result.rows)
+        return result.rows
+      } else {
+        // const rutaArchivo = 'sources/images/public/'
+        console.log(logo)
+        console.log('logo HAY que cambiar el logo')
+        const result1 = await conn.query('SELECT logo FROM lab WHERE id=$1', [idupdate])
+        const rutaArchivo = `sources/images/public/${basename(result1.rows[0].logo)}`
+        fs.unlink(rutaArchivo, function (err) {
+          if (err) {
+            console.error(err)
+            fs.unlink(join('sources', 'public', 'images', result1.rows[0].logo), function (err) {
+              if (err) { console.error(err) }
+              console.log('File deleted Local!')
+            })
+          } else {
+            console.log('File deleted Render UPDATE!')
+          }
+        })
+        // eslint-disable-next-line camelcase
+        const result = await conn.query('UPDATE lab SET name=$1,rif=$2,slogan=$3,description=$4,objetive=$5,mission=$6,vision=$7,email=$8,address=$9,phone=$10,logo=$11 WHERE id = $12 RETURNING *;', [name, rif, slogan, description, objetive, mission, vision, email, address, phone, logo, idupdate])
+        console.log(result.rows)
+        return result.rows
+      }
+    } catch (e) {
+      throw new Error('Error DB creating Lab')
     }
   }
 
@@ -298,11 +315,10 @@ export class ExamModel {
     try {
       if (_category) {
         const loweCaseCategoryID = _category.toLowerCase()
-        const res = await conn.query('SELECT * FROM exam WHERE exam_id_category = $1;', [loweCaseCategoryID])
+        const res = await conn.query('SELECT * FROM exam JOIN exam_category ON exam.exam_id = exam_category.ec_id_exam  WHERE exam_category.ec_id_category=$1;', [loweCaseCategoryID])
         return res.rows
       }
-      const result = await conn.query('SELECT * FROM exam INNER JOIN category ON exam.exam_id_category = category.category_id INNER JOIN sub_category ON category.category_id_sub_category = sub_category.sub_category_id;')
-      // const res = await conn.query('SELECT * FROM exam;')
+      const result = await conn.query('SELECT * FROM exam JOIN exam_category ON exam.exam_id = exam_category.ec_id_exam JOIN category ON exam_category.ec_id_category = category.category_id;')
       console.log(result.rows)
       console.log('entro a Exam Model')
       return result.rows
@@ -349,6 +365,258 @@ export class ExamModel {
   static async delete ({ id }) {
     console.log(id)
     const result = await conn.query('DELETE FROM exam WHERE id = $1 returning *;', [id])
+
+    console.log(result.rows)
+
+    return result.rows
+  }
+}
+
+export class InvoiceModel {
+  static async getAll ({ _category }) {
+    try {
+      if (_category) {
+        const loweCaseCategoryID = _category.toLowerCase()
+        const res = await conn.query('SELECT * FROM invoice WHERE invoice_id_category = $1;', [loweCaseCategoryID])
+        return res.rows
+      }
+      const result = await conn.query('SELECT * FROM invoice INNER JOIN category ON invoice.invoice_id_category = category.category_id INNER JOIN sub_category ON category.category_id_sub_category = sub_category.sub_category_id;')
+      // const res = await conn.query('SELECT * FROM invoice;')
+      console.log(result.rows)
+      console.log('entro a Invoice Model')
+      return result.rows
+    } catch (e) {
+      return null
+    }
+  }
+
+  static async getById (id) {
+    try {
+      const result = await conn.query('SELECT * FROM invoice WHERE id_invoice = $1;', [id])
+      const [clients] = result.rows
+
+      if (clients.length === 0) return null
+      return clients
+    } catch (e) {
+      return null
+    }
+  }
+
+  static async create ({ input }) {
+    // eslint-disable-next-line camelcase
+    const { name, id_category } = input
+
+    try {
+      // eslint-disable-next-line camelcase
+      const resultID = await conn.query('INSERT INTO invoice( name ,id_category ) VALUES ($1, $2 ) RETURNING *;', [name, id_category])
+      return (resultID.rows)
+    } catch (e) {
+      throw new Error('Errro creating client')
+    }
+  }
+
+  static async update ({ idupdate, input }) {
+    // eslint-disable-next-line camelcase
+    const { id, name } = input
+
+    // eslint-disable-next-line camelcase
+    const result = await conn.query('UPDATE invoice SET id = $1, name = $2  WHERE id = $3 RETURNING *;', [id, name, idupdate])
+    console.log(result.rows)
+    return result.rows
+  }
+
+  static async delete ({ id }) {
+    console.log(id)
+    const result = await conn.query('DELETE FROM invoice WHERE id = $1 returning *;', [id])
+
+    console.log(result.rows)
+
+    return result.rows
+  }
+}
+
+export class InvoiceExamModel {
+  static async getAll ({ _category }) {
+    try {
+      if (_category) {
+        const loweCaseCategoryID = _category.toLowerCase()
+        const res = await conn.query('SELECT * FROM invoice_facture WHERE invoice_facture_id_category = $1;', [loweCaseCategoryID])
+        return res.rows
+      }
+      const result = await conn.query('SELECT * FROM invoice_facture INNER JOIN category ON invoice_facture.invoice_facture_id_category = category.category_id INNER JOIN sub_category ON category.category_id_sub_category = sub_category.sub_category_id;')
+      // const res = await conn.query('SELECT * FROM invoice_facture;')
+      console.log(result.rows)
+      console.log('entro a InvoiceFacture Model')
+      return result.rows
+    } catch (e) {
+      return null
+    }
+  }
+
+  static async getById (id) {
+    try {
+      const result = await conn.query('SELECT * FROM invoice_facture WHERE id_invoice_facture = $1;', [id])
+      const [clients] = result.rows
+
+      if (clients.length === 0) return null
+      return clients
+    } catch (e) {
+      return null
+    }
+  }
+
+  static async create ({ input }) {
+    // eslint-disable-next-line camelcase
+    const { name, id_category } = input
+
+    try {
+      // eslint-disable-next-line camelcase
+      const resultID = await conn.query('INSERT INTO invoice_facture( name ,id_category ) VALUES ($1, $2 ) RETURNING *;', [name, id_category])
+      return (resultID.rows)
+    } catch (e) {
+      throw new Error('Errro creating client')
+    }
+  }
+
+  static async update ({ idupdate, input }) {
+    // eslint-disable-next-line camelcase
+    const { id, name } = input
+
+    // eslint-disable-next-line camelcase
+    const result = await conn.query('UPDATE invoice_facture SET id = $1, name = $2  WHERE id = $3 RETURNING *;', [id, name, idupdate])
+    console.log(result.rows)
+    return result.rows
+  }
+
+  static async delete ({ id }) {
+    console.log(id)
+    const result = await conn.query('DELETE FROM invoice_facture WHERE id = $1 returning *;', [id])
+
+    console.log(result.rows)
+
+    return result.rows
+  }
+}
+
+export class ReferenceModel {
+  static async getAll () {
+    try {
+      /* if (_category) {
+        const loweCaseCategoryID = _category.toLowerCase()
+        const res = await conn.query('SELECT * FROM reference WHERE reference_id_category = $1;', [loweCaseCategoryID])
+        return res.rows
+      } */
+      const result = await conn.query('SELECT * FROM reference INNER JOIN exam ON exam.exam_id = reference.ref_id_exam ;')
+      // const result = await conn.query('SELECT * FROM reference;')
+      console.log(result.rows)
+      console.log('entro a Reference Model')
+      return result.rows
+    } catch (e) {
+      return null
+    }
+  }
+
+  static async getById (id) {
+    try {
+      const result = await conn.query('SELECT * FROM reference WHERE id_reference = $1;', [id])
+      const [clients] = result.rows
+
+      if (clients.length === 0) return null
+      return clients
+    } catch (e) {
+      return null
+    }
+  }
+
+  static async create ({ input }) {
+    // eslint-disable-next-line camelcase
+    const { name, id_category } = input
+
+    try {
+      // eslint-disable-next-line camelcase
+      const resultID = await conn.query('INSERT INTO reference( name ,id_category ) VALUES ($1, $2 ) RETURNING *;', [name, id_category])
+      return (resultID.rows)
+    } catch (e) {
+      throw new Error('Errro creating client')
+    }
+  }
+
+  static async update ({ idupdate, input }) {
+    // eslint-disable-next-line camelcase
+    const { id, name } = input
+
+    // eslint-disable-next-line camelcase
+    const result = await conn.query('UPDATE reference SET id = $1, name = $2  WHERE id = $3 RETURNING *;', [id, name, idupdate])
+    console.log(result.rows)
+    return result.rows
+  }
+
+  static async delete ({ id }) {
+    console.log(id)
+    const result = await conn.query('DELETE FROM reference WHERE id = $1 returning *;', [id])
+
+    console.log(result.rows)
+
+    return result.rows
+  }
+}
+
+export class ResultModel {
+  static async getAll ({ _category }) {
+    try {
+      if (_category) {
+        const loweCaseCategoryID = _category.toLowerCase()
+        const res = await conn.query('SELECT * FROM result WHERE result_id_category = $1;', [loweCaseCategoryID])
+        return res.rows
+      }
+      const result = await conn.query('SELECT * FROM result INNER JOIN category ON result.result_id_category = category.category_id INNER JOIN sub_category ON category.category_id_sub_category = sub_category.sub_category_id;')
+      // const res = await conn.query('SELECT * FROM result;')
+      console.log(result.rows)
+      console.log('entro a Result Model')
+      return result.rows
+    } catch (e) {
+      return null
+    }
+  }
+
+  static async getById (id) {
+    try {
+      const result = await conn.query('SELECT * FROM result WHERE id_result = $1;', [id])
+      const [clients] = result.rows
+
+      if (clients.length === 0) return null
+      return clients
+    } catch (e) {
+      return null
+    }
+  }
+
+  static async create ({ input }) {
+    // eslint-disable-next-line camelcase
+    const { name, id_category } = input
+
+    try {
+      // eslint-disable-next-line camelcase
+      const resultID = await conn.query('INSERT INTO result( name ,id_category ) VALUES ($1, $2 ) RETURNING *;', [name, id_category])
+      return (resultID.rows)
+    } catch (e) {
+      throw new Error('Errro creating client')
+    }
+  }
+
+  static async update ({ idupdate, input }) {
+    // eslint-disable-next-line camelcase
+    const { id, name } = input
+
+    // eslint-disable-next-line camelcase
+    const result = await conn.query('UPDATE result SET id = $1, name = $2  WHERE id = $3 RETURNING *;', [id, name, idupdate])
+    console.log(result.rows)
+    return result.rows
+  }
+
+  static async delete ({ id }) {
+    console.log(id)
+    const result = await conn.query('DELETE FROM result WHERE id = $1 returning *;', [id])
 
     console.log(result.rows)
 
@@ -534,8 +802,13 @@ export class AuthModel {
     }
   }
 }
+
 export class ClientsDbModel {
   static async create () {
+    /* const resultado = await conn.query('SELECT id FROM id=$1', 1)
+    console.log(resultado.rows[0].id)
+
+    if(id) */
     // eslint-disable-next-line camelcase
     const input = { firstname: 'gerente', lastname: 'lab', email: 'admin@gmail.com', password: '1234', dni: '123456', mobilephone: '024869541', created: '2020-01-01T04:00:00.000Z', id_role: 1 }
 

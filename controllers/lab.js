@@ -284,6 +284,21 @@ export class LabController {
     return res.json(updatedlab) */
   }
 
+  deleteImg = async (req, res) => {
+    const { id, logo } = req.body
+    console.log(id + 'y' + logo)
+
+    console.log('funciona deleteImg en controllers')
+    // const result = await this.sourceModel.deleteImg({ id, logo })
+    /* fs.unlink('sources/images/' + id, function (err) {
+      if (err) { console.error(err) }
+      console.log('File deleted!')
+    }) */
+    // console.log(result)
+    // (result === false) return res.status(404).json({ error: 'Not found Source' })
+    return res.json({ message: 'Source deleted IMAGE' })
+  }
+
   delete = async (req, res) => {
     const { id } = req.params
     const result = await this.labModel.delete({ id })
