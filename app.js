@@ -35,6 +35,12 @@ export const createApp = ({ clientModel, roleModel, patientModel, labModel, invo
   app.set('pkg', pkg)
   app.use(json())
   app.use(cors())
+  app.use(function (req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*')
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
+    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE')
+    next()
+  })
   // app.use(corsMiddleware())
   // app.use(express.static(join(__dirname, './public')))
   app.disable('x-powered-by')
