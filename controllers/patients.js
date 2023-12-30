@@ -6,10 +6,10 @@ export class PatientController {
   }
 
   getAll = async (req, res) => {
-    const { role } = req.query
+    /* const { role } = req.query
     console.log(req.userRole)
-    console.log('ariba ROl')
-    const patient = await this.patientModel.getAll({ role })
+    console.log('ariba ROl') */
+    const patient = await this.patientModel.getAll()
     if (patient.length === 0) return res.status(404).json({ error: 'Not found patient' })
     res.json(patient)
   }

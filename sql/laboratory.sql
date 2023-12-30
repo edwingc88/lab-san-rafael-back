@@ -19,6 +19,7 @@ DROP TABLE IF EXISTS role CASCADE;
 DROP TABLE IF EXISTS relationship CASCADE;
 DROP TABLE IF EXISTS person;
 DROP TABLE IF EXISTS exam CASCADE;
+DROP TABLE IF EXISTS exam_category CASCADE;
 DROP TABLE IF EXISTS lab;
 DROP TABLE IF EXISTS client CASCADE;
 DROP TABLE IF EXISTS patient CASCADE;
@@ -26,10 +27,11 @@ DROP TABLE IF EXISTS category CASCADE;
 DROP TABLE IF EXISTS sub_category;
 DROP TABLE IF EXISTS result CASCADE;
 DROP TABLE IF EXISTS request;
-DROP TABLE IF EXISTS reference; 
-DROP TABLE IF EXISTS invoice CASCADE; 
-DROP TABLE IF EXISTS invoice_exam CASCADE;
+DROP TABLE IF EXISTS composed; 
+DROP TABLE IF EXISTS orden CASCADE; 
+DROP TABLE IF EXISTS orden_exam CASCADE;
 DROP TABLE IF EXISTS exam_category CASCADE;
+DROP TABLE IF EXISTS statu;
 
 ---ALTER SEQUENCE RESTART;
 
@@ -56,23 +58,23 @@ INSERT INTO role (role_id,role_name) VALUES
 ---
 
 CREATE TABLE IF NOT EXISTS client (
-    client_id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
+    /*client_id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),*/
+    client_id serial PRIMARY KEY,
     client_dni VARCHAR(255) UNIQUE,
     client_email VARCHAR(255) NOT NULL UNIQUE, 
-    client_password VARCHAR(255) NOT NULL,
+    client_password VARCHAR(255) NULL,
     client_firstname VARCHAR(255) NOT NULL,
     client_lastname VARCHAR(255) NOT NULL,
     client_address VARCHAR(255) ,
     client_mobilephone VARCHAR(255) NOT NULL,
     client_created DATE,
-    client_picture_url VARCHAR(255),
+    client_abatar VARCHAR(255),
     client_id_role INT NOT NULL,
     FOREIGN KEY (client_id_role) REFERENCES role(role_id)
 );
 
 
---INSERT INTO client (client_dni,client_email,client_password,client_firstname,client_lastname,client_address,client_mobilePhone, client_created,client_picture_url,client_id_role) VALUES
---('j-1234','admin@gmail.com','1234','admin','super','core 8','041432','1900-01-01','https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',1);
+INSERT INTO client (client_dni,client_email,client_password,client_firstname,client_lastname,client_address,client_mobilePhone, client_created,client_abatar,client_id_role) VALUES ('j-1234','admin@gmail.com','1234','edwin','mendez','core 8','041432','1900-01-01','https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',1);
 
 
 CREATE TABLE IF NOT EXISTS patient (
@@ -90,9 +92,11 @@ CREATE TABLE IF NOT EXISTS patient (
     patient_relationship VARCHAR(255) null,
     patient_created DATE,
     patient_principal BOOLEAN,
-    patient_id_client uuid NOT NULL,
+    patient_id_client serial NOT NULL,
     FOREIGN KEY (patient_id_client) REFERENCES client(client_id)
 );
+
+insert INTO patient (patient_dni,patient_email,patient_firstname,patient_lastname,patient_address,patient_mobilephone,patient_homephone,patient_birthdate,patient_gender,patient_blood_typing,patient_relationship,patient_created,patient_principal,patient_id_client) VALUES ('j-1234','edwingc88@gmail.com','edwin','mendez','core 8','041432','0412565','1900-01-01','masculino','o+','No aplica','1900-01-01',true,1);
 
 CREATE TABLE IF NOT EXISTS lab (
    id serial PRIMARY KEY ,
@@ -111,7 +115,7 @@ CREATE TABLE IF NOT EXISTS lab (
 
 
 INSERT INTO lab (name,rif,slogan,description,objetive,mission,vision,email,address,phone,logo) VALUES 
-('Centro Medico Ambulatorio San Rafael','J-1234562','Para nosotros no hay nada mas importante que tu salud.','servicio de laboratorio','Somos una empresa que cuenta con personal altamente calificado y que trabaja con altos estándares de calidad y servicio en el área de análisis clínicos. Nuestros pacientes son nuestra razón de ser y es por ello que para satisfacerlos utilizamos tecnología de vanguardia y los más exigentes controles de calidad, para poder brindarles la mayor confiabilidad en sus resultados.','Ofrecer un servicio de Laboratorio Clínico excepcional,  donde nuestros usuarios se sientan satisfechos y plenos por la atención ofrecida en todos nuestros departamentos. Distinguirnos como un laboratorio extraordinario donde la excelencia de nuestros procedimientos y atención  al cliente nos distinga.','Posicionarnos como un Laboratorio Clínico innovador y de alta calidad, que ofrezca a sus pacientes soluciones que permitan el preciso diagnóstico médico y oportuno tratamiento. Queremos ser una empresa referente en el sector salud, que la excelencia sea nuestro estandarte.','email','core 8','02864566','https://lab-san-rafael-api.onrender.com/sources/images/public/logo.jpeg');
+('Centro Medico Ambulatorio San Rafael','J-1234562','Para nosotros no hay nada mas importante que tu salud.','servicio de laboratorio','Somos una empresa que cuenta con personal altamente calificado y que trabaja con altos estándares de calidad y servicio en el área de análisis clínicos. Nuestros pacientes son nuestra razón de ser y es por ello que para satisfacerlos utilizamos tecnología de vanguardia y los más exigentes controles de calidad, para poder brindarles la mayor confiabilidad en sus resultados.','Ofrecer un servicio de Laboratorio Clínico excepcional,  donde nuestros usuarios se sientan satisfechos y plenos por la atención ofrecida en todos nuestros departamentos. Distinguirnos como un laboratorio extraordinario donde la excelencia de nuestros procedimientos y atención  al cliente nos distinga.','Posicionarnos como un Laboratorio Clínico innovador y de alta calidad, que ofrezca a sus pacientes soluciones que permitan el preciso diagnóstico médico y oportuno tratamiento. Queremos ser una empresa composederente en el sector salud, que la excelencia sea nuestro estandarte.','email','core 8','02864566','https://lab-san-rafael-api.onrender.com/sources/images/public/logo.jpeg');
 
 /*
 CREATE TABLE IF NOT EXISTS sub_category (
@@ -126,187 +130,207 @@ INSERT INTO sub_category (sub_category_id,sub_category_name) VALUES
 
 CREATE TABLE IF NOT EXISTS category (
    category_id serial PRIMARY KEY,
-   category_name VARCHAR(255) NOT NULL UNIQUE,
-   category_description VARCHAR(255) null
+   category_name VARCHAR(255) NOT NULL UNIQUE
 );
 
-INSERT INTO category (category_name) VALUES
-('HEMATOLOGÍA'),
-('BIOQUÍMICA SANGUÍNEA'),
-('HEMOSTASIA Y TROMBOSIS'),
-('ENDOCRINO - METABÓLICO'),
-('UROLOGIA - NEFROLOGIA'),
-('HECES'),
-('MARCADORES TUMORALES'),
-('INMUNO - DIAGNÓSTICO'),
-('BIOLOGÍA MOLECULAR'),
-('MICROBIOLOGÍA'),
-('INFECCIOSAS'),
-('INFECTOCONTAGIOZA'),
-('PERFIL LES DIAGNÓSTICO'),
-('PERFIL LES SEGUIMIENTO'),
-('PERFIL LES ANTIFOSFOLÍPIDOS'),
-('PERFIL ABORTO ESPONTÁNEO'),
-('PERFIL LÚPIDO (IL/LAC)'),
-('PERFIL ARTRITIS'),
-('PERFIL ANCA'),
-('PERFIL ENFERMEDAD CELÍACA'),
-('PERFIL HEPÁTICO AUTOINMUNE'),
-('PERFIL GLOMERULONEFRITIS'),
-('PERFIL ESCLERODERMIA'),
-('PERFIL TIROIDEO AUTOINMINE'),
-('PERFIL SJOGREN'),
-('PERFIL ENF.INFLAM.INSTESTINAL-CROHN'),
-('PERFIL ALERGIAS'),
-('PERFIL LIPIDO');
-
+INSERT INTO category (category_id,category_name) VALUES
+(1,'HEMATOLOGÍA BIOQUÍMICA SANGUÍNEA'),
+(2,'HEMOSTASIA Y TROMBOSIS'),
+(3,'ENDOCRINO - METABÓLICO'),
+(4,'UROLOGIA - NEFROLOGIA'),
+(5,'HECES'),
+(6,'MARCADORES TUMORALES'),
+(7,'INMUNO - DIAGNÓSTICO'),
+(8,'BIOLOGÍA MOLECULAR'),
+(9,'MICROBIOLOGÍA'),
+(10,'INFECCIOSAS'),
+(11,'PERFIL LES DIAGNÓSTICO'),
+(12,'PERFIL LES SEGUIMIENTO'),
+(13,'PERFIL LES ANTIFOSFOLÍPIDOS'),
+(14,'PERFIL ABORTO ESPONTÁNEO'),
+(15,'PERFIL LÚPIDO (IL/LAC)'),
+(16,'PERFIL ARTRITIS'),
+(17,'PERFIL ANCA'),
+(18,'PERFIL ENFERMEDAD CELÍACA'),
+(19,'PERFIL HEPÁTICO AUTOINMUNE'),
+(20,'PERFIL GLOMERULONEFRITIS'),
+(21,'PERFIL ESCLERODERMIA'),
+(22,'PERFIL TIROIDEO AUTOINMINE'),
+(23,'PERFIL SJOGREN'),
+(24,'PERFIL ENF.INFLAM.INSTESTINAL-CROHN'),
+(25,'PERFIL ALERGIAS'),
+(26,'PERFIL LIPIDO'),
+(27,'INFECTOCONTAGIOZA'),
+(28,'VIRUS');
 
 
 CREATE TABLE IF NOT EXISTS exam (
    exam_id serial PRIMARY KEY ,
    exam_name VARCHAR(255) NOT NULL,
+   exam_min FLOAT,
+   exam_max FLOAT,
+   exam_unit VARCHAR(255) null,
+   exam_composed BOOLEAN,
    exam_price FLOAT null
 );
 
-INSERT INTO exam (exam_id,exam_name, exam_price) VALUES
-(1,'Hematologia Completa',20),
-(2,'PT',30),
-(3,'PTT',30),
-(4,'VSG',30),
-(5,'Grupo Sanguíneo y RH',10),
-(6,'Glicemia',10),
-(7,'Glicemia Basal y Postprandial',10),
-(8,'Urea en Suero',10),
-(9,'Creatinina en Suero',10),
-(10,'Acido Urico',10),
-(11,'Transaminasa TGO',10),
-(12,'Transaminasa TGP',10),
-(13,'Cloro',10),
-(14,'Calcio Sérico',10),
-(15,'Fósforo Sérico',10),
-(16,'Magnesio Sérico',10),
-(17,'VDRL',10),
-(18,'HIV Tipo 1 y 2',10),
-(19,'Triglicéridos',5),
-(20,'Sodio Sérico',7),
-(21,'Potasio Sérico',7),
-(22,'Magnesio Sérico',7),
-(23,'Proteinas Totales y fraccionadas',7),
-(24,'TGO Aminotransferasa',7),
-(25,'TGP Aminotransferasa',7),
-(26,'PCR Proteina C reactiva',7),
-(27,'TP. Tiempo de protrombina',10),
-(28,'INR. COntrol anticoagulados',10),
-(29,'TTPa. Tiempo de Tromboplastina parcial activada',10),
-(30,'TT. Tiempo de Tromboplastina ',10),
-(31,'Colesterol Total',5),
-(32,'HDL',5),
-(33,'LDL',5),
-(34,'VLDL',5);
-/* ('TSH (Estimulante de Tiroides)',10,3),
-('T3. Libre ',10,3),
-('T4 Libre',1.5,3),
-('Insulina Basal',1.5,3),
-('Insulina Pre y Postprandial',1.5,3),
-('Orina General',10,4),
-('Depueracion de Creatinina',10,4),
-('Proteinuria',10,4),
-('Calcio',10,4),
-('Fósforo',10,4),
-('Oxalato',10,4),
-('Citrato',10,4),
-('Heces General',13,5),
-('Azucar Reductores',6.5,5),
-('Antic. Anti-Nucleares(cel Hep2) Dil: 1/140-1/160',10,7),
-('Antic. Anti DNA (Crithindia lucialae)',10,7),
-('Toxoplasma IgM',9,7),
-('Toxoplamsa Igm',9,7),
-('Helicobacter pylori',10,8),
-('Denge',10,27),
-('Factor Reumatoide (RA Test)',15,16),
-('CH50',8.5,16),
-('Panel 45 Alimentos IgG',25,25),
-('Panel Alimento IgE',25,25),
-('Panel inhalantes IgE',25,25),
- */
+
+INSERT INTO exam (exam_id,exam_name,exam_min,exam_max,exam_unit,exam_composed,exam_price) VALUES
+(1,'Hematologia Completa',null,null,null,true,20),
+(2,'PT',10,1,'md-dl',false,15),
+(3,'PTT',10,1,'md-dl',false,15),
+(4,'VSG',10,1,'md-dl',false,15),
+(5,'Grupo Sanguíneo y RH',10,1,'md-dl',false,15),
+(6,'Glicemia',10,1,'mg/dl',false,15),
+(7,'Glicemia Basal y Postprandial',10,1,'mg/dl',false,15),
+(8,'Urea en Suero',10,1,'mg/dl',false,15),
+(9,'Creatinina en Suero',10,1,'mg/dl',false,15),
+(10,'Acido Urico',10,1,'mg/dl',false,15),
+(11,'Cloro',10,1,'mg/dl',false,15),
+(12,'Calcio Sérico',10,1,'mg/dl',false,15),
+(13,'Fósforo Sérico',10,1,'mg/dl',false,15),
+(14,'Magnesio Sérico',10,1,'mg/dl',false,15),
+(15,'VDRL',10,1,'mg/dl',false,15),
+(16,'HIV Tipo 1 y 2',10,1,'mg/dl',false,15),
+(17,'Magnesio Sérico',10,1,'mg/dl',false,15),
+(18,'Potasio Sérico',10,1,'mg/dl',false,15),
+(19,'Proteinas Totales y fraccionadas',10,1,'mg/dl',false,3),
+(20,'PCR Proteina C reactiva',10,1,'mg/dl',false,15),
+(21,'TGO Aminotransferasa',10,1,'mg/dl',false,15),
+(22,'TGP Aminotransferasa',10,1,'mg/dl',false,15),
+(23,'TP. Tiempo de protrombina',10,1,'mg/dl',false,15),
+(24,'TTPa. Tiempo de Tromboplastina parcial activada',10,1,'mg/dl',false,15),
+(25,'Triglicéridos',10,1,'mg/dl',false,15),
+(26,'Colesterol Total',10,1,'mg/dl',false,15),
+(27,'HDL',10,1,'mg/dl',false,15),
+(28,'LDL',10,1,'mg/dl',false,15),
+(29,'VLDL',10,1,'mg/dl',false,15), 
+(30,'TSH (Estimulante de Tiroides)',10,1,'mg/dl',false,9),
+(31,'T3. Libre ',10,1,'mg/dl',false,9),
+(32,'T4 Libre',10,1,'mg/dl',false,9),
+(33,'H. Folico Estimulante (FSH)',10,1,'mg/dl',false,9),
+(34,'Antic. Anti-Nucleares(cel Hep2) Dil: 1/140-1/160',10,1,'mg/dl',false,3),
+(35,'Factor Reumatoide (RA Test)',10,1,'mg/dl',false,3),
+(36,'CH50',10,1,'mg/dl',false,3),
+(37,'Antic. Anti-Peptido Citrulinado Ciclico',10,1,'mg/dl',false,3),
+(38,'Beta-hCG',10,1,'mg/dl',false,3 ),
+(39,'Toxoplasma IgM',10,1,'mg/dl',false,3),
+(40,'Toxoplamsa Igm',10,1,'mg/dl',false,3),
+(41,'Helicobacter pylori',10,1,'mg/dl',false,3),
+(42,'Denge',10,1,'mg/dl',false,3),
+(43,'Orina General',null, null, null ,true,1),
+(44,'Heces General',null, null, null ,true,1);
+
 
 CREATE TABLE IF NOT EXISTS exam_category (
-   ec_id serial PRIMARY KEY ,
-   ec_id_exam serial NOT NULL,
-   ec_id_category serial NOT NULL,
-   FOREIGN KEY (ec_id_exam) REFERENCES exam(exam_id) ON DELETE CASCADE,
-   FOREIGN KEY (ec_id_category) REFERENCES category(category_id) ON DELETE CASCADE
+   exam_category_id serial PRIMARY KEY ,
+   exam_category_id_exam serial NOT NULL,
+   exam_category_id_category serial NOT NULL,
+   FOREIGN KEY (exam_category_id_exam) REFERENCES exam(exam_id) ON DELETE CASCADE,
+   FOREIGN KEY (exam_category_id_category) REFERENCES category(category_id) ON DELETE CASCADE
 );
 
-INSERT INTO exam_category (ec_id_exam ,ec_id_category) VALUES
-(1,1),(2,2),(3,2),(4,2),(5,2),(6,2),(7,2),(8,2),(9,2),(10,2),(10,2),(11,2),(12,2),(13,2),(14,2),(16,2),(17,2),(18,2),(19,2),(20,2),(21,2),(22,2),(23,2),(24,2),(25,2),(26,2),(27,3),(28,3),(29,3),(30,3),(31,1),(32,1),(33,1),(34,1),(31,28),(32,28),(33,28),(34,28);
+INSERT INTO exam_category  (exam_category_id_exam ,exam_category_id_category) VALUES
+(1,1),(2,1),(3,1),(4,1),(4,16),(5,1),(6,1),(7,1),(8,1),(9,1),(10,1),(11,1),(12,1),(13,1),(14,1),(15,1),(16,1),(17,1),(18,1),(19,1),(20,1),(21,1),(22,1),(23,2),(24,2),(25,26),(26,26),(27,26),(28,26),(29,26),(30,3),(31,3),(32,3),(33,3),(34,16),(34,7),(35,16),(36,16),(37,7),(37,16),(38,7),(39,7),(40,7),(41,8),(42,27),(43,4),(44,5);
 
-CREATE TABLE IF NOT EXISTS invoice (
-  invoice_id serial PRIMARY KEY,
-  invoice_date DATE,
-  invoice_status VARCHAR(255),
-  invoice_observation VARCHAR(255),
-  invoice_id_patient serial NOT NULL,
-  FOREIGN KEY (invoice_id_patient) REFERENCES patient(patient_id)
+
+CREATE TABLE IF NOT EXISTS composed (
+  composed_id serial PRIMARY KEY ,
+  composed_name VARCHAR(255),
+  composed_min FLOAT,
+  composed_max FLOAT,
+  composed_unit VARCHAR(255),
+  composed_id_exam serial NOT NULL,
+  FOREIGN KEY (composed_id_exam) REFERENCES exam(exam_id)
 );
 
-CREATE TABLE IF NOT EXISTS reference (
-  ref_id serial PRIMARY KEY ,
-  ref_component VARCHAR(255),
-  ref_min FLOAT,
-  ref_max FLOAT,
-  ref_unit VARCHAR(255),
-  ref_principal BOOLEAN,
-  ref_id_exam serial NOT NULL,
-  FOREIGN KEY (ref_id_exam) REFERENCES exam(exam_id)
+INSERT INTO composed (composed_name,composed_max,composed_min,composed_unit,composed_id_exam) VALUES
+('Lymph#',4.0,10.0,'ul',1),
+('Mid#',0.8,4.0,'ul',1),
+('Gran#',0.8,4.0,'ul',1),
+('Lymph%',4.0,10.0,'ul',1),
+('Mid%',0.8,4.0,'ul',1),
+('Gran%',0.8,4.0,'ul',1),
+('HGB',0.8,4.0,'ul',1),
+('RBC',0.8,4.0,'ul',1),
+('HCT',0.8,4.0,'ul',1),
+('MCV',0.8,4.0,'ul',1),
+('MCH',0.8,4.0,'ul',1),
+('MCHC',0.8,4.0,'ul',1),
+('RDW-CV',0.8,4.0,'ul',1),
+('RDW-SD',0.8,4.0,'ul',1),
+('PLT',0.8,4.0,'ul',1),
+('MPV',0.8,4.0,'ul',1),
+('PDW',0.8,4.0,'ul',1),
+('PCT',0.8,4.0,'ul',1),
+('ASPECTO ORINA',null,null,null,43),
+('COLOR ORINA',null,null,null,43),
+('REACCION ORINA',null,null,null,43),
+('DENSIDAD ORINA',null,null,null,43),
+('LEUCOCITOS ORINA', null,null,null,43),
+('CELULAS EPITELIALES ORINA', null,null,null,43),
+('BACTERIAS ORINA',null,null,null,43),
+('ASPECTO HECES',null,null,null,44),
+('COLOR HECES',null, null,null,44),
+('SANGRE HECES',null,null,null,44),
+('MOCO',null,null,null,44),
+('REACCION',null,null,null,44),
+('SANGRE OCULTA',null,null,null,44),
+('CUERPOS REDUCT', null,null,null,44),
+('ASCARIS',null,null,null,44),
+('PREQUISTE', null, null, null, 44),
+('QUISTE', null, null, null, 44),
+('METAQUISTE', null, null, null, 44);
+
+CREATE TABLE IF NOT EXISTS statu(
+   statu_id serial PRIMARY KEY,
+   statu_name VARCHAR(255),
+   statu_description VARCHAR(255)
 );
 
-INSERT INTO reference (ref_component,ref_min,ref_max,ref_unit,ref_principal,ref_id_exam) VALUES
-('Lymph#',4.0,10.0,'ul',false,1),
-('Mid#',0.8,4.0,'ul',false,1),
-('Gran#',0.8,4.0,'ul',false,1),
-('Lymph%',4.0,10.0,'ul',false,1),
-('Mid%',0.8,4.0,'ul',false,1),
-('Gran%',0.8,4.0,'ul',false,1),
-('HGB',0.8,4.0,'ul',false,1),
-('RBC',0.8,4.0,'ul',false,1),
-('HCT',0.8,4.0,'ul',false,1),
-('MCV',0.8,4.0,'ul',false,1),
-('MCH',0.8,4.0,'ul',false,1),
-('MCHC',0.8,4.0,'ul',false,1),
-('RDW-CV',0.8,4.0,'ul',false,1),
-('RDW-SD',0.8,4.0,'ul',false,1),
-('PLT',0.8,4.0,'ul',false,1),
-('MPV',0.8,4.0,'ul',false,1),
-('PDW',0.8,4.0,'ul',false,1),
-('PCT',0.8,4.0,'ul',false,1),
-('Glicemia',0.8,4.0,'ul',true,6),
-('Urea en Suero',0.8,4.0,'ul',true,9),
-('Cloro',0.8,4.0,'ul',true,14),
-('Grupo Sanguíneo y RH',null,null,null,true,5);
+INSERT INTO statu (statu_name,statu_description) VALUES
+('PENDIENTE','PENDIENTE'),
+('PAGADO','PAGADO'),
+('ANULADO','ANULADO'),
+('MUESTRA TOMADA', 'MUESTRA TOMADA'),
+('ANALISIS REALIZADO', 'ANALISIS REALIZADO'),
+('ANALISIS VERIFICADO', 'ANALISIS VERIFICADO'),
+('RESULTADO ENTREGADO', 'RESULTADO ENTREGADO');
 
-/*('Aspecto',null,null,null,false,34),
-('Color Orina',null,null,null,false,34),
-('Color Heces',null,null,null,false,41),
-('Creatinina en Suero',null,null,null,true,14),
-('Acido Urico',null,null,null,true,16),
-('Colesterol',null,null,null,true,54); */
+CREATE TABLE IF NOT EXISTS orden (
+  orden_id serial PRIMARY KEY,
+  orden_date DATE,
+  orden_observation VARCHAR(255),
+  orden_id_patient serial NOT NULL,
+  orden_statu serial,
+  FOREIGN KEY (orden_id_patient) REFERENCES patient(patient_id),
+  FOREIGN KEY (orden_statu) REFERENCES statu(statu_id)
+);
+
+CREATE TABLE IF NOT EXISTS exam_orden(
+   exam_orden_id serial PRIMARY KEY ,
+   exam_orden_id_exam serial NOT NULL,
+   exam_orden_id_orden serial NOT NULL,
+   exam_orden_price FLOAT,   
+   FOREIGN KEY (exam_orden_id_exam) REFERENCES exam(exam_id),
+   FOREIGN KEY (exam_orden_id_orden) REFERENCES orden(orden_id)
+);
+
+CREATE TABLE IF NOT EXISTS invoice(
+  invoice_id serial PRIMARY KEY ,
+  invoice_total FLOAT,
+  invoice_method_payment VARCHAR(255),
+  invoice_reference_paymeny VARCHAR(255)
+);
+
 
 CREATE TABLE IF NOT EXISTS result (
   result_id serial PRIMARY KEY ,
   result_value INT,
-  result_observer VARCHAR(255),
   result_boolean BOOLEAN,
-  result_id_reference serial NOT NULL,
-  result_id_invoice serial NOT NULL,
-  FOREIGN KEY (result_id_invoice) REFERENCES invoice(invoice_id),
-  FOREIGN KEY (result_id_reference) REFERENCES reference(ref_id)
-);
-
-CREATE TABLE IF NOT EXISTS invoice_exam(
-   invoice_exam_id serial PRIMARY KEY ,
-   invoice_exam_id_invoice serial NOT NULL,
-   invoice_exam_id_examen serial NOT NULL,
-   FOREIGN KEY (invoice_exam_id_invoice) REFERENCES invoice(invoice_id),
-   FOREIGN KEY (invoice_exam_id_examen) REFERENCES exam(exam_id)
+  result_observer VARCHAR(255),
+  result_id_composed serial NOT NULL,
+  result_id_orden serial NOT NULL,
+  FOREIGN KEY (result_id_orden) REFERENCES orden(orden_id),
+  FOREIGN KEY (result_id_composed) REFERENCES composed(composed_id)
 );

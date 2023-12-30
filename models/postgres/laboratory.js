@@ -67,15 +67,17 @@ export class ClientModel {
     // eslint-disable-next-line camelcase
     const { dni, email, password, firstname, lastname, address, mobilephone, created, picture_url, id_role } = input
 
-    const passwordHash = await bc.hash(password, 10)
+    // const passwordHash = await bc.hash(password, 10)
 
-    const result = await conn.query('SELECT uuid_generate_v4() uuid;')
+    // const result = await conn.query('SELECT uuid_generate_v4() uuid;')
 
-    const [{ uuid }] = result.rows
+    // const [{ uuid }] = result.rows
+
+    const passwordHash = password
 
     try {
       // eslint-disable-next-line camelcase
-      const resultID = await conn.query('INSERT INTO client( client_id,client_dni , client_password,client_firstname,client_lastname ,client_email ,client_address,client_mobilephone,client_created, client_picture_url,client_id_role) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11 ) RETURNING *;', [uuid, dni, passwordHash, firstname, lastname, email, address, mobilephone, created, picture_url, id_role])
+      const resultID = await conn.query('INSERT INTO client( client_id,client_dni , client_password,client_firstname,client_lastname ,client_email ,client_address,client_mobilephone,client_created, client_picture_url,client_id_role) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11 ) RETURNING *;', [dni, passwordHash, firstname, lastname, email, address, mobilephone, created, picture_url, id_role])
       return (resultID.rows)
     } catch (e) {
       throw new Error('Errro creating client')
@@ -318,7 +320,8 @@ export class ExamModel {
         const res = await conn.query('SELECT * FROM exam JOIN exam_category ON exam.exam_id = exam_category.ec_id_exam  WHERE exam_category.ec_id_category=$1;', [loweCaseCategoryID])
         return res.rows
       }
-      const result = await conn.query('SELECT * FROM exam JOIN exam_category ON exam.exam_id = exam_category.ec_id_exam JOIN category ON exam_category.ec_id_category = category.category_id;')
+      const result = await conn.query('SELECT * FROM exam;')
+      // const result = await conn.query('SELECT * FROM exam;')
       console.log(result.rows)
       console.log('entro a Exam Model')
       return result.rows
@@ -365,6 +368,69 @@ export class ExamModel {
   static async delete ({ id }) {
     console.log(id)
     const result = await conn.query('DELETE FROM exam WHERE id = $1 returning *;', [id])
+
+    console.log(result.rows)
+
+    return result.rows
+  }
+}
+
+export class ExamCategoryModel {
+  static async getAll ({ _category }) {
+    try {
+      if (_category) {
+        const loweCaseCategoryID = _category.toLowerCase()
+        const res = await conn.query('SELECT * FROM exam_category JOIN exam_category_category ON exam_category.exam_category_id = exam_category_category.ec_id_exam_category  WHERE exam_category_category.ec_id_category=$1;', [loweCaseCategoryID])
+        return res.rows
+      }
+      const result = await conn.query('SELECT * FROM exam_category JOIN exam ON exam.exam_id = exam_category.exam_category_id_exam JOIN category ON category.category_id = exam_category.exam_category_id_category;')
+      // const result = await conn.query('SELECT * FROM exam_category;')
+      console.log(result.rows)
+      console.log('entro a ExamCategory Model')
+      return result.rows
+    } catch (e) {
+      return null
+    }
+  }
+
+  static async getById (id) {
+    try {
+      const result = await conn.query('SELECT * FROM exam_category WHERE id_exam_category = $1;', [id])
+      const [clients] = result.rows
+
+      if (clients.length === 0) return null
+      return clients
+    } catch (e) {
+      return null
+    }
+  }
+
+  static async create ({ input }) {
+    // eslint-disable-next-line camelcase
+    const { name, id_category } = input
+
+    try {
+      // eslint-disable-next-line camelcase
+      const resultID = await conn.query('INSERT INTO exam_category( name ,id_category ) VALUES ($1, $2 ) RETURNING *;', [name, id_category])
+      return (resultID.rows)
+    } catch (e) {
+      throw new Error('Errro creating client')
+    }
+  }
+
+  static async update ({ idupdate, input }) {
+    // eslint-disable-next-line camelcase
+    const { id, name } = input
+
+    // eslint-disable-next-line camelcase
+    const result = await conn.query('UPDATE exam_category SET id = $1, name = $2  WHERE id = $3 RETURNING *;', [id, name, idupdate])
+    console.log(result.rows)
+    return result.rows
+  }
+
+  static async delete ({ id }) {
+    console.log(id)
+    const result = await conn.query('DELETE FROM exam_category WHERE id = $1 returning *;', [id])
 
     console.log(result.rows)
 
@@ -498,18 +564,18 @@ export class InvoiceExamModel {
   }
 }
 
-export class ReferenceModel {
+export class CompousedModel {
   static async getAll () {
     try {
       /* if (_category) {
         const loweCaseCategoryID = _category.toLowerCase()
-        const res = await conn.query('SELECT * FROM reference WHERE reference_id_category = $1;', [loweCaseCategoryID])
+        const res = await conn.query('SELECT * FROM compoused WHERE compoused_id_category = $1;', [loweCaseCategoryID])
         return res.rows
       } */
-      const result = await conn.query('SELECT * FROM reference INNER JOIN exam ON exam.exam_id = reference.ref_id_exam ;')
-      // const result = await conn.query('SELECT * FROM reference;')
+      const result = await conn.query('SELECT * FROM compoused INNER JOIN exam ON exam.exam_id = compoused.compoused_id_exam ;')
+      // const result = await conn.query('SELECT * FROM compoused;')
       console.log(result.rows)
-      console.log('entro a Reference Model')
+      console.log('entro a Compoused Model')
       return result.rows
     } catch (e) {
       return null
@@ -518,7 +584,7 @@ export class ReferenceModel {
 
   static async getById (id) {
     try {
-      const result = await conn.query('SELECT * FROM reference WHERE id_reference = $1;', [id])
+      const result = await conn.query('SELECT * FROM compoused WHERE id_compoused = $1;', [id])
       const [clients] = result.rows
 
       if (clients.length === 0) return null
@@ -534,7 +600,7 @@ export class ReferenceModel {
 
     try {
       // eslint-disable-next-line camelcase
-      const resultID = await conn.query('INSERT INTO reference( name ,id_category ) VALUES ($1, $2 ) RETURNING *;', [name, id_category])
+      const resultID = await conn.query('INSERT INTO compoused( name ,id_category ) VALUES ($1, $2 ) RETURNING *;', [name, id_category])
       return (resultID.rows)
     } catch (e) {
       throw new Error('Errro creating client')
@@ -546,14 +612,14 @@ export class ReferenceModel {
     const { id, name } = input
 
     // eslint-disable-next-line camelcase
-    const result = await conn.query('UPDATE reference SET id = $1, name = $2  WHERE id = $3 RETURNING *;', [id, name, idupdate])
+    const result = await conn.query('UPDATE compoused SET id = $1, name = $2  WHERE id = $3 RETURNING *;', [id, name, idupdate])
     console.log(result.rows)
     return result.rows
   }
 
   static async delete ({ id }) {
     console.log(id)
-    const result = await conn.query('DELETE FROM reference WHERE id = $1 returning *;', [id])
+    const result = await conn.query('DELETE FROM compoused WHERE id = $1 returning *;', [id])
 
     console.log(result.rows)
 
@@ -741,16 +807,17 @@ export class AuthModel {
     // eslint-disable-next-line camelcase
     const { firstname, lastname, email, password, dni, mobilephone, created, id_role } = input
 
-    const passwordHash = await bc.hash(password, 10)
+    const passwordHash = password
 
-    const result = await conn.query('SELECT uuid_generate_v4() uuid;')
-
-    const [{ uuid }] = result.rows
-    console.log(uuid)
+    // const passwordHash = await bc.hash(password, 10)
+    // const result = await conn.query('SELECT uuid_generate_v4() uuid;')
+    // const [{ uuid }] = result.rows
+    // console.log(uuid)
+    // Agregar el uudi en la Query
 
     try {
       // eslint-disable-next-line camelcase
-      const resultID = await conn.query('INSERT INTO client( client_id, client_password,client_firstname,client_lastname ,client_email ,client_dni, client_mobilephone, client_created,client_id_role) VALUES ($1, $2, $3, $4, $5, $6, $7, $8,$9) RETURNING *;', [uuid, passwordHash, firstname, lastname, email, dni, mobilephone, created, id_role])
+      const resultID = await conn.query('INSERT INTO client( client_id, client_password,client_firstname,client_lastname ,client_email ,client_dni, client_mobilephone, client_created,client_id_role) VALUES ($1, $2, $3, $4, $5, $6, $7, $8,$9) RETURNING *;', [passwordHash, firstname, lastname, email, dni, mobilephone, created, id_role])
       return (resultID.rows)
     } catch (e) {
       throw new Error('Errro creating client')

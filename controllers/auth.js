@@ -81,8 +81,10 @@ export class AuthController {
       const findUserByEmail = await this.authModel.find(dataObject.email)
 
       console.log(findUserByEmail)
+      // passwod con escriptacion
+      // const passwordIsValid = findUserByEmail === null ? false : await bcrypt.compare(dataObject.password, findUserByEmail[0].client_password)
 
-      const passwordIsValid = findUserByEmail === null ? false : await bcrypt.compare(dataObject.password, findUserByEmail[0].client_password)
+      const passwordIsValid = findUserByEmail === null ? false : dataObject.password === findUserByEmail[0].client_password
 
       if (!passwordIsValid) {
         return res.status(404).json({ error: 'Not found ID por PASSWORD' })

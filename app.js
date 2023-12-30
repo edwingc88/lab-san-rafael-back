@@ -7,8 +7,10 @@ import { createLabRouter } from './router/lab.js'
 import { createPatientRouter } from './router/patients.js'
 import { createSourceRouter } from './router/sources.js'
 import { createCategoryRouter } from './router/categorys.js'
+import { createResultRouter } from './router/results.js'
+import { createExamCategoryRouter } from './router/exams_categorys.js'
 import { createSubCategoryRouter } from './router/subcategorys.js'
-import { createReferenceRouter } from './router/references.js'
+import { createCompousedRouter } from './router/compouseds.js'
 import { createInvoiceRouter } from './router/invoices.js'
 import { createInvoiceExamRouter } from './router/invoices_exams.js'
 
@@ -30,7 +32,7 @@ const __dirname = dirname(__filename)
 
 const pkg = JSON.parse(readFileSync('./package.json'))
 
-export const createApp = ({ clientModel, roleModel, patientModel, labModel, invoiceModel, invoiceExamModel, examModel, referenceModel, resultModel, categoryModel, subcategoryModel, authModel }) => {
+export const createApp = ({ clientModel, roleModel, patientModel, labModel, invoiceModel, invoiceExamModel, examModel, examCategoryModel, compousedModel, resultModel, categoryModel, subcategoryModel, authModel }) => {
   const app = express()
   app.set('pkg', pkg)
   app.use(json())
@@ -64,10 +66,11 @@ export const createApp = ({ clientModel, roleModel, patientModel, labModel, invo
   app.use('/roles', createRoleRouter({ roleModel }))
   app.use('/auth', createAuthRouter({ authModel }))
   app.use('/exams', createExamRouter({ examModel }))
+  app.use('/exam_category', createExamCategoryRouter({ examCategoryModel }))
   app.use('/invoices_exams', createInvoiceExamRouter({ invoiceExamModel }))
   app.use('/invoices', createInvoiceRouter({ invoiceModel }))
-  app.use('/references', createReferenceRouter({ referenceModel }))
-  app.use('/results', createReferenceRouter({ resultModel }))
+  app.use('/compoused', createCompousedRouter({ compousedModel }))
+  app.use('/results', createResultRouter({ resultModel }))
   app.use('/categorys', createCategoryRouter({ categoryModel }))
   app.use('/subcategorys', createSubCategoryRouter({ subcategoryModel }))
   app.use('/lab', createLabRouter({ labModel }))
