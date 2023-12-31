@@ -43,6 +43,34 @@ DROP TABLE IF EXISTS statu;
 
 
 create extension if not exists "uuid-ossp";
+CREATE TABLE IF NOT EXISTS lab (
+   id serial PRIMARY KEY ,
+   name VARCHAR(255) NOT NULL UNIQUE,
+   rif VARCHAR(255) NOT NULL UNIQUE,
+   slogan VARCHAR(255) null,
+   description VARCHAR(255) null,
+   objetive VARCHAR(500) null,
+   mission VARCHAR(500) null,
+   vision VARCHAR(500) null,
+   email VARCHAR(255) null,
+   address VARCHAR(255) null,
+   phone VARCHAR(255) null,
+   logo VARCHAR(255) null
+);
+
+INSERT INTO lab (name,rif,slogan,description,objetive,mission,vision,email,address,phone,logo) VALUES 
+('Centro Medico Ambulatorio San Rafael','J-1234562','Para nosotros no hay nada mas importante que tu salud.','servicio de laboratorio','Somos una empresa que cuenta con personal altamente calificado y que trabaja con altos estándares de calidad y servicio en el área de análisis clínicos. Nuestros pacientes son nuestra razón de ser y es por ello que para satisfacerlos utilizamos tecnología de vanguardia y los más exigentes controles de calidad, para poder brindarles la mayor confiabilidad en sus resultados.','Ofrecer un servicio de Laboratorio Clínico excepcional,  donde nuestros usuarios se sientan satisfechos y plenos por la atención ofrecida en todos nuestros departamentos. Distinguirnos como un laboratorio extraordinario donde la excelencia de nuestros procedimientos y atención  al cliente nos distinga.','Posicionarnos como un Laboratorio Clínico innovador y de alta calidad, que ofrezca a sus pacientes soluciones que permitan el preciso diagnóstico médico y oportuno tratamiento. Queremos ser una empresa composederente en el sector salud, que la excelencia sea nuestro estandarte.','email','core 8','02864566','https://lab-san-rafael-api.onrender.com/sources/images/public/logo.jpeg');
+
+/*
+CREATE TABLE IF NOT EXISTS sub_category (
+   sub_category_id serial PRIMARY KEY ,
+   sub_category_name VARCHAR(255) NOT NULL UNIQUE
+);
+
+INSERT INTO sub_category (sub_category_id,sub_category_name) VALUES
+(1,'EXAM'),
+(2,'PERFIL');*/
+
 
 CREATE TABLE IF NOT EXISTS role (
     role_id serial PRIMARY KEY,
@@ -73,8 +101,19 @@ CREATE TABLE IF NOT EXISTS client (
     FOREIGN KEY (client_id_role) REFERENCES role(role_id)
 );
 
+INSERT INTO client (client_dni,client_email,client_password,client_firstname,client_lastname,client_address,client_mobilePhone, client_created,client_abatar,client_id_role) VALUES ('v-1234','Michelledellosa7@gmail.com','12345678','Michelle','Dellza','San Felix','041432','1900-01-01','https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',1),('v-24796','admin@gmail.com','1234','edwin','mendez','core 8','041432','1900-01-01','https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',2),('v-3333','bionalist@gmail.com','1234','nombrebio','apellidobio','core 8','041432','1900-01-01','https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',3),('v-4444','patient@gmail.com','1234','nombrepatient','apellidopatient','core 8','041432','1900-01-01','https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',4);
 
-INSERT INTO client (client_dni,client_email,client_password,client_firstname,client_lastname,client_address,client_mobilePhone, client_created,client_abatar,client_id_role) VALUES ('j-1234','admin@gmail.com','1234','edwin','mendez','core 8','041432','1900-01-01','https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',1);
+CREATE TABLE IF NOT EXISTS relationship (
+    relationship_id serial PRIMARY KEY,
+    relationship_name VARCHAR(255) NOT NULL UNIQUE
+);
+
+INSERT INTO relationship (relationship_id,relationship_name)  VALUES
+(1,'No aplica'),
+(2,'Familia'),
+(3,'Amigo'),
+(4,'Trabajador'),
+(5,'Otro');
 
 
 CREATE TABLE IF NOT EXISTS patient (
@@ -89,44 +128,17 @@ CREATE TABLE IF NOT EXISTS patient (
     patient_birthdate DATE,
     patient_gender VARCHAR(255) ,
     patient_blood_typing VARCHAR(255) ,
-    patient_relationship VARCHAR(255) null,
+    patient_relationship int NOT NULL,
     patient_created DATE,
     patient_principal BOOLEAN,
-    patient_id_client serial NOT NULL,
+    patient_id_client int NOT NULL,
+    FOREIGN KEY (patient_relationship) REFERENCES relationship(relationship_id),
     FOREIGN KEY (patient_id_client) REFERENCES client(client_id)
 );
 
-insert INTO patient (patient_dni,patient_email,patient_firstname,patient_lastname,patient_address,patient_mobilephone,patient_homephone,patient_birthdate,patient_gender,patient_blood_typing,patient_relationship,patient_created,patient_principal,patient_id_client) VALUES ('j-1234','edwingc88@gmail.com','edwin','mendez','core 8','041432','0412565','1900-01-01','masculino','o+','No aplica','1900-01-01',true,1);
-
-CREATE TABLE IF NOT EXISTS lab (
-   id serial PRIMARY KEY ,
-   name VARCHAR(255) NOT NULL UNIQUE,
-   rif VARCHAR(255) NOT NULL UNIQUE,
-   slogan VARCHAR(255) null,
-   description VARCHAR(255) null,
-   objetive VARCHAR(500) null,
-   mission VARCHAR(500) null,
-   vision VARCHAR(500) null,
-   email VARCHAR(255) null,
-   address VARCHAR(255) null,
-   phone VARCHAR(255) null,
-   logo VARCHAR(255) null
-);
-
-
-INSERT INTO lab (name,rif,slogan,description,objetive,mission,vision,email,address,phone,logo) VALUES 
-('Centro Medico Ambulatorio San Rafael','J-1234562','Para nosotros no hay nada mas importante que tu salud.','servicio de laboratorio','Somos una empresa que cuenta con personal altamente calificado y que trabaja con altos estándares de calidad y servicio en el área de análisis clínicos. Nuestros pacientes son nuestra razón de ser y es por ello que para satisfacerlos utilizamos tecnología de vanguardia y los más exigentes controles de calidad, para poder brindarles la mayor confiabilidad en sus resultados.','Ofrecer un servicio de Laboratorio Clínico excepcional,  donde nuestros usuarios se sientan satisfechos y plenos por la atención ofrecida en todos nuestros departamentos. Distinguirnos como un laboratorio extraordinario donde la excelencia de nuestros procedimientos y atención  al cliente nos distinga.','Posicionarnos como un Laboratorio Clínico innovador y de alta calidad, que ofrezca a sus pacientes soluciones que permitan el preciso diagnóstico médico y oportuno tratamiento. Queremos ser una empresa composederente en el sector salud, que la excelencia sea nuestro estandarte.','email','core 8','02864566','https://lab-san-rafael-api.onrender.com/sources/images/public/logo.jpeg');
-
-/*
-CREATE TABLE IF NOT EXISTS sub_category (
-   sub_category_id serial PRIMARY KEY ,
-   sub_category_name VARCHAR(255) NOT NULL UNIQUE
-);
-
-INSERT INTO sub_category (sub_category_id,sub_category_name) VALUES
-(1,'EXAM'),
-(2,'PERFIL');*/
-
+insert INTO patient (patient_dni,patient_email,patient_firstname,patient_lastname,patient_address,patient_mobilephone,patient_homephone,patient_birthdate,patient_gender,patient_blood_typing,patient_relationship,patient_created,patient_principal,patient_id_client) VALUES 
+('j-1234','Michelledellosa7@gmail.com','Michelle','Dellza','San Felix','041432','0412565','1900-01-01','Femenino','o+',1,'1900-01-01',true,1),
+('j-24796','edwingc88@gmail.com','Edwin','Mendez','Core 8','041432','0412565','1900-01-01','Masculino','o+',1,'1900-01-01',true,2);
 
 CREATE TABLE IF NOT EXISTS category (
    category_id serial PRIMARY KEY,

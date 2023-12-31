@@ -15,8 +15,8 @@ let conn
     port: process.env.DB_PORT,
     database: process.env.DB_NAME
   })
-} */
-
+}
+ */
 if (!conn) {
   conn = new Pool({
     connectionString: process.env.DATABASE_URL
