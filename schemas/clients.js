@@ -5,18 +5,25 @@ const cLientSchema = z.object({
     invalid_type_error: 'CLient DNI must be a string',
     required_error: 'CLient DNI is required'
   }),
+  email: z.string().min(1, { message: 'This field has to be filled.' }).email('This is not a valid email.'),
+  username: z.string().min(1, { message: 'This field has to be filled.' }),
   password: z.string().min(1, { message: 'This field has to be filled.' }),
   firstname: z.string().min(1, { message: 'This field has to be filled.' }),
   lastname: z.string().min(1, { message: 'This field has to be filled.' }),
-  email: z.string().min(1, { message: 'This field has to be filled.' }).email('This is not a valid email.'),
+  id_gender: z.number(),
   address: z.string(),
-  mobilephone: z.string(),
+  firstphone: z.string(),
+  secondphone: z.string(),
   // created: z.string().transform((str) => new Date(str)),
+  birthdate: z.string().transform((str) => new Date(str)),
+  blood_typing: z.enum(['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-']),
+  id_relationship: z.number(),
+  name_relationship: z.string(),
   created: z.date().safeParse(new Date()),
-  picture_url: z.string().url({
+  abatar: z.string().url({
     message: 'Picture must be a valid URL'
   }),
-  role_id: z.number([1, 2, 3, 4])
+  id_role: z.number([1, 2, 3, 4])
 })
 
 export function validateClient (object) {

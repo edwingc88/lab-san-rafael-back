@@ -9,14 +9,20 @@ const requestTest = request(createApp)
 
 console.log(createApp)
 // eslint-disable-next-line no-undef
-describe('api', function () {
+describe('auth', function () {
   // eslint-disable-next-line no-undef
-  describe('GET', function () {
+  describe('POST', function () {
     // eslint-disable-next-line no-undef
-    it('Should return HTML response with text/html content type', function (done) {
-      requestTest.get('/')
-        .set('Accept', 'text/plain')
-        .expect('Content-Type', /html/)
+    it('Should return JSON response with JSON content type', function (done) {
+      requestTest.post('/auth/signin', {
+        json: true,
+        body: {
+          username: 'michelle',
+          password: '12345678'
+        }
+      })
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
         .expect(200, done)
     })
   })

@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "start:postgre": "node server-with-pg.js",
-    "test": "mocha tests/client.test.js"
+    "test:client": "mocha tests/client.test.js",
+    "test:auth": "mocha tests/auth.test.js"
   },
   "keywords": [],
   "author": "GrupoTesis",

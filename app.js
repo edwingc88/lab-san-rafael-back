@@ -13,6 +13,7 @@ import { createSubCategoryRouter } from './router/subcategorys.js'
 import { createCompousedRouter } from './router/compouseds.js'
 import { createInvoiceRouter } from './router/invoices.js'
 import { createInvoiceExamRouter } from './router/invoices_exams.js'
+import { createRelationshipRouter } from './router/relationships.js'
 
 // Cors
 // import { corsMiddleware } from './middlewares/cors.js'
@@ -32,7 +33,7 @@ const __dirname = dirname(__filename)
 
 const pkg = JSON.parse(readFileSync('./package.json'))
 
-export const createApp = ({ clientModel, roleModel, patientModel, labModel, invoiceModel, invoiceExamModel, examModel, examCategoryModel, compousedModel, resultModel, categoryModel, subcategoryModel, authModel }) => {
+export const createApp = ({ relationshipModel, clientModel, roleModel, patientModel, labModel, invoiceModel, invoiceExamModel, examModel, examCategoryModel, compousedModel, resultModel, categoryModel, subcategoryModel, authModel }) => {
   const app = express()
   app.set('pkg', pkg)
   app.use(json())
@@ -75,6 +76,7 @@ export const createApp = ({ clientModel, roleModel, patientModel, labModel, invo
   app.use('/subcategorys', createSubCategoryRouter({ subcategoryModel }))
   app.use('/lab', createLabRouter({ labModel }))
   app.use('/patients', createPatientRouter({ patientModel }))
+  app.use('/relationships', createRelationshipRouter({ relationshipModel }))
 
   app.use((req, res) => {
     res.status(404).json({ error: 'Error 404 not found' })

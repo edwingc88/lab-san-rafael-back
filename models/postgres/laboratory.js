@@ -7,7 +7,7 @@ import { join, basename } from 'path'
 
 const { Pool } = pkg
 let conn
-/* if (!conn) {
+if (!conn) {
   conn = new Pool({
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
@@ -16,12 +16,93 @@ let conn
     database: process.env.DB_NAME
   })
 }
- */
-if (!conn) {
+
+/* if (!conn) {
   conn = new Pool({
     connectionString: process.env.DATABASE_URL
     // ssl: true
   })
+}
+ */
+
+export class RelationshipModel {
+  static async getAll () {
+    try {
+      //  console.log(role)
+      /*   if (role) {
+        const loweCaseRole = role.toLowerCase()
+        const result = await conn.query('SELECT id,name FROM role WHERE LOWER(name) = $1;', [loweCaseRole])
+        const roles = result.rows
+
+        if (roles.length === 0) {
+          // console.log(roles.length)
+          return []
+        }
+        const [{ id }] = roles
+
+        const resultRoles = await conn.query('SELECT * FROM relationship INNER JOIN role ON relationship.relationship_id_role = role.id WHERE role.id = $1;', [id])
+        const relationships = resultRoles.rows
+        return relationships
+      } */
+      const res = await conn.query('SELECT * FROM relationship;')
+      // console.log(res.rows)
+      return res.rows
+    } catch (e) {
+      throw new Error('ERRO')
+    }
+  }
+
+  static async getById (id) {
+    try {
+      const result = await conn.query('SELECT * FROM relationship WHERE id = $1;', [id])
+      const [relationships] = result.rows
+
+      if (relationships.length === 0) return null
+      return relationships
+    } catch (e) {
+      return null
+    }
+  }
+
+  static async create ({ input }) {
+    // eslint-disable-next-line camelcase
+    const { dni, email, password, firstname, lastname, address, mobilephone, created, picture_url, id_role } = input
+
+    // const passwordHash = await bc.hash(password, 10)
+
+    // const result = await conn.query('SELECT uuid_generate_v4() uuid;')
+
+    // const [{ uuid }] = result.rows
+
+    const passwordHash = password
+
+    try {
+      // eslint-disable-next-line camelcase
+      const resultID = await conn.query('INSERT INTO relationship( relationship_id,relationship_dni , relationship_password,relationship_firstname,relationship_lastname ,relationship_email ,relationship_address,relationship_mobilephone,relationship_created, relationship_picture_url,relationship_id_role) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11 ) RETURNING *;', [dni, passwordHash, firstname, lastname, email, address, mobilephone, created, picture_url, id_role])
+      return (resultID.rows)
+    } catch (e) {
+      throw new Error('Errro creating relationship')
+    }
+  }
+
+  static async update ({ id, input }) {
+    // eslint-disable-next-line camelcase
+    const { dni, password, firstname, lastname, email, birthdate, gender, address, mobilephone, homephone, blood_typing, created, picture_url, role_id } = input
+    const passwordHash = await bc.hash(password, 10)
+    // eslint-disable-next-line camelcase
+    const result = await conn.query('UPDATE relationship SET dni = $1, password = $2 , firstname= $3 , lastname= $4, email= $5, birthdate=$6, gender=$7 , address=$8 , mobilephone=$9, homephone=$10, blood_typing=$11, created=$12 , picture_url=$13 , role_id=$14  WHERE id = $15 RETURNING *;', [dni, passwordHash, firstname, lastname, email, birthdate, gender, address, mobilephone, homephone, blood_typing, created, picture_url, role_id, id])
+    console.log(result.rows)
+    return result.rows
+  }
+
+  static async delete ({ id }) {
+    console.log(id)
+    const result = await conn.query('DELETE FROM relationship WHERE id = $1 returning *;', [id])
+
+    console.log(result.rows)
+
+    return result.rows
+  }
 }
 
 export class ClientModel {
@@ -803,12 +884,13 @@ export class SubCategoryModel {
 }
 
 export class AuthModel {
-  static async create ({ input }) {
+  static async createClient ({ input }) {
     // eslint-disable-next-line camelcase
-    const { firstname, lastname, email, password, dni, mobilephone, created, id_role } = input
+    const { firstname, lastname, username, password, email, firstphone, created, birthdate, id_role, id_gender, id_relationship } = input
 
     const passwordHash = password
-
+    console.log('Abajo en inuto dentro del Modelo')
+    console.log(input)
     // const passwordHash = await bc.hash(password, 10)
     // const result = await conn.query('SELECT uuid_generate_v4() uuid;')
     // const [{ uuid }] = result.rows
@@ -817,17 +899,18 @@ export class AuthModel {
 
     try {
       // eslint-disable-next-line camelcase
-      const resultID = await conn.query('INSERT INTO client( client_id, client_password,client_firstname,client_lastname ,client_email ,client_dni, client_mobilephone, client_created,client_id_role) VALUES ($1, $2, $3, $4, $5, $6, $7, $8,$9) RETURNING *;', [passwordHash, firstname, lastname, email, dni, mobilephone, created, id_role])
+      const resultID = await conn.query('INSERT INTO client( client_username,client_password,client_firstname, client_lastname, client_email,client_firstphone, client_created, client_birthdate, client_id_role, client_id_gender, client_id_relationship) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING *;', [username, passwordHash, firstname, lastname, email, firstphone, created, birthdate, id_role, id_gender, id_relationship])
       return (resultID.rows)
     } catch (e) {
+      console.log(e)
       throw new Error('Errro creating client')
     }
   }
 
-  static async find (email) {
+  static async findByUsername (username) {
     // eslint-disable-next-line camelcase
     try {
-      const result = await conn.query('SELECT * FROM client WHERE client_email = $1 ;', [email])
+      const result = await conn.query('SELECT * FROM client WHERE client_username = $1 ;', [username])
       // console.log(result.rows)
       return (result.rows)
     } catch (e) {

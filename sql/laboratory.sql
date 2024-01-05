@@ -1,19 +1,8 @@
 -- creacion de databasecoles
 -- DROP DATABASE IF EXISTS laboratory;
 -- CREATE DATABASE laboratory;
-
 -- USE laboratory;
 
- 
-
--- INSERT INTO person (id ,dni, password, firstname, lastname, email, birthdate, gender, address, mobilePhone, homePhone, blood_typing, created, picture_url, role_id) VALUES (uuid_generate_v4(),'12345678','1234','Juan','Perez','juan@gmail.com','2000-01-01','Masculino','Calle 1 # 2-3','1234567890','1234567890','O+','2020-01-01','https://images.freeimages.com/images/large-previews/ddf/tour-d-eiffel-1447025.jpg',1);
-
---NEW
---postgres://lab_san_rafael_db_user:ftpPHRPljW2IQhDdodugAOgzbteg2Su9@dpg-clropq4m7d1c73f3kp30-a.oregon-postgres.render.com/lab_san_rafael_db
--- postgres://admin:p6ojFg5VZwQW2sbHCR6fRR5MzEvBtwFs@dpg-ck09konhdsdc73813vjg-a.oregon-postgres.render.com/labdb_ydvc
-
--- p6ojFg5VZwQW2sbHCR6fRR5MzEvBtwFs
---
 -- TRUNCATE TABLE role CASCADE;
 DROP TABLE IF EXISTS role CASCADE;
 DROP TABLE IF EXISTS relationship CASCADE;
@@ -32,6 +21,9 @@ DROP TABLE IF EXISTS orden CASCADE;
 DROP TABLE IF EXISTS orden_exam CASCADE;
 DROP TABLE IF EXISTS exam_category CASCADE;
 DROP TABLE IF EXISTS statu;
+DROP TABLE IF EXISTS gender;
+
+create extension if not exists "uuid-ossp";
 
 ---ALTER SEQUENCE RESTART;
 
@@ -41,8 +33,6 @@ DROP TABLE IF EXISTS statu;
 
 --- create SEQUENCE num_seq MINVAUE 0 increment By 1
 
-
-create extension if not exists "uuid-ossp";
 CREATE TABLE IF NOT EXISTS lab (
    id serial PRIMARY KEY ,
    name VARCHAR(255) NOT NULL UNIQUE,
@@ -61,47 +51,27 @@ CREATE TABLE IF NOT EXISTS lab (
 INSERT INTO lab (name,rif,slogan,description,objetive,mission,vision,email,address,phone,logo) VALUES 
 ('Centro Medico Ambulatorio San Rafael','J-1234562','Para nosotros no hay nada mas importante que tu salud.','servicio de laboratorio','Somos una empresa que cuenta con personal altamente calificado y que trabaja con altos estándares de calidad y servicio en el área de análisis clínicos. Nuestros pacientes son nuestra razón de ser y es por ello que para satisfacerlos utilizamos tecnología de vanguardia y los más exigentes controles de calidad, para poder brindarles la mayor confiabilidad en sus resultados.','Ofrecer un servicio de Laboratorio Clínico excepcional,  donde nuestros usuarios se sientan satisfechos y plenos por la atención ofrecida en todos nuestros departamentos. Distinguirnos como un laboratorio extraordinario donde la excelencia de nuestros procedimientos y atención  al cliente nos distinga.','Posicionarnos como un Laboratorio Clínico innovador y de alta calidad, que ofrezca a sus pacientes soluciones que permitan el preciso diagnóstico médico y oportuno tratamiento. Queremos ser una empresa composederente en el sector salud, que la excelencia sea nuestro estandarte.','email','core 8','02864566','https://lab-san-rafael-api.onrender.com/sources/images/public/logo.jpeg');
 
-/*
-CREATE TABLE IF NOT EXISTS sub_category (
-   sub_category_id serial PRIMARY KEY ,
-   sub_category_name VARCHAR(255) NOT NULL UNIQUE
-);
-
-INSERT INTO sub_category (sub_category_id,sub_category_name) VALUES
-(1,'EXAM'),
-(2,'PERFIL');*/
-
-
 CREATE TABLE IF NOT EXISTS role (
     role_id serial PRIMARY KEY,
     role_name VARCHAR(255) NOT NULL UNIQUE
 );
 
 INSERT INTO role (role_id,role_name) VALUES
-(1,'super-admin'),
+(1,'manager'),
 (2,'admin'),
 (3,'bioanalyst'),
 (4,'patient'); 
 
 ---
 
-CREATE TABLE IF NOT EXISTS client (
-    /*client_id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),*/
-    client_id serial PRIMARY KEY,
-    client_dni VARCHAR(255) UNIQUE,
-    client_email VARCHAR(255) NOT NULL UNIQUE, 
-    client_password VARCHAR(255) NULL,
-    client_firstname VARCHAR(255) NOT NULL,
-    client_lastname VARCHAR(255) NOT NULL,
-    client_address VARCHAR(255) ,
-    client_mobilephone VARCHAR(255) NOT NULL,
-    client_created DATE,
-    client_abatar VARCHAR(255),
-    client_id_role INT NOT NULL,
-    FOREIGN KEY (client_id_role) REFERENCES role(role_id)
+CREATE TABLE IF NOT EXISTS gender (
+    gender_id serial PRIMARY KEY,
+    gender_name VARCHAR(255) NOT NULL UNIQUE
 );
 
-INSERT INTO client (client_dni,client_email,client_password,client_firstname,client_lastname,client_address,client_mobilePhone, client_created,client_abatar,client_id_role) VALUES ('v-1234','Michelledellosa7@gmail.com','12345678','Michelle','Dellza','San Felix','041432','1900-01-01','https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',1),('v-24796','admin@gmail.com','1234','edwin','mendez','core 8','041432','1900-01-01','https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',2),('v-3333','bionalist@gmail.com','1234','nombrebio','apellidobio','core 8','041432','1900-01-01','https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',3),('v-4444','patient@gmail.com','1234','nombrepatient','apellidopatient','core 8','041432','1900-01-01','https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',4);
+INSERT INTO gender (gender_id,gender_name) VALUES
+(1,'Masculino'),
+(2,'Femenino');
 
 CREATE TABLE IF NOT EXISTS relationship (
     relationship_id serial PRIMARY KEY,
@@ -115,30 +85,39 @@ INSERT INTO relationship (relationship_id,relationship_name)  VALUES
 (4,'Trabajador'),
 (5,'Otro');
 
-
-CREATE TABLE IF NOT EXISTS patient (
-    patient_id SERIAL PRIMARY KEY,
-    patient_dni VARCHAR(255) UNIQUE,
-    patient_email VARCHAR(255) null,
-    patient_firstname VARCHAR(255) NOT NULL,
-    patient_lastname VARCHAR(255) NOT NULL,
-    patient_address VARCHAR(255) ,
-    patient_mobilephone VARCHAR(255) NOT NULL,
-    patient_homephone VARCHAR(255) ,
-    patient_birthdate DATE,
-    patient_gender VARCHAR(255) ,
-    patient_blood_typing VARCHAR(255) ,
-    patient_relationship int NOT NULL,
-    patient_created DATE,
-    patient_principal BOOLEAN,
-    patient_id_client int NOT NULL,
-    FOREIGN KEY (patient_relationship) REFERENCES relationship(relationship_id),
-    FOREIGN KEY (patient_id_client) REFERENCES client(client_id)
+CREATE TABLE IF NOT EXISTS client (
+    /*client_id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),*/
+    client_id serial PRIMARY KEY,
+    client_dni VARCHAR(255) UNIQUE NULL,
+    client_email VARCHAR(255) NOT NULL UNIQUE,
+    client_username VARCHAR NOT NULL UNIQUE,
+    client_password VARCHAR(255) NOT NULL,
+    client_firstname VARCHAR(255) NOT NULL,
+    client_lastname VARCHAR(255) NOT NULL,
+    client_id_gender INT NOT NULL,
+    client_address VARCHAR(255),
+    client_firstphone VARCHAR(255) NOT NULL,
+    client_secondphone VARCHAR(255) NULL,
+    client_birthdate DATE,
+    client_bloodtyping VARCHAR(255),
+    client_id_relationship int NOT NULL,
+    client_name_relationship VARCHAR(255) NULL,
+    client_created DATE,
+    client_abatar VARCHAR(255),
+    client_id_role INT NOT NULL,
+    FOREIGN KEY (client_id_role) REFERENCES role(role_id),
+    FOREIGN KEY (client_id_relationship) REFERENCES relationship(relationship_id),
+    FOREIGN KEY (client_id_gender) REFERENCES gender(gender_id)
 );
 
-insert INTO patient (patient_dni,patient_email,patient_firstname,patient_lastname,patient_address,patient_mobilephone,patient_homephone,patient_birthdate,patient_gender,patient_blood_typing,patient_relationship,patient_created,patient_principal,patient_id_client) VALUES 
+INSERT INTO client (client_dni,client_email,client_username,client_password,client_firstname,client_lastname,client_id_gender,client_address,client_firstphone,client_secondphone,client_birthday,client_bloodtyping,client_id_relationship,client_name_relationship, client_created,client_abatar,client_id_role) VALUES ('v-1234','michelledellosa7@gmail.com','michelle','12345678','Michelle','Dellza',2,'San Felix','041432','0412','1900-01-01','O+',1,null,now(),'https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',1),('v-24796','edwin@gmail.com','edwin','1234','edwin','mendez',1,'San Felix','041432','0412','1900-01-01','O+',1,null,now(),'https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',1),('v-333','bio@gmail.com','bio','33333','Michelle','Dellza',2,'San Felix','041432','0412','1900-01-01','O+',1,null,now(),'https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',1),('v-4444','patient@gmail.com','patient','44444','Patient','Dellza',2,'San Felix','041432','0412','1900-01-01','O+',1,null,now(),'https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',1);
+
+
+/*insert INTO patient (patient_dni,patient_email,patient_firstname,patient_lastname,patient_address,patient_mobilephone,patient_homephone,patient_birthdate,patient_gender,patient_blood_typing,patient_relationship,patient_created,patient_principal,patient_id_client) VALUES 
 ('j-1234','Michelledellosa7@gmail.com','Michelle','Dellza','San Felix','041432','0412565','1900-01-01','Femenino','o+',1,'1900-01-01',true,1),
-('j-24796','edwingc88@gmail.com','Edwin','Mendez','Core 8','041432','0412565','1900-01-01','Masculino','o+',1,'1900-01-01',true,2);
+('j-24796','edwingc88@gmail.com','Edwin','Mendez','Core 8','041432','0412565','1900-01-01','Masculino','o+',1,'1900-01-01',true,2),
+('v-3333','bionalist@gmail.com','nombrebio','apellidobio','Core 8','041432','0412565','1900-01-01','Masculino','o+',1,'1900-01-01',true,3);
+*/
 
 CREATE TABLE IF NOT EXISTS category (
    category_id serial PRIMARY KEY,
@@ -313,9 +292,9 @@ CREATE TABLE IF NOT EXISTS orden (
   orden_id serial PRIMARY KEY,
   orden_date DATE,
   orden_observation VARCHAR(255),
-  orden_id_patient serial NOT NULL,
+  orden_id_client serial NOT NULL,
   orden_statu serial,
-  FOREIGN KEY (orden_id_patient) REFERENCES patient(patient_id),
+  FOREIGN KEY (orden_id_client) REFERENCES client(client_id), 
   FOREIGN KEY (orden_statu) REFERENCES statu(statu_id)
 );
 

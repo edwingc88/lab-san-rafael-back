@@ -3,7 +3,7 @@ import 'dotenv/config'
 
 import { validateSignup } from '../schemas/signup.js'
 import jwt from 'jsonwebtoken'
-import bcrypt from 'bcrypt'
+// import bcrypt from 'bcrypt'  // Habilitar para encryptar
 import multiparty from 'multiparty'
 
 export class AuthController {
@@ -25,8 +25,10 @@ export class AuthController {
       console.log('mostrando arriba fileds')
 
       const idRoleParce = parseInt(fields.id_role[0], 10)
+      const idRelationShip = parseInt(fields.id_relationship[0], 10)
+      const idGender = parseInt(fields.id_gender[0], 10)
 
-      const dataObject = { firstname: fields.firstname[0], lastname: fields.lastname[0], email: fields.email[0], password: fields.password[0], mobilephone: fields.mobilephone[0], dni: fields.dni[0], created: fields.created[0], id_role: idRoleParce }
+      const dataObject = { firstname: fields.firstname[0], lastname: fields.lastname[0], username: fields.username[0], password: fields.password[0], email: fields.email[0], firstphone: fields.firstphone[0], created: fields.created[0], birthdate: fields.birthdate[0], id_role: idRoleParce, id_gender: idGender, id_relationship: idRelationShip }
 
       console.log(dataObject)
       console.log('Data object arriba')
@@ -39,7 +41,7 @@ export class AuthController {
         return res.status(400).json({ error: JSON.parse(result.error.message) })
       }
 
-      const newAuth = await this.authModel.create({ input: result.data })
+      const newAuth = await this.authModel.createClient({ input: result.data })
 
       res.status(201).json(newAuth)
     })
@@ -47,7 +49,7 @@ export class AuthController {
     /// ****///
     // const result = validateSignup(req.body)
 
-    // Validar si ya existe para no crear dos clientas con el mismo email
+    // Validar si ya existe para no crear dos clientas con el mismo username
 
     // const newAuth = await this.authModel.create({ input: result.data })
 
@@ -56,7 +58,7 @@ export class AuthController {
       expiresIn: 240// 24h
     }) */
 
-    // console.log(newAuth[0].email)
+    // console.log(newAuth[0].username)
     // res.status(201).json({ token })
   }
 
@@ -71,27 +73,27 @@ export class AuthController {
         return res.status(500).json({ error: 'Error msj formdata' })
       }
 
-      const dataObject = { email: fields.email[0], password: fields.password[0] }
+      const dataObject = { username: fields.username[0], password: fields.password[0] }
 
       console.log(dataObject)
       console.log('Data object arriba')
 
-      console.log(dataObject.email)
+      console.log(dataObject.username)
 
-      const findUserByEmail = await this.authModel.find(dataObject.email)
+      const findUserByUsername = await this.authModel.findByUsername(dataObject.username)
 
-      console.log(findUserByEmail)
+      console.log(findUserByUsername)
       // passwod con escriptacion
-      // const passwordIsValid = findUserByEmail === null ? false : await bcrypt.compare(dataObject.password, findUserByEmail[0].client_password)
+      // const passwordIsValid = findUserByUsername === null ? false : await bcrypt.compare(dataObject.password, findUserByUsername[0].client_password)
 
-      const passwordIsValid = findUserByEmail === null ? false : dataObject.password === findUserByEmail[0].client_password
+      const passwordIsValid = findUserByUsername === null ? false : dataObject.password === findUserByUsername[0].client_password
 
       if (!passwordIsValid) {
         return res.status(404).json({ error: 'Not found ID por PASSWORD' })
       }
 
-      const clientId = findUserByEmail[0].client_id
-      const roleId = findUserByEmail[0].client_id_role
+      const clientId = findUserByUsername[0].client_id
+      const roleId = findUserByUsername[0].client_id_role
 
       const token = jwt.sign({ client: [clientId, roleId] }, process.env.SECRET, { expiresIn: 840 })
 
