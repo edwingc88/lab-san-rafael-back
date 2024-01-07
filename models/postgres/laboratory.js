@@ -7,7 +7,7 @@ import { join, basename } from 'path'
 
 const { Pool } = pkg
 let conn
-if (!conn) {
+/* if (!conn) {
   conn = new Pool({
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
@@ -16,14 +16,14 @@ if (!conn) {
     database: process.env.DB_NAME
   })
 }
-
-/* if (!conn) {
+ */
+if (!conn) {
   conn = new Pool({
     connectionString: process.env.DATABASE_URL
     // ssl: true
   })
 }
- */
+
 
 export class RelationshipModel {
   static async getAll () {
