@@ -12,12 +12,15 @@ export class GenderController {
     res.json(genders)
   }
 
-  getById = async (req, res) => {
-    const { id } = req.params
-    const gender = await this.genderModel.getById(id)
-    console.log(gender)
-    if (gender) return res.json(gender)
-    res.status(404).json({ error: 'Not found gender' })
+  getById = async (req, res, next) => {
+    try {
+      const { id } = req.params
+      const genders = await this.genderModel.getById(id)
+      if (genders.length === 0) return res.status(404).json({ error: 'Not found gender' })
+      return res.status(201).json(genders) // 200 = OK, 201 = Created, 204 = No content, 400 = Bad request, 401 = Unauthorized, 403 = Forbidden, 404 = Not found, 500 = Internal server error, 503 = Service unavailable
+    } catch (error) {
+      next(error)
+    }
   }
 
   create = async (req, res) => {

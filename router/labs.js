@@ -1,6 +1,6 @@
 import { Router } from 'express'
 // import { verifyToken } from '../middlewares/authjwt.js'
-import { LabController } from '../controllers/lab.js'
+import { LabController } from '../controllers/labs.js'
 
 export const createLabRouter = ({ labModel }) => {
   const labRouter = Router()

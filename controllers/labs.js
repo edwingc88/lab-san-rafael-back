@@ -1,5 +1,5 @@
-import { validateLab, validatePartialLab } from '../schemas/lab.js'
-// import { validatePartiallab } from '../schemas/lab.js'
+import { validateLab, validatePartialLab } from '../schemas/labs.js'
+// import { validatePartiallab } from '../schemas/labs.js'
 import multiparty from 'multiparty'
 import 'dotenv/config'
 import fs from 'fs'
@@ -24,7 +24,6 @@ export class LabController {
   getAll = async (req, res) => {
     const labs = await this.labModel.getAll()
     if (labs.length === 0) return res.status(404).json({ error: 'lab: No Content' })
-    console.log('laboratorio entro')
     res.json(labs)
   }
 
@@ -50,8 +49,8 @@ export class LabController {
       // Obteniendo la ruta de la imagen por default
       let rutaFinalArchivo = process.env.WEB_URL + 'sources/images/public/default.jpg'
 
-      console.log(rutaFinalArchivo)
-      console.log('Arriba y abajo RutaFinal')
+      console.log(rutaFinalArchivo)// Ruta Final
+
       // console.log(Object.keys(files)[0])
 
       const key = Object.keys(files)[0]
@@ -83,52 +82,11 @@ export class LabController {
         })
       }
 
-      /* fs.unlink('sources/images/public/' + nameImagenDefault, function (err) {
-        if (err) {
-          console.error(err)
-        }
-        console.log('File deleted Render!')
-      })
-
-      fs.unlink(join('sources', 'public', 'images', nameImagenDefault), function (err) {
-        if (err) { console.error(err) }
-        console.log('File deleted Local!')
-      })
-      */
-
-      // const linkRutaBorrar = join('sources', 'images', 'public', nameImagenNula)
-
-      // const linkRutaBorrar = nameImagenNula
-
-      /* fs.unlink(linkRutaBorrar, function (err) {
-        if (err) { console.error(err) }
-        console.log('File deleted!')
-      }) */
-
-      // console.log(rutaArchivo)
-      // console.log(process.env.WEB_URL)
-
-      // const imagePath = files.logo[0].path
-      // const imageFileName = imagePath.slice(imagePath.lastIndexOf('\\') + 1)
-
-      // const imageURL = imageFileName
-      // console.log(imageFileName)
-
-      // console.log('imageFileName')
-      // const imageURLCompleta = join(resolve('sources', 'images') + imageFileName)
-
-      // console.log(JSON.stringify(fields, null, 2))
-      // console.log(JSON.stringify(files, null, 2))
-      // console.log(typeof (imageURLCompleta))
-
       console.log(fields)
 
-      console.log('arrinba field y abajo lo iterado ')
       /// RECUPERANDO DATOS ITERANDO OBJETO
       const claves = Object.keys(fields) // claves = ["nombre", "color", "macho", "edad"]
       let newvalue = {}
-
-      console.log(claves)
 
       for (let i = 0; i < claves.length; i++) {
         const clave = claves[i]
@@ -142,25 +100,13 @@ export class LabController {
 
       console.log(newvalue)
 
-      // const resultURL = imageURLCompleta.split('\\').join('/')
-      /* const dataObject = { name: fields.name[0], description: fields.description[0], email: fields.email[0], address: fields.address[0], phone: fields.phone[0], rif: fields.rif[0], slogan: fields.slogan[0], objetive: fields.objetive[0], mission: fields.mission[0], vision: fields.vision[0], logo: rutaFinalArchivo }
-*/
-      // Corrigiendo cambiando dataObjetc por newvalue
-
-      // console.log(dataObject)
-      // console.log('Arriba Dataobject')
-
       const result = validateLab(newvalue)
 
       if (result.error) {
         return res.status(400).json({ error: JSON.parse(result.error.message) })
       }
-
       console.log(result.data)
-
       const newlab = await this.labModel.create({ input: result.data })
-      // const newlab = result
-
       res.status(201).json(newlab)
     })
   }
@@ -299,28 +245,31 @@ export class LabController {
     return res.json({ message: 'Source deleted IMAGE' })
   }
 
-  delete = async (req, res) => {
-    const { id } = req.params
-    const result = await this.labModel.delete({ id })
-    if (result === false) return res.status(404).json({ error: 'Not found lab' })
-    const separar = result[0].logo.split(process.env.WEB_URL)
-    // console.log(separar.split(process.env.WEB_URL))
+  delete = async (req, res, next) => {
+    try {
+      const { id } = req.params
+      const result = await this.labModel.delete({ id })
+      if (!result.length) return res.status(404).json({ error: 'Not content. Empty database' })
 
-    /* if (separar[1].indexOf('default') === 0) {
-      console.log(separar[1].indexOf('default'))
-    } */
+      /* if (separar[1].indexOf('default') === 0) {
+        console.log(separar[1].indexOf('default'))
+      } */
 
-    if (separar[1].indexOf('default') === -1) {
-      fs.unlink(separar[1], function (err) {
-        if (err) { console.error(err) }
-        console.log('File deleted!')
-      })
+      if (result[0]) {
+        // console.log(result[0].indexOf('lab_logo'))
+        const separador = result[0].lab_logo
+        console.log(separador)
+        /* fs.unlink(separar[1], function (err) {
+          if (err) { console.error(err) }
+          console.log('File deleted!')
+        }) */
+      }
+
+      // console.log(separar[1].indexOf('default'))
+      // console.log('resultado arriba del separador , buscando default si encuentra es 0 ')
+      return res.status(201).json({ message: 'Table Lab Deleted successfully ' })
+    } catch (error) {
+      next(error)
     }
-
-    // console.log(separar[1].indexOf('default'))
-    // console.log('resultado arriba del separador , buscando default si encuentra es 0 ')
-
-    console.log('Delete result')
-    return res.json({ message: 'lab deleted' })
   }
 }

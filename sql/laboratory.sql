@@ -22,6 +22,7 @@ DROP TABLE IF EXISTS orden_exam CASCADE;
 DROP TABLE IF EXISTS exam_category CASCADE;
 DROP TABLE IF EXISTS statu;
 DROP TABLE IF EXISTS gender;
+DROP TABLE IF EXISTS role;
 
 create extension if not exists "uuid-ossp";
 
@@ -56,11 +57,11 @@ CREATE TABLE IF NOT EXISTS role (
     role_name VARCHAR(255) NOT NULL UNIQUE
 );
 
-INSERT INTO role (role_id,role_name) VALUES
-(1,'manager'),
-(2,'admin'),
-(3,'bioanalyst'),
-(4,'patient'); 
+INSERT INTO role (role_name) VALUES
+('manager'),
+('admin'),
+('bioanalyst'),
+('patient'); 
 
 ---
 
@@ -94,20 +95,20 @@ CREATE TABLE IF NOT EXISTS client (
     client_password VARCHAR(255) NOT NULL,
     client_firstname VARCHAR(255) NOT NULL,
     client_lastname VARCHAR(255) NOT NULL,
-    client_id_gender INT NOT NULL,
+    client_id_gender INT NULL,
     client_address VARCHAR(255),
     client_firstphone VARCHAR(255) NOT NULL,
     client_secondphone VARCHAR(255) NULL,
     client_birthdate DATE,
     client_bloodtyping VARCHAR(255),
-    client_id_relationship int NOT NULL,
+    client_id_relationship int NULL,
     client_name_relationship VARCHAR(255) NULL,
     client_created DATE,
     client_abatar VARCHAR(255),
-    client_id_role INT NOT NULL,
-    FOREIGN KEY (client_id_role) REFERENCES role(role_id),
-    FOREIGN KEY (client_id_relationship) REFERENCES relationship(relationship_id),
-    FOREIGN KEY (client_id_gender) REFERENCES gender(gender_id)
+    client_id_role INT NULL,
+    FOREIGN KEY (client_id_role) REFERENCES role(role_id) ON DELETE SET NULL,
+    FOREIGN KEY (client_id_relationship) REFERENCES relationship(relationship_id) ON DELETE SET NULL,
+    FOREIGN KEY (client_id_gender) REFERENCES gender(gender_id) ON DELETE SET NULL
 );
 
 INSERT INTO client (client_dni,client_email,client_username,client_password,client_firstname,client_lastname,client_id_gender,client_address,client_firstphone,client_secondphone,client_birthdate,client_bloodtyping,client_id_relationship,client_name_relationship, client_created,client_abatar,client_id_role) VALUES ('v-1234','michelledellosa7@gmail.com','michelle','12345678','Michelle','Dellza',2,'San Felix','041432','0412','1900-01-01','O+',1,null,now(),'https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',1),('v-24796','edwin@gmail.com','edwin','1234','edwin','mendez',1,'San Felix','041432','0412','1900-01-01','O+',1,null,now(),'https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',1),('v-333','bio@gmail.com','bio','33333','Michelle','Dellza',2,'San Felix','041432','0412','1900-01-01','O+',1,null,now(),'https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',1),('v-4444','patient@gmail.com','patient','44444','Patient','Dellza',2,'San Felix','041432','0412','1900-01-01','O+',1,null,now(),'https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',1);

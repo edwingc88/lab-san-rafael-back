@@ -2,8 +2,11 @@ import pkg from 'pg'
 import 'dotenv/config'
 import bc from 'bcrypt'
 // const bcrypt = require('bcrypt')
+
+/*
 import fs from 'fs'
 import { join, basename } from 'path'
+*/
 
 const { Pool } = pkg
 let conn
@@ -22,133 +25,6 @@ if (!conn) {
     connectionString: process.env.DATABASE_URL
     // ssl: true
   })
-}
-
-
-export class RelationshipModel {
-  static async getAll () {
-    try {
-      const res = await conn.query('SELECT * FROM relationship;')
-      // console.log(res.rows)
-      return res.rows
-    } catch (e) {
-      throw new Error('ERRO')
-    }
-  }
-
-  static async getById (id) {
-    try {
-      const result = await conn.query('SELECT * FROM relationship WHERE id = $1;', [id])
-      const [relationships] = result.rows
-
-      if (relationships.length === 0) return null
-      return relationships
-    } catch (e) {
-      return null
-    }
-  }
-
-  static async create ({ input }) {
-    // eslint-disable-next-line camelcase
-    const { type } = input
-    try {
-      // eslint-disable-next-line camelcase
-      const resultID = await conn.query('INSERT INTO relationship( relationship_id,relationship_dni , relationship_password,relationship_firstname,relationship_lastname ,relationship_email ,relationship_address,relationship_mobilephone,relationship_created, relationship_picture_url,relationship_id_role) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11 ) RETURNING *;', [type])
-      return (resultID.rows)
-    } catch (e) {
-      throw new Error('Errro creating relationship')
-    }
-  }
-
-  static async update ({ id, input }) {
-    // eslint-disable-next-line camelcase
-    const { dni, password, firstname, lastname, email, birthdate, gender, address, mobilephone, homephone, blood_typing, created, picture_url, role_id } = input
-    const passwordHash = await bc.hash(password, 10)
-    // eslint-disable-next-line camelcase
-    const result = await conn.query('UPDATE relationship SET dni = $1, password = $2 , firstname= $3 , lastname= $4, email= $5, birthdate=$6, gender=$7 , address=$8 , mobilephone=$9, homephone=$10, blood_typing=$11, created=$12 , picture_url=$13 , role_id=$14  WHERE id = $15 RETURNING *;', [dni, passwordHash, firstname, lastname, email, birthdate, gender, address, mobilephone, homephone, blood_typing, created, picture_url, role_id, id])
-    console.log(result.rows)
-    return result.rows
-  }
-
-  static async delete ({ id }) {
-    console.log(id)
-    const result = await conn.query('DELETE FROM relationship WHERE id = $1 returning *;', [id])
-
-    console.log(result.rows)
-
-    return result.rows
-  }
-}
-
-export class GenderModel {
-  static async getAll () {
-    try {
-      //  console.log(role)
-      /*   if (role) {
-        const loweCaseRole = role.toLowerCase()
-        const result = await conn.query('SELECT id,name FROM role WHERE LOWER(name) = $1;', [loweCaseRole])
-        const roles = result.rows
-
-        if (roles.length === 0) {
-          // console.log(roles.length)
-          return []
-        }
-        const [{ id }] = roles
-
-        const resultRoles = await conn.query('SELECT * FROM gender INNER JOIN role ON gender.gender_id_role = role.id WHERE role.id = $1;', [id])
-        const genders = resultRoles.rows
-        return genders
-      } */
-      const res = await conn.query('SELECT * FROM gender;')
-      // console.log(res.rows)
-      return res.rows
-    } catch (e) {
-      throw new Error('ERRO')
-    }
-  }
-
-  static async getById (id) {
-    try {
-      const result = await conn.query('SELECT * FROM gender WHERE id = $1;', [id])
-      const [genders] = result.rows
-
-      if (genders.length === 0) return null
-      return genders
-    } catch (e) {
-      return null
-    }
-  }
-
-  static async create ({ input }) {
-    // eslint-disable-next-line camelcase
-    const { type } = input
-    try {
-      // eslint-disable-next-line camelcase
-      const resultID = await conn.query('INSERT INTO gender( gender_id,gender_dni , gender_password,gender_firstname,gender_lastname ,gender_email ,gender_address,gender_mobilephone,gender_created, gender_picture_url,gender_id_role) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11 ) RETURNING *;', [type])
-      return (resultID.rows)
-    } catch (e) {
-      throw new Error('Errro creating gender')
-    }
-  }
-
-  static async update ({ id, input }) {
-    // eslint-disable-next-line camelcase
-    const { dni, password, firstname, lastname, email, birthdate, gender, address, mobilephone, homephone, blood_typing, created, picture_url, role_id } = input
-    const passwordHash = await bc.hash(password, 10)
-    // eslint-disable-next-line camelcase
-    const result = await conn.query('UPDATE gender SET dni = $1, password = $2 , firstname= $3 , lastname= $4, email= $5, birthdate=$6, gender=$7 , address=$8 , mobilephone=$9, homephone=$10, blood_typing=$11, created=$12 , picture_url=$13 , role_id=$14  WHERE id = $15 RETURNING *;', [dni, passwordHash, firstname, lastname, email, birthdate, gender, address, mobilephone, homephone, blood_typing, created, picture_url, role_id, id])
-    console.log(result.rows)
-    return result.rows
-  }
-
-  static async delete ({ id }) {
-    console.log(id)
-    const result = await conn.query('DELETE FROM gender WHERE id = $1 returning *;', [id])
-
-    console.log(result.rows)
-
-    return result.rows
-  }
 }
 
 export class ClientModel {
@@ -232,7 +108,7 @@ export class ClientModel {
   }
 }
 
-export class RoleModel {
+/* export class RoleModel {
   static async getAll () {
     const res = await conn.query('SELECT * FROM role;')
     // console.log(res.rows)
@@ -282,7 +158,7 @@ export class RoleModel {
 
     return result.rows
   }
-}
+} */
 
 export class PatientModel {
   static async getAll () {
@@ -339,100 +215,6 @@ export class PatientModel {
   static async delete ({ id }) {
     console.log(id)
     const result = await conn.query('DELETE FROM patient WHERE id = $1 returning *;', [id])
-
-    console.log(result.rows)
-
-    return result.rows
-  }
-}
-
-export class LabModel {
-  static async getAll () {
-    const res = await conn.query('SELECT * FROM lab;')
-    // console.log(res.rows)
-    return res.rows
-  }
-
-  static async getById (id) {
-    try {
-      const result = await conn.query('SELECT * FROM lab WHERE id = $1;', [id])
-      const [clients] = result.rows
-
-      if (clients.length === 0) return null
-      return clients
-    } catch (e) {
-      return null
-    }
-  }
-
-  static async create ({ input }) {
-    console.log(input)
-    console.log('en el  DB LAB entro, INPUT ARRIBA')
-    // eslint-disable-next-line camelcase
-    const { name, rif, slogan, description, objetive, mission, vision, email, address, phone, logo } = input
-    console.log(email)
-    try {
-      // eslint-disable-next-line camelcase
-      const res = await conn.query('INSERT INTO lab (name,rif,slogan,description,objetive,mission,vision,email,address,phone,logo) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING *;', [name, rif, slogan, description, objetive, mission, vision, email, address, phone, logo])
-      console.log('en el  DB LAB entro tambien')
-      console.log(res.rows)
-      return (res.rows)
-      // return ({ input })
-    } catch (e) {
-      throw new Error('Error DB creating Lab')
-    }
-  }
-
-  static async update ({ idupdate, input }) {
-    // eslint-disable-next-line camelcase
-    const { name, rif, slogan, description, objetive, mission, vision, email, address, phone, logo } = input
-    // console.log(input)
-    // console.log(idupdate)
-    console.log('entro en bd update')
-    console.log(logo)
-
-    /* const consultaImg = await conn.query('SELECT logo FROM lab WHERE id = $1;', [idupdate])
-
-    const nombreImg = basename(consultaImg.rows[0].logo)
-    console.log(nombreImg)
-    console.log('arriba consulta URL imagen') */
-    try {
-      if (logo === '') {
-        console.log('default NO hacer nada con Imagen')
-        // eslint-disable-next-line camelcase
-        const result = await conn.query('UPDATE lab SET name=$1,rif=$2,slogan=$3,description=$4,objetive=$5,mission=$6,vision=$7,email=$8,address=$9,phone=$10 WHERE id = $11 RETURNING *;', [name, rif, slogan, description, objetive, mission, vision, email, address, phone, idupdate])
-        console.log(result.rows)
-        return result.rows
-      } else {
-        // const rutaArchivo = 'sources/images/public/'
-        console.log(logo)
-        console.log('logo HAY que cambiar el logo')
-        const result1 = await conn.query('SELECT logo FROM lab WHERE id=$1', [idupdate])
-        const rutaArchivo = `sources/images/public/${basename(result1.rows[0].logo)}`
-        fs.unlink(rutaArchivo, function (err) {
-          if (err) {
-            console.error(err)
-            fs.unlink(join('sources', 'public', 'images', result1.rows[0].logo), function (err) {
-              if (err) { console.error(err) }
-              console.log('File deleted Local!')
-            })
-          } else {
-            console.log('File deleted Render UPDATE!')
-          }
-        })
-        // eslint-disable-next-line camelcase
-        const result = await conn.query('UPDATE lab SET name=$1,rif=$2,slogan=$3,description=$4,objetive=$5,mission=$6,vision=$7,email=$8,address=$9,phone=$10,logo=$11 WHERE id = $12 RETURNING *;', [name, rif, slogan, description, objetive, mission, vision, email, address, phone, logo, idupdate])
-        console.log(result.rows)
-        return result.rows
-      }
-    } catch (e) {
-      throw new Error('Error DB creating Lab')
-    }
-  }
-
-  static async delete ({ id }) {
-    console.log(id)
-    const result = await conn.query('DELETE FROM lab WHERE id = $1 returning *;', [id])
 
     console.log(result.rows)
 

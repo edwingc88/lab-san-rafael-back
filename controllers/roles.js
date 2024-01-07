@@ -5,31 +5,37 @@ export class RoleController {
     this.roleModel = roleModel
   }
 
-  getAll = async (req, res) => {
-    const roles = await this.roleModel.getAll()
-    if (roles.length === 0) return res.status(404).json({ error: 'Not found roles' })
-    res.json(roles)
-  }
-
-  getById = async (req, res) => {
-    const { id } = req.params
-    const roles = await this.roleModel.getById(id)
-    console.log(roles)
-    if (roles) return res.json(roles)
-    res.status(404).json({ error: 'Not found roles' })
-  }
-
-  create = async (req, res) => {
-    const result = validateRole(req.body)
-    console.log('entro en controller')
-
-    if (result.error) {
-      return res.status(400).json({ error: JSON.parse(result.error.message) })
+  getAll = async (req, res, next) => {
+    try {
+      const roles = await this.roleModel.getAll()
+      if (roles.length === 0) return res.status(404).json({ error: 'Not content. Empty database' })
+      return res.status(201).json(roles)
+    } catch (error) {
+      next(error)
     }
+  }
 
-    const newroles = await this.roleModel.create({ input: result.data })
+  getById = async (req, res, next) => {
+    try {
+      const { id } = req.params
+      const roles = await this.roleModel.getById(id)
+      if (roles.length === 0) return res.status(404).json({ error: 'Not content. Empty database' })
+      // res.status(404).json({ error: 'Not found roles' })
+      return res.status(201).json(roles)
+    } catch (error) {
+      next(error)
+    }
+  }
 
-    res.status(201).json(newroles)
+  create = async (req, res, next) => {
+    try {
+      const result = validateRole(req.body)
+      const newroles = await this.roleModel.create({ input: result.data })
+      if (newroles.length === 0) return res.status(400).json({ Error: 'Empty' })
+      return res.status(201).json(newroles)
+    } catch (error) {
+      next(error)
+    }
   }
 
   update = async (req, res) => {
@@ -43,10 +49,14 @@ export class RoleController {
     return res.json(updatedroles)
   }
 
-  delete = async (req, res) => {
-    const { id } = req.params
-    const result = await this.roleModel.delete({ id })
-    if (result === false) return res.status(404).json({ error: 'Not found roles' })
-    return res.json({ message: 'roles deleted' })
+  delete = async (req, res, next) => {
+    try {
+      const { id } = req.params
+      const result = await this.roleModel.delete({ id })
+      if (result.length === 0) return res.status(404).json({ error: 'Not found roles' })
+      return res.status(201).json({ message: 'roles deleted' })
+    } catch (error) {
+      next(error)
+    }
   }
 }

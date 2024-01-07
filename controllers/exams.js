@@ -10,17 +10,15 @@ export class ExamController {
     // console.log(_category)
 
     const exams = await this.examModel.getAll({ _category })
-    if (exams.length === null) return res.status(404).json({ msj: 'Empty  exams' })
-    if (exams.length === 0) return res.status(201).json({ msj: 'Empty  exams' })
+    if (exams.length === 0 || exams.length == null || exams.length === undefined) return res.status(201).json({ msj: 'Empty  exams' })
     res.json(exams)
   }
 
   getById = async (req, res) => {
     const { id } = req.params
-    const exam = await this.examModel.getById(id)
-    console.log(exam)
-    if (exam) return res.json(exam)
-    res.status(404).json({ error: 'Not found exam' })
+    const result = await this.examModel.getById(id)
+    if (!result.length) return res.status(404).json({ error: 'Not content. Empty database' })
+    return res.status(201).json(result)
   }
 
   create = async (req, res) => {

@@ -1,8 +1,7 @@
 import z from 'zod'
 
 const roleSchema = z.object({
-  id: z.number(),
-  name: z.string().min(1, { message: 'This field has to be filled.' })
+  name: z.string()
 })
 
 export function validateRole (object) {

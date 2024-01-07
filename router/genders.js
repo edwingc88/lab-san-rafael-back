@@ -11,13 +11,13 @@ export const createGenderRouter = ({ genderModel }) => {
 
   gendersRouter.get('/', genderController.getAll)
 
-  gendersRouter.get('/:category_id', [verifyToken], genderController.getById)
+  gendersRouter.get('/:id', genderController.getById)
 
   gendersRouter.post('/', genderController.create)
 
   gendersRouter.patch('/:id', [verifyToken, isAdmin], genderController.update)
 
-  gendersRouter.delete('/:id', [verifyToken, isAdmin], genderController.delete)
+  gendersRouter.delete('/:id', genderController.delete)
 
   return gendersRouter
 }

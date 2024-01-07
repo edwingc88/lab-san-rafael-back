@@ -1,9 +1,11 @@
 import express, { json } from 'express'
 import cors from 'cors'
+import { notFound, errorHandler } from './middlewares/errors.js'
+
 import { createExamRouter } from './router/exams.js'
 import { createClientRouter } from './router/clients.js'
 import { createRoleRouter } from './router/roles.js'
-import { createLabRouter } from './router/lab.js'
+import { createLabRouter } from './router/labs.js'
 import { createPatientRouter } from './router/patients.js'
 import { createSourceRouter } from './router/sources.js'
 import { createCategoryRouter } from './router/categorys.js'
@@ -73,14 +75,17 @@ export const createApp = ({ relationshipModel, genderModel, clientModel, roleMod
   app.use('/results', createResultRouter({ resultModel }))
   app.use('/categorys', createCategoryRouter({ categoryModel }))
   app.use('/subcategorys', createSubCategoryRouter({ subcategoryModel }))
-  app.use('/lab', createLabRouter({ labModel }))
+  app.use('/labs', createLabRouter({ labModel }))
   app.use('/patients', createPatientRouter({ patientModel }))
   app.use('/relationships', createRelationshipRouter({ relationshipModel }))
   app.use('/genders', createGenderRouter({ genderModel }))
 
-  app.use((req, res) => {
+  /* app.use((req, res) => {
     res.status(404).json({ error: 'Error 404 not found' })
-  })
+  }) */
+
+  app.use(notFound)
+  app.use(errorHandler)
 
   const PORT = process.env.PORT ?? 1234
   app.listen(PORT, () => {

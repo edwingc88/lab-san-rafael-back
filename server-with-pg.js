@@ -1,6 +1,12 @@
 import { createApp } from './app.js'
 
-import { /* ClientsDbModel, */ RelationshipModel, GenderModel, ClientModel, RoleModel, PatientModel, LabModel, ExamModel, ExamCategoryModel, InvoiceModel, InvoiceExamModel, CompousedModel, ResultModel, CategoryModel, SubCategoryModel, AuthModel } from './models/postgres/laboratory.js'
+import { /* ClientsDbModel, */ ClientModel, PatientModel, ExamModel, ExamCategoryModel, InvoiceModel, InvoiceExamModel, CompousedModel, ResultModel, CategoryModel, SubCategoryModel, AuthModel } from './models/postgres/laboratory.js'
+
+import { RoleModel } from './models/postgres/roles.js'
+import { LabModel } from './models/postgres/labs.js'
+import { GenderModel } from './models/postgres/genders.js'
+import { RelationshipModel } from './models/postgres/relationships.js'
+
 /*
 try {
   await ClientsDbModel.create()

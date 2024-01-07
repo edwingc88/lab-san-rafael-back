@@ -1,7 +1,7 @@
 import { Router } from 'express'
 
 import { verifyToken, isSuperAdmin } from '../middlewares/authjwt.js'
-import { checkRolesExisted } from '../middlewares/verifysignup.js'
+// import { checkRolesExisted } from '../middlewares/verifysignup.js'
 
 import { RoleController } from '../controllers/roles.js'
 
@@ -12,13 +12,13 @@ export const createRoleRouter = ({ roleModel }) => {
 
   rolesRouter.get('/', roleController.getAll)
 
-  rolesRouter.get('/:id', [verifyToken, isSuperAdmin], roleController.getById)
+  rolesRouter.get('/:id', roleController.getById)
 
-  rolesRouter.post('/', [verifyToken, isSuperAdmin, checkRolesExisted], roleController.create)
+  rolesRouter.post('/', roleController.create)
 
   rolesRouter.patch('/:id', [verifyToken, isSuperAdmin], roleController.update)
 
-  rolesRouter.delete('/:id', [verifyToken, isSuperAdmin], roleController.delete)
+  rolesRouter.delete('/:id', roleController.delete)
 
   return rolesRouter
 }
