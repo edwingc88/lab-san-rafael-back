@@ -21,7 +21,7 @@ const cLientSchema = z.object({
   name_relationship: z.string(),
   created: z.date().safeParse(new Date()),
   abatar: z.string().url({
-    message: 'Picture must be a valid URL'
+    message: 'Picture mus  t be a valid URL'
   }),
   id_role: z.number([1, 2, 3, 4])
 })

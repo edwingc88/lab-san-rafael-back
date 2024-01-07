@@ -34,22 +34,22 @@ create extension if not exists "uuid-ossp";
 --- create SEQUENCE num_seq MINVAUE 0 increment By 1
 
 CREATE TABLE IF NOT EXISTS lab (
-   id serial PRIMARY KEY ,
-   name VARCHAR(255) NOT NULL UNIQUE,
-   rif VARCHAR(255) NOT NULL UNIQUE,
-   slogan VARCHAR(255) null,
-   description VARCHAR(255) null,
-   objetive VARCHAR(500) null,
-   mission VARCHAR(500) null,
-   vision VARCHAR(500) null,
-   email VARCHAR(255) null,
-   address VARCHAR(255) null,
-   phone VARCHAR(255) null,
-   logo VARCHAR(255) null
+  lab_id serial PRIMARY KEY ,
+  lab_name VARCHAR(255) NOT NULL UNIQUE,
+  lab_rif VARCHAR(255) NOT NULL UNIQUE,
+  lab_slogan VARCHAR(255) null,
+  lab_description VARCHAR(255) null,
+  lab_objetive VARCHAR(500) null,
+  lab_mission VARCHAR(500) null,
+  lab_vision VARCHAR(500) null,
+  lab_email VARCHAR(255) null,
+  lab_address VARCHAR(255) null,
+  lab_phone VARCHAR(255) null,
+  lab_logo VARCHAR(255) null
 );
 
-INSERT INTO lab (name,rif,slogan,description,objetive,mission,vision,email,address,phone,logo) VALUES 
-('Centro Medico Ambulatorio San Rafael','J-1234562','Para nosotros no hay nada mas importante que tu salud.','servicio de laboratorio','Somos una empresa que cuenta con personal altamente calificado y que trabaja con altos estándares de calidad y servicio en el área de análisis clínicos. Nuestros pacientes son nuestra razón de ser y es por ello que para satisfacerlos utilizamos tecnología de vanguardia y los más exigentes controles de calidad, para poder brindarles la mayor confiabilidad en sus resultados.','Ofrecer un servicio de Laboratorio Clínico excepcional,  donde nuestros usuarios se sientan satisfechos y plenos por la atención ofrecida en todos nuestros departamentos. Distinguirnos como un laboratorio extraordinario donde la excelencia de nuestros procedimientos y atención  al cliente nos distinga.','Posicionarnos como un Laboratorio Clínico innovador y de alta calidad, que ofrezca a sus pacientes soluciones que permitan el preciso diagnóstico médico y oportuno tratamiento. Queremos ser una empresa composederente en el sector salud, que la excelencia sea nuestro estandarte.','email','core 8','02864566','https://lab-san-rafael-api.onrender.com/sources/images/public/logo.jpeg');
+INSERT INTO lab (lab_name,lab_rif,lab_slogan,lab_description,lab_objetive,lab_mission,lab_vision,lab_email,lab_address,lab_phone,lab_logo) VALUES 
+('Centro Medico Ambulatorio San Rafael','J-1234562','Para nosotros no hay nada mas importante que tu salud.','servicio de laboratorio','Somos una empresa que cuenta con personal altamente calificado y que trabaja con altos estándares de calidad y servicio en el área de análisis clínicos. Nuestros pacientes son nuestra razón de ser y es por ello que para satisfacerlos utilizamos tecnología de vanguardia y los más exigentes controles de calidad, para poder brindarles la mayor confiabilidad en sus resultados.','Ofrecer un servicio de Laboratorio Clínico excepcional,  donde nuestros usuarios se sientan satisfechos y plenos por la atención ofrecida en todos nuestros departamentos. Distinguirnos como un laboratorio extraordinario donde la excelencia de nuestros procedimientos y atención  al cliente nos distinga.','Posicionarnos como un Laboratorio Clínico innovador y de alta calidad, que ofrezca a sus pacientes soluciones que permitan el preciso diagnóstico médico y oportuno tratamiento. Queremos ser una empresa composederente en el sector salud, que la excelencia sea nuestro estandarte.','lab@gmail.com','Ciudad Guayana 8050, Bolívar. Core 8','0286-9530505','https://lab-san-rafael-api.onrender.com/sources/images/public/logo.png');
 
 CREATE TABLE IF NOT EXISTS role (
     role_id serial PRIMARY KEY,
@@ -65,8 +65,8 @@ INSERT INTO role (role_id,role_name) VALUES
 ---
 
 CREATE TABLE IF NOT EXISTS gender (
-    gender_id serial PRIMARY KEY,
-    gender_name VARCHAR(255) NOT NULL UNIQUE
+   gender_id serial PRIMARY KEY,
+   gender_name VARCHAR(255) NOT NULL UNIQUE
 );
 
 INSERT INTO gender (gender_id,gender_name) VALUES
@@ -74,15 +74,15 @@ INSERT INTO gender (gender_id,gender_name) VALUES
 (2,'Femenino');
 
 CREATE TABLE IF NOT EXISTS relationship (
-    relationship_id serial PRIMARY KEY,
-    relationship_name VARCHAR(255) NOT NULL UNIQUE
+   relationship_id serial PRIMARY KEY,
+   relationship_type VARCHAR(255) NOT NULL UNIQUE
 );
 
-INSERT INTO relationship (relationship_id,relationship_name)  VALUES
+INSERT INTO relationship (relationship_id,relationship_type)  VALUES
 (1,'No aplica'),
-(2,'Familia'),
+(2,'Familiar'),
 (3,'Amigo'),
-(4,'Trabajador'),
+(4,'Conocido'),
 (5,'Otro');
 
 CREATE TABLE IF NOT EXISTS client (
@@ -110,7 +110,7 @@ CREATE TABLE IF NOT EXISTS client (
     FOREIGN KEY (client_id_gender) REFERENCES gender(gender_id)
 );
 
-INSERT INTO client (client_dni,client_email,client_username,client_password,client_firstname,client_lastname,client_id_gender,client_address,client_firstphone,client_secondphone,client_birthday,client_bloodtyping,client_id_relationship,client_name_relationship, client_created,client_abatar,client_id_role) VALUES ('v-1234','michelledellosa7@gmail.com','michelle','12345678','Michelle','Dellza',2,'San Felix','041432','0412','1900-01-01','O+',1,null,now(),'https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',1),('v-24796','edwin@gmail.com','edwin','1234','edwin','mendez',1,'San Felix','041432','0412','1900-01-01','O+',1,null,now(),'https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',1),('v-333','bio@gmail.com','bio','33333','Michelle','Dellza',2,'San Felix','041432','0412','1900-01-01','O+',1,null,now(),'https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',1),('v-4444','patient@gmail.com','patient','44444','Patient','Dellza',2,'San Felix','041432','0412','1900-01-01','O+',1,null,now(),'https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',1);
+INSERT INTO client (client_dni,client_email,client_username,client_password,client_firstname,client_lastname,client_id_gender,client_address,client_firstphone,client_secondphone,client_birthdate,client_bloodtyping,client_id_relationship,client_name_relationship, client_created,client_abatar,client_id_role) VALUES ('v-1234','michelledellosa7@gmail.com','michelle','12345678','Michelle','Dellza',2,'San Felix','041432','0412','1900-01-01','O+',1,null,now(),'https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',1),('v-24796','edwin@gmail.com','edwin','1234','edwin','mendez',1,'San Felix','041432','0412','1900-01-01','O+',1,null,now(),'https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',1),('v-333','bio@gmail.com','bio','33333','Michelle','Dellza',2,'San Felix','041432','0412','1900-01-01','O+',1,null,now(),'https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',1),('v-4444','patient@gmail.com','patient','44444','Patient','Dellza',2,'San Felix','041432','0412','1900-01-01','O+',1,null,now(),'https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',1);
 
 
 /*insert INTO patient (patient_dni,patient_email,patient_firstname,patient_lastname,patient_address,patient_mobilephone,patient_homephone,patient_birthdate,patient_gender,patient_blood_typing,patient_relationship,patient_created,patient_principal,patient_id_client) VALUES 

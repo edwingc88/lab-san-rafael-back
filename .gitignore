@@ -2,4 +2,7 @@ node_modules
 .env
 db.sql
 pg.sql
-
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/

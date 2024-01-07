@@ -14,13 +14,12 @@ import { createCompousedRouter } from './router/compouseds.js'
 import { createInvoiceRouter } from './router/invoices.js'
 import { createInvoiceExamRouter } from './router/invoices_exams.js'
 import { createRelationshipRouter } from './router/relationships.js'
+import { createAuthRouter } from './router/auth.js'
+import { createGenderRouter } from './router/genders.js'
 
 // Cors
 // import { corsMiddleware } from './middlewares/cors.js'
-
 // jswt
-import { createAuthRouter } from './router/auth.js'
-
 // import pkg from './package.json' assert { type: 'json' }
 import { readFileSync } from 'fs'
 import { dirname, join } from 'path'
@@ -33,7 +32,7 @@ const __dirname = dirname(__filename)
 
 const pkg = JSON.parse(readFileSync('./package.json'))
 
-export const createApp = ({ relationshipModel, clientModel, roleModel, patientModel, labModel, invoiceModel, invoiceExamModel, examModel, examCategoryModel, compousedModel, resultModel, categoryModel, subcategoryModel, authModel }) => {
+export const createApp = ({ relationshipModel, genderModel, clientModel, roleModel, patientModel, labModel, invoiceModel, invoiceExamModel, examModel, examCategoryModel, compousedModel, resultModel, categoryModel, subcategoryModel, authModel }) => {
   const app = express()
   app.set('pkg', pkg)
   app.use(json())
@@ -77,6 +76,7 @@ export const createApp = ({ relationshipModel, clientModel, roleModel, patientMo
   app.use('/lab', createLabRouter({ labModel }))
   app.use('/patients', createPatientRouter({ patientModel }))
   app.use('/relationships', createRelationshipRouter({ relationshipModel }))
+  app.use('/genders', createGenderRouter({ genderModel }))
 
   app.use((req, res) => {
     res.status(404).json({ error: 'Error 404 not found' })

@@ -6,10 +6,7 @@ export class RelationshipController {
   }
 
   getAll = async (req, res) => {
-    const { _category } = req.query
-    // console.log(_category)
-
-    const relationships = await this.relationshipModel.getAll({ _category })
+    const relationships = await this.relationshipModel.getAll()
     if (relationships.length === null) return res.status(404).json({ msj: 'Empty  relationships' })
     if (relationships.length === 0) return res.status(201).json({ msj: 'Empty  relationships' })
     res.json(relationships)
