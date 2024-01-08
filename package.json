@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "start:postgre": "node server-with-pg.js",
+    "dev:postgre": "SET NODE_ENV=development & nodemon server-with-pg.js",
     "test:client": "playwright test example.spec.cjs"
   },
   "keywords": [],

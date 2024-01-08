@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'
-import { AuthModel } from '../models/postgres/laboratory.js'
+import { AuthModel } from '../models/postgres/auth.js'
 
 export const verifyToken = async (req, res, next) => {
   try {
