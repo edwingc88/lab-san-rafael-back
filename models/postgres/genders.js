@@ -61,11 +61,14 @@ export class GenderModel {
   }
 
   static async delete ({ id }) {
-    console.log(id)
-    const result = await conn.query('DELETE FROM gender WHERE id = $1 returning *;', [id])
-
-    console.log(result.rows)
-
-    return result.rows
+    try {
+      console.log(id)
+      const result = await conn.query('DELETE FROM gender WHERE gender_id = $1 returning *;', [id])
+      console.log(result.rows)
+      return result.rows
+    } catch (e) {
+      console.log('Error Role DB in request by ID  ')
+      throw new Error(e)
+    }
   }
 }

@@ -5,19 +5,25 @@ export class RelationshipController {
     this.relationshipModel = relationshipModel
   }
 
-  getAll = async (req, res) => {
-    const relationships = await this.relationshipModel.getAll()
-    if (relationships.length === null) return res.status(404).json({ msj: 'Empty  relationships' })
-    if (relationships.length === 0) return res.status(201).json({ msj: 'Empty  relationships' })
-    res.json(relationships)
+  getAll = async (req, res, next) => {
+    try {
+      const relationships = await this.relationshipModel.getAll()
+      if (relationships.length === null || relationships.length === 0) return res.status(404).json({ msj: 'Empty  relationships' })
+      return res.status(201).json(relationships)
+    } catch (error) {
+      next(error)
+    }
   }
 
-  getById = async (req, res) => {
-    const { id } = req.params
-    const relationship = await this.relationshipModel.getById(id)
-    console.log(relationship)
-    if (relationship) return res.json(relationship)
-    res.status(404).json({ error: 'Not found relationship' })
+  getById = async (req, res, next) => {
+    try {
+      const { id } = req.params
+      const relationship = await this.relationshipModel.getById(id)
+      if (relationship.length === 0) return res.status(404).json({ error: 'Not found relationship' })
+      return res.status(201).json(relationship)
+    } catch (error) {
+      next(error)
+    }
   }
 
   create = async (req, res) => {

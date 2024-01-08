@@ -17,12 +17,10 @@ export class LabModel {
   static async getById (id) {
     try {
       const result = await conn.query('SELECT * FROM lab WHERE lab_id = $1;', [id])
-      const [clients] = result.rows
-
-      if (clients.length === 0) return null
-      return clients
+      return result.rows
     } catch (e) {
-      return null
+      console.log('Error DB en lab By ID ')
+      throw new Error(e)
     }
   }
 

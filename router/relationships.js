@@ -11,13 +11,13 @@ export const createRelationshipRouter = ({ relationshipModel }) => {
 
   relationshipsRouter.get('/', relationshipController.getAll)
 
-  relationshipsRouter.get('/:category_id', [verifyToken], relationshipController.getById)
+  relationshipsRouter.get('/:category_id', relationshipController.getById)
 
   relationshipsRouter.post('/', relationshipController.create)
 
   relationshipsRouter.patch('/:id', [verifyToken, isAdmin], relationshipController.update)
 
-  relationshipsRouter.delete('/:id', [verifyToken, isAdmin], relationshipController.delete)
+  relationshipsRouter.delete('/:id', relationshipController.delete)
 
   return relationshipsRouter
 }

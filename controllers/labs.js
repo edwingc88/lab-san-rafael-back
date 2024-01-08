@@ -27,12 +27,15 @@ export class LabController {
     res.json(labs)
   }
 
-  getById = async (req, res) => {
-    const { id } = req.params
-    const lab = await this.labModel.getById(id)
-    console.log(lab)
-    if (lab) return res.json(lab)
-    res.status(404).json({ error: 'lab: No Content' })
+  getById = async (req, res, next) => {
+    try {
+      const { id } = req.params
+      const labs = await this.labModel.getById(id)
+      if (labs.length === 0) res.status(404).json({ error: 'lab: No Content' })
+      return res.status(201).json(labs)
+    } catch (error) {
+      next(error)
+    }
   }
 
   create = async (req, res) => {

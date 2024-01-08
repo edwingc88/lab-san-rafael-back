@@ -5,11 +5,14 @@ export class GenderController {
     this.genderModel = genderModel
   }
 
-  getAll = async (req, res) => {
-    const genders = await this.genderModel.getAll()
-    if (genders.length === null) return res.status(404).json({ msj: 'Empty  genders' })
-    if (genders.length === 0) return res.status(201).json({ msj: 'Empty  genders' })
-    res.json(genders)
+  getAll = async (req, res, next) => {
+    try {
+      const genders = await this.genderModel.getAll()
+      if (genders.length === 0) return res.status(404).json({ msj: 'Empty  genders' })
+      return res.status(201).json(genders)
+    } catch (error) {
+      next(error)
+    }
   }
 
   getById = async (req, res, next) => {
@@ -46,10 +49,14 @@ export class GenderController {
     return res.json(updatedgender)
   }
 
-  delete = async (req, res) => {
-    const { id } = req.params
-    const result = await this.genderModel.delete({ id })
-    if (result === false) return res.status(404).json({ error: 'Not found gender' })
-    return res.json({ message: 'gender deleted' })
+  delete = async (req, res, next) => {
+    try {
+      const { id } = req.params
+      const result = await this.genderModel.delete({ id })
+      if (result.length === 0) return res.status(404).json({ error: 'Not found gender' })
+      return res.status(201).json({ message: 'gender deleted' })
+    } catch (error) {
+      next(error)
+    }
   }
 }

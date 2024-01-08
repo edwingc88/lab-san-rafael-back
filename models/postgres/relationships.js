@@ -4,34 +4,31 @@ export class RelationshipModel {
   static async getAll () {
     try {
       const res = await conn.query('SELECT * FROM relationship;')
-      // console.log(res.rows)
       return res.rows
     } catch (e) {
-      throw new Error('ERRO')
+      console.log('Error Role DB in request by ID  ')
+      throw new Error(e)
     }
   }
 
   static async getById (id) {
     try {
       const result = await conn.query('SELECT * FROM relationship WHERE id = $1;', [id])
-      const [relationships] = result.rows
-
-      if (relationships.length === 0) return null
-      return relationships
+      return result.rows
     } catch (e) {
-      return null
+      console.log('Error Role DB in request by ID  ')
+      throw new Error(e)
     }
   }
 
   static async create ({ input }) {
-    // eslint-disable-next-line camelcase
-    const { type } = input
     try {
-      // eslint-disable-next-line camelcase
+      const { type } = input
       const resultID = await conn.query('INSERT INTO relationship( relationship_id,relationship_dni , relationship_password,relationship_firstname,relationship_lastname ,relationship_email ,relationship_address,relationship_mobilephone,relationship_created, relationship_picture_url,relationship_id_role) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11 ) RETURNING *;', [type])
       return (resultID.rows)
     } catch (e) {
-      throw new Error('Errro creating relationship')
+      console.log('Error Role DB in request by ID  ')
+      throw new Error(e)
     }
   }
 
@@ -46,11 +43,13 @@ export class RelationshipModel {
   }
 
   static async delete ({ id }) {
-    console.log(id)
-    const result = await conn.query('DELETE FROM relationship WHERE id = $1 returning *;', [id])
-
-    console.log(result.rows)
-
-    return result.rows
+    try {
+      console.log(id)
+      const result = await conn.query('DELETE FROM relationship WHERE id = $1 returning *;', [id])
+      return result.rows
+    } catch (e) {
+      console.log('Error Role DB in request by ID  ')
+      throw new Error(e)
+    }
   }
 }
