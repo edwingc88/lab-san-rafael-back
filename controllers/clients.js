@@ -1,6 +1,8 @@
 // import { validateClient, validatePartialClient } from '../schemas/clients.js'
 import multiparty from 'multiparty'
-import { rutaFinal } from '../middlewares/ruta_imagen.js'
+import 'dotenv/config'
+import { nombreFinal } from '../middlewares/nombre_imagen.js'
+const IMAGEN_UPLOAD_DIR = '/sources/images/public/'
 
 export class ClientController {
   constructor ({ clientModel }) {
@@ -32,27 +34,36 @@ export class ClientController {
   create = async (req, res, next) => {
     // const result = validateClient(req.body)
     // console.log(result)
-
-    const form = new multiparty.Form()
+    const form = new multiparty.Form(/* { uploadDir: '.' + IMAGEN_UPLOAD_DIR } */)
     try {
       form.parse(req, async (err, fields, files) => {
         if (err) return res.status(500).json({ error: 'Error msj formdata' })
-        /* if (result.error) return res.status(400).json({ error: JSON.parse(result.error.message) })
-        const newclient = await this.clientModel.create({ input: result.data })
-        res.status(201).json(newclient) */
 
-        //  Transformando los datos que vienen de Fields , quitando los [] que vienen en cada valor, para luego validarlos.
-        const rutaArchivoCompleta = await rutaFinal(files)
-        /*  const key = Object.keys(files)[0]
-        const rutaLink = files[key][0].path
-        const rutaArchivoCompleta = rutaLink.replaceAll('\\', '/') */
+        const mombreRandomImagenCompleta = await nombreFinal(files) // Nombre Ramdom de la imagen  . Transformando los datos que vienen de files , quitando los [] que vienen en cada valor, para luego validarlos.
 
-        console.log(rutaArchivoCompleta)
+        const objectImagen = JSON.stringify(files, null, 2)
+        const mombreRealImagenCompleta = JSON.parse(objectImagen).abatar[0].originalFilename // Obeteniendo Nombre Real de la imagen para ver si se subio o no
+
+        /* Si es verdadero o Hay imagen subida se va guardar esa misma, si no se guardara imagen por default */
+
+        const rutaURLTotal = mombreRealImagenCompleta ? process.env.WEB_URL + IMAGEN_UPLOAD_DIR + mombreRandomImagenCompleta : process.env.WEB_URL + IMAGEN_UPLOAD_DIR + 'default.jpg'
+        /* if (!mombreRealImagenCompleta) {
+          console.log(mombreRealImagenCompleta)
+          const rutaURLTotal = process.env.WEB_URL + IMAGEN_UPLOAD_DIR + mombreRandomImagenCompleta
+        } else {
+          const rutaURLTotal = process.env.WEB_URL + IMAGEN_UPLOAD_DIR + mombreRandomImagenCompleta
+        } */
+
+        console.log(rutaURLTotal)
 
         const dataObjectFields = { dni: fields.dni[0], email: fields.email[0], username: fields.username[0], password: fields.password[0], firstname: fields.firstname[0], lastname: fields.lastname[0], firstphone: fields.firstphone[0], secondphone: fields.secondphone[0], birthdate: fields.birthdate[0], bloodtyping: fields.bloodtyping[0], type_relationship: fields.type_relationship[0], created: fields.created[0], id_role: fields.id_role[0] }
         console.log(dataObjectFields)
 
         // const result = validateClient(dataObjectFields)
+
+        /* if (result.error) return res.status(400).json({ error: JSON.parse(result.error.message) })
+        const newclient = await this.clientModel.create({ input: result.data })
+        res.status(201).json(newclient) */
 
         return res.status(201).json(dataObjectFields)
       })
