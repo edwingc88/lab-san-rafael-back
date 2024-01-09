@@ -2,7 +2,7 @@
 import multiparty from 'multiparty'
 import 'dotenv/config'
 import { nombreFinal } from '../middlewares/nombre_imagen.js'
-const IMAGEN_UPLOAD_DIR = '/sources/images/public/'
+const IMAGEN_UPLOAD_DIR = 'sources/images/public/'
 
 export class ClientController {
   constructor ({ clientModel }) {
@@ -54,9 +54,9 @@ export class ClientController {
           const rutaURLTotal = process.env.WEB_URL + IMAGEN_UPLOAD_DIR + mombreRandomImagenCompleta
         } */
 
-        console.log(rutaURLTotal)
+        // console.log(rutaURLTotal)
 
-        const dataObjectFields = { dni: fields.dni[0], email: fields.email[0], username: fields.username[0], password: fields.password[0], firstname: fields.firstname[0], lastname: fields.lastname[0], firstphone: fields.firstphone[0], secondphone: fields.secondphone[0], birthdate: fields.birthdate[0], bloodtyping: fields.bloodtyping[0], type_relationship: fields.type_relationship[0], created: fields.created[0], id_role: fields.id_role[0] }
+        const dataObjectFields = { dni: fields.dni[0], email: fields.email[0], username: fields.username[0], password: fields.password[0], firstname: fields.firstname[0], lastname: fields.lastname[0], firstphone: fields.firstphone[0], secondphone: fields.secondphone[0], birthdate: fields.birthdate[0], bloodtyping: fields.bloodtyping[0], type_relationship: fields.type_relationship[0], created: fields.created[0], id_role: fields.id_role[0], abatar: rutaURLTotal }
         console.log(dataObjectFields)
 
         // const result = validateClient(dataObjectFields)
