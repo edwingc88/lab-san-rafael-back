@@ -26,16 +26,15 @@ export class RelationshipController {
     }
   }
 
-  create = async (req, res) => {
-    const result = validateRelationship(req.body)
-
-    if (result.error) {
-      return res.status(400).json({ error: JSON.parse(result.error.message) })
+  create = async (req, res, next) => {
+    try {
+      const result = validateRelationship(req.body)
+      const newrelationship = await this.relationshipModel.create({ input: result.data })
+      if (newrelationship.length === 0) return res.status(400).json({ error: 'Empy' })
+      return res.status(201).json(newrelationship)
+    } catch (error) {
+      next(error)
     }
-
-    const newrelationship = await this.relationshipModel.create({ input: result.data })
-
-    res.status(201).json(newrelationship)
   }
 
   update = async (req, res) => {

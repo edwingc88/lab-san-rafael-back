@@ -21,10 +21,14 @@ export class LabController {
     this.labModel = labModel
   }
 
-  getAll = async (req, res) => {
-    const labs = await this.labModel.getAll()
-    if (labs.length === 0) return res.status(404).json({ error: 'lab: No Content' })
-    res.json(labs)
+  getAll = async (req, res, next) => {
+    try {
+      const labs = await this.labModel.getAll()
+      if (labs.length === 0) return res.status(404).json({ error: 'lab: No Content' })
+      res.status(201).json(labs)
+    } catch (error) {
+      next(error)
+    }
   }
 
   getById = async (req, res, next) => {
@@ -42,10 +46,7 @@ export class LabController {
     const form = new multiparty.Form({ uploadDir: IMAGEN_UPLOAD_DIR })
 
     form.parse(req, async (err, fields, files) => {
-      if (err) {
-        console.error(err)
-        return res.status(500).json({ error: 'Error msj formdata' })
-      }
+      if (err) return res.status(500).json({ error: 'Error msj formdata' })
 
       console.log(JSON.stringify(fields, null, 2))
       console.log(JSON.stringify(files, null, 2))

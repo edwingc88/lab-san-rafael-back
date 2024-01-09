@@ -1,6 +1,5 @@
 import 'dotenv/config'
 // import { validatePerson } from '../schemas/clients.js'
-
 import { validateSignup } from '../schemas/signup.js'
 import jwt from 'jsonwebtoken'
 // import bcrypt from 'bcrypt'  // Habilitar para encryptar
@@ -11,40 +10,34 @@ export class AuthController {
     this.authModel = authModel
   }
 
-  signUp = async (req, res) => {
+  signUp = async (req, res, next) => {
     // console.log(req.body)
-
     const form = new multiparty.Form()
+    try {
+      form.parse(req, async (err, fields) => {
+        if (err) return res.status(500).json({ error: 'Error msj formdata' })
 
-    form.parse(req, async (err, fields) => {
-      if (err) {
-        console.error(err)
-        return res.status(500).json({ error: 'Error msj formdata' })
-      }
-      console.log(JSON.stringify(fields, null, 1))
-      console.log('mostrando arriba fileds')
+        console.log(JSON.stringify(fields, null, 1))
+        console.log('mostrando arriba fileds')
 
-      const idRoleParce = parseInt(fields.id_role[0], 10)
-      const idRelationShip = parseInt(fields.id_relationship[0], 10)
-      const idGender = parseInt(fields.id_gender[0], 10)
+        //  Transformando los datos que vienen de Fields , quitando los [] que vienen en cada valor, para luego validarlos.
+        const dataObjectFields = { firstname: fields.firstname[0], lastname: fields.lastname[0], username: fields.username[0], password: fields.password[0], email: fields.email[0], firstphone: fields.firstphone[0], created: fields.created[0], birthdate: fields.birthdate[0]/* id_role: idRoleParce, id_gender: idGender, id_relationship: idRelationShip */ }
 
-      const dataObject = { firstname: fields.firstname[0], lastname: fields.lastname[0], username: fields.username[0], password: fields.password[0], email: fields.email[0], firstphone: fields.firstphone[0], created: fields.created[0], birthdate: fields.birthdate[0], id_role: idRoleParce, id_gender: idGender, id_relationship: idRelationShip }
+        const result = validateSignup(dataObjectFields)
 
-      console.log(dataObject)
-      console.log('Data object arriba')
+        console.log(result)
 
-      const result = validateSignup(dataObject)
+        if (result.error) {
+          return res.status(400).json({ error: JSON.parse(result.error.message) })
+        }
 
-      console.log(result)
+        const newAuth = await this.authModel.createClient({ input: result.data })
 
-      if (result.error) {
-        return res.status(400).json({ error: JSON.parse(result.error.message) })
-      }
-
-      const newAuth = await this.authModel.createClient({ input: result.data })
-
-      res.status(201).json(newAuth)
-    })
+        res.status(201).json(newAuth)
+      })
+    } catch (error) {
+      next(error)
+    }
 
     /// ****///
     // const result = validateSignup(req.body)
@@ -62,44 +55,46 @@ export class AuthController {
     // res.status(201).json({ token })
   }
 
-  signIn = async (req, res) => {
-    const form = new multiparty.Form()
+  signIn = async (req, res, next) => {
+    try {
+      const form = new multiparty.Form()
 
-    console.log('ENTRO EN SIGNN')
+      form.parse(req, async (err, fields) => {
+        if (err) {
+          console.error(err)
+          return res.status(500).json({ error: 'Error msj formdata' })
+        }
 
-    form.parse(req, async (err, fields) => {
-      if (err) {
-        console.error(err)
-        return res.status(500).json({ error: 'Error msj formdata' })
-      }
+        const dataObject = { username: fields.username[0], password: fields.password[0] }
 
-      const dataObject = { username: fields.username[0], password: fields.password[0] }
+        console.log(dataObject)
+        console.log('Data object arriba')
 
-      console.log(dataObject)
-      console.log('Data object arriba')
+        console.log(dataObject.username)
 
-      console.log(dataObject.username)
+        const findUserByUsername = await this.authModel.findByUsername(dataObject.username)
 
-      const findUserByUsername = await this.authModel.findByUsername(dataObject.username)
+        console.log(findUserByUsername)
+        // passwod con escriptacion
+        // const passwordIsValid = findUserByUsername === null ? false : await bcrypt.compare(dataObject.password, findUserByUsername[0].client_password)
 
-      console.log(findUserByUsername)
-      // passwod con escriptacion
-      // const passwordIsValid = findUserByUsername === null ? false : await bcrypt.compare(dataObject.password, findUserByUsername[0].client_password)
+        const passwordIsValid = findUserByUsername === null ? false : dataObject.password === findUserByUsername[0].client_password
 
-      const passwordIsValid = findUserByUsername === null ? false : dataObject.password === findUserByUsername[0].client_password
+        if (!passwordIsValid) {
+          return res.status(404).json({ error: ' Your username and password are not correct. Try again' })
+        }
 
-      if (!passwordIsValid) {
-        return res.status(404).json({ error: 'Not found ID por PASSWORD' })
-      }
+        const clientId = findUserByUsername[0].client_id
+        const roleId = findUserByUsername[0].client_id_role
 
-      const clientId = findUserByUsername[0].client_id
-      const roleId = findUserByUsername[0].client_id_role
+        const token = jwt.sign({ client: [clientId, roleId] }, process.env.SECRET, { expiresIn: 3600 })
 
-      const token = jwt.sign({ client: [clientId, roleId] }, process.env.SECRET, { expiresIn: 840 })
-
-      console.log('ID ARRIBA')
-      return res.status(200).json({ id_client: clientId, id_role: roleId, token })
-      // return res.status(200).json({ dataObject })
-    })
+        console.log('ID ARRIBA')
+        return res.status(200).json({ id_client: clientId, id_role: roleId, token })
+        // return res.status(200).json({ dataObject })
+      })
+    } catch (error) {
+      next(error)
+    }
   }
 }

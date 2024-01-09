@@ -65,29 +65,31 @@ INSERT INTO role (role_name) VALUES
 
 ---
 
-CREATE TABLE IF NOT EXISTS gender (
-   gender_id serial PRIMARY KEY,
-   gender_name VARCHAR(255) NOT NULL UNIQUE
-);
+/*
+   CREATE TABLE IF NOT EXISTS gender (
+      gender_id serial PRIMARY KEY,
+      gender_name VARCHAR(255) NOT NULL UNIQUE
+   );
 
-INSERT INTO gender (gender_id,gender_name) VALUES
-(1,'Masculino'),
-(2,'Femenino');
+   INSERT INTO gender (gender_id,gender_name) VALUES
+   (1,'Masculino'),
+   (2,'Femenino');
 
-CREATE TABLE IF NOT EXISTS relationship (
-   relationship_id serial PRIMARY KEY,
-   relationship_type VARCHAR(255) NOT NULL UNIQUE
-);
+   CREATE TABLE IF NOT EXISTS relationship (
+      relationship_id serial PRIMARY KEY,
+      relationship_type VARCHAR(255) NOT NULL UNIQUE
+   );
 
-INSERT INTO relationship (relationship_id,relationship_type)  VALUES
-(1,'No aplica'),
-(2,'Familiar'),
-(3,'Amigo'),
-(4,'Conocido'),
-(5,'Otro');
+   INSERT INTO relationship (relationship_id,relationship_type)  VALUES
+   (1,'No aplica'),
+   (2,'Familiar'),
+   (3,'Amigo'),
+   (4,'Conocido'),
+   (5,'Otro');
+*/
 
 CREATE TABLE IF NOT EXISTS client (
-    /*client_id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),*/
+    /* client_id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),*/
     client_id serial PRIMARY KEY,
     client_dni VARCHAR(255) UNIQUE NULL,
     client_email VARCHAR(255) NOT NULL UNIQUE,
@@ -95,23 +97,23 @@ CREATE TABLE IF NOT EXISTS client (
     client_password VARCHAR(255) NOT NULL,
     client_firstname VARCHAR(255) NOT NULL,
     client_lastname VARCHAR(255) NOT NULL,
-    client_id_gender INT NULL,
+    client_gender VARCHAR(255),
     client_address VARCHAR(255),
     client_firstphone VARCHAR(255) NOT NULL,
     client_secondphone VARCHAR(255) NULL,
     client_birthdate DATE,
     client_bloodtyping VARCHAR(255),
-    client_id_relationship int NULL,
+    client_type_relationship VARCHAR(255) NULL,
     client_name_relationship VARCHAR(255) NULL,
     client_created DATE,
     client_abatar VARCHAR(255),
     client_id_role INT NULL,
-    FOREIGN KEY (client_id_role) REFERENCES role(role_id) ON DELETE SET NULL,
-    FOREIGN KEY (client_id_relationship) REFERENCES relationship(relationship_id) ON DELETE SET NULL,
-    FOREIGN KEY (client_id_gender) REFERENCES gender(gender_id) ON DELETE SET NULL
+    FOREIGN KEY (client_id_role) REFERENCES role(role_id) ON DELETE CASCADE
 );
 
-INSERT INTO client (client_dni,client_email,client_username,client_password,client_firstname,client_lastname,client_id_gender,client_address,client_firstphone,client_secondphone,client_birthdate,client_bloodtyping,client_id_relationship,client_name_relationship, client_created,client_abatar,client_id_role) VALUES ('v-1234','michelledellosa7@gmail.com','michelle','12345678','Michelle','Dellza',2,'San Felix','041432','0412','1900-01-01','O+',1,null,now(),'https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',1),('v-24796','edwin@gmail.com','edwin','1234','edwin','mendez',1,'San Felix','041432','0412','1900-01-01','O+',1,null,now(),'https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',1),('v-333','bio@gmail.com','bio','33333','Michelle','Dellza',2,'San Felix','041432','0412','1900-01-01','O+',1,null,now(),'https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',1),('v-4444','patient@gmail.com','patient','44444','Patient','Dellza',2,'San Felix','041432','0412','1900-01-01','O+',1,null,now(),'https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',1);
+--- FOREIGN KEY (client_id_role) REFERENCES role(role_id) ON DELETE SET NULL,
+
+INSERT INTO client (client_dni,client_email,client_username,client_password,client_firstname,client_lastname,client_gender,client_address,client_firstphone,client_secondphone,client_birthdate,client_bloodtyping,client_type_relationship,client_name_relationship, client_created,client_abatar,client_id_role) VALUES ('v-1234','michelledellosa7@gmail.com','michelle','12345678','Michelle','Dellza','Femenino','San Felix','041432','0412','1900-01-01','O+',null,null,now(),'https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',1),('v-24796','edwin@gmail.com','edwin','1234','edwin','mendez','Masculino','San Felix','041432','0412','1900-01-01','O+',null,null,now(),'https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',2),('v-333','bio@gmail.com','bio','33333','Michelle','Dellza','Masculino','San Felix','041432','0412','1900-01-01','O+',null,null,now(),'https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',3),('v-4444','patient@gmail.com','patient','44444','Patient','Dellza','Masculino','San Felix','041432','0412','1900-01-01','O+',null,null,now(),'https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',4);
 
 
 /*insert INTO patient (patient_dni,patient_email,patient_firstname,patient_lastname,patient_address,patient_mobilephone,patient_homephone,patient_birthdate,patient_gender,patient_blood_typing,patient_relationship,patient_created,patient_principal,patient_id_client) VALUES 

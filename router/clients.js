@@ -11,13 +11,13 @@ export const createClientRouter = ({ clientModel }) => {
 
   clientsRouter.get('/', clientController.getAll)
 
-  clientsRouter.get('/:id', [verifyToken], clientController.getById)
+  clientsRouter.get('/:id', clientController.getById)
 
   clientsRouter.post('/', clientController.create)
 
   clientsRouter.patch('/:id', [verifyToken, isAdmin], clientController.update)
 
-  clientsRouter.delete('/:id', [verifyToken, isAdmin], clientController.delete)
+  clientsRouter.delete('/:id', clientController.delete)
 
   return clientsRouter
 }
