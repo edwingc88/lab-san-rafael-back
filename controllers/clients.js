@@ -1,5 +1,6 @@
-import { /* validateClient */ validatePartialClient } from '../schemas/clients.js'
+// import { validateClient, validatePartialClient } from '../schemas/clients.js'
 import multiparty from 'multiparty'
+import { rutaFinal } from '../middlewares/ruta_imagen.js'
 
 export class ClientController {
   constructor ({ clientModel }) {
@@ -41,15 +42,19 @@ export class ClientController {
         res.status(201).json(newclient) */
 
         //  Transformando los datos que vienen de Fields , quitando los [] que vienen en cada valor, para luego validarlos.
-
-        const key = Object.keys(files)[0]
+        const rutaArchivoCompleta = await rutaFinal(files)
+        /*  const key = Object.keys(files)[0]
         const rutaLink = files[key][0].path
-        const rutaArchivo = rutaLink.replaceAll('\\', '/')
-        console.log(rutaArchivo)
+        const rutaArchivoCompleta = rutaLink.replaceAll('\\', '/') */
+
+        console.log(rutaArchivoCompleta)
 
         const dataObjectFields = { dni: fields.dni[0], email: fields.email[0], username: fields.username[0], password: fields.password[0], firstname: fields.firstname[0], lastname: fields.lastname[0], firstphone: fields.firstphone[0], secondphone: fields.secondphone[0], birthdate: fields.birthdate[0], bloodtyping: fields.bloodtyping[0], type_relationship: fields.type_relationship[0], created: fields.created[0], id_role: fields.id_role[0] }
         console.log(dataObjectFields)
-        return res.status(201).json({ message: 'client created' })
+
+        // const result = validateClient(dataObjectFields)
+
+        return res.status(201).json(dataObjectFields)
       })
     } catch (error) {
       next(error)
@@ -57,14 +62,14 @@ export class ClientController {
   }
 
   update = async (req, res) => {
-    const result = validatePartialClient(req.body)
+    /* const result = validatePartialClient(req.body)
     if (!result.success) {
       return res.status(400).json({ error: JSON.parse(result.error.message) })
     }
     const { id } = req.params
     const updatedclient = await this.clientModell.update({ id, input: result.data })
     if (!updatedclient) return res.status(404).json({ error: 'Not found client' })
-    return res.json(updatedclient)
+    return res.json(updatedclient) */
   }
 
   delete = async (req, res, next) => {

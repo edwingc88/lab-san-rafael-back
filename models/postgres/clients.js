@@ -3,20 +3,17 @@ import bc from 'bcrypt'
 export class ClientModel {
   static async getAll (role) {
     try {
-      if (role !== undefined || null) {
+      if (role) {
         console.log(role)
         const loweCaseRole = role.toLowerCase()
         const result = await conn.query('SELECT role_id,role_name FROM role WHERE LOWER(role_name) = $1;', [loweCaseRole])
         const roles = result.rows[0]
         console.log(roles)
-        if (roles.length === 0) {
-        // console.log(roles.length)
-          return []
-        }
+        if (roles.length === 0) return false
         const idRole = roles.role_id
         const resultRoles = await conn.query('SELECT * FROM client INNER JOIN role ON client.client_id_role = role.role_id WHERE role.role_id = $1;', [idRole])
-        const clients = resultRoles.rows
-        return clients
+        // const clients = resultRoles.rows
+        return resultRoles.rows
       }
       const res = await conn.query('SELECT * FROM client;')
       return res.rows
