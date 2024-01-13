@@ -1,5 +1,7 @@
 import conn from './db.js'
-import bc from 'bcrypt'
+// import bc from 'bcrypt'
+import { nombreFinalImagenDB } from '../../middlewares/nombre_imagen.js'
+
 export class ClientModel {
   static async getAll (role) {
     try {
@@ -40,7 +42,7 @@ export class ClientModel {
   static async create ({ input }) {
     try {
     // eslint-disable-next-line camelcase
-      const { dni, email, username, password, firstname, lastname, id_gender, address, firstphone, secondphone, birthdate, bloodtyping, id_relationship, name_relationship, created, abatar, id_role } = input
+      const { dni, email, username, password, firstname, lastname, gender, address, firstphone, secondphone, birthdate, bloodtyping, type_relationship, name_relationship, created, abatar, id_role } = input
 
       // const passwordHash = await bc.hash(password, 10)
 
@@ -49,7 +51,7 @@ export class ClientModel {
 
       const passwordHash = password
       // eslint-disable-next-line camelcase
-      const result = await conn.query('INSERT INTO client( client_id,client_dni , client_password,client_firstname,client_lastname ,client_email ,client_address,client_mobilephone,client_created, client_picture_url,client_id_role) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11 ) RETURNING *;', [dni, email, username, passwordHash, firstname, lastname, id_gender, address, firstphone, secondphone, birthdate, bloodtyping, id_relationship, name_relationship, created, abatar, id_role])
+      const result = await conn.query('INSERT INTO client( client_dni , client_email, client_username ,client_password,client_firstname,client_lastname ,client_gender ,client_address,client_firstphone,client_secondphone,client_birthdate, client_bloodtyping,client_type_relationship,client_name_relationship,client_created, client_abatar,client_id_role) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11,$12,$13,$14,$15,$16,$17) RETURNING *;', [dni, email, username, passwordHash, firstname, lastname, gender, address, firstphone, secondphone, birthdate, bloodtyping, type_relationship, name_relationship, created, abatar, id_role])
       return (result.rows)
     } catch (e) {
       console.log('Error DB en lab By ID ')
@@ -58,22 +60,109 @@ export class ClientModel {
   }
 
   static async update ({ id, input }) {
-    // eslint-disable-next-line camelcase
-    const { dni, password, firstname, lastname, email, birthdate, gender, address, mobilephone, homephone, blood_typing, created, picture_url, role_id } = input
-    const passwordHash = await bc.hash(password, 10)
-    // eslint-disable-next-line camelcase
-    const result = await conn.query('UPDATE client SET dni = $1, password = $2 , firstname= $3 , lastname= $4, email= $5, birthdate=$6, gender=$7 , address=$8 , mobilephone=$9, homephone=$10, blood_typing=$11, created=$12 , picture_url=$13 , role_id=$14  WHERE id = $15 RETURNING *;', [dni, passwordHash, firstname, lastname, email, birthdate, gender, address, mobilephone, homephone, blood_typing, created, picture_url, role_id, id])
-    console.log(result.rows)
-    return result.rows
+    try {
+      // eslint-disable-next-line camelcase
+      const { dni, email, username, password, firstname, lastname, gender, address, firstphone, secondphone, birthdate, bloodTyping, typeRelationship, nameRelationship, created, abatar, idRole } = input
+
+      // const passwordHash = await bc.hash(password, 10)
+      // eslint-disable-next-line camelcase
+
+      const passwordHash = password
+
+      const abatarUrlDelete = await conn.query('SELECT client_abatar FROM client WHERE client_id = $1;', [id])
+      console.log(abatarUrlDelete.rows[0].client_abatar)
+      console.log(nombreFinalImagenDB(abatarUrlDelete.rows[0].client_abatar))
+      // nombreFinalImagenD()
+
+      console.log('entro en DB update , el ID es:' + id)
+      if (abatar) {
+        console.log(abatar)
+        const result = await conn.query('UPDATE client SET  client_dni=$1 , client_email=$2, client_username=$3 ,client_password=$4,client_firstname=$5,client_lastname=$6 ,client_gender=$7,client_address=$8,client_firstphone=$9,client_secondphone=$10,client_birthdate=$11, client_bloodtyping=$12,client_type_relationship=$13,client_name_relationship=$14,client_created=$15, client_abatar=$16,client_id_role=$17 WHERE client_id=$18 RETURNING *;', [dni, email, username, passwordHash, firstname, lastname, gender, address, firstphone, secondphone, birthdate, bloodTyping, typeRelationship, nameRelationship, created, abatar, idRole, id])
+        return (result.rows)
+      } else {
+        console.log('No update')
+        const result = await conn.query('UPDATE client SET  client_dni=$1 , client_email=$2, client_username=$3 ,client_password=$4,client_firstname=$5,client_lastname=$6 ,client_gender=$7,client_address=$8,client_firstphone=$9,client_secondphone=$10,client_birthdate=$11, client_bloodtyping=$12,client_type_relationship=$13,client_name_relationship=$14,client_created=$15,client_id_role=$16 WHERE client_id=$17 RETURNING *;', [dni, email, username, passwordHash, firstname, lastname, gender, address, firstphone, secondphone, birthdate, bloodTyping, typeRelationship, nameRelationship, created, idRole, id])
+        return (result.rows)
+      }
+
+      // eslint-disable-next-line camelcase
+      /* const result = await conn.query('UPDATE client SET ( client_dni=$1 , client_email=$2, client_username=$3 ,client_password=$4,client_firstname=$5,client_lastname=$6 ,client_gender=$7,client_address=$8,client_firstphone=$9,client_secondphone=$10,client_birthdate=$11, client_bloodtyping=$12,client_type_relationship=$13,client_name_relationship=$14,client_created=$15, client_abatar=$16,client_id_role=$17) WHERE client_id=$18 RETURNING *;', [dni, email, username, passwordHash, firstname, lastname, gender, address, firstphone, secondphone, birthdate, bloodtyping, type_relationship, name_relationship, created, abatar, id_role])
+      return (result.rows) */
+    } catch (e) {
+      console.log('Error DB en lab By ID ')
+      throw new Error(e)
+    }
+  }
+
+  static async updateImg ({ id, input }) {
+    try {
+      // eslint-disable-next-line camelcase
+      const abatar = input
+
+      console.log('entro en model udate img: ' + abatar + id)
+
+      const resultUrlDelete = await conn.query('SELECT client_abatar FROM client WHERE client_id = $1;', [id])
+
+      if (resultUrlDelete.row === 0) return resultUrlDelete.row
+
+      const abatarUrlDelete = resultUrlDelete.rows[0].client_abatar
+      const nombreImgDelete = nombreFinalImagenDB(abatarUrlDelete)
+      console.log(abatarUrlDelete)
+      console.log(nombreImgDelete)
+
+      if (nombreImgDelete !== 'default.jpg') {
+        console.log('BOORANDO ARCHIVO')
+      }
+
+      // console.log(abatar)
+      const result = await conn.query('UPDATE client SET  client_abatar=$1 WHERE client_id=$2 RETURNING *;', [abatar, id])
+      return result.rows
+
+      // return { id, imagenForm }
+
+      /* const abatarUrlDelete = await conn.query('SELECT client_abatar FROM client WHERE client_id = $1;', [id])
+      console.log(abatarUrlDelete.rows[0].client_abatar)
+      console.log(nombreFinalImagenDB(abatarUrlDelete.rows[0].client_abatar)) */
+      // nombreFinalImagenD()
+      /*
+      console.log('entro en DB update , el ID es:' + id)
+      if (abatar) {
+        console.log(abatar)
+        const result = await conn.query('UPDATE client SET  client_dni=$1 , client_email=$2, client_username=$3 ,client_password=$4,client_firstname=$5,client_lastname=$6 ,client_gender=$7,client_address=$8,client_firstphone=$9,client_secondphone=$10,client_birthdate=$11, client_bloodtyping=$12,client_type_relationship=$13,client_name_relationship=$14,client_created=$15, client_abatar=$16,client_id_role=$17 WHERE client_id=$18 RETURNING *;', [dni, email, username, passwordHash, firstname, lastname, gender, address, firstphone, secondphone, birthdate, bloodTyping, typeRelationship, nameRelationship, created, abatar, idRole, id])
+        return (result.rows)
+      } else {
+        console.log('No update')
+        const result = await conn.query('UPDATE client SET  client_dni=$1 , client_email=$2, client_username=$3 ,client_password=$4,client_firstname=$5,client_lastname=$6 ,client_gender=$7,client_address=$8,client_firstphone=$9,client_secondphone=$10,client_birthdate=$11, client_bloodtyping=$12,client_type_relationship=$13,client_name_relationship=$14,client_created=$15,client_id_role=$16 WHERE client_id=$17 RETURNING *;', [dni, email, username, passwordHash, firstname, lastname, gender, address, firstphone, secondphone, birthdate, bloodTyping, typeRelationship, nameRelationship, created, idRole, id])
+        return (result.rows)
+      }
+*/
+      // eslint-disable-next-line camelcase
+      /* const result = await conn.query('UPDATE client SET ( client_dni=$1 , client_email=$2, client_username=$3 ,client_password=$4,client_firstname=$5,client_lastname=$6 ,client_gender=$7,client_address=$8,client_firstphone=$9,client_secondphone=$10,client_birthdate=$11, client_bloodtyping=$12,client_type_relationship=$13,client_name_relationship=$14,client_created=$15, client_abatar=$16,client_id_role=$17) WHERE client_id=$18 RETURNING *;', [dni, email, username, passwordHash, firstname, lastname, gender, address, firstphone, secondphone, birthdate, bloodtyping, type_relationship, name_relationship, created, abatar, id_role])
+      return (result.rows) */
+    } catch (e) {
+      console.log('Error DB en lab By ID ')
+      throw new Error(e)
+    }
   }
 
   static async delete ({ id }) {
     try {
-      const result = await conn.query('DELETE FROM client WHERE id = $1 returning *;', [id])
-      console.log(result.rows)
+      const result = await conn.query('DELETE FROM client WHERE client_id = $1 returning *;', [id])
+      // console.log(result.rows)
       return result.rows
     } catch (e) {
       console.log('Error DB en lab By ID ')
+      throw new Error(e)
+    }
+  }
+
+  static async deleteImg ({ id, rutaImgDefault }) {
+    try {
+      const result = await conn.query('UPDATE client SET client_abatar = $1  WHERE client_id = $2 RETURNING *;', [rutaImgDefault, id])
+      // console.log(result.rows)
+      return result.rows
+    } catch (e) {
+      console.log('Error DB en lab By DeleteIMG ')
       throw new Error(e)
     }
   }

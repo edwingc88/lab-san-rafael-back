@@ -10,20 +10,20 @@ const cLientSchema = z.object({
   password: z.string().min(1, { message: 'This field has to be filled.' }),
   firstname: z.string().min(1, { message: 'This field has to be filled.' }),
   lastname: z.string().min(1, { message: 'This field has to be filled.' }),
-  id_gender: z.number(),
+  gender: z.string(),
   address: z.string(),
   firstphone: z.string(),
   secondphone: z.string(),
-  // created: z.string().transform((str) => new Date(str)),
   birthdate: z.string().transform((str) => new Date(str)),
   blood_typing: z.enum(['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-']),
-  id_relationship: z.number(),
+  type_relationship: z.string(),
   name_relationship: z.string(),
-  created: z.date().safeParse(new Date()),
+  // created: z.date().safeParse(new Date()),
+  created: z.string().transform((str) => new Date(str)),
   abatar: z.string().url({
     message: 'Picture mus  t be a valid URL'
   }),
-  id_role: z.number([1, 2, 3, 4])
+  id_role: z.string(['1', '2', '3', '4'])
 })
 
 export function validateClient (object) {

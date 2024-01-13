@@ -2,7 +2,7 @@ import { Router } from 'express'
 
 import { ClientController } from '../controllers/clients.js'
 
-import { verifyToken, isAdmin } from '../middlewares/authjwt.js'
+// import { verifyToken, isAdmin } from '../middlewares/authjwt.js'
 
 export const createClientRouter = ({ clientModel }) => {
   const clientsRouter = Router()
@@ -15,9 +15,11 @@ export const createClientRouter = ({ clientModel }) => {
 
   clientsRouter.post('/', clientController.create)
 
-  clientsRouter.patch('/:id', [verifyToken, isAdmin], clientController.update)
-
+  clientsRouter.patch('/:id'/*, [verifyToken, isAdmin] */, clientController.update)
+  clientsRouter.patch('/updateimg/:id', clientController.updateImg)
   clientsRouter.delete('/:id', clientController.delete)
+
+  clientsRouter.delete('/deleteimg/:id', clientController.deleteImg)
 
   return clientsRouter
 }
