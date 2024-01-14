@@ -48,21 +48,21 @@
   <h1 style="padding: .5rem;align-items: center; margin: auto;text-align: center;">API Laboratorio Clinico <span class="listo">"San Rafael"</span></h1>
   <section style="display: flex;padding: .5rem; gap: 2rem;border-top: 2px solid rgb(32, 32, 32);max-width: 1400px; margin: 0 auto;">
     <!-- Lab, Client , Patient , Role -->
-    <article id="colum1" style="width: 50%;max-width:700px;border-right: 2px solid  rgb(11, 11, 11); overflow-x: scroll;">
+    <article id="colum1" style="width: 50%;max-width:700px;border-right: 2px solid  rgb(11, 11, 11); overflow-x: auto;">
         <!-- API Lab-->
-        <details >
-          <summary style="margin: 1rem; font-size: x-large; font-weight: 600;">
+      <details open >
+        <summary style="margin: 1rem; font-size: x-large; font-weight: 600;">
               API Lab <span class="proceso">&#x2615;&#xfe0e;</span>
-          </summary>
-          <ul >
-              <li>
+        </summary>
+        <ul >
+            <li>
                   <p class="negrita">
                     <span class="grande">GET :</span>
                     Consulta todos los Laboratorios
                     <span class="listo">&#x1f5f9;</span>
                   </p>
                   <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/labs</p>
-              </li>
+            </li>
               <li>
                 <p class="negrita"><span class="grande">POST : </span>Crear Un Laboratorio<span class="listo"> &#x1f5f9;</span></p> 
                 <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/labs</p>
@@ -82,14 +82,33 @@
   "vision":"vision de lab"
   }
   </pre>
-              </li>
               <li>     
-                <p class="negrita"> <span class="grande">PATH : </span>Actualizar  Laboratorio por ID<span class="falta"> &#x1f5f7;</span></p> 
+                <p class="negrita"> <span class="grande">PATH : </span>Actualizar  Laboratorio por ID <span class="listo">&#x1f5f9;</span></p> 
                 <span>https://lab-san-rafael-api.onrender.com/labs/:id</span>
+<pre style="box-sizing: border-box;overflow-x: scroll;">
+  {
+    "lab_id": 9,
+    "lab_name": "Centro11111234567899111",
+    "lab_rif": "J-11111234567899111",
+    "lab_slogan": "Para nosotros no hay nada mas importante que tu salud.",
+    "lab_description": "laboratorio clínico servicios",
+    "lab_objetive": "Somos una empresa que cuenta con personal altamente calificado y que trabaja con altos estandares de calidad ",
+    "lab_mission": "Ofrecer uns ervicion de Laboratorio Clinico",
+    "lab_vision": "Posicionarnos como un laborarotio clinino",
+    "lab_email": "sanrafa1@gmail.com",
+    "lab_address": "Urb gran Sabana core931237829",
+    "lab_phone": "04143859751129"
+  }
+</pre>
               </li>
               <li>
-                <p class="negrita"> <span class="grande">PATH : </span>Actualizar  Imagen por ID<span class="falta"> &#x1f5f7;</span></p> 
+                <p class="negrita"> <span class="grande">PATH : </span>Actualizar  Imagen por ID <span class="listo">&#x1f5f9;</span></p> 
                 <span>https://lab-san-rafael-api.onrender.com/labs/updateimg/:id</span>
+<pre style="box-sizing: border-box;overflow-x: scroll;">
+ {
+   "lab_logo": "localhost:1234/sources/images/public/TyFN0W26XRQ-TqB5XEoiZAe-.png"
+ }
+</pre>
               </li>
               <li>
                 <p class="negrita"><span class="grande">DELETE : </span>Eliminar Lab por ID         <span class="listo">&#x1f5f9;</span></p> 
@@ -100,10 +119,10 @@
                 <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/labs/deleteimg/:id</p>
               </li>
           </ul>
-        </details>   
+      </details>   
 
-        <!-- API Client-->
-        <details open >
+      <!-- API Client-->
+      <details  >
           <summary style="margin: 1rem; font-size: x-large; font-weight: 600;">
               API Client <span class="proceso">&#x2615;&#xfe0e;</span>
           </summary>
@@ -164,10 +183,10 @@
               </div>
             </li>
           </ul>
-        </details>
+      </details>
       
-        <!-- API Patient-->
-        <!--     <div>
+      <!-- API Patient-->
+      <!-- <div>
           <h2>API Patient</h2>
           <ul style="padding-bottom: .5rem;">
             <li >    
@@ -199,8 +218,8 @@
         </div>
  -->
        
-        <!-- API Role-->
-        <details >
+      <!-- API Role-->
+      <details >
           <summary style="margin: 1rem; font-size: x-large; font-weight: 600;">
               API Role <span class="proceso">&#x2615;&#xfe0e;</span>
           </summary>
@@ -231,7 +250,7 @@
                     </div>
                   </li>
           </ul>
-        </details>  
+      </details>  
     
     </article>
 
@@ -278,7 +297,7 @@
       </details>  
 
       <!-- API Source-->
-      <details open>
+      <details >
         <summary style="margin: 1rem; font-size: x-large; font-weight: 600;">
             API Source <span class="proceso">&#x2615;&#xfe0e;</span>
         </summary>
@@ -360,8 +379,6 @@
         </ul>
       </details>   
         
-
-
       <!-- API Sub-Category-->
  <!--      <div>
         <h2>API Sub-Category</h2>
@@ -394,8 +411,6 @@
         </ul>
       </div> -->
       
-  
-    
     </article>
   </section>
 </body>

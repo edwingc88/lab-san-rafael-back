@@ -117,96 +117,113 @@ export class LabController {
     })
   }
 
-  update = async (req, res) => {
-    const form = new multiparty.Form({ uploadDir: IMAGEN_UPLOAD_DIR })
-
-    form.parse(req, async (err, fields, files) => {
-      if (err) {
-        console.error(err)
-        return res.status(500).json({ error: 'Error msj formdata Update' })
-      }
-
-      console.log(JSON.stringify(fields, null, 2))
-      console.log(JSON.stringify(files, null, 2))
-      // console.log(Object.keys(files)[0])
-
-      // Creando la ruta de la imagen por default
-      /* rutaFinalArchivo = process.env.WEB_URL + 'sources/images/public/default.jpg'
-      console.log(rutaFinalArchivo)
-      console.log('Arriba RutaFinal') */
-      let rutaFinalArchivo = ''
-      // Obteniendo la ruta de la imagen
-      const key = Object.keys(files)[0]
-      const rutaLink = files[key][0].path
-      const rutaArchivo = rutaLink.replaceAll('\\', '/')
-      console.log(files[key][0].originalFilename)
-      console.log('Arriba OriginalFAliName sacado de Multi part')
-      if (files[key][0].originalFilename !== '') {
-        rutaFinalArchivo = process.env.WEB_URL + rutaArchivo
-        console.log(rutaFinalArchivo)
-      }
-
-      console.log('Abajo default imagen sacada de multipartys y despues ruta Archivo')
-      const nameImagenDefault = rutaLink.slice(rutaLink.lastIndexOf('\\') + 1)
-      console.log(nameImagenDefault)
-
-      console.log(rutaArchivo)
-
-      console.log(extname(rutaArchivo))
-
-      /// RECUPERANDO DATOS ITERANDO OBJETO
-      const claves = Object.keys(fields) // claves = ["nombre", "color", "macho", "edad"]
-      let newvalue = {}
-
-      console.log(claves)
-
-      for (let i = 0; i < claves.length; i++) {
-        const clave = claves[i]
-        const valor = { [clave]: fields[clave][0] }
-        // console.log(clave)
-        // console.log(valor)
-        newvalue = { ...newvalue, ...valor }
-      }
-
-      console.log(newvalue)
-      console.log('Arriba NewValiue')
-
-      // para actulizar una nueva imagen debe ingresar uno nuevo si no no hace nada
-
-      if (extname(rutaArchivo) === '') {
-        fs.unlink(rutaArchivo, function (err) {
-          if (err) {
-            console.error(err)
-            fs.unlink(join('sources', 'public', 'images', nameImagenDefault), function (err) {
-              if (err) { console.error(err) }
-              console.log('File deleted Local!')
-            })
-          } else {
-            console.log('File deleted Render UPDATE!')
-          }
-        })
-      }
-
-      newvalue.logo = rutaFinalArchivo
-      console.log(newvalue.logo)
-      console.log('Arriba NewValue logo')
-
-      const result = validatePartialLab(newvalue)
-
-      if (result.error) {
-        return res.status(400).json({ error: JSON.parse(result.error.message) })
-      }
-
-      console.log(result.data)
-      console.log('resulta.DATA arriba')
+  update = async (req, res, next) => {
+    try {
+      const form = new multiparty.Form({ /* uploadDir: IMAGEN_UPLOAD_DIR */})
       const { id } = req.params
-      console.log(id)
-      console.log('id arriba que pasar para actulizar')
-      const updatedlab = await this.labModel.update({ idupdate: id, input: result.data })
+      form.parse(req, async (err, fields) => {
+        if (err) {
+          console.error(err)
+          return res.status(500).json({ error: 'Error msj formdata Update' })
+        }
 
-      res.status(201).json(updatedlab)
+        console.log(JSON.stringify(fields, null, 2))
+        // console.log(JSON.stringify(files, null, 2))
 
-      /* else {
+        // let rutaFinalArchivo = ''
+        // Obteniendo la ruta de la imagen
+
+        ///
+        /*
+        const key = Object.keys(files)[0]
+        const rutaLink = files[key][0].path
+        const rutaArchivo = rutaLink.replaceAll('\\', '/')
+        console.log(files[key][0].originalFilename)
+        console.log('Arriba OriginalFAliName sacado de Multi part')
+        if (files[key][0].originalFilename !== '') {
+          rutaFinalArchivo = process.env.WEB_URL + rutaArchivo
+          console.log(rutaFinalArchivo)
+        }
+
+        console.log('Abajo default imagen sacada de multipartys y despues ruta Archivo')
+        const nameImagenDefault = rutaLink.slice(rutaLink.lastIndexOf('\\') + 1)
+        console.log(nameImagenDefault)
+
+        console.log(rutaArchivo)
+
+        console.log(extname(rutaArchivo))
+
+        /// RECUPERANDO DATOS ITERANDO OBJETO
+        const claves = Object.keys(fields) // claves = ["nombre", "color", "macho", "edad"]
+        let newvalue = {}
+
+        console.log(claves)
+
+        for (let i = 0; i < claves.length; i++) {
+          const clave = claves[i]
+          const valor = { [clave]: fields[clave][0] }
+          // console.log(clave)
+          // console.log(valor)
+          newvalue = { ...newvalue, ...valor }
+        }
+
+        console.log(newvalue)
+        console.log('Arriba NewValiue')
+
+        // para actulizar una nueva imagen debe ingresar uno nuevo si no no hace nada
+
+        if (extname(rutaArchivo) === '') {
+          fs.unlink(rutaArchivo, function (err) {
+            if (err) {
+              console.error(err)
+              fs.unlink(join('sources', 'public', 'images', nameImagenDefault), function (err) {
+                if (err) { console.error(err) }
+                console.log('File deleted Local!')
+              })
+            } else {
+              console.log('File deleted Render UPDATE!')
+            }
+          })
+        }
+
+        newvalue.logo = rutaFinalArchivo
+        console.log(newvalue.logo)
+        console.log('Arriba NewValue logo')
+        */
+
+        /// RECUPERANDO DATOS ITERANDO OBJETO
+        const claves = Object.keys(fields)
+        let newvalue = {}
+
+        for (let i = 0; i < claves.length; i++) {
+          const clave = claves[i]
+          const valor = { [clave]: fields[clave][0] }
+          // console.log(clave)
+          // console.log(valor)
+          newvalue = { ...newvalue, ...valor }
+        }
+
+        const result = validatePartialLab(newvalue)
+
+        if (result.error) {
+          return res.status(400).json({ error: JSON.parse(result.error.message) })
+        }
+
+        console.log(result.data)
+        console.log('resulta.DATA arriba')
+        const updatedlabResult = await this.labModel.update({ idupdate: id, input: result.data })
+
+        console.log(updatedlabResult)
+
+        // if (updatedlab.length === 0) res.status(404).json({ error: 'Not found lab' })
+
+        return res.status(201).json(updatedlabResult)
+      })
+    } catch (error) {
+      next(error)
+    }
+
+    /* else {
         let result = {}
         newvalue.logo = rutaFinalArchivo
 
@@ -222,11 +239,9 @@ export class LabController {
 
         res.status(201).json(updatedlab)
       } */
-    })
-
-    /// ///
-
-    /* const result = validatePartialLab(req.body)
+  }
+  /// ///
+  /* const result = validatePartialLab(req.body)
     if (!result.success) {
       return res.status(400).json({ error: JSON.parse(result.error.message) })
     }
@@ -234,7 +249,6 @@ export class LabController {
     const updatedlab = await this.labModell.update({ id, input: result.data })
     if (!updatedlab) return res.status(404).json({ error: 'Not found lab' })
     return res.json(updatedlab) */
-  }
 
   updateImg = async (req, res, next) => {
     const { id } = req.params
@@ -249,17 +263,17 @@ export class LabController {
         console.log('Nombre random' + mombreRandomImagenCompleta)
         /* Condicional para actulizar o NO */
         // let ifUpdate = true
-        let rutaURLTotal = process.env.WEB_URL + IMAGEN_UPLOAD_DIR + mombreRandomImagenCompleta
+        const rutaURLTotal = process.env.WEB_URL + IMAGEN_UPLOAD_DIR + mombreRandomImagenCompleta
 
         const objectImagen = JSON.stringify(files, null, 2)
-        const mombreRealImagenCompleta = JSON.parse(objectImagen).abatar[0].originalFilename // Obeteniendo Nombre Real de la imagen para ver si se subio o no
+        const mombreRealImagenCompleta = JSON.parse(objectImagen).logo[0].originalFilename // Obeteniendo Nombre Real de la imagen para ver si se subio o no
         console.log('Nombre Real' + mombreRealImagenCompleta)
 
         if (mombreRealImagenCompleta === '') {
           console.log('vacio el Nombre Real')
           borrarImagen(mombreRandomImagenCompleta)
           // ifUpdate = false
-          rutaURLTotal = ''
+          // rutaURLTotal = ''
           return res.status(404).json({ error: 'No hay archivo que actualizar . Ingrese una imagen!' })
         }
 
@@ -267,15 +281,6 @@ export class LabController {
 
         return res.status(201).json(updatedclient)
       })
-
-      /* const result = validatePartialClient(req.body)
-    if (!result.success) {
-      return res.status(400).json({ error: JSON.parse(result.error.message) })
-    }
-    const { id } = req.params
-    const updatedclient = await this.clientModell.update({ id, input: result.data })
-    if (!updatedclient) return res.status(404).json({ error: 'Not found client' })
-    return res.json(updatedclient) */
     } catch (error) {
       next(error)
     }
