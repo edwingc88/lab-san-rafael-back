@@ -1,7 +1,7 @@
-import { validateClient /*, validatePartialClient */ } from '../schemas/clients.js'
+import { validateClient, validatePartialClient } from '../schemas/clients.js'
 import multiparty from 'multiparty'
 import 'dotenv/config'
-import { nombreFinal, nombreFinalImagenDB } from '../middlewares/nombre_imagen.js'
+import { nombreFinalImagenByFile, nombreFinalImagenByUrl } from '../middlewares/nombre_imagen.js'
 import { borrarImagen } from '../middlewares/borrar_imagen.js'
 // import fs from 'fs's
 const IMAGEN_UPLOAD_DIR = 'sources/images/public/'
@@ -40,7 +40,7 @@ export class ClientController {
       form.parse(req, async (err, fields, files) => {
         if (err) return res.status(500).json({ error: 'Error msj formdata' })
 
-        const mombreRandomImagenCompleta = await nombreFinal(files) // Nombre Ramdom de la imagen  . Transformando los datos que vienen de files , quitando los [] que vienen en cada valor, para luego validarlos.
+        const mombreRandomImagenCompleta = await nombreFinalImagenByFile(files) // Nombre Ramdom de la imagen  . Transformando los datos que vienen de files , quitando los [] que vienen en cada valor, para luego validarlos.
 
         console.log('Nombre random' + mombreRandomImagenCompleta)
 
@@ -76,16 +76,15 @@ export class ClientController {
 
   update = async (req, res, next) => {
     const { id } = req.params
-    const form = new multiparty.Form({ uploadDir: './' + IMAGEN_UPLOAD_DIR })
+    const form = new multiparty.Form({ })
     try {
-      form.parse(req, async (err, fields, files) => {
+      form.parse(req, async (err, fields) => {
         if (err) return res.status(500).json({ error: 'Error msj formdata' })
 
-        const mombreRandomImagenCompleta = await nombreFinal(files) // Nombre Ramdom de la imagen  . Transformando los datos que vienen de files , quitando los [] que vienen en cada valor, para luego validarlos.
+        /* const mombreRandomImagenCompleta = await nombreFinal(files) // Nombre Ramdom de la imagen  . Transformando los datos que vienen de files , quitando los [] que vienen en cada valor, para luego validarlos.
 
         console.log('Nombre random' + mombreRandomImagenCompleta)
-        /* Condicional para actulizar o NO */
-        let ifUpdate = true
+
         let rutaURLTotal = process.env.WEB_URL + IMAGEN_UPLOAD_DIR + mombreRandomImagenCompleta
 
         const objectImagen = JSON.stringify(files, null, 2)
@@ -95,15 +94,19 @@ export class ClientController {
         if (mombreRealImagenCompleta === '') {
           console.log('vacio el Nombre Real')
           borrarImagen(mombreRandomImagenCompleta)
-          ifUpdate = false
           rutaURLTotal = ''
-        }
-        console.log('ifupdate' + ifUpdate)
-        console.log('RutaURL=' + rutaURLTotal)
-        const dataObjectFields = { dni: fields.dni[0], email: fields.email[0], username: fields.username[0], password: fields.password[0], firstname: fields.firstname[0], lastname: fields.lastname[0], gender: fields.gender[0], address: fields.address[0], firstphone: fields.firstphone[0], secondphone: fields.secondphone[0], birthdate: fields.birthdate[0], bloodTyping: fields.bloodtyping[0], typeRelationship: fields.type_relationship[0], nameRelationship: fields.name_relationship[0], created: fields.created[0], abatar: rutaURLTotal, idRole: fields.id_role[0] }
+        } */
+
+        // console.log('RutaURL=' + rutaURLTotal)
+        const dataObjectFields = { dni: fields.dni[0], email: fields.email[0], username: fields.username[0], password: fields.password[0], firstname: fields.firstname[0], lastname: fields.lastname[0], gender: fields.gender[0], address: fields.address[0], firstphone: fields.firstphone[0], secondphone: fields.secondphone[0], birthdate: fields.birthdate[0], bloodTyping: fields.bloodtyping[0], typeRelationship: fields.type_relationship[0], nameRelationship: fields.name_relationship[0], created: fields.created[0], idRole: fields.id_role[0] }
         // console.log(dataObjectFields)
 
-        const updatedclient = await this.clientModel.update({ id, input: dataObjectFields })
+        const result = validatePartialClient(dataObjectFields)
+        if (!result.success) {
+          return res.status(400).json({ error: JSON.parse(result.error.message) })
+        }
+
+        const updatedclient = await this.clientModel.update({ id, input: result })
 
         // console.log(updatedclient)
 
@@ -133,7 +136,7 @@ export class ClientController {
         // console.log(files)
         if (err) return res.status(500).json({ error: 'Error msj formdata' })
         console.log(fields)
-        const mombreRandomImagenCompleta = await nombreFinal(files) // Nombre Ramdom de la imagen  . Transformando los datos que vienen de files , quitando los [] que vienen en cada valor, para luego validarlos.
+        const mombreRandomImagenCompleta = await nombreFinalImagenByFile(files) // Nombre Ramdom de la imagen  . Transformando los datos que vienen de files , quitando los [] que vienen en cada valor, para luego validarlos.
 
         console.log('Nombre random' + mombreRandomImagenCompleta)
         /* Condicional para actulizar o NO */
@@ -151,18 +154,9 @@ export class ClientController {
           rutaURLTotal = ''
           return res.status(404).json({ error: 'No hay archivo que actualizar . Ingrese una imagen!' })
         }
-        // console.log('ifupdate' + ifUpdate)
-        // console.log('RutaURL=' + rutaURLTotal)
-        // console.log(id)
-        // console.log(dataObjectFields)
 
         const updatedclient = await this.clientModel.updateImg({ id, input: rutaURLTotal })
 
-        // console.log(updatedclient)
-
-        // if (updatedclient.length === 0) return res.status(404).json({ error: 'Not found client' })
-
-        //  return res.status(201).json(updatedclient)
         return res.status(201).json(updatedclient)
       })
 
@@ -189,13 +183,13 @@ export class ClientController {
       console.log('jsonresult arriba') */
       // console.log(result[0].client_abatar)
 
-      if (nombreFinalImagenDB(result[0].client_abatar) !== 'default.jpg') {
+      if (nombreFinalImagenByUrl(result[0].client_abatar) !== 'default.jpg') {
         /* const imagenBorrar = IMAGEN_UPLOAD_DIR + nombreFinalImagenDB(result[0].client_abatar)
         fs.unlink(imagenBorrar, function (err) {
           if (err) { console.error(err) }
           console.log('File deleted!')
         }) */
-        const namIMGBorrar = nombreFinalImagenDB(result[0].client_abatar)
+        const namIMGBorrar = nombreFinalImagenByUrl(result[0].client_abatar)
         console.log(namIMGBorrar)
         await borrarImagen(namIMGBorrar)
       }

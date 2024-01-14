@@ -7,6 +7,10 @@
   <style>
 
     .proceso{
+      color: rgb(246, 161, 24);
+    }
+
+    .falta{
       color: brown;
     }
 
@@ -18,200 +22,279 @@
       color: rgb(11, 10, 10);
     }
 
+    .negrita{
+      font-weight:800;
+      font-size: medium;
+    }
+
+    .grande{
+      font-size: larger;
+      font-weight:bold;
+    }
+
+    details{
+      padding-top: 2px;
+    }
+
+    /*
+     LISTO :  &#x1f5f9;
+      PROCESO : &#x2615;&#xfe0e
+      FALTA: &#x1f5f7;
+    */
+
   </style>
 </head>
 <body style="color: rgb(11, 11, 11);">
-  <h1 style="padding: 1rem;align-items: center; margin: auto;text-align: center;">API Laboratorio Clinico "San Rafael"</h1>
-  <section style="display: flex;padding: .5rem; gap: 2rem;border-top: 2px solid rgb(32, 32, 32);">
-
+  <h1 style="padding: .5rem;align-items: center; margin: auto;text-align: center;">API Laboratorio Clinico <span class="listo">"San Rafael"</span></h1>
+  <section style="display: flex;padding: .5rem; gap: 2rem;border-top: 2px solid rgb(32, 32, 32);max-width: 1400px; margin: 0 auto;">
     <!-- Lab, Client , Patient , Role -->
-    <article id="colum1" style="width:50%;border-right: 2px solid  rgb(11, 11, 11);">
-      <!-- API Lab-->
-      <div>
-              <h2>API Lab</h2>
-                <ul style="padding-bottom: 2rem;" >
-                  <li >    
-                    <p class="listo" style="font-weight: bold;">GET : <span style="color: black;">Consulta todos los Laboratorios</span></p> 
-                    <span>https://lab-san-rafael-api.onrender.com/lab</span>
-                  </li>
-                  <li>
-                    <p class="listo" style="font-weight: bold;">POST :<span style="font-weight:bold;" class="normal" >Crear Laboratorio</span></p> 
-                    <span>https://lab-san-rafael-api.onrender.com/lab</span> 
+    <article id="colum1" style="width: 50%;max-width:700px;border-right: 2px solid  rgb(11, 11, 11); overflow-x: scroll;">
+        <!-- API Lab-->
+        <details >
+          <summary style="margin: 1rem; font-size: x-large; font-weight: 600;">
+              API Lab <span class="proceso">&#x2615;&#xfe0e;</span>
+          </summary>
+          <ul >
+              <li>
+                  <p class="negrita">
+                    <span class="grande">GET :</span>
+                    Consulta todos los Laboratorios
+                    <span class="listo">&#x1f5f9;</span>
+                  </p>
+                  <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/labs</p>
+              </li>
+              <li>
+                <p class="negrita"><span class="grande">POST : </span>Crear Un Laboratorio<span class="listo"> &#x1f5f9;</span></p> 
+                <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/labs</p>
+                <p><span class="negrita">Headers : </span> multipart/form-data;</p>
+  <pre style="box-sizing: border-box;overflow-x: scroll;">
+  {
+  "name":"Centro Médico Ambulatorio San Rafael2",
+  "rif":"J-12345678",
+  "slogan":"Los resultados en los que puede confiar",
+  "description":" Un laboratorio clínico es una especialidad médica que permite contribuir al estudio, prevención, diagnóstico y tratamiento de las enfermedades humanas.",
+  "address":"65JG+H7V, Ciudad Guayana 8050, Bolívar. Urb Gran Sabana",
+  "phone":"0286-9530505",
+  "email":"lab@gmail.com",
+  "logo":"localhost/url/imagen.jpg",
+  "objetive":"objetivos de lab",
+  "mission":"misiones de lab",
+  "vision":"vision de lab"
+  }
+  </pre>
+              </li>
+              <li>     
+                <p class="negrita"> <span class="grande">PATH : </span>Actualizar  Laboratorio por ID<span class="falta"> &#x1f5f7;</span></p> 
+                <span>https://lab-san-rafael-api.onrender.com/labs/:id</span>
+              </li>
+              <li>
+                <p class="negrita"> <span class="grande">PATH : </span>Actualizar  Imagen por ID<span class="falta"> &#x1f5f7;</span></p> 
+                <span>https://lab-san-rafael-api.onrender.com/labs/updateimg/:id</span>
+              </li>
+              <li>
+                <p class="negrita"><span class="grande">DELETE : </span>Eliminar Lab por ID         <span class="listo">&#x1f5f9;</span></p> 
+                <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/labs/:id</p>
+              </li>
+              <li>
+                <p class="negrita"><span class="grande">DELETE : </span>Eliminar Imagen por ID         <span class="listo">&#x1f5f9;</span></p> 
+                <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/labs/deleteimg/:id</p>
+              </li>
+          </ul>
+        </details>   
+
+        <!-- API Client-->
+        <details open >
+          <summary style="margin: 1rem; font-size: x-large; font-weight: 600;">
+              API Client <span class="proceso">&#x2615;&#xfe0e;</span>
+          </summary>
+          <ul>
+            <li>
+              <p class="negrita">
+                <span class="grande">GET :</span>
+                Consulta todos los  Clientes
+                <span class="listo">&#x1f5f9;</span>
+              </p>
+              <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/clients</p>
+            </li>
+            <li>
+              <p class="negrita"><span class="grande">POST : </span>Crear Un Cliente<span class="listo"> &#x1f5f9;</span></p> 
+              <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/clients</p>
+              <p><span class="negrita">Headers : </span> multipart/form-data;</p>
 <pre style="box-sizing: border-box;overflow-x: scroll;">
 {
- "name":"Centro Médico Ambulatorio San Rafael",
- "rif":"J-12345",
- "slogan":"Los resultados en los que puede confiar",
- "description":" Un laboratorio clínico es una especialidad médica que permite contribuir al estudio, prevención, diagnóstico y tratamiento de las enfermedades humanas.",
- "address":"65JG+H7V, Ciudad Guayana 8050, Bolívar. Urb Gran Sabana",
- "phone":"0286-9530505",
- "email":"lab@gmail.com",
- "logo":"imagen.jpg",
- "objetive":"objetivos de lab",
- "mission":"misiones de lab",
- "vision":"vision de lab"
+"dni":"v-1111",
+"email":"J-12345678",
+"username":"pedrito",
+"password":"11111",
+"firstname":"65JG+H7V, Ciudad Guayana 8050, Bolívar. Urb Gran Sabana",
+"lastname":"0286-9530505",
+"gender":"lab@gmail.com",
+"address":"imagen.jpg",
+"firstphone":"objetivos de lab",
+"secondphone":"misiones de lab",
+"birthdate":"vision de lab",
+"bloodtyping":"vision de lab",
+"type_relationship":"vision de lab",
+"name_relationship":"vision de lab",
+"created":"vision de lab",
+"id_role":"vision de lab",
+"abatar":"localhost/url/imagen.jpg"
 }
 </pre>
-                  </li>
-                  <li >
-                    <div style="display:flex;gap: 2rem;">
-                    <p class="proceso">PATH</p> 
-                    <p>/lab</p>
-                    <p>Consulta todas las clients</p>
-                    </div>
-                  </li>
-                 <li>
-                  <p class="listo" style="font-weight: bold;">DELETE : <span class="normal">Eliminar Lab por ID</span></p> 
-                  <span>https://lab-san-rafael-api.onrender.com/lab/:id</span>
-                 </li>
-                </ul>
-      </div> 
-
-      <!-- API Client-->
-      <div>
-        <h2>API Client</h2>
-        <ul style="padding-bottom: 2rem;">
-          <li>
-            <p class="listo" style="font-weight: bold;">GET : <span style="color: black;">Consultar Clientes</span></p> 
-            <span>https://lab-san-rafael-api.onrender.com/clients</span>
-          </li>
+            </li>
+            <li>
+              <div style="display:flex;gap: 2rem;">
+                <p>POST</p> 
+                <p>/client</p>
+                <p>Consulta todas las clients</p>
+              </div>
+            </li>
+            <li>
+              <div style="display:flex;gap: 2rem;">
+                <p>PATH</p> 
+                <p>/person</p>
+                <p>Consulta todas las clients</p>
+              </div>
+            </li>
+            <li>
+              <div style="display:flex;gap: 2rem;">
+                <p>DELETE</p> 
+                <p>/person</p>
+                <p>Consulta todas las clients</p>
+              </div>
+            </li>
+          </ul>
+        </details>
+      
+        <!-- API Patient-->
+        <!--     <div>
+          <h2>API Patient</h2>
+          <ul style="padding-bottom: .5rem;">
+            <li >    
+              <p class="listo" style="font-weight: bold;">GET : <span style="color: black;">Consulta todos los Pacientes</span></p> 
+              <span>https://lab-san-rafael-api.onrender.com/patients</span>
+            </li>
           <li>
             <div style="display:flex;gap: 2rem;">
               <p>POST</p> 
-              <p>/client</p>
-              <p>Consulta todas las clients</p>
-            </div>
-          </li>
-          <li>
-            <div style="display:flex;gap: 2rem;">
-              <p>PATH</p> 
-              <p>/person</p>
-              <p>Consulta todas las clients</p>
-            </div>
-          </li>
-          <li>
-            <div style="display:flex;gap: 2rem;">
-              <p>DELETE</p> 
-              <p>/person</p>
-              <p>Consulta todas las clients</p>
-            </div>
-          </li>
-        </ul>
-      </div>
-  
-      <!-- API Patient-->
-      <div>
-        <h2>API Patient</h2>
-        <ul>
-          <li >    
-            <p class="listo" style="font-weight: bold;">GET : <span style="color: black;">Consulta todos los Pacientes</span></p> 
-            <span>https://lab-san-rafael-api.onrender.com/patients</span>
-          </li>
-        <li>
-          <div style="display:flex;gap: 2rem;">
-            <p>POST</p> 
-            <p>/patient</p>
-            <p>Consulta todas las clients</p>
-          </div>
-        </li>
-        <li>
-          <div style="display:flex;gap: 2rem;">
-              <p>PATH</p> 
               <p>/patient</p>
               <p>Consulta todas las clients</p>
             </div>
           </li>
           <li>
-          <div style="display:flex;gap: 2rem;">
-            <p>DELETE</p> 
-            <p>/patient</p>
-            <p>Consulta todas las clients</p>
-          </div>
-        </li>
-       </ul>
-      </div>
-
-      <!-- API Role-->
-      <div>
-            <h2>API Role</h2>
-            <ul>
-              <li >    
-                <p class="listo" style="font-weight: bold;">GET : <span style="color: black;">Consulta todos los Roles</span></p> 
-                <span>https://lab-san-rafael-api.onrender.com/roles</span>
-              </li>
-              <li>
-                <div style="display:flex;gap: 2rem;">
-                  <p>POST</p> 
-                  <p>/roles</p>
-                  <p>Consulta todas las clients</p>
-                </div>
-              </li>
-              <li>
-                <div style="display:flex;gap: 2rem;">
-                  <p>PATH</p> 
-                  <p>/role</p>
-                  <p>Consulta todas las clients</p>
-                </div>
-              </li>
-              <li>
-                <div style="display:flex;gap: 2rem;">
-                  <p>DELETE</p> 
-                  <p>/role</p>
-                  <p>Consulta todas las clients</p>
-                </div>
-              </li>
-       </ul>
-      </div>
-    </article>
-    
-    <!-- Auth, Source,  Exam , Category , SubCategory  -->
-    <article id="colum2" style="width:50%;border-right: 2px solid rgb(11, 11, 11);">
-      <!-- API Auth-->
-      <div>
-        <h2>API Auth</h2>
-        <ul style="padding-bottom: 2rem;">
-          <li>    
-            <p class="listo" style="font-weight: bold;">POST : <span style="color: black;">Iniciar Sesion</span></p> 
-            <span>https://lab-san-rafael-api.onrender.com/auth/signin</span>
-<pre style="box-sizing: border-box;overflow-x: scroll;">
-{
-  "email":"edwin@gmail.com",
-  "password":"1234"
-}
-</pre>
-          </li>
-          <li>    
-            <p class="listo" style="font-weight: bold;">POST : <span style="color: black;">Registrarse como cliente</span></p> 
-            <span>https://lab-san-rafael-api.onrender.com/auth/signup</span>
-<pre style="box-sizing: border-box;overflow-x: scroll;">
-{
- "firstname":"edwin",
- "lastname":"mendez",
- "email":"admin@gmail.com",
- "password":"1234",
- mobilephone:"0414359",
- "dni":"V-123456",
- "created":"2020-01-01T04:00:00.000Z"
- id_role:1
-}
-</pre>
+            <div style="display:flex;gap: 2rem;">
+                <p>PATH</p> 
+                <p>/patient</p>
+                <p>Consulta todas las clients</p>
+              </div>
+            </li>
+            <li>
+            <div style="display:flex;gap: 2rem;">
+              <p>DELETE</p> 
+              <p>/patient</p>
+              <p>Consulta todas las clients</p>
+            </div>
           </li>
         </ul>
-      </div> 
-      <!-- API Source-->
-      <div> 
-        <h2>API Source</h2>
+        </div>
+ -->
+       
+        <!-- API Role-->
+        <details >
+          <summary style="margin: 1rem; font-size: x-large; font-weight: 600;">
+              API Role <span class="proceso">&#x2615;&#xfe0e;</span>
+          </summary>
+             <ul>
+                  <li >    
+                    <p class="listo" style="font-weight: bold;">GET : <span style="color: black;">Consulta todos los Roles</span></p> 
+                    <span>https://lab-san-rafael-api.onrender.com/roles</span>
+                  </li>
+                  <li>
+                    <div style="display:flex;gap: 2rem;">
+                      <p>POST</p> 
+                      <p>/roles</p>
+                      <p>Consulta todas las clients</p>
+                    </div>
+                  </li>
+                  <li>
+                    <div style="display:flex;gap: 2rem;">
+                      <p>PATH</p> 
+                      <p>/role</p>
+                      <p>Consulta todas las clients</p>
+                    </div>
+                  </li>
+                  <li>
+                    <div style="display:flex;gap: 2rem;">
+                      <p>DELETE</p> 
+                      <p>/role</p>
+                      <p>Consulta todas las clients</p>
+                    </div>
+                  </li>
+          </ul>
+        </details>  
+    
+    </article>
+
+    <!-- Auth, Source,  Exam , Category , SubCategory  -->
+    <article id="colum2" style="width: 50%;max-width:700px;border-right: 2px solid rgb(11, 11, 11);overflow-x: scroll;">
+      <!-- API Auth-->
+      <details open>
+        <summary style="margin: 1rem; font-size: x-large; font-weight: 600;">
+            API Auth <span class="proceso">&#x2615;&#xfe0e;</span>
+        </summary>
           <ul>
-            <li >    
-              <p class="listo" style="font-weight: bold;">GET : <span style="color: black;">Ver imagen por nombre</span></p> 
-              <span>https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg</span>
+            <li>
+              <p class="negrita">
+                <span class="grande">POST :</span>
+                Iniciar Sesión
+                <span class="listo">&#x1f5f9;</span>
+              </p>
+              <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/auth/signin</p>
+              <p><span class="negrita">Headers : </span> multipart/form-data;</p>
+<pre style="box-sizing: border-box;overflow-x: scroll;">
+{
+  "username":"michelle",
+  "password":"12345678"
+}
+</pre>
+            </li>
+            <li>    
+              <p class="listo" style="font-weight: bold;">POST : <span style="color: black;">Registrarse como cliente</span></p> 
+              <span>https://lab-san-rafael-api.onrender.com/auth/signup</span>
+  <pre style="box-sizing: border-box;overflow-x: scroll;">
+  {
+   "firstname":"edwin",
+   "lastname":"mendez",
+   "email":"admin@gmail.com",
+   "password":"1234",
+   mobilephone:"0414359",
+   "dni":"V-123456",
+   "created":"2020-01-01T04:00:00.000Z"
+   id_role:1
+  }
+  </pre>
             </li>
           </ul>
-      </div>
+      </details>  
+
+      <!-- API Source-->
+      <details open>
+        <summary style="margin: 1rem; font-size: x-large; font-weight: 600;">
+            API Source <span class="proceso">&#x2615;&#xfe0e;</span>
+        </summary>
+            <ul style="padding-bottom: .5rem;">
+              <li >    
+                <p class="listo" style="font-weight: bold;">GET : <span style="color: black;">Ver imagen por nombre</span></p> 
+                <span>https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg</span>
+              </li>
+            </ul>
+      </details>  
+
       <!-- API Exam-->
-      <div>
-        <h2>API Exam</h2>
-        <ul>
+      <details>
+        <summary style="margin: 1rem; font-size: x-large; font-weight: 600;">
+            API Exam <span class="proceso">&#x2615;&#xfe0e;</span>
+        </summary>
           <li >    
             <p class="listo" style="font-weight: bold;">GET : <span style="color: black;">Devuelve todos los Examenes , con sus categorias y subcategorias </span></p> 
             <span>https://lab-san-rafael-api.onrender.com/exams</span>
@@ -242,10 +325,12 @@
             </div>
           </li>
         </ul>
-      </div>
+      </details>
       <!-- API Category-->
-      <div>
-        <h2>API Category</h2>
+      <details open>
+        <summary style="margin: 1rem; font-size: x-large; font-weight: 600;">
+            API Category <span class="proceso">&#x2615;&#xfe0e;</span>
+        </summary>
         <ul>
           <li>    
             <p class="listo" style="font-weight: bold;">GET : <span style="color: black;">Devuelva el listado de todas las categorias</span></p> 
@@ -273,10 +358,12 @@
             </div>
           </li>
         </ul>
-      </div>
+      </details>   
+        
+
 
       <!-- API Sub-Category-->
-      <div>
+ <!--      <div>
         <h2>API Sub-Category</h2>
         <ul>
           <li>    
@@ -305,8 +392,10 @@
             </div>
           </li>
         </ul>
-      </div>
+      </div> -->
       
+  
+    
     </article>
   </section>
 </body>

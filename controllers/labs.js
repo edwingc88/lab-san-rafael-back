@@ -4,6 +4,8 @@ import multiparty from 'multiparty'
 import 'dotenv/config'
 import fs from 'fs'
 import { extname, join } from 'path'
+import { nombreFinalImagenByFile, nombreFinalImagenByUrl } from '../middlewares/nombre_imagen.js'
+import { borrarImagen } from '../middlewares/borrar_imagen.js'
 
 // import { resolve, join } from 'path'
 
@@ -14,7 +16,7 @@ console.log(__filename)
 console.log('filename arriba y dirname abajao')
 console.log(__dirname) */
 
-const IMAGEN_UPLOAD_DIR = './sources/images/public/'
+const IMAGEN_UPLOAD_DIR = 'sources/images/public/'
 
 export class LabController {
   constructor ({ labModel }) {
@@ -43,7 +45,7 @@ export class LabController {
   }
 
   create = async (req, res) => {
-    const form = new multiparty.Form({ uploadDir: IMAGEN_UPLOAD_DIR })
+    const form = new multiparty.Form({ uploadDir: './' + IMAGEN_UPLOAD_DIR })
 
     form.parse(req, async (err, fields, files) => {
       if (err) return res.status(500).json({ error: 'Error msj formdata' })
@@ -51,7 +53,7 @@ export class LabController {
       console.log(JSON.stringify(fields, null, 2))
       console.log(JSON.stringify(files, null, 2))
       // Obteniendo la ruta de la imagen por default
-      let rutaFinalArchivo = process.env.WEB_URL + 'sources/images/public/default.jpg'
+      let rutaFinalArchivo = process.env.WEB_URL + 'sources/images/public/noimage.jpg'
 
       console.log(rutaFinalArchivo)// Ruta Final
 
@@ -234,44 +236,85 @@ export class LabController {
     return res.json(updatedlab) */
   }
 
-  deleteImg = async (req, res) => {
-    const { id, logo } = req.body
-    console.log(id + 'y' + logo)
+  updateImg = async (req, res, next) => {
+    const { id } = req.params
+    const form = new multiparty.Form({ uploadDir: './' + IMAGEN_UPLOAD_DIR })
+    try {
+      form.parse(req, async (err, fields, files) => {
+        // console.log(files)
+        if (err) return res.status(500).json({ error: 'Error msj formdata' })
+        console.log(fields)
+        const mombreRandomImagenCompleta = nombreFinalImagenByFile(files) // Nombre Ramdom de la imagen  . Transformando los datos que vienen de files , quitando los [] que vienen en cada valor, para luego validarlos.
 
-    console.log('funciona deleteImg en controllers')
-    // const result = await this.sourceModel.deleteImg({ id, logo })
-    /* fs.unlink('sources/images/' + id, function (err) {
-      if (err) { console.error(err) }
-      console.log('File deleted!')
-    }) */
-    // console.log(result)
-    // (result === false) return res.status(404).json({ error: 'Not found Source' })
-    return res.json({ message: 'Source deleted IMAGE' })
+        console.log('Nombre random' + mombreRandomImagenCompleta)
+        /* Condicional para actulizar o NO */
+        // let ifUpdate = true
+        let rutaURLTotal = process.env.WEB_URL + IMAGEN_UPLOAD_DIR + mombreRandomImagenCompleta
+
+        const objectImagen = JSON.stringify(files, null, 2)
+        const mombreRealImagenCompleta = JSON.parse(objectImagen).abatar[0].originalFilename // Obeteniendo Nombre Real de la imagen para ver si se subio o no
+        console.log('Nombre Real' + mombreRealImagenCompleta)
+
+        if (mombreRealImagenCompleta === '') {
+          console.log('vacio el Nombre Real')
+          borrarImagen(mombreRandomImagenCompleta)
+          // ifUpdate = false
+          rutaURLTotal = ''
+          return res.status(404).json({ error: 'No hay archivo que actualizar . Ingrese una imagen!' })
+        }
+
+        const updatedclient = await this.labModel.updateImg({ id, input: rutaURLTotal })
+
+        return res.status(201).json(updatedclient)
+      })
+
+      /* const result = validatePartialClient(req.body)
+    if (!result.success) {
+      return res.status(400).json({ error: JSON.parse(result.error.message) })
+    }
+    const { id } = req.params
+    const updatedclient = await this.clientModell.update({ id, input: result.data })
+    if (!updatedclient) return res.status(404).json({ error: 'Not found client' })
+    return res.json(updatedclient) */
+    } catch (error) {
+      next(error)
+    }
   }
 
   delete = async (req, res, next) => {
     try {
       const { id } = req.params
       const result = await this.labModel.delete({ id })
-      if (!result.length) return res.status(404).json({ error: 'Not content. Empty database' })
+      if (result.length === 0) return res.status(404).json({ error: 'Not found client' })
+      /* const separador = JSON.parse(result)
+      console.log(separador)
+      console.log('jsonresult arriba') */
+      // console.log(result[0].client_abatar)
 
-      /* if (separar[1].indexOf('default') === 0) {
-        console.log(separar[1].indexOf('default'))
-      } */
-
-      if (result[0]) {
-        // console.log(result[0].indexOf('lab_logo'))
-        const separador = result[0].lab_logo
-        console.log(separador)
-        /* fs.unlink(separar[1], function (err) {
+      if (nombreFinalImagenByUrl(result[0].lab_logo) !== 'noimage.jpg') {
+        const imagenBorrar = nombreFinalImagenByUrl(result[0].lab_logo)
+        /* fs.unlink(imagenBorrar, function (err) {
           if (err) { console.error(err) }
           console.log('File deleted!')
         }) */
+        // const namIMGBorrar = nombreFinalImagenByUrl(imagenBorrar)
+        console.log(imagenBorrar)
+        await borrarImagen(imagenBorrar)
       }
 
-      // console.log(separar[1].indexOf('default'))
-      // console.log('resultado arriba del separador , buscando default si encuentra es 0 ')
-      return res.status(201).json({ message: 'Table Lab Deleted successfully ' })
+      return res.status(201).json({ message: 'client deleted' })
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  deleteImg = async (req, res, next) => {
+    try {
+      const { id } = req.params
+      const rutaImgDefault = process.env.WEB_URL + IMAGEN_UPLOAD_DIR + 'noimage.jpg'
+      const result = await this.labModel.deleteImg({ id, rutaImgDefault })
+      if (result.length === 0) return res.status(404).json({ error: 'Not found image' })
+      return res.status(201).json({ message: 'Imagen deleted' })
     } catch (error) {
       next(error)
     }

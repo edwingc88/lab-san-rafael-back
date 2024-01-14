@@ -15,9 +15,11 @@ export const createLabRouter = ({ labModel }) => {
 
   labRouter.patch('/:id', labController.update)
 
-  labRouter.patch('/', labController.deleteImg)
+  labRouter.patch('/updateimg/:id', labController.updateImg)
 
   labRouter.delete('/:id', labController.delete)
+
+  labRouter.delete('/deleteimg/:id', labController.deleteImg)
 
   return labRouter
 }

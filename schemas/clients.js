@@ -22,7 +22,7 @@ const cLientSchema = z.object({
   created: z.string().transform((str) => new Date(str)),
   abatar: z.string().url({
     message: 'Picture mus  t be a valid URL'
-  }),
+  }).optional(),
   id_role: z.string(['1', '2', '3', '4'])
 })
 

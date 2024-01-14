@@ -3,6 +3,9 @@ import conn from './db.js'
 import fs from 'fs'
 import { join, basename } from 'path'
 
+import { nombreFinalImagenByUrl } from '../../middlewares/nombre_imagen.js'
+import { borrarImagen } from '../../middlewares/borrar_imagen.js'
+
 export class LabModel {
   static async getAll () {
     try {
@@ -42,7 +45,7 @@ export class LabModel {
     }
   }
 
-  static async update ({ idupdate, input }) {
+  static async update2 ({ idupdate, input }) {
     // eslint-disable-next-line camelcase
     const { name, rif, slogan, description, objetive, mission, vision, email, address, phone, logo } = input
     // console.log(input)
@@ -89,12 +92,50 @@ export class LabModel {
     }
   }
 
+  static async update ({ id, input }) {
+    try {
+      // eslint-disable-next-line camelcase
+      const { name, rif, slogan, description, objetive, mission, vision, email, address, phone } = input
+
+      // const passwordHash = await bc.hash(password, 10)
+      // eslint-disable-next-line camelcase
+
+      const result = await conn.query('UPDATE lab SET name=$1,rif=$2,slogan=$3,description=$4,objetive=$5,mission=$6,vision=$7,email=$8,address=$9,phone=$10 WHERE id = $12 RETURNING *;', [name, rif, slogan, description, objetive, mission, vision, email, address, phone, id])
+      console.log(result.rows)
+    } catch (e) {
+      console.log('Error DB en lab By ID ')
+      throw new Error(e)
+    }
+  }
+
   static async delete ({ id }) {
     try {
       const result = await conn.query('DELETE FROM lab WHERE lab_id = $1 returning *;', [id])
       return result.rows
     } catch (e) {
       console.log('Error delete  db labs')
+      throw new Error(e)
+    }
+  }
+
+  static async deleteImg ({ id, rutaImgDefault }) {
+    try {
+      const resultUrlDelete = await conn.query('SELECT lab_logo FROM lab WHERE lab_id = $1;', [id])
+
+      if (resultUrlDelete.row === 0) return resultUrlDelete.row
+
+      const abatarUrlDelete = resultUrlDelete.rows[0].lab_logo
+      const nombreImgDelete = nombreFinalImagenByUrl(abatarUrlDelete)
+
+      if (nombreImgDelete !== 'noimage.jpg') {
+        console.log('BOORANDO ARCHIVO')
+        await borrarImagen(nombreImgDelete)
+      }
+
+      const result = await conn.query('UPDATE lab SET lab_logo = $1  WHERE lab_id = $2 RETURNING *;', [rutaImgDefault, id])
+      return result.rows
+    } catch (e) {
+      console.log('Error DB en lab By DeleteIMG ')
       throw new Error(e)
     }
   }
