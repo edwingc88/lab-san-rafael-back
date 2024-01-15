@@ -63,14 +63,16 @@ export class ClientModel {
   static async update ({ id, input }) {
     try {
       // eslint-disable-next-line camelcase
-      const { dni, email, username, password, firstname, lastname, gender, address, firstphone, secondphone, birthdate, bloodTyping, typeRelationship, nameRelationship, created, idRole } = input
+      const { dni, email, username, password, firstname, lastname, gender, address, firstphone, secondphone, birthdate, bloodTyping, typeRelationship, nameRelationship, created } = input
 
       // const passwordHash = await bc.hash(password, 10)
       // eslint-disable-next-line camelcase
 
+      console.log(input)
+
       const passwordHash = password
 
-      const result = await conn.query('UPDATE client SET  client_dni=$1 , client_email=$2, client_username=$3 ,client_password=$4,client_firstname=$5,client_lastname=$6 ,client_gender=$7,client_address=$8,client_firstphone=$9,client_secondphone=$10,client_birthdate=$11, client_bloodtyping=$12,client_type_relationship=$13,client_name_relationship=$14,client_created=$15,client_id_role=$16 WHERE client_id=$17 RETURNING *;', [dni, email, username, passwordHash, firstname, lastname, gender, address, firstphone, secondphone, birthdate, bloodTyping, typeRelationship, nameRelationship, created, idRole, id])
+      const result = await conn.query('UPDATE client SET  client_dni=$1 ,client_email=$2, client_username=$3 ,client_password=$4,client_firstname=$5,client_lastname=$6 ,client_gender=$7,client_address=$8,client_firstphone=$9,client_secondphone=$10,client_birthdate=$11, client_bloodtyping=$12,client_type_relationship=$13,client_name_relationship=$14,client_created=$15 WHERE client_id=$16 RETURNING *;', [dni, email, username, passwordHash, firstname, lastname, gender, address, firstphone, secondphone, birthdate, bloodTyping, typeRelationship, nameRelationship, created, id])
       return (result.rows)
     } catch (e) {
       console.log('Error DB en lab By ID ')

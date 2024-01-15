@@ -198,8 +198,6 @@ export class LabController {
         for (let i = 0; i < claves.length; i++) {
           const clave = claves[i]
           const valor = { [clave]: fields[clave][0] }
-          // console.log(clave)
-          // console.log(valor)
           newvalue = { ...newvalue, ...valor }
         }
 
@@ -222,23 +220,6 @@ export class LabController {
     } catch (error) {
       next(error)
     }
-
-    /* else {
-        let result = {}
-        newvalue.logo = rutaFinalArchivo
-
-        result = validatePartialLab(newvalue)
-
-        if (result.error) {
-          return res.status(400).json({ error: JSON.parse(result.error.message) })
-        }
-
-        console.log(result.data)
-        const { id } = req.params
-        const updatedlab = await this.labModell.update({ id, input: result.data })
-
-        res.status(201).json(updatedlab)
-      } */
   }
   /// ///
   /* const result = validatePartialLab(req.body)

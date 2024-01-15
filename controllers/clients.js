@@ -98,7 +98,7 @@ export class ClientController {
         } */
 
         // console.log('RutaURL=' + rutaURLTotal)
-        const dataObjectFields = { dni: fields.dni[0], email: fields.email[0], username: fields.username[0], password: fields.password[0], firstname: fields.firstname[0], lastname: fields.lastname[0], gender: fields.gender[0], address: fields.address[0], firstphone: fields.firstphone[0], secondphone: fields.secondphone[0], birthdate: fields.birthdate[0], bloodTyping: fields.bloodtyping[0], typeRelationship: fields.type_relationship[0], nameRelationship: fields.name_relationship[0], created: fields.created[0], idRole: fields.id_role[0] }
+        const dataObjectFields = { dni: fields.dni[0], email: fields.email[0], username: fields.username[0], password: fields.password[0], firstname: fields.firstname[0], lastname: fields.lastname[0], gender: fields.gender[0], address: fields.address[0], firstphone: fields.firstphone[0], secondphone: fields.secondphone[0], birthdate: fields.birthdate[0], bloodTyping: fields.bloodtyping[0], typeRelationship: fields.type_relationship[0], nameRelationship: fields.name_relationship[0], created: fields.created[0] }
         // console.log(dataObjectFields)
 
         const result = validatePartialClient(dataObjectFields)
@@ -106,7 +106,7 @@ export class ClientController {
           return res.status(400).json({ error: JSON.parse(result.error.message) })
         }
 
-        const updatedclient = await this.clientModel.update({ id, input: result })
+        const updatedclient = await this.clientModel.update({ id, input: result.data })
 
         // console.log(updatedclient)
 
@@ -135,7 +135,6 @@ export class ClientController {
       form.parse(req, async (err, fields, files) => {
         // console.log(files)
         if (err) return res.status(500).json({ error: 'Error msj formdata' })
-        console.log(fields)
         const mombreRandomImagenCompleta = await nombreFinalImagenByFile(files) // Nombre Ramdom de la imagen  . Transformando los datos que vienen de files , quitando los [] que vienen en cada valor, para luego validarlos.
 
         console.log('Nombre random' + mombreRandomImagenCompleta)
@@ -191,7 +190,7 @@ export class ClientController {
         }) */
         const namIMGBorrar = nombreFinalImagenByUrl(result[0].client_abatar)
         console.log(namIMGBorrar)
-        await borrarImagen(namIMGBorrar)
+        borrarImagen(namIMGBorrar)
       }
 
       return res.status(201).json({ message: 'client deleted' })

@@ -6,6 +6,14 @@
   <title>API LABORATORY</title>
   <style>
 
+    body{
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      overflow-x: hidden;
+    }
+
     .proceso{
       color: rgb(246, 161, 24);
     }
@@ -16,6 +24,8 @@
 
     .listo{
       color: green;
+      font-weight: 900;
+      font-size: large;
     }
 
     .normal{
@@ -45,10 +55,10 @@
   </style>
 </head>
 <body style="color: rgb(11, 11, 11);">
-  <h1 style="padding: .5rem;align-items: center; margin: auto;text-align: center;">API Laboratorio Clinico <span class="listo">"San Rafael"</span></h1>
-  <section style="display: flex;padding: .5rem; gap: 2rem;border-top: 2px solid rgb(32, 32, 32);max-width: 1400px; margin: 0 auto;">
+  <h1 style="padding: .5rem;align-items: center; margin: 0 auto;text-align: center;">API Laboratorio Clinico <span style="color: green;">"San Rafael"</span></h1>
+  <section style="display: flex; align-content: center; padding: .5rem; gap: 2rem;border-top: 2px solid rgb(32, 32, 32);min-width: 1300px; margin: 0 auto; width: 1300px;">
     <!-- Lab, Client , Patient , Role -->
-    <article id="colum1" style="width: 50%;max-width:700px;border-right: 2px solid  rgb(11, 11, 11); overflow-x: auto;">
+    <article id="colum1" style="width: 650px;min-width:650px;border-right: 2px solid  rgb(11, 11, 11); overflow-x: hidden;">
         <!-- API Lab-->
       <details open >
         <summary style="margin: 1rem; font-size: x-large; font-weight: 600;">
@@ -57,14 +67,14 @@
         <ul >
             <li>
                   <p class="negrita">
-                    <span class="grande">GET :</span>
+                    <span class="listo">GET :</span>
                     Consulta todos los Laboratorios
                     <span class="listo">&#x1f5f9;</span>
                   </p>
                   <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/labs</p>
             </li>
               <li>
-                <p class="negrita"><span class="grande">POST : </span>Crear Un Laboratorio<span class="listo"> &#x1f5f9;</span></p> 
+                <p class="negrita"><span class="listo">POST : </span>Crear Un Laboratorio<span class="listo"> &#x1f5f9;</span></p> 
                 <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/labs</p>
                 <p><span class="negrita">Headers : </span> multipart/form-data;</p>
   <pre style="box-sizing: border-box;overflow-x: scroll;">
@@ -83,8 +93,9 @@
   }
   </pre>
               <li>     
-                <p class="negrita"> <span class="grande">PATH : </span>Actualizar  Laboratorio por ID <span class="listo">&#x1f5f9;</span></p> 
-                <span>https://lab-san-rafael-api.onrender.com/labs/:id</span>
+                <p class="negrita"> <span class="listo">PATH : </span>Actualizar  Laboratorio por ID <span class="listo">&#x1f5f9;</span></p> 
+                <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/labs/:id</p>
+                <p><span class="negrita">Headers : </span> multipart/form-data;</p>
 <pre style="box-sizing: border-box;overflow-x: scroll;">
   {
     "lab_id": 9,
@@ -102,8 +113,9 @@
 </pre>
               </li>
               <li>
-                <p class="negrita"> <span class="grande">PATH : </span>Actualizar  Imagen por ID <span class="listo">&#x1f5f9;</span></p> 
-                <span>https://lab-san-rafael-api.onrender.com/labs/updateimg/:id</span>
+                <p class="negrita"> <span class="listo">PATH : </span>Actualizar  Imagen por ID <span class="listo">&#x1f5f9;</span></p> 
+                <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/labs/updateimg/:id</p>
+                <p><span class="negrita">Headers : </span> multipart/form-data;</p>
 <pre style="box-sizing: border-box;overflow-x: scroll;">
  {
    "lab_logo": "localhost:1234/sources/images/public/TyFN0W26XRQ-TqB5XEoiZAe-.png"
@@ -111,14 +123,14 @@
 </pre>
               </li>
               <li>
-                <p class="negrita"><span class="grande">DELETE : </span>Eliminar Lab por ID         <span class="listo">&#x1f5f9;</span></p> 
+                <p class="negrita"><span class="listo">DELETE : </span>Eliminar Lab por ID         <span class="listo">&#x1f5f9;</span></p> 
                 <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/labs/:id</p>
               </li>
               <li>
-                <p class="negrita"><span class="grande">DELETE : </span>Eliminar Imagen por ID         <span class="listo">&#x1f5f9;</span></p> 
+                <p class="negrita"><span class="listo">DELETE : </span>Eliminar Imagen por ID         <span class="listo">&#x1f5f9;</span></p> 
                 <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/labs/deleteimg/:id</p>
               </li>
-          </ul>
+        </ul>
       </details>   
 
       <!-- API Client-->
@@ -136,7 +148,7 @@
               <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/clients</p>
             </li>
             <li>
-              <p class="negrita"><span class="grande">POST : </span>Crear Un Cliente<span class="listo"> &#x1f5f9;</span></p> 
+              <p class="negrita"><span class="listo">POST : </span>Crear Un Cliente<span class="listo"> &#x1f5f9;</span></p> 
               <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/clients</p>
               <p><span class="negrita">Headers : </span> multipart/form-data;</p>
 <pre style="box-sizing: border-box;overflow-x: scroll;">
@@ -156,31 +168,53 @@
 "type_relationship":"vision de lab",
 "name_relationship":"vision de lab",
 "created":"vision de lab",
+"abatar":"localhost/dir/imagen.jpg"
 "id_role":"vision de lab",
-"abatar":"localhost/url/imagen.jpg"
 }
 </pre>
             </li>
+            <p class="negrita"><span class="listo">PATH : </span>Crear Un Cliente<span class="listo"> &#x1f5f9;</span></p> 
+            <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/clients</p>
+            <p><span class="negrita">Headers : </span> multipart/form-data;</p>
+<pre style="box-sizing: border-box;overflow-x: scroll;">
+{
+"dni":"v-1111",
+"email":"J-12345678",
+"username":"pedrito",
+"password":"11111",
+"firstname":"65JG+H7V, Ciudad Guayana 8050, Bolívar. Urb Gran Sabana",
+"lastname":"0286-9530505",
+"gender":"lab@gmail.com",
+"address":"imagen.jpg",
+"firstphone":"objetivos de lab",
+"secondphone":"misiones de lab",
+"birthdate":"vision de lab",
+"bloodtyping":"vision de lab",
+"type_relationship": No Aplica,
+"name_relationship": No Aplica,
+"type_relationship":"vision de lab",
+"name_relationship":"vision de lab",
+"created":"vision de lab",
+"id_role":"vision de lab",
+}
+</pre>
             <li>
-              <div style="display:flex;gap: 2rem;">
-                <p>POST</p> 
-                <p>/client</p>
-                <p>Consulta todas las clients</p>
-              </div>
+              <p class="negrita"><span class="listo">PATH : </span>Editar Imagen Cliente<span class="listo"> &#x1f5f9;</span></p> 
+              <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/clients</p>
+              <p><span class="negrita">Headers : </span> multipart/form-data;</p>
+  <pre style="box-sizing: border-box;overflow-x: scroll;">
+  {
+    "abatar":"localhost/dir/imagen.jpg",
+  }
+  </pre>
             </li>
             <li>
-              <div style="display:flex;gap: 2rem;">
-                <p>PATH</p> 
-                <p>/person</p>
-                <p>Consulta todas las clients</p>
-              </div>
+                <p class="negrita"><span class="listo">DELETE : </span>Eliminar Cliente por ID <span class="listo">&#x1f5f9;</span></p> 
+                <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/clients/:id</p>
             </li>
             <li>
-              <div style="display:flex;gap: 2rem;">
-                <p>DELETE</p> 
-                <p>/person</p>
-                <p>Consulta todas las clients</p>
-              </div>
+              <p class="negrita"><span class="listo">DELETE : </span>Eliminar Imagen por ID         <span class="listo">&#x1f5f9;</span></p> 
+              <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/clients/deleteimg/:id</p>
             </li>
           </ul>
       </details>
@@ -255,7 +289,7 @@
     </article>
 
     <!-- Auth, Source,  Exam , Category , SubCategory  -->
-    <article id="colum2" style="width: 50%;max-width:700px;border-right: 2px solid rgb(11, 11, 11);overflow-x: scroll;">
+    <article id="colum2" style="width: 650px;min-width:650px;overflow-x: scroll;">
       <!-- API Auth-->
       <details open>
         <summary style="margin: 1rem; font-size: x-large; font-weight: 600;">
@@ -264,7 +298,7 @@
           <ul>
             <li>
               <p class="negrita">
-                <span class="grande">POST :</span>
+                <span class="listo">POST :</span>
                 Iniciar Sesión
                 <span class="listo">&#x1f5f9;</span>
               </p>
@@ -278,18 +312,24 @@
 </pre>
             </li>
             <li>    
-              <p class="listo" style="font-weight: bold;">POST : <span style="color: black;">Registrarse como cliente</span></p> 
-              <span>https://lab-san-rafael-api.onrender.com/auth/signup</span>
+              <p class="negrita" >
+                <span class="listo">POST :</span>
+                  Registrarse como cliente
+                <span class="listo">&#x1f5f9;</span>
+              </p>
+              <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/auth/signup</p>
+              <p><span class="negrita">Headers : </span> multipart/form-data;</p>
+
   <pre style="box-sizing: border-box;overflow-x: scroll;">
   {
-   "firstname":"edwin",
-   "lastname":"mendez",
-   "email":"admin@gmail.com",
-   "password":"1234",
-   mobilephone:"0414359",
-   "dni":"V-123456",
-   "created":"2020-01-01T04:00:00.000Z"
-   id_role:1
+    firstname: 'pepito',
+    lastname: 'rodriguez',
+    username: 'pepito',
+    password: '1234',
+    email: 'pepito@gmail.com',
+    firstphone: '04141234',
+    created: 2024-05-05T04:00:00.000Z,
+    birthdate: 1990-05-06T04:00:00.000Z
   }
   </pre>
             </li>
