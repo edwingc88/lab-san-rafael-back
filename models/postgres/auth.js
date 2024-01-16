@@ -22,10 +22,10 @@ export class AuthModel {
     }
   }
 
-  static async findUserByname (username) {
+  static async findUserByName (username) {
     // eslint-disable-next-line camelcase
     try {
-      const result = await conn.query('SELECT cliente FROM client WHERE client_username = $1 ;', [username])
+      const result = await conn.query('SELECT * FROM client WHERE client_username = $1 ;', [username])
       // console.log(result.rows)
       return (result.rows)
     } catch (e) {

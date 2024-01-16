@@ -12,23 +12,27 @@ export const verifyToken = async (req, res, next) => {
     // const token = req.headers.authorization.split(' ')[1]
     // console.log(token)
     // console.log('verficando')
-
+    console.log(token)
     if (!token) return res.status(401).json({ message: 'No token provided' })
 
     const decoded = jwt.verify(token, process.env.SECRET)
     if ((Date.now() / 1000) > decoded.exp) {
+      console.log((Date.now() / 1000))
+      console.log(decoded.exp)
       return res.status(401).json({ message: 'Unauthorized verifi TIME OUT' })
     }
+    console.log(decoded)
     console.log('Decoded Arriba')
     req.userId = decoded.client[0]
     req.userRole = decoded.client[1]
 
-    const findIDEmail = await AuthModel.getByID(req.userId)
+    /* const findIDEmail = await AuthModel.getByID(req.userId)
 
     if (!findIDEmail) {
       return res.status(404).json({ error: 'Not found ID por ID' })
-    }
+    } */
   } catch (error) {
+    console.log(error)
     return res.status(401).json({ message: 'Unauthorized verifi' })
   }
 

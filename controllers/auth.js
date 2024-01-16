@@ -52,7 +52,7 @@ export class AuthController {
         console.log(dataObject)
         console.log('Data object arriba')
 
-        const findUserByUsername = await this.authModel.findUserByname(dataObject.username)
+        const findUserByUsername = await this.authModel.findUserByName(dataObject.username)
 
         // passwod con escriptacion
         // const passwordIsValid = findUserByUsername === null ? false : await bcrypt.compare(dataObject.password, findUserByUsername[0].client_password)
@@ -66,7 +66,7 @@ export class AuthController {
         const clientId = findUserByUsername[0].client_id
         const roleId = findUserByUsername[0].client_id_role
 
-        const token = jwt.sign({ client: [clientId, roleId] }, process.env.SECRET, { expiresIn: 3600 })
+        const token = jwt.sign({ client: [clientId, roleId] }, process.env.SECRET, { expiresIn: 33600 })
 
         console.log('ID ARRIBA')
         return res.status(200).json({ id_client: clientId, id_role: roleId, token })
