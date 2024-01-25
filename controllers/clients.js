@@ -3,6 +3,7 @@ import multiparty from 'multiparty'
 import 'dotenv/config'
 import { nombreFinalImagenByFile, nombreFinalImagenByUrl } from '../middlewares/nombre_imagen.js'
 import { borrarImagen } from '../middlewares/borrar_imagen.js'
+/* import sendEmail from '../controllers/email.js' */
 // import fs from 'fs's
 const IMAGEN_UPLOAD_DIR = 'sources/images/public/'
 export class ClientController {
@@ -39,7 +40,7 @@ export class ClientController {
     try {
       form.parse(req, async (err, fields, files) => {
         if (err) return res.status(500).json({ error: 'Error msj formdata' })
-
+        console.log(files)
         const mombreRandomImagenCompleta = await nombreFinalImagenByFile(files) // Nombre Ramdom de la imagen  . Transformando los datos que vienen de files , quitando los [] que vienen en cada valor, para luego validarlos.
 
         console.log('Nombre random' + mombreRandomImagenCompleta)
@@ -66,6 +67,9 @@ export class ClientController {
 
         const newClient = await this.clientModel.create({ input: result.data })
         if (newClient.length === 0) return res.status(404).json({ error: 'Not found client' })
+        /*
+        await sendEmail() */
+
         return res.status(201).json(newClient)
         // return res.status(201).json(result)
       })

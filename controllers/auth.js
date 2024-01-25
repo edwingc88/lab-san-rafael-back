@@ -66,7 +66,7 @@ export class AuthController {
         const clientId = findUserByUsername[0].client_id
         const roleId = findUserByUsername[0].client_id_role
 
-        const token = jwt.sign({ client: [clientId, roleId] }, process.env.SECRET, { expiresIn: 33600 })
+        const token = jwt.sign({ client: [clientId, roleId] }, process.env.SECRET, { expiresIn: 3360000 })
 
         console.log('ID ARRIBA')
         return res.status(200).json({ id_client: clientId, id_role: roleId, token })

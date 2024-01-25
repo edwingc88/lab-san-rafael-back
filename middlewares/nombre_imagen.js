@@ -1,5 +1,5 @@
 export const nombreFinalImagenByFile = (file) => {
-  // console.log(files)
+  console.log(file)
   const key = Object.keys(file)[0]
   const rutaLink = file[key][0].path
   const rutaArchivo = rutaLink.replaceAll('\\', '/')

@@ -60,7 +60,7 @@
     <!-- Lab, Client , Patient , Role -->
     <article id="colum1" style="width: 650px;min-width:650px;border-right: 2px solid  rgb(11, 11, 11); overflow-x: hidden;">
         <!-- API Lab-->
-      <details open >
+      <details >
         <summary style="margin: 1rem; font-size: x-large; font-weight: 600;">
               API Lab <span class="proceso">&#x2615;&#xfe0e;</span>
         </summary>
@@ -126,10 +126,6 @@
                 <p class="negrita"><span class="listo">DELETE : </span>Eliminar Lab por ID         <span class="listo">&#x1f5f9;</span></p> 
                 <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/labs/:id</p>
               </li>
-              <li>
-                <p class="negrita"><span class="listo">DELETE : </span>Eliminar Imagen por ID         <span class="listo">&#x1f5f9;</span></p> 
-                <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/labs/deleteimg/:id</p>
-              </li>
         </ul>
       </details>   
 
@@ -141,20 +137,20 @@
      
           <ul>
             <li>
-              <span class="listo">For authorization use "Bearer Token</span>
-            </li>
-            <li>
               <p class="negrita">
                 <span class="listo">GET :</span>
                 Consulta todos los  Clientes
                 <span class="listo">&#x1f5f9;</span>
               </p>
               <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/clients</p>
+              <p><span class="negrita">Headers : </span> Content-Type: multipart/form-data;</p>
+              <p><span class="negrita">Bearer Token:  </span> "UseToken"</p>
             </li>
             <li>
               <p class="negrita"><span class="listo">POST : </span>Crear Un Cliente<span class="listo"> &#x1f5f9;</span></p> 
               <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/clients</p>
-              <p><span class="negrita">Headers : </span> multipart/form-data;</p>
+              <p><span class="negrita">Headers : </span> Content-Type: multipart/form-data;</p>
+              <p><span class="negrita">Bearer Token:  </span> "UseToken"</p>
 <pre style="box-sizing: border-box;overflow-x: scroll;">
 {
 "dni":"v-1111",
@@ -179,7 +175,8 @@
             </li>
             <p class="negrita"><span class="listo">PATH : </span>Crear Un Cliente<span class="listo"> &#x1f5f9;</span></p> 
             <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/clients</p>
-            <p><span class="negrita">Headers : </span> multipart/form-data;</p>
+            <p><span class="negrita">Headers : </span> Content-Type: multipart/form-data;</p>
+            <p><span class="negrita">Bearer Token:  </span> "UseToken"</p>
 <pre style="box-sizing: border-box;overflow-x: scroll;">
 {
 "dni":"v-1111",
@@ -205,7 +202,8 @@
             <li>
               <p class="negrita"><span class="listo">PATH : </span>Editar Imagen Cliente<span class="listo"> &#x1f5f9;</span></p> 
               <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/clients</p>
-              <p><span class="negrita">Headers : </span> multipart/form-data;</p>
+              <p><span class="negrita">Headers : </span> Content-Type: multipart/form-data;</p>
+              <p><span class="negrita">Bearer Token:  </span> "UseToken"</p>
   <pre style="box-sizing: border-box;overflow-x: scroll;">
   {
     "abatar":"localhost/dir/imagen.jpg",
@@ -215,10 +213,14 @@
             <li>
                 <p class="negrita"><span class="listo">DELETE : </span>Eliminar Cliente por ID <span class="listo">&#x1f5f9;</span></p> 
                 <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/clients/:id</p>
+
+                <p><span class="negrita">Bearer Token:  </span> "UseToken"</p>
             </li>
             <li>
               <p class="negrita"><span class="listo">DELETE : </span>Eliminar Imagen por ID         <span class="listo">&#x1f5f9;</span></p> 
               <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/clients/deleteimg/:id</p>
+
+              <p><span class="negrita">Bearer Token:  </span> "UseToken"</p>
             </li>
           </ul>
       </details>
@@ -262,17 +264,25 @@
               API Role <span class="proceso">&#x2615;&#xfe0e;</span>
           </summary>
              <ul>
-                  <li >    
-                    <p class="listo" style="font-weight: bold;">GET : <span style="color: black;">Consulta todos los Roles</span></p> 
-                    <span>https://lab-san-rafael-api.onrender.com/roles</span>
-                  </li>
-                  <li>
-                    <div style="display:flex;gap: 2rem;">
-                      <p>POST</p> 
-                      <p>/roles</p>
-                      <p>Consulta todas las clients</p>
-                    </div>
-                  </li>
+                <li>
+                  <p class="negrita">
+                    <span class="listo">GET :</span>
+                    Consulta todos los Roles
+                    <span class="listo">&#x1f5f9;</span>
+                  </p>
+                  <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/roles</p>
+                  <p><span class="negrita">Headers : </span> Content-Type: Application/json</p>
+                  <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+                </li>
+                <li>
+                  <p class="negrita">
+                    <span class="listo">POST :</span>
+                    Crear Role
+                    <span class="listo">&#x1f5f9;</span>
+                  </p>
+                  <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/roles</p>
+                  <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+                </li>
                   <li>
                     <div style="display:flex;gap: 2rem;">
                       <p>PATH</p> 
@@ -281,11 +291,13 @@
                     </div>
                   </li>
                   <li>
-                    <div style="display:flex;gap: 2rem;">
-                      <p>DELETE</p> 
-                      <p>/role</p>
-                      <p>Consulta todas las clients</p>
-                    </div>
+                    <p class="negrita">
+                      <span class="listo">DELETE :</span>
+                      Eliminar Role por ID
+                      <span class="listo">&#x1f5f9;</span>
+                    </p>
+                    <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/roles</p>
+                    <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
                   </li>
           </ul>
       </details>  
@@ -295,7 +307,7 @@
     <!-- Auth, Source,  Exam , Category , SubCategory  -->
     <article id="colum2" style="width: 650px;min-width:650px;overflow-x: scroll;">
       <!-- API Auth-->
-      <details open>
+      <details >       <!-- details open-->
         <summary style="margin: 1rem; font-size: x-large; font-weight: 600;">
             API Auth <span class="proceso">&#x2615;&#xfe0e;</span>
         </summary>
@@ -346,10 +358,15 @@
             API Source <span class="proceso">&#x2615;&#xfe0e;</span>
         </summary>
             <ul style="padding-bottom: .5rem;">
-              <li >    
-                <p class="listo" style="font-weight: bold;">GET : <span style="color: black;">Ver imagen por nombre</span></p> 
-                <span>https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg</span>
-              </li>
+              <li>
+                <p class="negrita">
+                  <span class="listo">GET :</span>
+                  Obtener imagen por nombre
+                  <span class="listo">&#x1f5f9;</span>
+                </p>
+                <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg</p>
+      
+               </li> 
             </ul>
       </details>  
 
@@ -390,7 +407,7 @@
         </ul>
       </details>
       <!-- API Category-->
-      <details open>
+      <details>
         <summary style="margin: 1rem; font-size: x-large; font-weight: 600;">
             API Category <span class="proceso">&#x2615;&#xfe0e;</span>
         </summary>
