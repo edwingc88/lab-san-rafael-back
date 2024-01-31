@@ -3,7 +3,7 @@ import cors from 'cors'
 import { notFound, errorHandler } from './middlewares/errors.js'
 
 import { createExamRouter } from './router/exams.js'
-import { createClientRouter } from './router/clients.js'
+import { createUserRouter } from './router/users.js'
 import { createRoleRouter } from './router/roles.js'
 import { createLabRouter } from './router/labs.js'
 import { createPatientRouter } from './router/patients.js'
@@ -34,7 +34,7 @@ const __dirname = dirname(__filename)
 
 const pkg = JSON.parse(readFileSync('./package.json'))
 
-export const createApp = ({ relationshipModel, genderModel, clientModel, roleModel, patientModel, labModel, invoiceModel, invoiceExamModel, examModel, examCategoryModel, compousedModel, resultModel, categoryModel, subcategoryModel, authModel }) => {
+export const createApp = ({ relationshipModel, genderModel, userModel, roleModel, patientModel, labModel, invoiceModel, invoiceExamModel, examModel, examCategoryModel, compousedModel, resultModel, categoryModel, subcategoryModel, authModel }) => {
   const app = express()
   app.set('pkg', pkg)
   app.use(json())
@@ -64,7 +64,7 @@ export const createApp = ({ relationshipModel, genderModel, clientModel, roleMod
     res.sendFile(join(__dirname, 'public/images/ambulatorio.png'))
   }) */
   app.use('/sources', createSourceRouter())
-  app.use('/clients', createClientRouter({ clientModel }))
+  app.use('/users', createUserRouter({ userModel }))
   app.use('/roles', createRoleRouter({ roleModel }))
   app.use('/auth', createAuthRouter({ authModel }))
   app.use('/exams', createExamRouter({ examModel }))

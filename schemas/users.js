@@ -1,9 +1,9 @@
 import z from 'zod'
 
-const cLientSchema = z.object({
+const userSchema = z.object({
   dni: z.string({
-    invalid_type_error: 'CLient DNI must be a string',
-    required_error: 'CLient DNI is required'
+    invalid_type_error: 'User DNI must be a string',
+    required_error: 'User DNI is required'
   }),
   email: z.string().min(1, { message: 'This field has to be filled.' }).email('This is not a valid email.'),
   username: z.string().min(1, { message: 'This field has to be filled.' }),
@@ -26,10 +26,10 @@ const cLientSchema = z.object({
   id_role: z.string(['1', '2', '3', '4'])
 })
 
-export function validateClient (object) {
-  return cLientSchema.safeParse(object)
+export function validateUser (object) {
+  return userSchema.safeParse(object)
 }
 
-export function validatePartialClient (object) {
-  return cLientSchema.partial().safeParse(object)
+export function validatePartialUser (object) {
+  return userSchema.partial().safeParse(object)
 }

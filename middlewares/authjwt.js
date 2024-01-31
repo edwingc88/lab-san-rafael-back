@@ -23,8 +23,8 @@ export const verifyToken = async (req, res, next) => {
     }
     console.log(decoded)
     console.log('Decoded Arriba')
-    req.userId = decoded.client[0]
-    req.userRole = decoded.client[1]
+    req.userId = decoded.user[0]
+    req.userRole = decoded.user[1]
 
     /* const findIDEmail = await AuthModel.getByID(req.userId)
 

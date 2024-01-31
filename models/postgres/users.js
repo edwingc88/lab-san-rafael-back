@@ -3,7 +3,7 @@ import conn from './db.js'
 import { nombreFinalImagenByUrl } from '../../middlewares/nombre_imagen.js'
 import { borrarImagen } from '../../middlewares/borrar_imagen.js'
 
-export class ClientModel {
+export class UserModel {
   static async getAll (role) {
     try {
       if (role) {
@@ -16,11 +16,11 @@ export class ClientModel {
         const idRole = roles[0].role_id
         console.log(idRole)
 
-        const resultClientsByRole = await conn.query('SELECT * FROM client INNER JOIN role ON client.client_id_role = role.role_id WHERE role.role_id = $1;', [idRole])
-        // const clients = resultRoles.rows
-        return resultClientsByRole.rows
+        const resultUsersByRole = await conn.query('SELECT * FROM users INNER JOIN role ON users.users_id_role = role.role_id WHERE role.role_id = $1;', [idRole])
+        // const users = resultRoles.rows
+        return resultUsersByRole.rows
       }
-      const res = await conn.query('SELECT * FROM client;')
+      const res = await conn.query('SELECT * FROM users;')
       return res.rows
     } catch (e) {
       console.log('Error DB en lab By ID ')
@@ -30,9 +30,9 @@ export class ClientModel {
 
   static async getById (id) {
     try {
-      const result = await conn.query('SELECT * FROM client WHERE client_id = $1;', [id])
-      // const [clients] = result.rows
-      // if (clients.length === 0) return null
+      const result = await conn.query('SELECT * FROM users WHERE users_id = $1;', [id])
+      // const [users] = result.rows
+      // if (users.length === 0) return null
       return result.rows
     } catch (e) {
       console.log('Error DB en lab By ID ')
@@ -52,7 +52,7 @@ export class ClientModel {
 
       const passwordHash = password
       // eslint-disable-next-line camelcase
-      const result = await conn.query('INSERT INTO client( client_dni , client_email, client_username ,client_password,client_firstname,client_lastname ,client_gender ,client_address,client_firstphone,client_secondphone,client_birthdate, client_bloodtyping,client_type_relationship,client_name_relationship,client_created, client_abatar,client_id_role) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11,$12,$13,$14,$15,$16,$17) RETURNING *;', [dni, email, username, passwordHash, firstname, lastname, gender, address, firstphone, secondphone, birthdate, bloodtyping, type_relationship, name_relationship, created, abatar, id_role])
+      const result = await conn.query('INSERT INTO users( users_dni , users_email, users_username ,users_password,users_firstname,users_lastname ,users_gender ,users_address,users_firstphone,users_secondphone,users_birthdate, users_bloodtyping,users_type_relationship,users_name_relationship,users_created, users_abatar,users_id_role) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11,$12,$13,$14,$15,$16,$17) RETURNING *;', [dni, email, username, passwordHash, firstname, lastname, gender, address, firstphone, secondphone, birthdate, bloodtyping, type_relationship, name_relationship, created, abatar, id_role])
       return (result.rows)
     } catch (e) {
       console.log('Error DB en lab By ID ')
@@ -72,7 +72,7 @@ export class ClientModel {
 
       const passwordHash = password
 
-      const result = await conn.query('UPDATE client SET  client_dni=$1 ,client_email=$2, client_username=$3 ,client_password=$4,client_firstname=$5,client_lastname=$6 ,client_gender=$7,client_address=$8,client_firstphone=$9,client_secondphone=$10,client_birthdate=$11, client_bloodtyping=$12,client_type_relationship=$13,client_name_relationship=$14,client_created=$15 WHERE client_id=$16 RETURNING *;', [dni, email, username, passwordHash, firstname, lastname, gender, address, firstphone, secondphone, birthdate, bloodTyping, typeRelationship, nameRelationship, created, id])
+      const result = await conn.query('UPDATE users SET  users_dni=$1 ,users_email=$2, users_username=$3 ,users_password=$4,users_firstname=$5,users_lastname=$6 ,users_gender=$7,users_address=$8,users_firstphone=$9,users_secondphone=$10,users_birthdate=$11, users_bloodtyping=$12,users_type_relationship=$13,users_name_relationship=$14,users_created=$15 WHERE users_id=$16 RETURNING *;', [dni, email, username, passwordHash, firstname, lastname, gender, address, firstphone, secondphone, birthdate, bloodTyping, typeRelationship, nameRelationship, created, id])
       return (result.rows)
     } catch (e) {
       console.log('Error DB en lab By ID ')
@@ -87,11 +87,11 @@ export class ClientModel {
 
       console.log('entro en model udate img: ' + abatar + id)
 
-      const resultUrlDelete = await conn.query('SELECT client_abatar FROM client WHERE client_id = $1;', [id])
+      const resultUrlDelete = await conn.query('SELECT users_abatar FROM users WHERE users_id = $1;', [id])
 
       if (resultUrlDelete.row === 0) return resultUrlDelete.row
 
-      const abatarUrlDelete = resultUrlDelete.rows[0].client_abatar
+      const abatarUrlDelete = resultUrlDelete.rows[0].users_abatar
       const nombreImgDelete = nombreFinalImagenByUrl(abatarUrlDelete)
       console.log(abatarUrlDelete)
       console.log(nombreImgDelete)
@@ -101,7 +101,7 @@ export class ClientModel {
         await borrarImagen(nombreImgDelete)
       }
 
-      const result = await conn.query('UPDATE client SET  client_abatar=$1 WHERE client_id=$2 RETURNING *;', [abatar, id])
+      const result = await conn.query('UPDATE users SET  users_abatar=$1 WHERE users_id=$2 RETURNING *;', [abatar, id])
       return result.rows
     } catch (e) {
       console.log('Error DB en lab By ID ')
@@ -111,7 +111,7 @@ export class ClientModel {
 
   static async delete ({ id }) {
     try {
-      const result = await conn.query('DELETE FROM client WHERE client_id = $1 returning *;', [id])
+      const result = await conn.query('DELETE FROM users WHERE users_id = $1 returning *;', [id])
       // console.log(result.rows)
       return result.rows
     } catch (e) {
@@ -122,7 +122,7 @@ export class ClientModel {
 
   static async deleteImg ({ id, rutaImgDefault }) {
     try {
-      const result = await conn.query('UPDATE client SET client_abatar = $1  WHERE client_id = $2 RETURNING *;', [rutaImgDefault, id])
+      const result = await conn.query('UPDATE users SET users_abatar = $1  WHERE users_id = $2 RETURNING *;', [rutaImgDefault, id])
       // console.log(result.rows)
       return result.rows
     } catch (e) {

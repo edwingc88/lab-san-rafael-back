@@ -57,7 +57,7 @@
 <body style="color: rgb(11, 11, 11);">
   <h1 style="padding: .5rem;align-items: center; margin: 0 auto;text-align: center;">API Laboratorio Clinico <span style="color: green;">"San Rafael"</span></h1>
   <section style="display: flex; align-content: center; padding: .5rem; gap: 2rem;border-top: 2px solid rgb(32, 32, 32);min-width: 1300px; margin: 0 auto; width: 1300px;">
-    <!-- Lab, Client , Patient , Role -->
+    <!-- Lab, User , Patient , Role -->
     <article id="colum1" style="width: 650px;min-width:650px;border-right: 2px solid  rgb(11, 11, 11); overflow-x: hidden;">
         <!-- API Lab-->
       <details >
@@ -129,26 +129,26 @@
         </ul>
       </details>   
 
-      <!-- API Client-->
+      <!-- API User-->
       <details  >
           <summary style="margin: 1rem; font-size: x-large; font-weight: 600;">
-              API Client <span class="proceso">&#x2615;&#xfe0e;</span>
+              API User <span class="proceso">&#x2615;&#xfe0e;</span>
           </summary>
      
           <ul>
             <li>
               <p class="negrita">
                 <span class="listo">GET :</span>
-                Consulta todos los  Clientes
+                Consulta todos los  Users
                 <span class="listo">&#x1f5f9;</span>
               </p>
-              <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/clients</p>
+              <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/users</p>
               <p><span class="negrita">Headers : </span> Content-Type: multipart/form-data;</p>
               <p><span class="negrita">Bearer Token:  </span> "UseToken"</p>
             </li>
             <li>
-              <p class="negrita"><span class="listo">POST : </span>Crear Un Cliente<span class="listo"> &#x1f5f9;</span></p> 
-              <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/clients</p>
+              <p class="negrita"><span class="listo">POST : </span>Crear Un User<span class="listo"> &#x1f5f9;</span></p> 
+              <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/users</p>
               <p><span class="negrita">Headers : </span> Content-Type: multipart/form-data;</p>
               <p><span class="negrita">Bearer Token:  </span> "UseToken"</p>
 <pre style="box-sizing: border-box;overflow-x: scroll;">
@@ -173,8 +173,8 @@
 }
 </pre>
             </li>
-            <p class="negrita"><span class="listo">PATH : </span>Crear Un Cliente<span class="listo"> &#x1f5f9;</span></p> 
-            <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/clients</p>
+            <p class="negrita"><span class="listo">PATH : </span>Crear Un User<span class="listo"> &#x1f5f9;</span></p> 
+            <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/users</p>
             <p><span class="negrita">Headers : </span> Content-Type: multipart/form-data;</p>
             <p><span class="negrita">Bearer Token:  </span> "UseToken"</p>
 <pre style="box-sizing: border-box;overflow-x: scroll;">
@@ -200,8 +200,8 @@
 }
 </pre>
             <li>
-              <p class="negrita"><span class="listo">PATH : </span>Editar Imagen Cliente<span class="listo"> &#x1f5f9;</span></p> 
-              <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/clients</p>
+              <p class="negrita"><span class="listo">PATH : </span>Editar Imagen User<span class="listo"> &#x1f5f9;</span></p> 
+              <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/users</p>
               <p><span class="negrita">Headers : </span> Content-Type: multipart/form-data;</p>
               <p><span class="negrita">Bearer Token:  </span> "UseToken"</p>
   <pre style="box-sizing: border-box;overflow-x: scroll;">
@@ -211,14 +211,14 @@
   </pre>
             </li>
             <li>
-                <p class="negrita"><span class="listo">DELETE : </span>Eliminar Cliente por ID <span class="listo">&#x1f5f9;</span></p> 
-                <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/clients/:id</p>
+                <p class="negrita"><span class="listo">DELETE : </span>Eliminar User por ID <span class="listo">&#x1f5f9;</span></p> 
+                <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/users/:id</p>
 
                 <p><span class="negrita">Bearer Token:  </span> "UseToken"</p>
             </li>
             <li>
               <p class="negrita"><span class="listo">DELETE : </span>Eliminar Imagen por ID         <span class="listo">&#x1f5f9;</span></p> 
-              <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/clients/deleteimg/:id</p>
+              <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/users/deleteimg/:id</p>
 
               <p><span class="negrita">Bearer Token:  </span> "UseToken"</p>
             </li>
@@ -237,21 +237,21 @@
             <div style="display:flex;gap: 2rem;">
               <p>POST</p> 
               <p>/patient</p>
-              <p>Consulta todas las clients</p>
+              <p>Consulta todas las users</p>
             </div>
           </li>
           <li>
             <div style="display:flex;gap: 2rem;">
                 <p>PATH</p> 
                 <p>/patient</p>
-                <p>Consulta todas las clients</p>
+                <p>Consulta todas las users</p>
               </div>
             </li>
             <li>
             <div style="display:flex;gap: 2rem;">
               <p>DELETE</p> 
               <p>/patient</p>
-              <p>Consulta todas las clients</p>
+              <p>Consulta todas las users</p>
             </div>
           </li>
         </ul>
@@ -287,7 +287,7 @@
                     <div style="display:flex;gap: 2rem;">
                       <p>PATH</p> 
                       <p>/role</p>
-                      <p>Consulta todas las clients</p>
+                      <p>Consulta todas las users</p>
                     </div>
                   </li>
                   <li>
@@ -387,21 +387,21 @@
             <div style="display:flex;gap: 2rem;">
               <p>POST</p> 
               <p>/exam</p>
-              <p>Consulta todas las clients</p>
+              <p>Consulta todas las users</p>
             </div>
           </li>
           <li>
             <div style="display:flex;gap: 2rem;">
               <p>PATH</p> 
               <p>/exam</p>
-              <p>Consulta todas las clients</p>
+              <p>Consulta todas las users</p>
             </div>
           </li>
           <li>
             <div style="display:flex;gap: 2rem;">
               <p>DELETE</p> 
               <p>/exam</p>
-              <p>Consulta todas las clients</p>
+              <p>Consulta todas las users</p>
             </div>
           </li>
         </ul>
@@ -420,21 +420,21 @@
             <div style="display:flex;gap: 2rem;">
               <p>POST</p> 
               <p>/exam</p>
-              <p>Consulta todas las clients</p>
+              <p>Consulta todas las users</p>
             </div>
           </li>
           <li>
             <div style="display:flex;gap: 2rem;">
               <p>PATH</p> 
               <p>/exam</p>
-              <p>Consulta todas las clients</p>
+              <p>Consulta todas las users</p>
             </div>
           </li>
           <li>
             <div style="display:flex;gap: 2rem;">
               <p>DELETE</p> 
               <p>/exam</p>
-              <p>Consulta todas las clients</p>
+              <p>Consulta todas las users</p>
             </div>
           </li>
         </ul>
@@ -452,21 +452,21 @@
             <div style="display:flex;gap: 2rem;">
               <p>POST</p> 
               <p>/exam</p>
-              <p>Consulta todas las clients</p>
+              <p>Consulta todas las users</p>
             </div>
           </li>
           <li>
             <div style="display:flex;gap: 2rem;">
               <p>PATH</p> 
               <p>/exam</p>
-              <p>Consulta todas las clients</p>
+              <p>Consulta todas las users</p>
             </div>
           </li>
           <li>
             <div style="display:flex;gap: 2rem;">
               <p>DELETE</p> 
               <p>/exam</p>
-              <p>Consulta todas las clients</p>
+              <p>Consulta todas las users</p>
             </div>
           </li>
         </ul>

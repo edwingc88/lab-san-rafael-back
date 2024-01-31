@@ -10,7 +10,7 @@ DROP TABLE IF EXISTS person;
 DROP TABLE IF EXISTS exam CASCADE;
 DROP TABLE IF EXISTS exam_category CASCADE;
 DROP TABLE IF EXISTS lab;
-DROP TABLE IF EXISTS client CASCADE;
+
 DROP TABLE IF EXISTS patient CASCADE;
 DROP TABLE IF EXISTS category CASCADE;
 DROP TABLE IF EXISTS sub_category;
@@ -23,6 +23,8 @@ DROP TABLE IF EXISTS exam_category CASCADE;
 DROP TABLE IF EXISTS statu;
 DROP TABLE IF EXISTS gender;
 DROP TABLE IF EXISTS role;
+DROP TABLE IF EXISTS client CASCADE;
+DROP TABLE IF EXISTS users CASCADE;
 
 create extension if not exists "uuid-ossp";
 
@@ -50,7 +52,7 @@ CREATE TABLE IF NOT EXISTS lab (
 );
 
 INSERT INTO lab (lab_name,lab_rif,lab_slogan,lab_description,lab_objetive,lab_mission,lab_vision,lab_email,lab_address,lab_phone,lab_logo) VALUES 
-('Centro Medico Ambulatorio San Rafael','J-1234562','Para nosotros no hay nada mas importante que tu salud.','servicio de laboratorio','Somos una empresa que cuenta con personal altamente calificado y que trabaja con altos estándares de calidad y servicio en el área de análisis clínicos. Nuestros pacientes son nuestra razón de ser y es por ello que para satisfacerlos utilizamos tecnología de vanguardia y los más exigentes controles de calidad, para poder brindarles la mayor confiabilidad en sus resultados.','Ofrecer un servicio de Laboratorio Clínico excepcional,  donde nuestros usuarios se sientan satisfechos y plenos por la atención ofrecida en todos nuestros departamentos. Distinguirnos como un laboratorio extraordinario donde la excelencia de nuestros procedimientos y atención  al cliente nos distinga.','Posicionarnos como un Laboratorio Clínico innovador y de alta calidad, que ofrezca a sus pacientes soluciones que permitan el preciso diagnóstico médico y oportuno tratamiento. Queremos ser una empresa composederente en el sector salud, que la excelencia sea nuestro estandarte.','lab@gmail.com','Ciudad Guayana 8050, Bolívar. Core 8','0286-9530505','https://lab-san-rafael-api.onrender.com/sources/images/public/logo.png');
+('Centro Medico Ambulatorio San Rafael','J-1234562','Para nosotros no hay nada mas importante que tu salud.','servicio de laboratorio','Somos una empresa que cuenta con personal altamente calificado y que trabaja con altos estándares de calidad y servicio en el área de análisis clínicos. Nuestros pacientes son nuestra razón de ser y es por ello que para satisfacerlos utilizamos tecnología de vanguardia y los más exigentes controles de calidad, para poder brindarles la mayor confiabilidad en sus resultados.','Ofrecer un servicio de Laboratorio Clínico excepcional,  donde nuestros usuarios se sientan satisfechos y plenos por la atención ofrecida en todos nuestros departamentos. Distinguirnos como un laboratorio extraordinario donde la excelencia de nuestros procedimientos y atención  al userse nos distinga.','Posicionarnos como un Laboratorio Clínico innovador y de alta calidad, que ofrezca a sus pacientes soluciones que permitan el preciso diagnóstico médico y oportuno tratamiento. Queremos ser una empresa composederente en el sector salud, que la excelencia sea nuestro estandarte.','lab@gmail.com','Ciudad Guayana 8050, Bolívar. Core 8','0286-9530505','https://lab-san-rafael-api.onrender.com/sources/images/public/logo.png');
 
 CREATE TABLE IF NOT EXISTS role (
     role_id serial PRIMARY KEY,
@@ -88,35 +90,35 @@ INSERT INTO role (role_name) VALUES
    (5,'Otro');
 */
 
-CREATE TABLE IF NOT EXISTS client (
-    /* client_id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),*/
-    client_id serial PRIMARY KEY,
-    client_dni VARCHAR(255) UNIQUE NULL,
-    client_email VARCHAR(255) NOT NULL UNIQUE,
-    client_username VARCHAR NOT NULL UNIQUE,
-    client_password VARCHAR(255) NOT NULL,
-    client_firstname VARCHAR(255) NOT NULL,
-    client_lastname VARCHAR(255) NOT NULL,
-    client_gender VARCHAR(255),
-    client_address VARCHAR(255),
-    client_firstphone VARCHAR(255) NOT NULL,
-    client_secondphone VARCHAR(255) NULL,
-    client_birthdate DATE,
-    client_bloodtyping VARCHAR(255),
-    client_type_relationship VARCHAR(255) NULL,
-    client_name_relationship VARCHAR(255) NULL,
-    client_created DATE,
-    client_abatar VARCHAR(255),
-    client_id_role INT NULL,
-    FOREIGN KEY (client_id_role) REFERENCES role(role_id) ON DELETE CASCADE
+CREATE TABLE IF NOT EXISTS users (
+    /* users_id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),*/
+    users_id serial PRIMARY KEY,
+    users_dni VARCHAR(255) UNIQUE NULL,
+    users_email VARCHAR(255) NOT NULL UNIQUE,
+    users_usersname VARCHAR NOT NULL UNIQUE,
+    users_password VARCHAR(255) NOT NULL,
+    users_firstname VARCHAR(255) NOT NULL,
+    users_lastname VARCHAR(255) NOT NULL,
+    users_gender VARCHAR(255),
+    users_address VARCHAR(255),
+    users_firstphone VARCHAR(255) NOT NULL,
+    users_secondphone VARCHAR(255) NULL,
+    users_birthdate DATE,
+    users_bloodtyping VARCHAR(255),
+    users_type_relationship VARCHAR(255) NULL,
+    users_name_relationship VARCHAR(255) NULL,
+    users_created DATE,
+    users_abatar VARCHAR(255),
+    users_id_role INT NULL,
+    FOREIGN KEY (users_id_role) REFERENCES role(role_id) ON DELETE CASCADE
 );
 
---- FOREIGN KEY (client_id_role) REFERENCES role(role_id) ON DELETE SET NULL,
+--- FOREIGN KEY (users_id_role) REFERENCES role(role_id) ON DELETE SET NULL,
 
-INSERT INTO client (client_dni,client_email,client_username,client_password,client_firstname,client_lastname,client_gender,client_address,client_firstphone,client_secondphone,client_birthdate,client_bloodtyping,client_type_relationship,client_name_relationship, client_created,client_abatar,client_id_role) VALUES ('v-1234','michelledellosa7@gmail.com','michelle','12345678','Michelle','Dellza','Femenino','San Felix','041432','0412','1900-01-01','O+',null,null,now(),'https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',1),('v-24796','edwin@gmail.com','edwin','1234','edwin','mendez','Masculino','San Felix','041432','0412','1900-01-01','O+',null,null,now(),'https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',2),('v-333','bio@gmail.com','bio','33333','Michelle','Dellza','Masculino','San Felix','041432','0412','1900-01-01','O+',null,null,now(),'https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',3),('v-4444','patient@gmail.com','patient','44444','Patient','Dellza','Masculino','San Felix','041432','0412','1900-01-01','O+',null,null,now(),'https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',4);
+INSERT INTO users (users_dni,users_email,users_usersname,users_password,users_firstname,users_lastname,users_gender,users_address,users_firstphone,users_secondphone,users_birthdate,users_bloodtyping,users_type_relationship,users_name_relationship, users_created,users_abatar,users_id_role) VALUES ('v-1234','michelledellosa7@gmail.com','michelle','12345678','Michelle','Dellza','Femenino','San Felix','041432','0412','1900-01-01','O+',null,null,now(),'https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',1),('v-24796','edwin@gmail.com','edwin','1234','edwin','mendez','Masculino','San Felix','041432','0412','1900-01-01','O+',null,null,now(),'https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',2),('v-333','bio@gmail.com','bio','33333','Michelle','Dellza','Masculino','San Felix','041432','0412','1900-01-01','O+',null,null,now(),'https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',3),('v-4444','patient@gmail.com','patient','44444','Patient','Dellza','Masculino','San Felix','041432','0412','1900-01-01','O+',null,null,now(),'https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',4);
 
 
-/*insert INTO patient (patient_dni,patient_email,patient_firstname,patient_lastname,patient_address,patient_mobilephone,patient_homephone,patient_birthdate,patient_gender,patient_blood_typing,patient_relationship,patient_created,patient_principal,patient_id_client) VALUES 
+/*insert INTO patient (patient_dni,patient_email,patient_firstname,patient_lastname,patient_address,patient_mobilephone,patient_homephone,patient_birthdate,patient_gender,patient_blood_typing,patient_relationship,patient_created,patient_principal,patient_id_users) VALUES 
 ('j-1234','Michelledellosa7@gmail.com','Michelle','Dellza','San Felix','041432','0412565','1900-01-01','Femenino','o+',1,'1900-01-01',true,1),
 ('j-24796','edwingc88@gmail.com','Edwin','Mendez','Core 8','041432','0412565','1900-01-01','Masculino','o+',1,'1900-01-01',true,2),
 ('v-3333','bionalist@gmail.com','nombrebio','apellidobio','Core 8','041432','0412565','1900-01-01','Masculino','o+',1,'1900-01-01',true,3);
@@ -295,9 +297,9 @@ CREATE TABLE IF NOT EXISTS orden (
   orden_id serial PRIMARY KEY,
   orden_date DATE,
   orden_observation VARCHAR(255),
-  orden_id_client serial NOT NULL,
+  orden_id_users serial NOT NULL,
   orden_statu serial,
-  FOREIGN KEY (orden_id_client) REFERENCES client(client_id), 
+  FOREIGN KEY (orden_id_users) REFERENCES users(users_id), 
   FOREIGN KEY (orden_statu) REFERENCES statu(statu_id)
 );
 

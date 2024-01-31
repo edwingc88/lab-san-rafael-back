@@ -4,7 +4,7 @@ import { RoleModel } from './models/postgres/roles.js'
 import { LabModel } from './models/postgres/labs.js'
 import { GenderModel } from './models/postgres/genders.js'
 import { RelationshipModel } from './models/postgres/relationships.js'
-import { ClientModel } from './models/postgres/clients.js'
+import { UserModel } from './models/postgres/users.js'
 import { AuthModel } from './models/postgres/auth.js'
 import { SubCategoryModel } from './models/postgres/subcategorys.js'
 import { PatientModel } from './models/postgres/patients.js'
@@ -17,14 +17,14 @@ import { ResultModel } from './models/postgres/results.js'
 import { CategoryModel } from './models/postgres/categorys.js'
 
 // import { seedDbModel } from './models/postgres/seeds.js'
-// Seed mpara crear Db de clientes inciales como el manager
+// Seed mpara crear Db de useres inciales como el manager
 /*
 try {
-  await ClientsDbModel.create()
+  await UsersDbModel.create()
 } catch (error) {
   console.log(error)
 } */
 
-createApp({ relationshipModel: RelationshipModel, genderModel: GenderModel, clientModel: ClientModel, roleModel: RoleModel, patientModel: PatientModel, labModel: LabModel, examModel: ExamModel, examCategoryModel: ExamCategoryModel, invoiceModel: InvoiceModel, invoiceExamModel: InvoiceExamModel, compousedModel: CompousedModel, resultModel: ResultModel, categoryModel: CategoryModel, subcategoryModel: SubCategoryModel, authModel: AuthModel })
+createApp({ relationshipModel: RelationshipModel, genderModel: GenderModel, userModel: UserModel, roleModel: RoleModel, patientModel: PatientModel, labModel: LabModel, examModel: ExamModel, examCategoryModel: ExamCategoryModel, invoiceModel: InvoiceModel, invoiceExamModel: InvoiceExamModel, compousedModel: CompousedModel, resultModel: ResultModel, categoryModel: CategoryModel, subcategoryModel: SubCategoryModel, authModel: AuthModel })
 
 export default createApp
