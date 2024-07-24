@@ -50,49 +50,56 @@ export class LabController {
     form.parse(req, async (err, fields, files) => {
       if (err) return res.status(500).json({ error: 'Error msj formdata' })
 
-      console.log(JSON.stringify(fields, null, 2))
-      console.log(JSON.stringify(files, null, 2))
-      // Obteniendo la ruta de la imagen por default
-      let rutaFinalArchivo = process.env.WEB_URL + 'sources/images/public/noimage.jpg'
+      let rutaDefaultFinalArchivo = process.env.WEB_URL + 'sources/images/public/noimage.jpg' // Obteniendo la ruta de la imagen por default
+      let key = ''
+      let rutaArchivo = ''
+      let rutaLink = ''
+      let nameImagenDefault = ''
 
-      console.log(rutaFinalArchivo)// Ruta Final
-
-      // console.log(Object.keys(files)[0])
-
-      const key = Object.keys(files)[0]
-      const rutaLink = files[key][0].path
-      const rutaArchivo = rutaLink.replaceAll('\\', '/')
-      if (files[key][0].originalFilename !== '') {
-        rutaFinalArchivo = process.env.WEB_URL + rutaArchivo
-        console.log(rutaFinalArchivo)
+      if (Object.keys(files).length === 0) {
+        console.log('NO hay archivos')
+        console.log(JSON.stringify(files, null, 2))
+      } else {
+        console.log('SI hay archivos')
+        console.log(JSON.stringify(fields, null, 2))
+        key = Object.keys(files)[0]
+        rutaLink = files[key][0].path
+        rutaArchivo = rutaLink.replaceAll('\\', '/')
+        rutaDefaultFinalArchivo = process.env.WEB_URL + rutaArchivo
+        nameImagenDefault = rutaLink.slice(rutaLink.lastIndexOf('\\') + 1)
+        console.log('Entro a Objey Key , RUTA FINAL ARCHIVO:', rutaDefaultFinalArchivo)
       }
 
-      console.log('Abajo default imagen sacada de multipartys y despues ruta Archivo')
-      const nameImagenDefault = rutaLink.slice(rutaLink.lastIndexOf('\\') + 1)
-      console.log(nameImagenDefault)
-      console.log(rutaArchivo)
+      /*     if (Object.keys(files)[0]) {
+        key = Object.keys(files)[0]
+        rutaLink = files[key][0].path
+        rutaArchivo = rutaLink.replaceAll('\\', '/')
+        rutaDefaultFinalArchivo = process.env.WEB_URL + rutaArchivo
+        nameImagenDefault = rutaLink.slice(rutaLink.lastIndexOf('\\') + 1)
+        console.log('Entro a Objey Key , RUTA FINAL ARCHIVO:', rutaDefaultFinalArchivo)
+      } */
 
-      console.log(extname(rutaArchivo))
+      console.log('NameImagenDefault:', nameImagenDefault)
+      console.log('ruta Archivo:', rutaArchivo)
 
-      if (extname(rutaArchivo) === '') {
+      console.log('ext Ruta Archivo:', extname(rutaArchivo))
+
+      if (extname(rutaArchivo) === '' && Object.keys(files)[0]) {
         fs.unlink(rutaArchivo, function (err) {
           if (err) {
-            console.error(err)
             fs.unlink(join('sources', 'public', 'images', nameImagenDefault), function (err) {
               if (err) { console.error(err) }
-              console.log('File deleted Local!')
             })
           } else {
-            console.log('File deleted Render!')
+            console.log('File deleted Archivo en la ruta : ', rutaArchivo)
           }
         })
       }
 
-      console.log(fields)
-
       /// RECUPERANDO DATOS ITERANDO OBJETO
-      const claves = Object.keys(fields) // claves = ["nombre", "color", "macho", "edad"]
       let newvalue = {}
+
+      const claves = Object.keys(fields) // claves = ["nombre", "color", "macho", "edad"]
 
       for (let i = 0; i < claves.length; i++) {
         const clave = claves[i]
@@ -102,16 +109,17 @@ export class LabController {
         newvalue = { ...newvalue, ...valor }
       }
 
-      newvalue.logo = rutaFinalArchivo
+      newvalue.logo = rutaDefaultFinalArchivo
 
-      console.log(newvalue)
-
+      /**  Validar Datos con Zot **/
       const result = validateLab(newvalue)
 
       if (result.error) {
         return res.status(400).json({ error: JSON.parse(result.error.message) })
       }
       console.log(result.data)
+
+      /**  Registrar en Base de Datos **/
       const newlab = await this.labModel.create({ input: result.data })
       res.status(201).json(newlab)
     })
@@ -119,7 +127,7 @@ export class LabController {
 
   update = async (req, res, next) => {
     try {
-      const form = new multiparty.Form({ /* uploadDir: IMAGEN_UPLOAD_DIR */})
+      const form = new multiparty.Form({ /* uploadDir: IMAGEN_UPLOAD_DIR */ })
       const { id } = req.params
       form.parse(req, async (err, fields) => {
         if (err) {
@@ -221,15 +229,6 @@ export class LabController {
       next(error)
     }
   }
-  /// ///
-  /* const result = validatePartialLab(req.body)
-    if (!result.success) {
-      return res.status(400).json({ error: JSON.parse(result.error.message) })
-    }
-    const { id } = req.params
-    const updatedlab = await this.labModell.update({ id, input: result.data })
-    if (!updatedlab) return res.status(404).json({ error: 'Not found lab' })
-    return res.json(updatedlab) */
 
   updateImg = async (req, res, next) => {
     const { id } = req.params

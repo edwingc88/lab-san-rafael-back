@@ -12,6 +12,8 @@
       padding: 0;
       box-sizing: border-box;
       overflow-x: hidden;
+      background-color: rgb(21, 46, 46);
+      color: white;
     }
 
     .proceso{
@@ -29,7 +31,7 @@
     }
 
     .normal{
-      color: rgb(11, 10, 10);
+      color: rgb(243, 238, 238);
     }
 
     .negrita{
@@ -46,6 +48,15 @@
       padding-top: 2px;
     }
 
+    .copy {
+      display: inline;
+    }
+
+
+    .btn{
+      display: inline;
+    }
+
     /*
      LISTO :  &#x1f5f9;
       PROCESO : &#x2615;&#xfe0e
@@ -54,7 +65,7 @@
 
   </style>
 </head>
-<body style="color: rgb(11, 11, 11);">
+<body>
   <h1 style="padding: .5rem;align-items: center; margin: 0 auto;text-align: center;">API Laboratorio Clinico <span style="color: green;">"San Rafael"</span></h1>
   <section style="display: flex; align-content: center; padding: .5rem; gap: 2rem;border-top: 2px solid rgb(32, 32, 32);min-width: 1300px; margin: 0 auto; width: 1300px;">
     <!-- Lab, User , Patient , Role -->
@@ -66,14 +77,14 @@
         </summary>
         <ul >
             <li>
-                  <p class="negrita">
+                <p class="negrita">
                     <span class="listo">GET :</span>
                     Consulta todos los Laboratorios
-                    <span class="listo">&#x1f5f9;</span>
-                  </p>
-                  <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/labs</p>
+                </p>
+                <p class="copy"><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/labs</p>
+                <button id="LabGetAllBtn" class="btn">Copiar</button>
             </li>
-              <li>
+            <li>
                 <p class="negrita"><span class="listo">POST : </span>Crear Un Laboratorio<span class="listo"> &#x1f5f9;</span></p> 
                 <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/labs</p>
                 <p><span class="negrita">Headers : </span> multipart/form-data;</p>
@@ -275,20 +286,26 @@
                   <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
                 </li>
                 <li>
-                  <p class="negrita">
-                    <span class="listo">POST :</span>
-                    Crear Role
-                    <span class="listo">&#x1f5f9;</span>
-                  </p>
+                  <p class="negrita"><span class="listo">POST : </span>Crear Un User<span class="listo"> &#x1f5f9;</span></p> 
                   <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/roles</p>
-                  <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+                  <p><span class="negrita">Headers : </span> Content-Type: multipart/form-data;</p>
+                  <p><span class="negrita">Bearer Token:  </span> "UseToken"</p>
+<pre style="box-sizing: border-box;overflow-x: scroll;">
+{
+"name":"rolenuevo",
+}
+</pre>
                 </li>
                   <li>
-                    <div style="display:flex;gap: 2rem;">
-                      <p>PATH</p> 
-                      <p>/role</p>
-                      <p>Consulta todas las users</p>
-                    </div>
+                    <p class="negrita"><span class="listo">PATH : </span>Crear Un User<span class="listo"> &#x1f5f9;</span></p> 
+                    <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/roles/:id</p>
+                    <p><span class="negrita">Headers : </span> Content-Type: multipart/form-data;</p>
+                    <p><span class="negrita">Bearer Token:  </span> "UseToken"</p>
+<pre style="box-sizing: border-box;overflow-x: scroll;">
+{
+  "name":"roleeditado",
+}
+</pre>
                   </li>
                   <li>
                     <p class="negrita">
@@ -330,7 +347,7 @@
             <li>    
               <p class="negrita" >
                 <span class="listo">POST :</span>
-                  Registrarse como cliente
+                  Registrarse paciente
                 <span class="listo">&#x1f5f9;</span>
               </p>
               <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/auth/signup</p>
@@ -375,34 +392,16 @@
         <summary style="margin: 1rem; font-size: x-large; font-weight: 600;">
             API Exam <span class="proceso">&#x2615;&#xfe0e;</span>
         </summary>
-          <li >    
-            <p class="listo" style="font-weight: bold;">GET : <span style="color: black;">Devuelve todos los Examenes , con sus categorias y subcategorias </span></p> 
-            <span>https://lab-san-rafael-api.onrender.com/exams</span>
-          </li>
-          <li>    
-            <p class="listo" style="font-weight: bold;">GET : <span style="color: black;">Devuelva examenes pertenecen a una categoria por su ID</span></p> 
-            <span>https://lab-san-rafael-api.onrender.com/exams?_category={id}</span>
-          </li>
-          <li>
-            <div style="display:flex;gap: 2rem;">
-              <p>POST</p> 
-              <p>/exam</p>
-              <p>Consulta todas las users</p>
-            </div>
-          </li>
-          <li>
-            <div style="display:flex;gap: 2rem;">
-              <p>PATH</p> 
-              <p>/exam</p>
-              <p>Consulta todas las users</p>
-            </div>
-          </li>
-          <li>
-            <div style="display:flex;gap: 2rem;">
-              <p>DELETE</p> 
-              <p>/exam</p>
-              <p>Consulta todas las users</p>
-            </div>
+        <ul style="padding-bottom: .5rem;">
+          <li > 
+            <p class="negrita">
+                <span class="listo">GET :</span>
+                Devuelve todos los Examenescon sus categorias
+                <span class="listo">&#x1f5f9;</span>
+              </p>
+              <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/exams</p>
+              <p><span class="negrita">Headers : </span> Content-Type: Application/json</p>
+              <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
           </li>
         </ul>
       </details>
@@ -474,5 +473,29 @@
       
     </article>
   </section>
+
 </body>
+<script>
+  const  copiarAlPortapapeles= async (ev) => {
+
+ //   console.log(ev.target.previousElementSibling.childNodes[1].data)
+    let texto= ev.target.previousElementSibling.childNodes[1].data
+
+    await navigator.clipboard.writeText(texto)
+    
+    ev.target.innerHTML="Copiado &#x1f5f9"
+      ev.target.style.backgroundColor="green";
+      ev.target.style.color="white";
+    
+
+    setTimeout(function(){
+      ev.target.innerHTML="Copiar"
+      ev.target.style.backgroundColor="white";
+      ev.target.style.color="black";
+    }, 750)
+}
+
+document.getElementById('LabGetAllBtn').addEventListener('click', copiarAlPortapapeles);
+
+</script>
 </html>

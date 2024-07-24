@@ -2,7 +2,7 @@ import { createApp } from './app.js'
 
 import { RoleModel } from './models/postgres/roles.js'
 import { LabModel } from './models/postgres/labs.js'
-import { GenderModel } from './models/postgres/genders.js'
+import { StateModel } from './models/postgres/states.js'
 import { RelationshipModel } from './models/postgres/relationships.js'
 import { UserModel } from './models/postgres/users.js'
 import { AuthModel } from './models/postgres/auth.js'
@@ -25,6 +25,6 @@ try {
   console.log(error)
 } */
 
-createApp({ relationshipModel: RelationshipModel, genderModel: GenderModel, userModel: UserModel, roleModel: RoleModel, patientModel: PatientModel, labModel: LabModel, examModel: ExamModel, examCategoryModel: ExamCategoryModel, invoiceModel: InvoiceModel, invoiceExamModel: InvoiceExamModel, compousedModel: CompousedModel, resultModel: ResultModel, categoryModel: CategoryModel, subcategoryModel: SubCategoryModel, authModel: AuthModel })
+createApp({ relationshipModel: RelationshipModel, stateModel: StateModel, userModel: UserModel, roleModel: RoleModel, patientModel: PatientModel, labModel: LabModel, examModel: ExamModel, examCategoryModel: ExamCategoryModel, invoiceModel: InvoiceModel, invoiceExamModel: InvoiceExamModel, compousedModel: CompousedModel, resultModel: ResultModel, categoryModel: CategoryModel, subcategoryModel: SubCategoryModel, authModel: AuthModel })
 
 export default createApp

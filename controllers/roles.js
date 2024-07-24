@@ -38,15 +38,20 @@ export class RoleController {
     }
   }
 
-  update = async (req, res) => {
-    const result = validatePartialRole(req.body)
-    if (!result.success) {
-      return res.status(400).json({ error: JSON.parse(result.error.message) })
+  update = async (req, res, next) => {
+    try {
+      const result = validatePartialRole(req.body)
+      if (!result.success) {
+        return res.status(400).json({ error: JSON.parse(result.error.message) })
+      }
+      const { id } = req.params
+      console.log(id)
+      const updatedroles = await this.roleModel.update({ id, input: result.data })
+      if (!updatedroles || updatedroles.length === 0) return res.status(404).json({ error: 'Not found roles' })
+      return res.json(updatedroles)
+    } catch (error) {
+      next(error)
     }
-    const { id } = req.params
-    const updatedroles = await this.roleModell.update({ id, input: result.data })
-    if (!updatedroles) return res.status(404).json({ error: 'Not found roles' })
-    return res.json(updatedroles)
   }
 
   delete = async (req, res, next) => {

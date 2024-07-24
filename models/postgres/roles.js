@@ -32,12 +32,13 @@ export class RoleModel {
     }
   }
 
-  static async update ({ idupdate, input }) {
+  static async update ({ id, input }) {
     // eslint-disable-next-line camelcase
-    const { id, name } = input
-
+    const { name } = input
+    console.log(name)
+    console.log(id)
     // eslint-disable-next-line camelcase
-    const result = await conn.query('UPDATE role SET id = $1, name = $2  WHERE id = $3 RETURNING *;', [id, name, idupdate])
+    const result = await conn.query('UPDATE role SET role_name = $1  WHERE role_id = $2 RETURNING *;', [name, id])
     console.log(result.rows)
     return result.rows
   }

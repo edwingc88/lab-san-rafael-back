@@ -5,13 +5,22 @@ export class ResultController {
     this.resultModel = resultModel
   }
 
-  getAll = async (req, res) => {
-    const { _category } = req.query
-    // console.log(_category)
+  getAll = async (req, res, next) => {
+  /*     const { _category } = req.query
+     console.log(_category)
 
     const results = await this.resultModel.getAll({ _category })
     if (results.length === 0) return res.status(404).json({ msj: 'Empty  results' })
     res.json(results)
+ */
+
+    try {
+      const results = await this.resultModel.getAll()
+      if (results.length === 0) return res.status(404).json({ msj: 'Empty  results' })
+      return res.status(201).json(results)
+    } catch (error) {
+      next(error)
+    }
   }
 
   getById = async (req, res) => {

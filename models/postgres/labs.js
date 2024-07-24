@@ -32,11 +32,11 @@ export class LabModel {
     console.log('en el  DB LAB entro, INPUT ARRIBA')
     // eslint-disable-next-line camelcase
     const { name, rif, slogan, description, objetive, mission, vision, email, address, phone, logo } = input
-    console.log(email)
+
     try {
       // eslint-disable-next-line camelcase
       const res = await conn.query('INSERT INTO lab (lab_name,lab_rif,lab_slogan,lab_description,lab_objetive,lab_mission,lab_vision,lab_email,lab_address,lab_phone,lab_logo) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING *;', [name, rif, slogan, description, objetive, mission, vision, email, address, phone, logo])
-      console.log('en el  DB LAB entro tambien')
+      console.log('en el DB LAB entro tambien')
       console.log(res.rows)
       return (res.rows)
       // return ({ input })
@@ -45,7 +45,7 @@ export class LabModel {
     }
   }
 
-  static async update22 ({ idupdate, input }) {
+  static async update ({ idupdate, input }) {
     // eslint-disable-next-line camelcase
     const { name, rif, slogan, description, objetive, mission, vision, email, address, phone, logo } = input
     // console.log(input)
@@ -92,6 +92,8 @@ export class LabModel {
     }
   }
 
+  /*
+
   static async update ({ idupdate, input }) {
     try {
       // eslint-disable-next-line camelcase
@@ -107,6 +109,7 @@ export class LabModel {
       throw new Error(e)
     }
   }
+*/
 
   static async updateImg ({ id, input }) {
     try {

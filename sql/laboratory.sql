@@ -16,12 +16,13 @@ DROP TABLE IF EXISTS category CASCADE;
 DROP TABLE IF EXISTS sub_category;
 DROP TABLE IF EXISTS result CASCADE;
 DROP TABLE IF EXISTS request;
-DROP TABLE IF EXISTS composed; 
+DROP TABLE IF EXISTS composed;
 DROP TABLE IF EXISTS orden CASCADE; 
-DROP TABLE IF EXISTS orden_exam CASCADE;
+DROP TABLE IF EXISTS order CASCADE; 
+DROP TABLE IF EXISTS order_exam CASCADE;
 DROP TABLE IF EXISTS exam_category CASCADE;
 DROP TABLE IF EXISTS statu;
-DROP TABLE IF EXISTS gender;
+DROP TABLE IF EXISTS gender CASCADE;
 DROP TABLE IF EXISTS role;
 DROP TABLE IF EXISTS client CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
@@ -65,30 +66,7 @@ INSERT INTO role (role_name) VALUES
 ('bioanalyst'),
 ('patient'); 
 
----
 
-/*
-   CREATE TABLE IF NOT EXISTS gender (
-      gender_id serial PRIMARY KEY,
-      gender_name VARCHAR(255) NOT NULL UNIQUE
-   );
-
-   INSERT INTO gender (gender_id,gender_name) VALUES
-   (1,'Masculino'),
-   (2,'Femenino');
-
-   CREATE TABLE IF NOT EXISTS relationship (
-      relationship_id serial PRIMARY KEY,
-      relationship_type VARCHAR(255) NOT NULL UNIQUE
-   );
-
-   INSERT INTO relationship (relationship_id,relationship_type)  VALUES
-   (1,'No aplica'),
-   (2,'Familiar'),
-   (3,'Amigo'),
-   (4,'Conocido'),
-   (5,'Otro');
-*/
 
 CREATE TABLE IF NOT EXISTS users (
     /* users_id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),*/
@@ -163,21 +141,21 @@ INSERT INTO category (category_id,category_name) VALUES
 CREATE TABLE IF NOT EXISTS exam (
    exam_id serial PRIMARY KEY ,
    exam_name VARCHAR(255) NOT NULL,
-   exam_min FLOAT,
-   exam_max FLOAT,
+   exam_reference VARCHAR(255) NULL,
    exam_unit VARCHAR(255) null,
-   exam_composed BOOLEAN,
-   exam_price FLOAT null
+   exam_price FLOAT,
+   exam_id_father INT NULL,
+   FOREIGN KEY (exam_id_father) REFERENCES exam(exam_id)
 );
 
 
-INSERT INTO exam (exam_id,exam_name,exam_min,exam_max,exam_unit,exam_composed,exam_price) VALUES
-(1,'Hematologia Completa',null,null,null,true,20),
-(2,'PT',10,1,'md-dl',false,15),
-(3,'PTT',10,1,'md-dl',false,15),
-(4,'VSG',10,1,'md-dl',false,15),
-(5,'Grupo Sanguíneo y RH',10,1,'md-dl',false,15),
-(6,'Glicemia',10,1,'mg/dl',false,15),
+INSERT INTO exam (exam_id,exam_name,exam_reference,exam_unit,exam_price,exam_id_father) VALUES
+(1,'Hematologia Completa',null,null,15,null),
+(2,'PT','10-1','md-dl',10,null),
+(3,'PTT','10-1','md-dl',15,null),
+(4,'VSG','10-1','md-dl',15,null),
+(5,'Grupo Sanguíneo y RH',null,null,15,null),
+/* (6,'Glicemia','10-1','mg/dl',false,15),
 (7,'Glicemia Basal y Postprandial',10,1,'mg/dl',false,15),
 (8,'Urea en Suero',10,1,'mg/dl',false,15),
 (9,'Creatinina en Suero',10,1,'mg/dl',false,15),
@@ -213,12 +191,14 @@ INSERT INTO exam (exam_id,exam_name,exam_min,exam_max,exam_unit,exam_composed,ex
 (39,'Toxoplasma IgM',10,1,'mg/dl',false,3),
 (40,'Toxoplamsa Igm',10,1,'mg/dl',false,3),
 (41,'Helicobacter pylori',10,1,'mg/dl',false,3),
-(42,'Denge',10,1,'mg/dl',false,3),
-(43,'Orina General',null, null, null ,true,1),
-(44,'Heces General',null, null, null ,true,1);
+(42,'Denge',10,1,'mg/dl',false,3), */
+(6,'Orina General',null, null, 10 ,null),
+(7,'Heces General',null, null, 5 ,null),
+(8,'Lymph#','20-1', 'dl',4, 1),
+(9,'A#','20-1', 'dl',3 ,1);
 
 
-CREATE TABLE IF NOT EXISTS exam_category (
+/* CREATE TABLE IF NOT EXISTS exam_category (
    exam_category_id serial PRIMARY KEY ,
    exam_category_id_exam serial NOT NULL,
    exam_category_id_category serial NOT NULL,
@@ -277,7 +257,7 @@ INSERT INTO composed (composed_name,composed_max,composed_min,composed_unit,comp
 ('PREQUISTE', null, null, null, 44),
 ('QUISTE', null, null, null, 44),
 ('METAQUISTE', null, null, null, 44);
-
+ */
 CREATE TABLE IF NOT EXISTS statu(
    statu_id serial PRIMARY KEY,
    statu_name VARCHAR(255),
@@ -293,23 +273,22 @@ INSERT INTO statu (statu_name,statu_description) VALUES
 ('ANALISIS VERIFICADO', 'ANALISIS VERIFICADO'),
 ('RESULTADO ENTREGADO', 'RESULTADO ENTREGADO');
 
-CREATE TABLE IF NOT EXISTS orden (
-  orden_id serial PRIMARY KEY,
-  orden_date DATE,
-  orden_observation VARCHAR(255),
-  orden_id_users serial NOT NULL,
-  orden_statu serial,
-  FOREIGN KEY (orden_id_users) REFERENCES users(users_id), 
-  FOREIGN KEY (orden_statu) REFERENCES statu(statu_id)
+CREATE TABLE IF NOT EXISTS order (
+  order_id serial PRIMARY KEY,
+  order_number serial PRIMARY KEY,
+  order_date DATE,
+  order_observation VARCHAR(255),
+  order_statu serial,
 );
 
-CREATE TABLE IF NOT EXISTS exam_orden(
-   exam_orden_id serial PRIMARY KEY ,
-   exam_orden_id_exam serial NOT NULL,
-   exam_orden_id_orden serial NOT NULL,
-   exam_orden_price FLOAT,   
-   FOREIGN KEY (exam_orden_id_exam) REFERENCES exam(exam_id),
-   FOREIGN KEY (exam_orden_id_orden) REFERENCES orden(orden_id)
+CREATE TABLE IF NOT EXISTS exam_with_order(
+   exam_with_order_id serial PRIMARY KEY ,
+   exam_with_order_id_exam serial NOT NULL,
+   eexam_with_order_id_order serial NOT NULL,
+   exam_with_order_id_user serial NOT NULL,  
+   FOREIGN KEY (exam_with_order_id_exam) REFERENCES exam(exam_id),
+   FOREIGN KEY (exam_with_order_id_order) REFERENCES order(order_id),
+   FOREIGN KEY (exam_with_order_id_user) REFERENCES user(user_id)
 );
 
 CREATE TABLE IF NOT EXISTS invoice(
@@ -319,14 +298,14 @@ CREATE TABLE IF NOT EXISTS invoice(
   invoice_reference_paymeny VARCHAR(255)
 );
 
-
+/* 
 CREATE TABLE IF NOT EXISTS result (
   result_id serial PRIMARY KEY ,
   result_value INT,
   result_boolean BOOLEAN,
   result_observer VARCHAR(255),
   result_id_composed serial NOT NULL,
-  result_id_orden serial NOT NULL,
-  FOREIGN KEY (result_id_orden) REFERENCES orden(orden_id),
+  result_id_order serial NOT NULL,
+  FOREIGN KEY (result_id_order) REFERENCES order(order_id),
   FOREIGN KEY (result_id_composed) REFERENCES composed(composed_id)
-);
+); */

@@ -1,14 +1,14 @@
 import conn from './db.js'
 export class ResultModel {
-  static async getAll ({ _category }) {
+  static async getAll () {
     try {
-      if (_category) {
+      /*       if (_category) {
         const loweCaseCategoryID = _category.toLowerCase()
         const res = await conn.query('SELECT * FROM result WHERE result_id_category = $1;', [loweCaseCategoryID])
         return res.rows
-      }
-      const result = await conn.query('SELECT * FROM result INNER JOIN category ON result.result_id_category = category.category_id INNER JOIN sub_category ON category.category_id_sub_category = sub_category.sub_category_id;')
-      // const res = await conn.query('SELECT * FROM result;')
+      } */
+      // const result = await conn.query('SELECT * FROM result INNER JOIN category ON result.result_id_category = category.category_id INNER JOIN sub_category ON category.category_id_sub_category = sub_category.sub_category_id;')
+      const result = await conn.query('SELECT * FROM result;')
       console.log(result.rows)
       console.log('entro a Result Model')
       return result.rows
