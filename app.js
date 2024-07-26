@@ -6,16 +6,12 @@ import { createExamRouter } from './router/exams.js'
 import { createUserRouter } from './router/users.js'
 import { createRoleRouter } from './router/roles.js'
 import { createLabRouter } from './router/labs.js'
-import { createPatientRouter } from './router/patients.js'
 import { createSourceRouter } from './router/sources.js'
 import { createCategoryRouter } from './router/categorys.js'
 import { createResultRouter } from './router/results.js'
 import { createExamCategoryRouter } from './router/exams_categorys.js'
-import { createSubCategoryRouter } from './router/subcategorys.js'
-import { createCompousedRouter } from './router/compouseds.js'
+import { createOrderRouter } from './router/orders.js'
 import { createInvoiceRouter } from './router/invoices.js'
-import { createInvoiceExamRouter } from './router/invoices_exams.js'
-import { createRelationshipRouter } from './router/relationships.js'
 import { createAuthRouter } from './router/auth.js'
 import { createStateRouter } from './router/states.js'
 
@@ -34,7 +30,7 @@ const __dirname = dirname(__filename)
 
 const pkg = JSON.parse(readFileSync('./package.json'))
 
-export const createApp = ({ relationshipModel, stateModel, userModel, roleModel, patientModel, labModel, invoiceModel, invoiceExamModel, examModel, examCategoryModel, compousedModel, resultModel, categoryModel, subcategoryModel, authModel }) => {
+export const createApp = ({ stateModel, userModel, roleModel, labModel, invoiceModel, examModel, examCategoryModel, orderModel, resultModel, categoryModel, authModel }) => {
   const app = express()
   app.set('pkg', pkg)
   app.use(json())
@@ -57,9 +53,18 @@ export const createApp = ({ relationshipModel, stateModel, userModel, roleModel,
     })
   }) */
 
-  app.get('/', (req, res) => {
-    res.sendFile(join(__dirname, './index.html'))
-  })
+  const { NODE_ENV } = process.env
+
+  if (NODE_ENV === 'development ') {
+    app.get('/', (req, res) => {
+      res.sendFile(join(__dirname, './index_dev.html'))
+    })
+  } else {
+    app.get('/', (req, res) => {
+      res.sendFile(join(__dirname, './index.html'))
+    })
+  }
+
   /* app.get('/public', (req, res) => {
     res.sendFile(join(__dirname, 'public/images/ambulatorio.png'))
   }) */
@@ -69,15 +74,11 @@ export const createApp = ({ relationshipModel, stateModel, userModel, roleModel,
   app.use('/auth', createAuthRouter({ authModel }))
   app.use('/exams', createExamRouter({ examModel }))
   app.use('/exam_category', createExamCategoryRouter({ examCategoryModel }))
-  app.use('/invoices_exams', createInvoiceExamRouter({ invoiceExamModel }))
   app.use('/invoices', createInvoiceRouter({ invoiceModel }))
-  app.use('/compoused', createCompousedRouter({ compousedModel }))
+  app.use('/orders', createOrderRouter({ orderModel }))
   app.use('/results', createResultRouter({ resultModel }))
   app.use('/categorys', createCategoryRouter({ categoryModel }))
-  app.use('/subcategorys', createSubCategoryRouter({ subcategoryModel }))
   app.use('/labs', createLabRouter({ labModel }))
-  app.use('/patients', createPatientRouter({ patientModel }))
-  app.use('/relationships', createRelationshipRouter({ relationshipModel }))
   app.use('/states', createStateRouter({ stateModel }))
 
   /* app.use((req, res) => {

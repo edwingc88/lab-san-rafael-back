@@ -75,7 +75,7 @@
   </style>
 </head>
 <body>
-  <h1 style="padding: .5rem;align-items: center; margin: 0 auto;text-align: center;"> API - Laboratorio Clinico <span style="color: green;">"San Rafael"</span></h1>
+  <h1 style="padding: .5rem;align-items: center; margin: 0 auto;text-align: center;"> API Local - Laboratorio Clinico <span style="color: green;">"San Rafael"</span></h1>
   <section style="display: flex; align-content: center; padding: .5rem; gap: 2rem;border-top: 2px solid rgb(32, 32, 32);min-width: 1300px; margin: 0 auto; width: 1300px;">
     <!-- Lab, User , Patient , Role,  Auth, Imagenes -->
     <article id="colum1" style="width: 650px;min-width:650px;border-right: 2px solid  rgb(11, 11, 11); overflow-x: hidden;">
@@ -89,10 +89,10 @@
           <ul >
               <li>
                   <h2 class="negrita">
-                    <span class="listo">GET :</span>
+                      <span class="listo">GET :</span>
                       Consulta todos los Laboratorios
                   </h2>
-                  <p class="copy"><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/labs</p>
+                  <p class="copy"><span class="negrita">EndPoint : </span>http://localhost:1234/labs</p>
                   <button id="LabGet" class="btn">Copiar</button>
               </li>
               <li>
@@ -100,18 +100,18 @@
                     <span class="listo">GET :</span>
                     Consulta laboratorio por ID
                 </h2>
-                <p class="copy"><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/labs/:id</p>
+                <p class="copy"><span class="negrita">EndPoint : </span>http://localhost:1234/labs/:id</p>
                 <button id="LabGetID" class="btn">Copiar</button>
             </li>
               <li>
                   <h2 class="negrita"><span class="listo">POST : </span>Crear Un Laboratorio</h2> 
-                  <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/labs/</p>
+                  <p><span class="negrita">EndPoint : </span>http://localhost:1234/labs/</p>
                   <button id="LabPost" class="btn">Copiar</button>
               
                   <p><span class="negrita">Headers : </span> multipart/form-data;</p>
                 <li>     
                   <h2 class="negrita"> <span class="listo">PATH : </span>Actualizar  Laboratorio por ID</h2> 
-                  <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/labs/:id</p>
+                  <p><span class="negrita">EndPoint : </span>http://localhost:1234/labs/:id</p>
                   <button id="LabPathID" class="btn">Copiar</button>
                   <p><span class="negrita">Headers : </span> multipart/form-data;</p>
   <pre style="box-sizing: border-box;overflow-x: scroll;">
@@ -132,7 +132,7 @@
                 </li>
                 <li>
                   <h2 class="negrita"><span class="listo">DELETE : </span>Eliminar Lab por ID </h2> 
-                  <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/labs/:id</p>
+                  <p><span class="negrita">EndPoint : </span>http://localhost:1234/labs/:id</p>
                   <button id="LabDeleteID" class="btn">Copiar</button>
                 </li>
           </ul>
@@ -150,21 +150,21 @@
                   <span class="listo">GET :</span>
                   Consulta todos los  Users
                 </h2>
-                <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/users</p>
+                <p><span class="negrita">EndPoint : </span>http://localhost:1234/users</p>
                 <button id="UserGet" class="btn">Copiar</button>
                 <p><span class="negrita">Headers : </span> Content-Type: multipart/form-data;</p>
                 <p><span class="negrita">Bearer Token:  </span> "UseToken"</p>
               </li>
               <li>
                 <h2 class="negrita"><span class="listo">GET : </span>Crear Un User</h2> 
-                <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/users/:id</p>
+                <p><span class="negrita">EndPoint : </span>http://localhost:1234/users/:id</p>
                 <button id="UserGetID" class="btn">Copiar</button>
                 <p><span class="negrita">Headers : </span> Content-Type: multipart/form-data;</p>
                 <p><span class="negrita">Bearer Token:  </span> "UseToken"</p>
               </li>
               <li>
               <h2 class="negrita"><span class="listo">POST : </span>Crear Un User</h2> 
-              <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/users</p>
+              <p><span class="negrita">EndPoint : </span>http://localhost:1234/users</p>
               <button id="UserPost" class="btn">Copiar</button>
               <p><span class="negrita">Headers : </span> Content-Type: multipart/form-data;</p>
               <p><span class="negrita">Bearer Token:  </span> "UseToken"</p>
@@ -193,7 +193,7 @@
               </li>
               <li>
                 <h2 class="negrita"><span class="listo">PATH : </span>Editar Imagen User</h2> 
-                <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/users</p>
+                <p><span class="negrita">EndPoint : </span>http://localhost:1234/users</p>
                 <button id="UserPathID" class="btn">Copiar</button>
                 <p><span class="negrita">Headers : </span> Content-Type: multipart/form-data;</p>
                 <p><span class="negrita">Bearer Token:  </span> "UseToken"</p>
@@ -222,7 +222,7 @@
               </li>
               <li>
                   <h2 class="negrita"><span class="listo">DELETE : </span>Eliminar User por ID </h2> 
-                  <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/users/:id</p>
+                  <p><span class="negrita">EndPoint : </span>http://localhost:1234/users/:id</p>
                   <button id="UserDeleteID" class="btn">Copiar</button>
                   <p><span class="negrita">Bearer Token:  </span> "UseToken"</p>
               </li>
@@ -241,7 +241,7 @@
                       <span class="listo">GET :</span>
                       Consulta todos los Roles
                     </h2>
-                    <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/roles</p>
+                    <p><span class="negrita">EndPoint : </span>http://localhost:1234/roles</p>
                     <button id="RoleGet" class="btn">Copiar</button>
                     <p><span class="negrita">Headers : </span> Content-Type: Application/json</p>
                     <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
@@ -251,14 +251,14 @@
                       <span class="listo">GET :</span>
                       Consulta Roles por ID
                     </h2>
-                    <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/roles/:id</p>
+                    <p><span class="negrita">EndPoint : </span>http://localhost:1234/roles/:id</p>
                     <button id="RoleGetID" class="btn">Copiar</button>
                     <p><span class="negrita">Headers : </span> Content-Type: Application/json</p>
                     <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
                   </li>
                   <li>
                     <h2 class="negrita"><span class="listo">POST : </span>Crear Un User</h2> 
-                    <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/roles</p>
+                    <p><span class="negrita">EndPoint : </span>http://localhost:1234/roles</p>
                     <button id="RolePost" class="btn">Copiar</button>
                     <p><span class="negrita">Headers : </span> Content-Type: multipart/form-data;</p>
                     <p><span class="negrita">Bearer Token:  </span> "UseToken"</p>
@@ -270,7 +270,7 @@
                   </li>
                     <li>
                       <h2 class="negrita"><span class="listo">PATH : </span>Crear Un User</h2> 
-                      <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/roles/:id</p>
+                      <p><span class="negrita">EndPoint : </span>http://localhost:1234/roles/:id</p>
                       <button id="RolePathID" class="btn">Copiar</button>
                       <p><span class="negrita">Headers : </span> Content-Type: multipart/form-data;</p>
                       <p><span class="negrita">Bearer Token:  </span> "UseToken"</p>
@@ -285,7 +285,7 @@
                         <span class="listo">DELETE :</span>
                         Eliminar Role por ID
                       </h2>
-                      <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/roles/:id</p>
+                      <p><span class="negrita">EndPoint : </span>http://localhost:1234/roles/:id</p>
                       <button id="RoleDeleteID" class="btn">Copiar</button>
                       <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
                     </li>
@@ -304,7 +304,7 @@
                 <span class="listo">POST :</span>
                 Iniciar Sesión
               </h2>
-              <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/auth/signin</p>
+              <p><span class="negrita">EndPoint : </span>http://localhost:1234/auth/signin</p>
               <button id="SigninPost" class="btn">Copiar</button>
               <p><span class="negrita">Headers : </span> multipart/form-data;</p>
       <pre style="box-sizing: border-box;overflow-x: scroll;">
@@ -320,7 +320,7 @@
                   Registrarse paciente
                 <span class="listo">;</span>
               </h2>
-              <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/auth/signup</p>
+              <p><span class="negrita">EndPoint : </span>http://localhost:1234/auth/signup</p>
               <button id="SignupPost" class="btn">Copiar</button>
               <p><span class="negrita">Headers : </span> multipart/form-data;</p>
 
@@ -351,7 +351,7 @@
                   <span class="listo">GET :</span>
                   Obtener imagen por nombre
                 </h2>
-                <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg</p>
+                <p><span class="negrita">EndPoint : </span>http://localhost:1234/sources/images/public/default.jpg</p>
                 <button id="ImagenGet" class="btn">Copiar</button>
               </li> 
             </ul>
@@ -375,7 +375,7 @@
                   <span class="listo">GET :</span>
                   Devuelve todos los Examenescon sus categorias
                 </h2>
-                <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/exams</p>
+                <p><span class="negrita">EndPoint : </span>http://localhost:1234/exams</p>
                 <button id="ExamGet" class="btn">Copiar</button>
                 <p><span class="negrita">Headers : </span> Content-Type: Application/json</p>
                 <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
@@ -395,7 +395,7 @@
                 <span class="listo">GET :</span>
                 Devuelve todos los Examenescon sus categorias
               </h2>
-              <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/exams</p>
+              <p><span class="negrita">EndPoint : </span>http://localhost:1234/exams</p>
               <button id="CategoryGet" class="btn">Copiar</button>
               <p><span class="negrita">Headers : </span> Content-Type: Application/json</p>
               <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
@@ -416,7 +416,7 @@
                 Devuelve todos los Examenescon sus categorias
                 <span class="listo">;</span>
             </h2>
-            <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/exams</p>
+            <p><span class="negrita">EndPoint : </span>http://localhost:1234/exams</p>
             <button id="OrderGet" class="btn">Copiar</button>
             <p><span class="negrita">Headers : </span> Content-Type: Application/json</p>
             <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
@@ -437,7 +437,7 @@
                 Devuelve todos los Examenescon sus categorias
                 <span class="listo">;</span>
               </h2>
-              <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/exams</p>
+              <p><span class="negrita">EndPoint : </span>http://localhost:1234/exams</p>
               <button id="" class="btn">Copiar</button>
               <p><span class="negrita">Headers : </span> Content-Type: Application/json</p>
               <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
@@ -457,7 +457,7 @@
                 <span class="listo">GET :</span>
                 Devuelve todos los Examenescon sus categorias
               </h2>
-              <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/exams</p>
+              <p><span class="negrita">EndPoint : </span>http://localhost:1234/exams</p>
               <button id="ROEGet" class="btn">Copiar</button>
               <p><span class="negrita">Headers : </span> Content-Type: Application/json</p>
               <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
@@ -478,7 +478,7 @@
                 Devuelve todos los Examenes con sus categorias
                 <span class="listo">;</span>
               </h2>
-              <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/exams</p>
+              <p><span class="negrita">EndPoint : </span>http://localhost:1234/exams</p>
               <button id="InoviceGet" class="btn">Copiar</button>
               <p><span class="negrita">Headers : </span> Content-Type: Application/json</p>
               <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
