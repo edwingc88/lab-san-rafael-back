@@ -2,7 +2,7 @@ import { Router } from 'express'
 
 import { ExamController } from '../controllers/exams.js'
 
-import { verifyToken, isAdmin } from '../middlewares/authjwt.js'
+import { /* verifyToken, isAdmin */ } from '../middlewares/authjwt.js'
 
 export const createExamRouter = ({ examModel }) => {
   const examsRouter = Router()
@@ -11,13 +11,13 @@ export const createExamRouter = ({ examModel }) => {
 
   examsRouter.get('/', examController.getAll)
 
-  examsRouter.get('/:category_id', [verifyToken], examController.getById)
+  examsRouter.get('/:id', /* [verifyToken], */ examController.getById)
 
   examsRouter.post('/', examController.create)
 
-  examsRouter.patch('/:id', [verifyToken, isAdmin], examController.update)
+  examsRouter.patch('/:id', /*  [verifyToken, isAdmin], */ examController.update)
 
-  examsRouter.delete('/:id', [verifyToken, isAdmin], examController.delete)
+  examsRouter.delete('/:id', /*  [verifyToken, isAdmin], */ examController.delete)
 
   return examsRouter
 }

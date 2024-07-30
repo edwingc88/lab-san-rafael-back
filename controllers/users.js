@@ -2,9 +2,11 @@ import { validateUser, validatePartialUser } from '../schemas/users.js'
 import multiparty from 'multiparty'
 import 'dotenv/config'
 import { nombreFinalImagenByFile, nombreFinalImagenByUrl } from '../middlewares/nombre_imagen.js'
+import fs from 'fs'
 import { borrarImagen } from '../middlewares/borrar_imagen.js'
 /* import sendEmail from '../controllers/email.js' */
 // import fs from 'fs's
+import { extname, join } from 'path'
 const IMAGEN_UPLOAD_DIR = 'sources/images/public/'
 export class UserController {
   constructor ({ userModel }) {
@@ -36,42 +38,106 @@ export class UserController {
   create = async (req, res, next) => {
     // const result = validateUser(req.body)
     // console.log(result)
+
     const form = new multiparty.Form({ uploadDir: './' + IMAGEN_UPLOAD_DIR })
     try {
       form.parse(req, async (err, fields, files) => {
         if (err) return res.status(500).json({ error: 'Error msj formdata' })
-        console.log(files)
-        const mombreRandomImagenCompleta = await nombreFinalImagenByFile(files) // Nombre Ramdom de la imagen  . Transformando los datos que vienen de files , quitando los [] que vienen en cada valor, para luego validarlos.
 
-        console.log('Nombre random' + mombreRandomImagenCompleta)
+        let rutaDefaultFinalArchivo = process.env.WEB_URL + 'sources/images/public/default.jpg' // Obteniendo la ruta de la imagen por default
+        let key = ''
+        let rutaArchivo = ''
+        let rutaLink = ''
+        let nameImagenDefault = ''
 
-        const objectImagen = JSON.stringify(files, null, 2)
-        const mombreRealImagenCompleta = JSON.parse(objectImagen).abatar[0].originalFilename // Obeteniendo Nombre Real de la imagen para ver si se subio o no
-        console.log('Nombre Real' + mombreRealImagenCompleta)
+        if (Object.keys(files).length === 0) {
+          console.log('NO hay archivos')
+          console.log(JSON.stringify(files, null, 2))
+        } else {
+          console.log('SI hay archivos')
+          console.log(JSON.stringify(fields, null, 2))
+          key = Object.keys(files)[0]
+          rutaLink = files[key][0].path
+          rutaArchivo = rutaLink.replaceAll('\\', '/')
+          rutaDefaultFinalArchivo = process.env.WEB_URL + rutaArchivo
+          nameImagenDefault = rutaLink.slice(rutaLink.lastIndexOf('\\') + 1)
+          console.log('Entro a Objey Key , RUTA FINAL ARCHIVO:', rutaDefaultFinalArchivo)
+        }
+
+        console.log('GG NameImagenDefault:', nameImagenDefault)
+        console.log('GG ruta Archivo:', rutaArchivo)
+        console.log('GG ext Ruta Archivo:', extname(rutaArchivo))
+
+        if (extname(rutaArchivo) === '' && Object.keys(files)[0]) {
+          fs.unlink(rutaArchivo, function (err) {
+            if (err) {
+              fs.unlink(join('sources', 'public', 'images', nameImagenDefault), function (err) {
+                if (err) { console.error(err) }
+              })
+            } else {
+              console.log('File deleted Archivo en la ruta : ', rutaArchivo)
+            }
+          })
+        }
+
+        let newvalue = {}
+
+        const claves = Object.keys(fields) // claves = ["nombre", "color", "macho", "edad"]
+
+        for (let i = 0; i < claves.length; i++) {
+          const clave = claves[i]
+          const valor = { [clave]: fields[clave][0] }
+          newvalue = { ...newvalue, ...valor }
+        }
+
+        newvalue.abatar = rutaDefaultFinalArchivo
+
+        console.log(newvalue)
+
+        /**  Validar Datos con Zot **/
+        const resultZot = validateUser(newvalue)
+
+        if (resultZot.error) {
+          return res.status(400).json({ error: JSON.parse(resultZot.error) })
+        }
+        console.log('Zot : ', resultZot.data)
+
+        /**  Registrar en Base de Datos **/
+        const newUserResult = await this.userModel.create({ input: resultZot.data })
+        return res.status(201).json(newUserResult)
+        /*        if (resultZot.error) {
+          console.log('Error Zot : ')
+          return res.status(400).json({ error: JSON.parse(resultZot.error) })
+        } */
+
+        /* const mombreRandomImagenCompleta = await nombreFinalImagenByFile(files) // Nombre Ramdom de la imagen  . Transformando los datos que vienen de files , quitando los [] que vienen en cada valor, para luego validarlos. */
+
+        // const objectImagen = JSON.stringify(files, null, 2)
+        //  const mombreRealImagenCompleta = JSON.parse(objectImagen).abatar[0].originalFilename // Obeteniendo Nombre Real de la imagen para ver si se subio o no
+        /*       console.log('Nombre Real' + mombreRealImagenCompleta)
 
         if (mombreRealImagenCompleta === '') {
           console.log('vacio el Nombre Real')
           borrarImagen(mombreRandomImagenCompleta)
-        }
+        } */
         // console.log(JSON.parse(objectImagen).abatar[0])
 
         /* Si es verdadero o Hay imagen subida se va guardar esa misma, si no se guardara imagen por default */
-        const rutaURLTotal = mombreRealImagenCompleta ? process.env.WEB_URL + IMAGEN_UPLOAD_DIR + mombreRandomImagenCompleta : process.env.WEB_URL + IMAGEN_UPLOAD_DIR + 'default.jpg'
+        /*      const rutaURLTotal = mombreRealImagenCompleta ? process.env.WEB_URL + IMAGEN_UPLOAD_DIR + mombreRandomImagenCompleta : process.env.WEB_URL + IMAGEN_UPLOAD_DIR + 'default.jpg'
+ */
+        /*        const dataObjectFields = { dni: fields.dni[0], email: fields.email[0], username: fields.username[0], password: fields.password[0], firstname: fields.firstname[0], lastname: fields.lastname[0], gender: fields.gender[0], address: fields.address[0], firstphone: fields.firstphone[0], secondphone: fields.secondphone[0], birthdate: fields.birthdate[0], blood_typing: fields.bloodtyping[0], type_relationship: fields.type_relationship[0], name_relationship: fields.name_relationship[0], created: fields.created[0], abatar: rutaURLTotal, id_role: fields.id_role[0] }
+        console.log(dataObjectFields) */
 
-        const dataObjectFields = { dni: fields.dni[0], email: fields.email[0], username: fields.username[0], password: fields.password[0], firstname: fields.firstname[0], lastname: fields.lastname[0], gender: fields.gender[0], address: fields.address[0], firstphone: fields.firstphone[0], secondphone: fields.secondphone[0], birthdate: fields.birthdate[0], blood_typing: fields.bloodtyping[0], type_relationship: fields.type_relationship[0], name_relationship: fields.name_relationship[0], created: fields.created[0], abatar: rutaURLTotal, id_role: fields.id_role[0] }
-        console.log(dataObjectFields)
-
-        const result = validateUser(dataObjectFields)
+        /*  const result = validateUser(dataObjectFields)
 
         if (result.error) return res.status(400).json({ error: JSON.parse(result.error.message) })
 
         const newUser = await this.userModel.create({ input: result.data })
-        if (newUser.length === 0) return res.status(404).json({ error: 'Not found user' })
-        /*
-        await sendEmail() */
+        if (newUser.length === 0) return res.status(404).json({ error: 'Not found user' }) */
+        /* await sendEmail() */
+        // return res.status(201).json(newUser)
 
-        return res.status(201).json(newUser)
-        // return res.status(201).json(result)
+        // return res.status(201).json({ message: 'User created successfully' })
       })
     } catch (error) {
       next(error)
@@ -181,20 +247,14 @@ export class UserController {
       const { id } = req.params
       const result = await this.userModel.delete({ id })
       if (result.length === 0) return res.status(404).json({ error: 'Not found user' })
-      /* const separador = JSON.parse(result)
-      console.log(separador)
-      console.log('jsonresult arriba') */
-      // console.log(result[0].user_abatar)
-
-      if (nombreFinalImagenByUrl(result[0].user_abatar) !== 'default.jpg') {
-        /* const imagenBorrar = IMAGEN_UPLOAD_DIR + nombreFinalImagenDB(result[0].user_abatar)
-        fs.unlink(imagenBorrar, function (err) {
-          if (err) { console.error(err) }
-          console.log('File deleted!')
-        }) */
-        const namIMGBorrar = nombreFinalImagenByUrl(result[0].user_abatar)
-        console.log(namIMGBorrar)
-        borrarImagen(namIMGBorrar)
+      console.log('userAbatar Antes', result[0].user_abatar)
+      if (!result[0].users_abatar) {
+        if (nombreFinalImagenByUrl(result[0].user_abatar) !== 'default.jpg') {
+          console.log('Esta etrando aqui')
+          const namIMGBorrar = nombreFinalImagenByUrl(result[0].user_abatar)
+          console.log('nombre final Despues', namIMGBorrar)
+          borrarImagen(namIMGBorrar)
+        }
       }
 
       return res.status(201).json({ message: 'user deleted' })
@@ -206,8 +266,7 @@ export class UserController {
   deleteImg = async (req, res, next) => {
     try {
       const { id } = req.params
-      const rutaImgDefault = process.env.WEB_URL + IMAGEN_UPLOAD_DIR + 'default.jpg'
-      const result = await this.userModel.deleteImg({ id, rutaImgDefault })
+      const result = await this.userModel.deleteImgByID({ id })
       console.log(result)
       return res.status(201).json({ message: 'Imagen deleted' })
     } catch (error) {

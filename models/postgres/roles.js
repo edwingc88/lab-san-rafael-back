@@ -32,15 +32,20 @@ export class RoleModel {
     }
   }
 
-  static async update ({ id, input }) {
+  static async update ({ idupdate, input }) {
     // eslint-disable-next-line camelcase
-    const { name } = input
-    console.log(name)
-    console.log(id)
-    // eslint-disable-next-line camelcase
-    const result = await conn.query('UPDATE role SET role_name = $1  WHERE role_id = $2 RETURNING *;', [name, id])
-    console.log(result.rows)
-    return result.rows
+    try {
+      const { name } = input
+      console.log('dentro de DB', name)
+      console.log(idupdate)
+      // eslint-disable-next-line camelcase
+      const result = await conn.query('UPDATE role SET role_name = $1  WHERE role_id = $2 RETURNING *;', [name, idupdate])
+      console.log(result.rows)
+      return result.rows
+    } catch (error) {
+      console.log('Error Role table created ')
+      throw new Error(error)
+    }
   }
 
   static async delete ({ id }) {

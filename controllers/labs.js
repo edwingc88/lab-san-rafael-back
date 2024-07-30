@@ -70,15 +70,6 @@ export class LabController {
         console.log('Entro a Objey Key , RUTA FINAL ARCHIVO:', rutaDefaultFinalArchivo)
       }
 
-      /*     if (Object.keys(files)[0]) {
-        key = Object.keys(files)[0]
-        rutaLink = files[key][0].path
-        rutaArchivo = rutaLink.replaceAll('\\', '/')
-        rutaDefaultFinalArchivo = process.env.WEB_URL + rutaArchivo
-        nameImagenDefault = rutaLink.slice(rutaLink.lastIndexOf('\\') + 1)
-        console.log('Entro a Objey Key , RUTA FINAL ARCHIVO:', rutaDefaultFinalArchivo)
-      } */
-
       console.log('NameImagenDefault:', nameImagenDefault)
       console.log('ruta Archivo:', rutaArchivo)
 
@@ -96,7 +87,7 @@ export class LabController {
         })
       }
 
-      /// RECUPERANDO DATOS ITERANDO OBJETO
+      /** RECUPERANDO DATOS ITERANDO OBJETO **/
       let newvalue = {}
 
       const claves = Object.keys(fields) // claves = ["nombre", "color", "macho", "edad"]
@@ -104,8 +95,6 @@ export class LabController {
       for (let i = 0; i < claves.length; i++) {
         const clave = claves[i]
         const valor = { [clave]: fields[clave][0] }
-        console.log(clave)
-        console.log(valor)
         newvalue = { ...newvalue, ...valor }
       }
 
@@ -127,7 +116,7 @@ export class LabController {
 
   update = async (req, res, next) => {
     try {
-      const form = new multiparty.Form({ /* uploadDir: IMAGEN_UPLOAD_DIR */ })
+      const form = new multiparty.Form({})
       const { id } = req.params
       form.parse(req, async (err, fields) => {
         if (err) {
@@ -271,10 +260,6 @@ export class LabController {
       const { id } = req.params
       const result = await this.labModel.delete({ id })
       if (result.length === 0) return res.status(404).json({ error: 'Not found client' })
-      /* const separador = JSON.parse(result)
-      console.log(separador)
-      console.log('jsonresult arriba') */
-      // console.log(result[0].client_abatar)
 
       if (nombreFinalImagenByUrl(result[0].lab_logo) !== 'noimage.jpg') {
         const imagenBorrar = nombreFinalImagenByUrl(result[0].lab_logo)
@@ -283,11 +268,11 @@ export class LabController {
           console.log('File deleted!')
         }) */
         // const namIMGBorrar = nombreFinalImagenByUrl(imagenBorrar)
-        console.log(imagenBorrar)
+        console.log('Condicion de borrar en Controller', imagenBorrar)
         await borrarImagen(imagenBorrar)
       }
 
-      return res.status(201).json({ message: 'client deleted' })
+      return res.status(201).json({ message: 'Laboratory deleted' })
     } catch (error) {
       next(error)
     }

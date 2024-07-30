@@ -2,8 +2,11 @@ import z from 'zod'
 
 const examSchema = z.object({
   name: z.string().min(1, { message: 'This field has to be filled.' }),
-  price: z.number().min(1, { message: 'This field has to be filled.' }),
-  id_category: z.number().min(1, { message: 'This field has to be filled.' })
+  description: z.string().min(1, { message: 'This field has to be filled.' }),
+  indicator: z.string().min(1, { message: 'This field has to be filled.' }),
+  unit: z.string().min(1, { message: 'This field has to be filled.' }),
+  price: z.string().min(1, { message: 'This field has to be filled.' }).transform((id) => parseInt(id)),
+  id_category: z.string().min(1, { message: 'This field has to be filled.' }).transform((id) => parseInt(id))
 })
 
 export function validateExam (object) {

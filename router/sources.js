@@ -9,8 +9,8 @@ export const createSourceRouter = () => {
 
   // sourceRouter.get('/', sourceController.getAll)
 
-  sourceRouter.get('/images/private/:id', sourceController.getByIdImgPrivate)
-  sourceRouter.get('/images/public/:id', sourceController.getByIdImgPublic)
+  sourceRouter.get('/images/private/:name', sourceController.getByIdImgPrivate)
+  // sourceRouter.get('/images/public/:name', sourceController.getByIdImgPublic)
 
   // sourceRouter.post('/', sourceController.create)
 

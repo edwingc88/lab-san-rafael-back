@@ -12,18 +12,15 @@ export class UserModel {
         const result = await conn.query('SELECT role_id FROM role WHERE LOWER(role_name) = $1;', [loweCaseRole])
         const roles = result.rows
         if (roles.length === 0) return roles
-
         const idRole = roles[0].role_id
         console.log(idRole)
-
         const resultUsersByRole = await conn.query('SELECT * FROM users INNER JOIN role ON users.users_id_role = role.role_id WHERE role.role_id = $1;', [idRole])
-        // const users = resultRoles.rows
         return resultUsersByRole.rows
       }
       const res = await conn.query('SELECT * FROM users;')
       return res.rows
     } catch (e) {
-      console.log('Error DB en lab By ID ')
+      console.log('Error DB en User ')
       throw new Error(e)
     }
   }
@@ -112,19 +109,19 @@ export class UserModel {
   static async delete ({ id }) {
     try {
       const result = await conn.query('DELETE FROM users WHERE users_id = $1 returning *;', [id])
-      // console.log(result.rows)
       return result.rows
     } catch (e) {
-      console.log('Error DB en lab By ID ')
+      console.log('Error DB en Users By ID ')
       throw new Error(e)
     }
   }
 
-  static async deleteImg ({ id, rutaImgDefault }) {
+  static async deleteImgByID ({ id }) {
     try {
-      const result = await conn.query('UPDATE users SET users_abatar = $1  WHERE users_id = $2 RETURNING *;', [rutaImgDefault, id])
+      // const result = await conn.query('UPDATE users SET users_abatar = $1  WHERE users_id = $2 RETURNING *;', [rutaImgDefault, id])
       // console.log(result.rows)
-      return result.rows
+      // return result.rows
+      return (id)
     } catch (e) {
       console.log('Error DB en lab By DeleteIMG ')
       throw new Error(e)

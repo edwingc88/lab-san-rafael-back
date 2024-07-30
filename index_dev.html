@@ -107,8 +107,23 @@
                   <h2 class="negrita"><span class="listo">POST : </span>Crear Un Laboratorio</h2> 
                   <p><span class="negrita">EndPoint : </span>http://localhost:1234/labs/</p>
                   <button id="LabPost" class="btn">Copiar</button>
-              
                   <p><span class="negrita">Headers : </span> multipart/form-data;</p>
+  <pre  style="box-sizing: border-box;overflow-x: scroll;">
+    {
+      "id": 1,
+      "name": "Centro Medico Ambulatorio San Rafael",
+      "rif": "J-1234562",
+      "slogan": "Para nosotros no hay nada mas importante que tu salud.",
+      "description": "servicio de laboratorio",
+      "objetive": "Somos una empresa que cuenta con personal altamente calificado y que trabaja con altos estándares de calidad y servicio en el área de análisis clínicos. Nuestros pacientes son nuestra razón de ser y es por ello que para satisfacerlos utilizamos tecnología de vanguardia y los más exigentes controles de calidad, para poder brindarles la mayor confiabilidad en sus resultados.",
+      "mission": "Ofrecer un servicio de Laboratorio Clínico excepcional,  donde nuestros usuarios se sientan satisfechos y plenos por la atención ofrecida en todos nuestros departamentos. Distinguirnos como un laboratorio extraordinario donde la excelencia de nuestros procedimientos y atención  al userse nos distinga.",
+      "vision": "Posicionarnos como un Laboratorio Clínico innovador y de alta calidad, que ofrezca a sus pacientes soluciones que permitan el preciso diagnóstico médico y oportuno tratamiento. Queremos ser una empresa resulterente en el sector salud, que la excelencia sea nuestro estandarte.",
+      "email": "lab@gmail.com",
+      "address": "Ciudad Guayana 8050, Bolívar. Core 8",
+      "phone": "0286-9530505",
+      "logo": "https://lab-san-rafael-api.onrender.com/sources/images/public/logo.png"
+      }
+  </pre>
                 <li>     
                   <h2 class="negrita"> <span class="listo">PATH : </span>Actualizar  Laboratorio por ID</h2> 
                   <p><span class="negrita">EndPoint : </span>http://localhost:1234/labs/:id</p>
@@ -116,17 +131,17 @@
                   <p><span class="negrita">Headers : </span> multipart/form-data;</p>
   <pre style="box-sizing: border-box;overflow-x: scroll;">
     {
-      "lab_id": 9,
-      "lab_name": "Centro11111234567899111",
-      "lab_rif": "J-11111234567899111",
-      "lab_slogan": "Para nosotros no hay nada mas importante que tu salud.",
-      "lab_description": "laboratorio clínico servicios",
-      "lab_objetive": "Somos una empresa que cuenta con personal altamente calificado y que trabaja con altos estandares de calidad ",
-      "lab_mission": "Ofrecer uns ervicion de Laboratorio Clinico",
-      "lab_vision": "Posicionarnos como un laborarotio clinino",
-      "lab_email": "sanrafa1@gmail.com",
-      "lab_address": "Urb gran Sabana core931237829",
-      "lab_phone": "04143859751129"
+      "id": 9,
+      "name": "Centro11111234567899111",
+      "rif": "J-11111234567899111",
+      "slogan": "Para nosotros no hay nada mas importante que tu salud.",
+      "description": "laboratorio clínico servicios",
+      "objetive": "Somos una empresa que cuenta con personal altamente calificado y que trabaja con altos estandares de calidad ",
+      "mission": "Ofrecer uns ervicion de Laboratorio Clinico",
+      "vision": "Posicionarnos como un laborarotio clinino",
+      "email": "sanrafa1@gmail.com",
+      "address": "Urb gran Sabana core931237829",
+      "phone": "04143859751129"
     }
   </pre>
                 </li>
@@ -156,7 +171,7 @@
                 <p><span class="negrita">Bearer Token:  </span> "UseToken"</p>
               </li>
               <li>
-                <h2 class="negrita"><span class="listo">GET : </span>Crear Un User</h2> 
+                <h2 class="negrita"><span class="listo">GET : </span>Consultar usuario por ID </h2> 
                 <p><span class="negrita">EndPoint : </span>http://localhost:1234/users/:id</p>
                 <button id="UserGetID" class="btn">Copiar</button>
                 <p><span class="negrita">Headers : </span> Content-Type: multipart/form-data;</p>
@@ -170,24 +185,24 @@
               <p><span class="negrita">Bearer Token:  </span> "UseToken"</p>
   <pre style="box-sizing: border-box;overflow-x: scroll;">
   {
-  "dni":"v-1111",
-  "email":"J-12345678",
-  "username":"pedrito",
-  "password":"11111",
-  "firstname":"65JG+H7V, Ciudad Guayana 8050, Bolívar. Urb Gran Sabana",
-  "lastname":"0286-9530505",
-  "gender":"lab@gmail.com",
-  "address":"imagen.jpg",
-  "firstphone":"objetivos de lab",
-  "secondphone":"misiones de lab",
-  "birthdate":"vision de lab",
-  "bloodtyping":"vision de lab",
-  "type_relationship": No Aplica,
-  "name_relationship": No Aplica,
-  "type_relationship":"vision de lab",
-  "name_relationship":"vision de lab",
-  "created":"vision de lab",
-  "id_role":"vision de lab",
+    "id": 1,
+    "dni": "v-1234",
+    "email": "michelledellosa7@gmail.com",
+    "username": "michelle",
+    "password": "12345678",
+    "firstname": "Michelle",
+    "lastname": "Dellza",
+    "gender": "Femenino",
+    "address": "San Felix",
+    "firstphone": "041432",
+    "secondphone": "0412",
+    "birthdate": "1900-01-01T04:27:40.000Z",
+    "bloodtyping": "O+",
+    "type_relationship": null,
+    "name_relationship": null,
+    "created": "2024-07-24T04:00:00.000Z",
+    "abatar": "https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg",
+    "id_role": 1
   }
   </pre>
               </li>
@@ -352,6 +367,7 @@
                   Obtener imagen por nombre
                 </h2>
                 <p><span class="negrita">EndPoint : </span>http://localhost:1234/sources/images/public/default.jpg</p>
+                <p><span class="negrita">EndPoint : </span>http://localhost:1234/sources/images/public/noimage.jpg</p>
                 <button id="ImagenGet" class="btn">Copiar</button>
               </li> 
             </ul>
@@ -380,6 +396,56 @@
                 <p><span class="negrita">Headers : </span> Content-Type: Application/json</p>
                 <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
             </li>
+            <li> 
+              <h2 class="negrita">
+                  <span class="listo">GET :</span>
+                  Devuelve todos los Examenescon sus categorias
+                </h2>
+                <p><span class="negrita">EndPoint : </span>http://localhost:1234/exams/1</p>
+                <button id="ExamGetID" class="btn">Copiar</button>
+                <p><span class="negrita">Headers : </span> Content-Type: Application/json</p>
+                <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+            </li>
+            <li> 
+              <h2 class="negrita">
+                  <span class="listo">POST :</span>
+                  Devuelve todos los Examenescon sus categorias
+                </h2>
+                <p><span class="negrita">EndPoint : </span>http://localhost:1234/exams</p>
+                <button id="ExamPost" class="btn">Copiar</button>
+                <p><span class="negrita">Headers : </span> Content-Type: Application/json</p>
+                <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+<pre style="box-sizing: border-box;overflow-x: scroll;">
+  {
+    "name": "Lymph#",
+    "description": "examen de hermatogolia",
+    "indicator": "10-15",
+    "unit": "hz",
+    "price": 4,
+    "id_category": 1
+  }
+ </pre>
+            </li>
+            <li> 
+              <h2 class="negrita">
+                  <span class="listo">PATH :</span>
+                  Devuelve todos los Examenescon sus categorias
+                </h2>
+                <p><span class="negrita">EndPoint : </span>http://localhost:1234/exams/:id</p>
+                <button id="ExamPathID" class="btn">Copiar</button>
+                <p><span class="negrita">Headers : </span> Content-Type: Application/json</p>
+                <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+            </li>
+            <li> 
+              <h2 class="negrita">
+                  <span class="listo">DELETE :</span>
+                  Devuelve todos los Examenescon sus categorias
+                </h2>
+                <p><span class="negrita">EndPoint : </span>http://localhost:1234/exams/:id</p>
+                <button id="ExamDeleteID" class="btn">Copiar</button>
+                <p><span class="negrita">Headers : </span> Content-Type: Application/json</p>
+                <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+            </li>
           </ul>
       </details>
 
@@ -395,10 +461,70 @@
                 <span class="listo">GET :</span>
                 Devuelve todos los Examenescon sus categorias
               </h2>
-              <p><span class="negrita">EndPoint : </span>http://localhost:1234/exams</p>
+              <p><span class="negrita">EndPoint : </span>http://localhost:1234/categorys</p>
               <button id="CategoryGet" class="btn">Copiar</button>
               <p><span class="negrita">Headers : </span> Content-Type: Application/json</p>
               <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+          </li>
+          <li> 
+            <h2 class="negrita">
+              <span class="listo">GET :</span>
+              Devuelve Categoria de examen por ID
+            </h2>
+            <p><span class="negrita">EndPoint : </span>http://localhost:1234/categorys/:id</p>
+            <button id="CategoryGetID" class="btn">Copiar</button>
+            <p><span class="negrita">Headers : </span> Content-Type: Application/json</p>
+            <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+          </li>
+          <li> 
+            <h2 class="negrita">
+              <span class="listo">POST :</span>
+              Devuelve Categoria de examen por ID
+            </h2>
+            <p><span class="negrita">EndPoint : </span>http://localhost:1234/categorys/:id</p>
+            <button id="CategoryPost" class="btn">Copiar</button>
+            <p><span class="negrita">Headers : </span> Content-Type: Application/json</p>
+            <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+<pre style="box-sizing: border-box;overflow-x: scroll;">
+  {
+    "name": "Lymph#",
+    "description": "examen de hermatogolia",
+    "indicator": "10-15",
+    "unit": "hz",
+    "price": 4,
+    "id_category": 1
+  }
+  </pre>
+          </li>
+          <li> 
+            <h2 class="negrita">
+              <span class="listo">PATH :</span>
+              Devuelve Categoria de examen por ID
+            </h2>
+            <p><span class="negrita">EndPoint : </span>http://localhost:1234/categorys/:id</p>
+            <button id="CategoryPathID" class="btn">Copiar</button>
+            <p><span class="negrita">Headers : </span> Content-Type: Application/json</p>
+            <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+<pre style="box-sizing: border-box;overflow-x: scroll;">
+  {
+    "name": "Lymph#",
+    "description": "examen de hermatogolia",
+    "indicator": "10-15",
+    "unit": "hz",
+    "price": 4,
+    "id_category": 1
+  }
+  </pre>
+          </li>
+          <li> 
+            <h2 class="negrita">
+              <span class="listo">DELETE :</span>
+              Borrar examen por ID
+            </h2>
+            <p><span class="negrita">EndPoint : </span>http://localhost:1234/categorys/:id</p>
+            <button id="CategoryDeleteID" class="btn">Copiar</button>
+            <p><span class="negrita">Headers : </span> Content-Type: Application/json</p>
+            <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
           </li>
         </ul>
       </details>
@@ -414,10 +540,49 @@
             <h2 class="negrita">
                 <span class="listo">GET :</span>
                 Devuelve todos los Examenescon sus categorias
-                <span class="listo">;</span>
             </h2>
-            <p><span class="negrita">EndPoint : </span>http://localhost:1234/exams</p>
+            <p><span class="negrita">EndPoint : </span>http://localhost:1234/orders</p>
             <button id="OrderGet" class="btn">Copiar</button>
+            <p><span class="negrita">Headers : </span> Content-Type: Application/json</p>
+            <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+          </li>
+          <li> 
+            <h2 class="negrita">
+                <span class="listo">GET :</span>
+                Devuelve Orden por ID
+            </h2>
+            <p><span class="negrita">EndPoint : </span>http://localhost:1234/orders/:id</p>
+            <button id="OrderGetID" class="btn">Copiar</button>
+            <p><span class="negrita">Headers : </span> Content-Type: Application/json</p>
+            <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+          </li>
+          <li> 
+            <h2 class="negrita">
+                <span class="listo">POST :</span>
+                Devuelve Orden por ID
+            </h2>
+            <p><span class="negrita">EndPoint : </span>http://localhost:1234/orders/:id</p>
+            <button id="OrderPost" class="btn">Copiar</button>
+            <p><span class="negrita">Headers : </span> Content-Type: Application/json</p>
+            <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+          </li>
+          <li> 
+            <h2 class="negrita">
+                <span class="listo">PATH :</span>
+                Devuelve Orden por ID
+            </h2>
+            <p><span class="negrita">EndPoint : </span>http://localhost:1234/orders/:id</p>
+            <button id="OrderPathID" class="btn">Copiar</button>
+            <p><span class="negrita">Headers : </span> Content-Type: Application/json</p>
+            <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+          </li>
+          <li> 
+            <h2 class="negrita">
+                <span class="listo">DELETE :</span>
+                Devuelve Orden por ID
+            </h2>
+            <p><span class="negrita">EndPoint : </span>http://localhost:1234/orders/:id</p>
+            <button id="OrderDeleteID" class="btn">Copiar</button>
             <p><span class="negrita">Headers : </span> Content-Type: Application/json</p>
             <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
           </li>
@@ -435,9 +600,8 @@
              <h2 class="negrita">
                 <span class="listo">GET :</span>
                 Devuelve todos los Examenescon sus categorias
-                <span class="listo">;</span>
               </h2>
-              <p><span class="negrita">EndPoint : </span>http://localhost:1234/exams</p>
+              <p><span class="negrita">EndPoint : </span>http://localhost:1234/results</p>
               <button id="" class="btn">Copiar</button>
               <p><span class="negrita">Headers : </span> Content-Type: Application/json</p>
               <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
@@ -531,6 +695,25 @@ document.getElementById('SigninPost').addEventListener('click', copiarAlPortapap
 document.getElementById('SignupPost').addEventListener('click', copiarAlPortapapeles);
 
 document.getElementById('ImagenGet').addEventListener('click', copiarAlPortapapeles);
+
+document.getElementById('ExamGet').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('ExamGetID').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('ExamPost').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('ExamPathID').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('ExamDeleteID').addEventListener('click', copiarAlPortapapeles);
+
+document.getElementById('CategoryGet').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('CategoryGetID').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('CategoryPost').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('CategoryPathID').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('CategoryDeleteID').addEventListener('click', copiarAlPortapapeles);
+
+document.getElementById('OrderGet').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('OrderGetID').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('OrderPost').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('OrderPathID').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('OrderDeleteID').addEventListener('click', copiarAlPortapapeles);
+
 
 </script>
 </html>

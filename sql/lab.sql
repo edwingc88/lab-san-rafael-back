@@ -74,7 +74,7 @@ CREATE TABLE IF NOT EXISTS users (
     users_id serial PRIMARY KEY,
     users_dni VARCHAR(255) UNIQUE NULL,
     users_email VARCHAR(255) NOT NULL UNIQUE,
-    users_usersname VARCHAR NOT NULL UNIQUE,
+    users_username VARCHAR NOT NULL UNIQUE,
     users_password VARCHAR(255) NOT NULL,
     users_firstname VARCHAR(255) NOT NULL,
     users_lastname VARCHAR(255) NOT NULL,
@@ -92,7 +92,7 @@ CREATE TABLE IF NOT EXISTS users (
     FOREIGN KEY (users_id_role) REFERENCES role(role_id) ON DELETE CASCADE
 );
 
-INSERT INTO users (users_dni,users_email,users_usersname,users_password,users_firstname,users_lastname,users_gender,users_address,users_firstphone,users_secondphone,users_birthdate,users_bloodtyping,users_type_relationship,users_name_relationship, users_created,users_abatar,users_id_role) VALUES ('v-1234','michelledellosa7@gmail.com','michelle','12345678','Michelle','Dellza','Femenino','San Felix','041432','0412','1900-01-01','O+',null,null,now(),'https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',1),('v-24796','edwin@gmail.com','edwin','1234','edwin','mendez','Masculino','San Felix','041432','0412','1900-01-01','O+',null,null,now(),'https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',2),('v-333','bio@gmail.com','bio','33333','Michelle','Dellza','Masculino','San Felix','041432','0412','1900-01-01','O+',null,null,now(),'https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',3),('v-4444','patient@gmail.com','patient','44444','Patient','Dellza','Masculino','San Felix','041432','0412','1900-01-01','O+',null,null,now(),'https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',4);
+INSERT INTO users (users_dni,users_email,users_username,users_password,users_firstname,users_lastname,users_gender,users_address,users_firstphone,users_secondphone,users_birthdate,users_bloodtyping,users_type_relationship,users_name_relationship, users_created,users_abatar,users_id_role) VALUES ('v-1234','michelledellosa7@gmail.com','michelle','12345678','Michelle','Dellza','Femenino','San Felix','041432','0412','1900-01-01','O+',null,null,now(),'https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',1),('v-24796','edwin@gmail.com','edwin','1234','edwin','mendez','Masculino','San Felix','041432','0412','1900-01-01','O+',null,null,now(),'https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',2),('v-333','bio@gmail.com','bio','33333','Michelle','Dellza','Masculino','San Felix','041432','0412','1900-01-01','O+',null,null,now(),'https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',3),('v-4444','patient@gmail.com','patient','44444','Patient','Dellza','Masculino','San Felix','041432','0412','1900-01-01','O+',null,null,now(),'https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',4);
 
 
 
@@ -159,8 +159,8 @@ CREATE TABLE IF NOT EXISTS orders (
   orders_observation VARCHAR(255),
   orders_id_users INT NOT NULL,  
   orders_id_states INT NULL,
-  FOREIGN KEY (orders_id_users) REFERENCES users(users_id),
-  FOREIGN KEY (orders_id_states) REFERENCES states(states_id)
+  FOREIGN KEY (orders_id_users) REFERENCES users(users_id) ON DELETE CASCADE,
+  FOREIGN KEY (orders_id_states) REFERENCES states(states_id) 
 );
 
 INSERT INTO orders (orders_id, orders_number, orders_date, orders_observation, orders_id_users, orders_id_states) VALUES
@@ -198,7 +198,7 @@ CREATE TABLE IF NOT EXISTS exam_orders_result(
    exam_orders_result_id_orders INT NOT NULL,
    exam_orders_result_id_result INT NOT NULL,
    FOREIGN KEY (exam_orders_result_id_exam) REFERENCES exam(exam_id),
-   FOREIGN KEY (exam_orders_result_id_orders) REFERENCES orders(orders_id),
+   FOREIGN KEY (exam_orders_result_id_orders) REFERENCES orders(orders_id) ON DELETE CASCADE,
    FOREIGN KEY (exam_orders_result_id_result) REFERENCES result(result_id)
 );
 
@@ -226,10 +226,11 @@ CREATE TABLE IF NOT EXISTS invoice(
   invoice_states_payment BOOLEAN,
   invoice_states_date DATE,
   invoice_id_orders INT NOT NULL,
-  FOREIGN KEY (invoice_id_orders) REFERENCES orders(orders_id)
+  FOREIGN KEY (invoice_id_orders) REFERENCES orders(orders_id) ON DELETE CASCADE
 );
 
 INSERT INTO invoice (invoice_id, invoice_total, invoice_method_payment, invoice_reference_payment, invoice_type_payment, invoice_states_payment, invoice_states_date, invoice_id_orders) VALUES
 (1, 100.0, 'efectivo', 'efectivo', 'efectivo', true, '2023-05-01', 1),
 (2, 200.0, 'efectivo', 'efectivo', 'efectivo', true, '2023-05-02', 2);
 
+/* ALTER SEQUENCE exam_exam_id_seq RESTART WITH 1; */

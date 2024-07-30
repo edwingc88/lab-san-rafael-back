@@ -19,17 +19,16 @@ export class ExamModel {
 
   static async getById (id) {
     try {
-      const result = await conn.query('SELECT * FROM exam WHERE id_exam = $1;', [id])
-      const [clients] = result.rows
-
-      if (clients.length === 0) return null
-      return clients
+      const result = await conn.query('SELECT * FROM exam WHERE exam_id = $1;', [id])
+      /*   const [clients] = result.rows
+      if (clients.length === 0) return null */
+      return result.rows
     } catch (e) {
       return null
     }
   }
 
-  static async create ({ input }) {
+  /*   static async create ({ input }) {
     // eslint-disable-next-line camelcase
     const { name, id_category } = input
 
@@ -39,6 +38,20 @@ export class ExamModel {
       return (resultID.rows)
     } catch (e) {
       throw new Error('Errro creating client')
+    }
+  } */
+
+  static async create ({ input }) {
+    try {
+      // eslint-disable-next-line camelcase
+      const { name, description, indicator, unit, price, id_category } = input
+      console.log('entro en IUPNU DB', input)
+      // eslint-disable-next-line camelcase
+      const results = await conn.query('INSERT INTO exam( exam_name ,exam_description, exam_indicator, exam_unit, exam_price, exam_id_category ) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;', [name, description, indicator, unit, price, id_category])
+      return results.rows
+    } catch (error) {
+      console.log(error)
+      throw new Error('Errro creating Exam')
     }
   }
 
@@ -54,7 +67,7 @@ export class ExamModel {
 
   static async delete ({ id }) {
     console.log(id)
-    const result = await conn.query('DELETE FROM exam WHERE id = $1 returning *;', [id])
+    const result = await conn.query('DELETE FROM exam WHERE exam_id = $1 returning *;', [id])
 
     console.log(result.rows)
 
