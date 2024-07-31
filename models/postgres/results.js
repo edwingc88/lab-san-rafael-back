@@ -19,11 +19,10 @@ export class ResultModel {
 
   static async getById (id) {
     try {
-      const result = await conn.query('SELECT * FROM result WHERE id_result = $1;', [id])
-      const [clients] = result.rows
-
-      if (clients.length === 0) return null
-      return clients
+      const result = await conn.query('SELECT * FROM result WHERE result_id = $1;', [id])
+      /*     const [clients] = result.rows
+      if (clients.length === 0) return null */
+      return result.rows
     } catch (e) {
       return null
     }
@@ -53,11 +52,15 @@ export class ResultModel {
   }
 
   static async delete ({ id }) {
-    console.log(id)
-    const result = await conn.query('DELETE FROM result WHERE id = $1 returning *;', [id])
+    try {
+      console.log(id)
+      const result = await conn.query('DELETE FROM result WHERE result_id = $1 returning *;', [id])
 
-    console.log(result.rows)
+      console.log(result.rows)
 
-    return result.rows
+      return result.rows
+    } catch (error) {
+      throw new Error('Errro creating client')
+    }
   }
 }

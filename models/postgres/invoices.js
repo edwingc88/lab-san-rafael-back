@@ -20,7 +20,7 @@ export class InvoiceModel {
 
   static async getById (id) {
     try {
-      const result = await conn.query('SELECT * FROM invoice WHERE id_invoice = $1;', [id])
+      const result = await conn.query('SELECT * FROM invoice WHERE invoice_id = $1;', [id])
       const [clients] = result.rows
 
       if (clients.length === 0) return null
@@ -31,15 +31,14 @@ export class InvoiceModel {
   }
 
   static async create ({ input }) {
-    // eslint-disable-next-line camelcase
-    const { name, id_category } = input
-
     try {
+    // eslint-disable-next-line camelcase
+      const { name, id_category } = input
       // eslint-disable-next-line camelcase
       const resultID = await conn.query('INSERT INTO invoice( name ,id_category ) VALUES ($1, $2 ) RETURNING *;', [name, id_category])
       return (resultID.rows)
     } catch (e) {
-      throw new Error('Errro creating client')
+      throw new Error('Errro creating Invoice')
     }
   }
 
@@ -54,11 +53,13 @@ export class InvoiceModel {
   }
 
   static async delete ({ id }) {
-    console.log(id)
-    const result = await conn.query('DELETE FROM invoice WHERE id = $1 returning *;', [id])
-
-    console.log(result.rows)
-
-    return result.rows
+    try {
+      const result = await conn.query('DELETE FROM invoice WHERE invoice_id = $1 returning *;', [id])
+      console.log(result.rows)
+      return result.rows
+    } catch (error) {
+      console.log(error)
+      throw new Error('Errro creating invoice')
+    }
   }
 }

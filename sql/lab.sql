@@ -15,6 +15,7 @@ DROP TABLE IF EXISTS states CASCADE;
 DROP TABLE IF EXISTS patient CASCADE;
 DROP TABLE IF EXISTS category CASCADE;
 DROP TABLE IF EXISTS category_orders_result;
+DROP TABLE IF EXISTS exam_order_results;
 DROP TABLE IF EXISTS exam_orders_result;
 DROP TABLE IF EXISTS sub_category;
 DROP TABLE IF EXISTS result CASCADE;
@@ -24,7 +25,7 @@ DROP TABLE IF EXISTS exam_category CASCADE;
 DROP TABLE IF EXISTS orders CASCADE; 
 DROP TABLE IF EXISTS orden; 
 DROP TABLE IF EXISTS orders_exam CASCADE;
-DROP TABLE IF EXISTS exam_orden;
+DROP TABLE IF EXISTS exam_order;
 DROP TABLE IF EXISTS gender CASCADE;
 DROP TABLE IF EXISTS client CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
@@ -132,8 +133,8 @@ CREATE TABLE IF NOT EXISTS exam (
    exam_indicator VARCHAR(255),
    exam_unit VARCHAR(255),
    exam_price FLOAT,
-   exam_id_category INT NULL,
-   FOREIGN KEY (exam_id_category) REFERENCES category(category_id)
+   exam_id_category INT ,
+   FOREIGN KEY (exam_id_category) REFERENCES category(category_id) ON DELETE SET NULL
 );
 
 INSERT INTO exam (exam_id,exam_name,exam_description,exam_indicator,exam_unit,exam_price,exam_id_category) VALUES
@@ -168,54 +169,53 @@ INSERT INTO orders (orders_id, orders_number, orders_date, orders_observation, o
 (2, 2, '2023-05-02', 'ninguna', 2, 1);
 
 
+CREATE TABLE IF NOT EXISTS exam_order(
+   exam_order_id serial PRIMARY KEY ,
+   exam_order_id_exam INT NOT NULL,
+   exam_order_id_orders INT NOT NULL,
+   FOREIGN KEY (exam_order_id_exam) REFERENCES exam(exam_id),
+   FOREIGN KEY (exam_order_id_orders) REFERENCES orders(orders_id) ON DELETE CASCADE
+);
+
+INSERT INTO exam_order (exam_order_id, exam_order_id_exam, exam_order_id_orders) VALUES
+(1, 1, 1),
+(2, 2, 1),
+(3, 3, 1),
+(4, 4, 1),
+(5, 5, 1),
+(6, 6, 1),
+(7, 7, 1),
+(8, 8, 1),
+(9, 9, 1),
+(10, 10, 1),
+(11, 11, 2),
+(12, 12, 2),
+(13, 13, 2);
+
 
 CREATE TABLE IF NOT EXISTS result (
   result_id serial PRIMARY KEY ,
   result_observation VARCHAR(255),
-  result_value FLOAT
+  result_value FLOAT,
+  result_id_exam_order INT NOT NULL,
+  FOREIGN KEY (result_id_exam_order) REFERENCES exam_order(exam_order_id) ON DELETE CASCADE
 );
 
-INSERT INTO result (result_id, result_observation, result_value) VALUES
-(1, 'Lymph#', 10.0),
-(2, 'Mid#', 20.0),
-(3, 'Gran#', 30.0),
-(4, 'Lymph%', 40.0),
-(5, 'Urea', 50.0),
-(6, 'glicemia', 60.0),
-(7, 'creatinina', 70.0),
-(8, 'trigliceridos', 80.0),
-(9, 'Orina color', 90.0),
-(10, 'Orina aspecto', 100.0),
-(11, 'Heces color', 110.0),
-(12, 'Heces aspecto', 120.0),
-(13, 'Prueba de embarazo', 1);
+INSERT INTO result (result_id, result_observation, result_value, result_id_exam_order) VALUES
+(1, 'Lymph#', 10.0,1),
+(2, 'Mid#', 20.0,2),
+(3, 'Gran#', 30.0,3),
+(4, 'Lymph%', 40.0,4),
+(5, 'Urea', 50.0,5),
+(6, 'glicemia', 60.0,6),
+(7, 'creatinina', 70.0,7),
+(8, 'trigliceridos', 80.0,8),
+(9, 'Orina color', 90.0,9),
+(10, 'Orina aspecto', 100.0,10),
+(11, 'Heces color', 110.0, 11),
+(12, 'Heces aspecto', 120.0, 12),
+(13, 'Prueba de embarazo', 10.0, 13);
 
-
-
-CREATE TABLE IF NOT EXISTS exam_orders_result(
-   exam_orders_result_id serial PRIMARY KEY ,
-   exam_orders_result_id_exam INT NOT NULL,
-   exam_orders_result_id_orders INT NOT NULL,
-   exam_orders_result_id_result INT NOT NULL,
-   FOREIGN KEY (exam_orders_result_id_exam) REFERENCES exam(exam_id),
-   FOREIGN KEY (exam_orders_result_id_orders) REFERENCES orders(orders_id) ON DELETE CASCADE,
-   FOREIGN KEY (exam_orders_result_id_result) REFERENCES result(result_id)
-);
-
-INSERT INTO exam_orders_result (exam_orders_result_id, exam_orders_result_id_exam, exam_orders_result_id_orders, exam_orders_result_id_result) VALUES
-(1, 1, 1, 1),
-(2, 2, 1, 2),
-(3, 3, 1, 3),
-(4, 4, 1, 4),
-(5, 5, 1, 5),
-(6, 6, 1, 6),
-(7, 7, 1, 7),
-(8, 8, 1, 8),
-(9, 9, 1, 9),
-(10, 10, 1, 10),
-(11, 11, 1, 11),
-(12, 12, 1, 12),
-(13, 13, 2, 13);
 
 CREATE TABLE IF NOT EXISTS invoice(
   invoice_id serial PRIMARY KEY,
@@ -233,4 +233,4 @@ INSERT INTO invoice (invoice_id, invoice_total, invoice_method_payment, invoice_
 (1, 100.0, 'efectivo', 'efectivo', 'efectivo', true, '2023-05-01', 1),
 (2, 200.0, 'efectivo', 'efectivo', 'efectivo', true, '2023-05-02', 2);
 
-/* ALTER SEQUENCE exam_exam_id_seq RESTART WITH 1; */
+ ALTER SEQUENCE exam_exam_id_seq RESTART WITH 13; 

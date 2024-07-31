@@ -599,21 +599,61 @@
           <li> 
              <h2 class="negrita">
                 <span class="listo">GET :</span>
-                Devuelve todos los Examenescon sus categorias
+                Devuelve todos los Resultados
               </h2>
               <p><span class="negrita">EndPoint : </span>http://localhost:1234/results</p>
-              <button id="" class="btn">Copiar</button>
+              <button id="ResultGet" class="btn">Copiar</button>
               <p><span class="negrita">Headers : </span> Content-Type: Application/json</p>
               <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+          </li>
+          <li> 
+            <h2 class="negrita">
+               <span class="listo">GET :</span>
+               Devuelve Resultado por ID
+             </h2>
+             <p><span class="negrita">EndPoint : </span>http://localhost:1234/results</p>
+             <button id="ResultGetID" class="btn">Copiar</button>
+             <p><span class="negrita">Headers : </span> Content-Type: Application/json</p>
+             <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+         </li>
+         <li> 
+          <h2 class="negrita">
+             <span class="listo">POST :</span>
+             Crea Resultado
+           </h2>
+           <p><span class="negrita">EndPoint : </span>http://localhost:1234/results</p>
+           <button id="ResultPost" class="btn">Copiar</button>
+           <p><span class="negrita">Headers : </span> Content-Type: Application/json</p>
+           <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+       </li>
+       <li> 
+        <h2 class="negrita">
+           <span class="listo">PATH :</span>
+           Devuelve Resultado por ID
+         </h2>
+         <p><span class="negrita">EndPoint : </span>http://localhost:1234/results</p>
+         <button id="ResultPathID" class="btn">Copiar</button>
+         <p><span class="negrita">Headers : </span> Content-Type: Application/json</p>
+         <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+        </li>
+        <li> 
+          <h2 class="negrita">
+             <span class="listo">DELETE :</span>
+             Devuelve Resultado por ID
+           </h2>
+           <p><span class="negrita">EndPoint : </span>http://localhost:1234/results</p>
+           <button id="ResultDeleteID" class="btn">Copiar</button>
+           <p><span class="negrita">Headers : </span> Content-Type: Application/json</p>
+           <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
           </li>
         </ul>
       </details>
 
-      <!--------------------- API Resultados+Ordenes+Examenes -------------------------->
+      <!--------------------- API Ordenes+Examenes -------------------------->
       
       <details>
         <summary style="margin: 1rem; font-size: x-large; font-weight: 600;">
-            API Resultados+Ordenes+Examenes <span class="proceso">&#x2615;&#xfe0e;</span>
+            API Ordenes+Examenes <span class="proceso">&#x2615;&#xfe0e;</span>
         </summary>
         <ul style="padding-bottom: .5rem;">
           <li> 
@@ -621,11 +661,51 @@
                 <span class="listo">GET :</span>
                 Devuelve todos los Examenescon sus categorias
               </h2>
-              <p><span class="negrita">EndPoint : </span>http://localhost:1234/exams</p>
-              <button id="ROEGet" class="btn">Copiar</button>
+              <p><span class="negrita">EndPoint : </span>http://localhost:1234/exam_order_results</p>
+              <button id="OEGet" class="btn">Copiar</button>
               <p><span class="negrita">Headers : </span> Content-Type: Application/json</p>
               <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
           </li>
+          <li> 
+            <h2 class="negrita">
+              <span class="listo">GET :</span>
+              Devuelve todos los Examenescon sus categorias
+            </h2>
+            <p><span class="negrita">EndPoint : </span>http://localhost:1234/exam_order_results/:id</p>
+            <button id="OEGetID" class="btn">Copiar</button>
+            <p><span class="negrita">Headers : </span> Content-Type: Application/json</p>
+            <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+        </li>
+        <li> 
+          <h2 class="negrita">
+            <span class="listo">POST :</span>
+            Devuelve todos los Examenescon sus categorias
+          </h2>
+          <p><span class="negrita">EndPoint : </span>http://localhost:1234/exam_order_results</p>
+          <button id="OEPost" class="btn">Copiar</button>
+          <p><span class="negrita">Headers : </span> Content-Type: Application/json</p>
+          <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+      </li>
+      <li> 
+        <h2 class="negrita">
+          <span class="listo">PATH :</span>
+          Devuelve todos los Examenescon sus categorias
+        </h2>
+        <p><span class="negrita">EndPoint : </span>http://localhost:1234/exam_order_results</p>
+        <button id="OEPathID" class="btn">Copiar</button>
+        <p><span class="negrita">Headers : </span> Content-Type: Application/json</p>
+        <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+    </li>
+    <li> 
+      <h2 class="negrita">
+        <span class="listo">DELETE :</span>
+        Devuelve todos los Examenescon sus categorias
+      </h2>
+      <p><span class="negrita">EndPoint : </span>http://localhost:1234/exam_order_results</p>
+      <button id="OEDeleteID" class="btn">Copiar</button>
+      <p><span class="negrita">Headers : </span> Content-Type: Application/json</p>
+      <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+  </li>
         </ul>
       </details>
 
@@ -640,13 +720,52 @@
               <h2 class="negrita">
                 <span class="listo">GET :</span>
                 Devuelve todos los Examenes con sus categorias
-                <span class="listo">;</span>
               </h2>
-              <p><span class="negrita">EndPoint : </span>http://localhost:1234/exams</p>
-              <button id="InoviceGet" class="btn">Copiar</button>
+              <p><span class="negrita">EndPoint : </span>http://localhost:1234/invoices</p>
+              <button id="InvoiceGet" class="btn">Copiar</button>
               <p><span class="negrita">Headers : </span> Content-Type: Application/json</p>
               <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
           </li>
+          <li > 
+            <h2 class="negrita">
+              <span class="listo">GET :</span>
+              Devuelve Factura por ID
+            </h2>
+            <p><span class="negrita">EndPoint : </span>http://localhost:1234/invoices/:id</p>
+            <button id="InvoiceGetID" class="btn">Copiar</button>
+            <p><span class="negrita">Headers : </span> Content-Type: Application/json</p>
+            <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+        </li>
+        <li > 
+          <h2 class="negrita">
+            <span class="listo">POST :</span>
+            Devuelve Factura por ID
+          </h2>
+          <p><span class="negrita">EndPoint : </span>http://localhost:1234/invoices</p>
+          <button id="InvoicePost" class="btn">Copiar</button>
+          <p><span class="negrita">Headers : </span> Content-Type: Application/json</p>
+          <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+      </li>
+      <li > 
+        <h2 class="negrita">
+          <span class="listo">PATH :</span>
+          Devuelve Factura por ID
+        </h2>
+        <p><span class="negrita">EndPoint : </span>http://localhost:1234/invoices/:id</p>
+        <button id="InvoicePathID" class="btn">Copiar</button>
+        <p><span class="negrita">Headers : </span> Content-Type: Application/json</p>
+        <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+      </li>
+      <li > 
+        <h2 class="negrita">
+          <span class="listo">DELETE :</span>
+          Devuelve Factura por ID
+        </h2>
+        <p><span class="negrita">EndPoint : </span>http://localhost:1234/invoices/:id</p>
+        <button id="InvoiceDeleteID" class="btn">Copiar</button>
+        <p><span class="negrita">Headers : </span> Content-Type: Application/json</p>
+        <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+       </li>
         </ul>
       </details>
 
@@ -713,6 +832,27 @@ document.getElementById('OrderGetID').addEventListener('click', copiarAlPortapap
 document.getElementById('OrderPost').addEventListener('click', copiarAlPortapapeles);
 document.getElementById('OrderPathID').addEventListener('click', copiarAlPortapapeles);
 document.getElementById('OrderDeleteID').addEventListener('click', copiarAlPortapapeles);
+
+document.getElementById('ResultGet').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('ResultGetID').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('ResultPost').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('ResultPathID').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('ResultDeleteID').addEventListener('click', copiarAlPortapapeles);
+
+document.getElementById('OEGet').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('OEGetID').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('OEPost').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('OEPathID').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('OEDeleteID').addEventListener('click', copiarAlPortapapeles);
+
+
+document.getElementById('InvoiceGet').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('InvoiceGetID').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('InvoicePost').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('InvoicePathID').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('InvoiceDeleteID').addEventListener('click', copiarAlPortapapeles); 
+
+
 
 
 </script>

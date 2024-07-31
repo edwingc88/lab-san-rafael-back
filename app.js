@@ -9,7 +9,7 @@ import { createLabRouter } from './router/labs.js'
 import { createSourceRouter } from './router/sources.js'
 import { createCategoryRouter } from './router/categorys.js'
 import { createResultRouter } from './router/results.js'
-import { createExamCategoryRouter } from './router/exams_categorys.js'
+import { createExamOrderResultRouter } from './router/exam_order_results.js'
 import { createOrderRouter } from './router/orders.js'
 import { createInvoiceRouter } from './router/invoices.js'
 import { createAuthRouter } from './router/auth.js'
@@ -30,7 +30,7 @@ const __dirname = dirname(__filename)
 
 const pkg = JSON.parse(readFileSync('./package.json'))
 
-export const createApp = ({ stateModel, userModel, roleModel, labModel, invoiceModel, examModel, examCategoryModel, orderModel, resultModel, categoryModel, authModel }) => {
+export const createApp = ({ stateModel, userModel, roleModel, labModel, invoiceModel, examModel, examOrderResultModel, orderModel, resultModel, categoryModel, authModel }) => {
   const app = express()
   app.set('pkg', pkg)
   app.use(json())
@@ -73,7 +73,7 @@ export const createApp = ({ stateModel, userModel, roleModel, labModel, invoiceM
   app.use('/roles', createRoleRouter({ roleModel }))
   app.use('/auth', createAuthRouter({ authModel }))
   app.use('/exams', createExamRouter({ examModel }))
-  app.use('/exam_category', createExamCategoryRouter({ examCategoryModel }))
+  app.use('/exam_order_results', createExamOrderResultRouter({ examOrderResultModel }))
   app.use('/invoices', createInvoiceRouter({ invoiceModel }))
   app.use('/orders', createOrderRouter({ orderModel }))
   app.use('/results', createResultRouter({ resultModel }))

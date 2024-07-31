@@ -2,7 +2,7 @@ import { Router } from 'express'
 
 import { InvoiceController } from '../controllers/invoices.js'
 
-import { verifyToken, isAdmin } from '../middlewares/authjwt.js'
+/* import { verifyToken, isAdmin } from '../middlewares/authjwt.js' */
 
 export const createInvoiceRouter = ({ invoiceModel }) => {
   const invoicesRouter = Router()
@@ -11,13 +11,13 @@ export const createInvoiceRouter = ({ invoiceModel }) => {
 
   invoicesRouter.get('/', invoiceController.getAll)
 
-  invoicesRouter.get('/:id', [verifyToken], invoiceController.getById)
+  invoicesRouter.get('/:id', /* [verifyToken] , */ invoiceController.getById)
 
   invoicesRouter.post('/', invoiceController.create)
 
-  invoicesRouter.patch('/:id', [verifyToken, isAdmin], invoiceController.update)
+  invoicesRouter.patch('/:id', /* [verifyToken, isAdmin],  */invoiceController.update)
 
-  invoicesRouter.delete('/:id', [verifyToken, isAdmin], invoiceController.delete)
+  invoicesRouter.delete('/:id', /* [verifyToken, isAdmin], */ invoiceController.delete)
 
   return invoicesRouter
 }

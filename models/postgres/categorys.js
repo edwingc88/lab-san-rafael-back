@@ -46,11 +46,13 @@ export class CategoryModel {
   }
 
   static async delete ({ id }) {
-    console.log(id)
-    const result = await conn.query('DELETE FROM category WHERE id = $1 returning *;', [id])
-
-    console.log(result.rows)
-
-    return result.rows
+    try {
+      const result = await conn.query('DELETE FROM category WHERE category_id = $1 returning *;', [id])
+      console.log(result.rows)
+      return result.rows
+    } catch (error) {
+      console.log(error)
+      throw new Error('Errro Deleting Category')
+    }
   }
 }

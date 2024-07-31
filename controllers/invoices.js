@@ -1,4 +1,5 @@
 import { validateInvoice, validatePartialInvoice } from '../schemas/invoices.js'
+import multiparty from 'multiparty'
 
 export class InvoiceController {
   constructor ({ invoiceModel }) {
@@ -17,12 +18,11 @@ export class InvoiceController {
   getById = async (req, res) => {
     const { id } = req.params
     const invoices = await this.invoicesModel.getById(id)
-    console.log(invoices)
     if (invoices) return res.json(invoices)
     res.status(404).json({ error: 'Not found invoices' })
   }
 
-  create = async (req, res) => {
+  /*   create = async (req, res) => {
     const result = validateInvoice(req.body)
 
     if (result.error) {
@@ -32,6 +32,37 @@ export class InvoiceController {
     const newinvoices = await this.invoicesModel.create({ input: result.data })
 
     res.status(201).json(newinvoices)
+  } */
+
+  create = async (req, res) => {
+    const form = new multiparty.Form()
+
+    form.parse(req, async (err, fields) => {
+      if (err) return res.status(500).json({ error: 'Error msj formdata' })
+
+      /** RECUPERANDO DATOS ITERANDO OBJETO **/
+      let newvalue = {}
+
+      const claves = Object.keys(fields) // claves = ["nombre", "color", "macho", "edad"]
+
+      for (let i = 0; i < claves.length; i++) {
+        const clave = claves[i]
+        const valor = { [clave]: fields[clave][0] }
+        newvalue = { ...newvalue, ...valor }
+      }
+
+      /**  Validar Datos con Zot **/
+      const resultZod = validateInvoice(newvalue)
+
+      if (resultZod.error) {
+        return res.status(400).json({ error: JSON.parse(resultZod.error) })
+      }
+      console.log(resultZod.data)
+
+      /**  Registrar en Base de Datos **/
+      const newResult = await this.labModel.create({ input: resultZod.data })
+      res.status(201).json(newResult)
+    })
   }
 
   update = async (req, res) => {

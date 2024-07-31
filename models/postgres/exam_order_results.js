@@ -1,7 +1,7 @@
 import conn from './db.js'
 // import bc from 'bcrypt'
-export class ExamCategoryModel {
-  static async getAll ({ _category }) {
+export class ExamOrderResultModel {
+/*   static async getAll ({ _category }) {
     try {
       if (_category) {
         const loweCaseCategoryID = _category.toLowerCase()
@@ -11,7 +11,18 @@ export class ExamCategoryModel {
       //  const result = await conn.query('SELECT * FROM exam_orders_result JOIN exam ON exam.exam_id = exam_orders_result.exam_orders_result_id_exam JOIN category ON category.category_id = exam_orders_result.exam_orders_result_id_category;')
       const result = await conn.query('SELECT * FROM exam_orders_result;')
       console.log(result.rows)
-      console.log('entro a ExamCategory Model')
+      console.log('entro a ExamOrderResult Model')
+      return result.rows
+    } catch (e) {
+      return null
+    }
+  } */
+
+  static async getAll () {
+    try {
+      const result = await conn.query('SELECT * FROM exam_order;')
+      console.log(result.rows)
+      console.log('entro a ExamOrderResult Model')
       return result.rows
     } catch (e) {
       return null
