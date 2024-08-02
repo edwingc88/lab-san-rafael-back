@@ -25,8 +25,9 @@ export class SourceController {
   }
 
   getByIdImgPublic = async (req, res) => {
-    const { id } = req.params
-    if (id) return res.sendFile(join(resolve('sources', 'images', 'public'), id))
+    const { name } = req.params
+    console.log(req.params)
+    if (name) return res.sendFile(join(resolve('sources', 'images', 'public'), name))
     res.status(404).json({ error: 'Source: No Content' })
   }
 
