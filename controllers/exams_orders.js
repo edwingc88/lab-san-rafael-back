@@ -1,4 +1,4 @@
-import { validateExamOrderResult, validatePartialExamOrderResult } from '../schemas/exam_order_results.js'
+import { validateExamOrderResult, validatePartialExamOrderResult } from '../schemas/exams_orders.js'
 
 export class ExamOrderResultController {
   constructor ({ examOrderResultModel }) {

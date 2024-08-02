@@ -1,6 +1,6 @@
 import { Router } from 'express'
 
-import { ExamOrderResultController } from '../controllers/exam_order_results.js'
+import { ExamOrderResultController } from '../controllers/exams_orders.js'
 
 import { verifyToken, isAdmin } from '../middlewares/authjwt.js'
 

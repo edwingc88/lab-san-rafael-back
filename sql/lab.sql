@@ -173,7 +173,7 @@ CREATE TABLE IF NOT EXISTS exam_order(
    exam_order_id serial PRIMARY KEY ,
    exam_order_id_exam INT NOT NULL,
    exam_order_id_orders INT NOT NULL,
-   FOREIGN KEY (exam_order_id_exam) REFERENCES exam(exam_id),
+   FOREIGN KEY (exam_order_id_exam) REFERENCES exam(exam_id) ON DELETE CASCADE,
    FOREIGN KEY (exam_order_id_orders) REFERENCES orders(orders_id) ON DELETE CASCADE
 );
 

@@ -65,15 +65,19 @@ export class InvoiceController {
     })
   }
 
-  update = async (req, res) => {
-    const result = validatePartialInvoice(req.body)
-    if (!result.success) {
-      return res.status(400).json({ error: JSON.parse(result.error.message) })
+  update = async (req, res, next) => {
+    try {
+      const result = validatePartialInvoice(req.body)
+      if (!result.success) {
+        return res.status(400).json({ error: JSON.parse(result.error.message) })
+      }
+      const { id } = req.params
+      const updatedinvoices = await this.invoicesModel.update({ id, input: result.data })
+      if (!updatedinvoices) return res.status(404).json({ error: 'Not found invoices' })
+      return res.json(updatedinvoices)
+    } catch (error) {
+      next(error)
     }
-    const { id } = req.params
-    const updatedinvoices = await this.invoicesModell.update({ id, input: result.data })
-    if (!updatedinvoices) return res.status(404).json({ error: 'Not found invoices' })
-    return res.json(updatedinvoices)
   }
 
   delete = async (req, res) => {

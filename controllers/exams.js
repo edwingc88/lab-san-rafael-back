@@ -67,21 +67,61 @@ export class ExamController {
     }
   }
 
-  update = async (req, res) => {
+  /*   update = async (req, res) => {
+    console('Iniciando update en controllers')
     const result = validatePartialExam(req.body)
     if (!result.success) {
       return res.status(400).json({ error: JSON.parse(result.error.message) })
     }
     const { id } = req.params
-    const updatedexam = await this.examModell.update({ id, input: result.data })
+    const updatedexam = await this.examModel.update({ id, input: result.data })
     if (!updatedexam) return res.status(404).json({ error: 'Not found exam' })
     return res.json(updatedexam)
   }
+ */
 
-  delete = async (req, res) => {
-    const { id } = req.params
-    const result = await this.examModel.delete({ id })
-    if (result === false) return res.status(404).json({ error: 'Not found exam' })
-    return res.json({ message: 'exam deleted' })
+  update = async (req, res, next) => {
+    try {
+      console.log('Iniciando update en controllers')
+      const { id } = req.params
+      const form = new multiparty.Form()
+      form.parse(req, async (err, fields) => {
+        if (err) return res.status(500).json({ error: 'Error msj formdata' })
+
+        let newvalue = {}
+
+        const claves = Object.keys(fields)
+
+        for (let i = 0; i < claves.length; i++) {
+          const clave = claves[i]
+          const valor = { [clave]: fields[clave][0] }
+          newvalue = { ...newvalue, ...valor }
+        }
+
+        const result = validatePartialExam(newvalue)
+        if (!result.success) {
+          return res.status(400).json({ error: JSON.parse(result.error.message) })
+        }
+
+        const updateduser = await this.examModel.update({ id, input: result.data })
+        /*
+        if (updateduser.length === 0) return res.status(404).json({ error: 'Not found Exam en Controllers' }) */
+
+        return res.status(201).json(updateduser)
+      })
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  delete = async (req, res, next) => {
+    try {
+      const { id } = req.params
+      const result = await this.examModel.delete({ id })
+      if (result === false) return res.status(404).json({ error: 'Not found exam' })
+      return res.json({ message: 'exam deleted' })
+    } catch (error) {
+      next(error)
+    }
   }
 }

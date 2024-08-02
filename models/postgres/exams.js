@@ -55,22 +55,27 @@ export class ExamModel {
     }
   }
 
-  static async update ({ idupdate, input }) {
-    // eslint-disable-next-line camelcase
-    const { id, name } = input
-
-    // eslint-disable-next-line camelcase
-    const result = await conn.query('UPDATE exam SET id = $1, name = $2  WHERE id = $3 RETURNING *;', [id, name, idupdate])
-    console.log(result.rows)
-    return result.rows
+  static async update ({ id, input }) {
+    try {
+      // eslint-disable-next-line camelcase
+      const { name, description, indicator, unit, price, id_category } = input
+      // eslint-disable-next-line camelcase
+      const result = await conn.query('UPDATE exam SET exam_name = $1, exam_description = $2, exam_indicator= $3, exam_unit=$4, exam_price=$5, exam_id_category=$6 WHERE exam_id = $7 RETURNING *;', [name, description, indicator, unit, price, id_category, id])
+      console.log(' update en Model')
+      return result.rows
+    } catch (error) {
+      console.log(error)
+      throw new Error(error)
+    }
   }
 
   static async delete ({ id }) {
-    console.log(id)
-    const result = await conn.query('DELETE FROM exam WHERE exam_id = $1 returning *;', [id])
-
-    console.log(result.rows)
-
-    return result.rows
+    try {
+      console.log(id)
+      const result = await conn.query('DELETE FROM exam WHERE exam_id = $1 returning *;', [id])
+      return result.rows
+    } catch (error) {
+      throw new Error('Error deleting Exam')
+    }
   }
 }

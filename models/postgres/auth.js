@@ -4,7 +4,7 @@ export class AuthModel {
   static async createUser ({ input }) {
     try {
     // eslint-disable-next-line camelcase
-      const { firstname, lastname, username, password, email, firstphone, created, birthdate } = input
+      const { firstname, lastname, username, password, dni, email, firstphone, created, birthdate } = input
       const passwordHash = password
       const idRolePatient = 4
       // const passwordHash = await bc.hash(password, 10)
@@ -14,7 +14,7 @@ export class AuthModel {
       // Agregar el uudi en la
       const abatarDefault = 'https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg'
       // eslint-disable-next-line camelcase
-      const resultID = await conn.query('INSERT INTO users( users_username,users_password,users_firstname, users_lastname, users_email,users_firstphone, users_created, users_birthdate, users_id_role,users_abatar) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9,$10) RETURNING *;', [username, passwordHash, firstname, lastname, email, firstphone, created, birthdate, idRolePatient, abatarDefault])
+      const resultID = await conn.query('INSERT INTO users( users_username,users_password,users_firstname, users_lastname,users_dni , users_email,users_firstphone, users_created, users_birthdate, users_id_role,users_abatar) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9,$10) RETURNING *;', [username, passwordHash, firstname, lastname, dni, email, firstphone, created, birthdate, idRolePatient, abatarDefault])
       return (resultID.rows)
     } catch (e) {
       console.log(e)
@@ -36,7 +36,7 @@ export class AuthModel {
   static async findRol ({ idrole }) {
     // eslint-disable-next-line camelcase
     try {
-      const result = await conn.query('SELECT id FROM role WHERE id = $1 ;', [idrole])
+      const result = await conn.query('SELECT id FROM role WHERE role_id = $1 ;', [idrole])
       // console.log(result.rows)
       return (result.rows)
     } catch (e) {
