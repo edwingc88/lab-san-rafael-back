@@ -364,11 +364,18 @@
               <li>
                 <h2 class="negrita">
                   <span class="listo">GET :</span>
-                  Obtener imagen por nombre
+                  Obtener imagen default USUARIOS
                 </h2>
                 <p><span class="negrita">EndPoint : </span>http://localhost:1234/sources/images/public/default.jpg</p>
+                <button id="ImagenGetDefault" class="btn">Copiar</button>
+              </li> 
+              <li>
+                <h2 class="negrita">
+                  <span class="listo">GET :</span>
+                  Obtener imagen No content
+                </h2>
                 <p><span class="negrita">EndPoint : </span>http://localhost:1234/sources/images/public/noimage.jpg</p>
-                <button id="ImagenGet" class="btn">Copiar</button>
+                <button id="ImagenGetNone" class="btn">Copiar</button>
               </li> 
             </ul>
       </details>  
@@ -379,7 +386,7 @@
 
     <article id="colum2" style="width: 650px;min-width:650px;overflow-x: hidden;">
  
-      <!----------------------------- API Examenes ------------------------------------>
+      <!----------------------------- API Examenes ----------------------------------->
         
       <details>
           <summary style="margin: 1rem; font-size: x-large; font-weight: 600;">
@@ -389,7 +396,7 @@
             <li> 
               <h2 class="negrita">
                   <span class="listo">GET :</span>
-                  Devuelve todos los Examenescon sus categorias
+                  Devuelve todos los Examenes con sus categorias
                 </h2>
                 <p><span class="negrita">EndPoint : </span>http://localhost:1234/exams</p>
                 <button id="ExamGet" class="btn">Copiar</button>
@@ -401,7 +408,7 @@
                   <span class="listo">GET :</span>
                   Devuelve todos los Examenescon sus categorias
                 </h2>
-                <p><span class="negrita">EndPoint : </span>http://localhost:1234/exams/1</p>
+                <p><span class="negrita">EndPoint : </span>http://localhost:1234/exams/:id</p>
                 <button id="ExamGetID" class="btn">Copiar</button>
                 <p><span class="negrita">Headers : </span> Content-Type: Application/json</p>
                 <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
@@ -449,7 +456,7 @@
           </ul>
       </details>
 
-      <!----------------------------- API Categorias ----------------------------------->
+      <!---------------------------- API Categorias ---------------------------------->
       
       <details>
         <summary style="margin: 1rem; font-size: x-large; font-weight: 600;">
@@ -589,7 +596,7 @@
         </ul>
       </details>
 
-      <!------------------------------- API Resultados --------------------------------->
+      <!----------------------------- API Resultados --------------------------------->
       
       <details>
         <summary style="margin: 1rem; font-size: x-large; font-weight: 600;">
@@ -769,6 +776,66 @@
         </ul>
       </details>
 
+     <!---------------------------- API STATES ---------------------------------->
+          
+            <details>
+              <summary style="margin: 1rem; font-size: x-large; font-weight: 600;">
+                  API Estados <span class="proceso">&#x2615;&#xfe0e;</span>
+              </summary>
+              <ul style="padding-bottom: .5rem;">
+                <li > 
+                    <h2 class="negrita">
+                      <span class="listo">GET :</span>
+                      Devuelve todos los Estados
+                    </h2>
+                    <p><span class="negrita">EndPoint : </span>http://localhost:1234/states</p>
+                    <button id="StateGet" class="btn">Copiar</button>
+                    <p><span class="negrita">Headers : </span> Content-Type: Application/json</p>
+                    <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+                </li>
+                <li > 
+                  <h2 class="negrita">
+                    <span class="listo">GET :</span>
+                    Devuelve Factura por ID
+                  </h2>
+                  <p><span class="negrita">EndPoint : </span>http://localhost:1234/states/:id</p>
+                  <button id="StateGetID" class="btn">Copiar</button>
+                  <p><span class="negrita">Headers : </span> Content-Type: Application/json</p>
+                  <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+              </li>
+              <li > 
+                <h2 class="negrita">
+                  <span class="listo">POST :</span>
+                  Devuelve Factura por ID
+                </h2>
+                <p><span class="negrita">EndPoint : </span>http://localhost:1234/invoices</p>
+                <button id="StatePost" class="btn">Copiar</button>
+                <p><span class="negrita">Headers : </span> Content-Type: Application/json</p>
+                <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+            </li>
+            <li > 
+              <h2 class="negrita">
+                <span class="listo">PATH :</span>
+                Devuelve Factura por ID
+              </h2>
+              <p><span class="negrita">EndPoint : </span>http://localhost:1234/invoices/:id</p>
+              <button id="StatePathID" class="btn">Copiar</button>
+              <p><span class="negrita">Headers : </span> Content-Type: Application/json</p>
+              <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+            </li>
+            <li > 
+              <h2 class="negrita">
+                <span class="listo">DELETE :</span>
+                Devuelve Factura por ID
+              </h2>
+              <p><span class="negrita">EndPoint : </span>http://localhost:1234/invoices/:id</p>
+              <button id="StateDeleteID" class="btn">Copiar</button>
+              <p><span class="negrita">Headers : </span> Content-Type: Application/json</p>
+              <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+             </li>
+              </ul>
+            </details>
+
     </article>
   </section>
 
@@ -813,7 +880,11 @@ document.getElementById('RoleDeleteID').addEventListener('click', copiarAlPortap
 document.getElementById('SigninPost').addEventListener('click', copiarAlPortapapeles);
 document.getElementById('SignupPost').addEventListener('click', copiarAlPortapapeles);
 
-document.getElementById('ImagenGet').addEventListener('click', copiarAlPortapapeles);
+
+document.getElementById('ImagenGetDefault').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('ImagenGetNone').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('ImagenPathID').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('ImagenDelete').addEventListener('click', copiarAlPortapapeles);
 
 document.getElementById('ExamGet').addEventListener('click', copiarAlPortapapeles);
 document.getElementById('ExamGetID').addEventListener('click', copiarAlPortapapeles);
@@ -852,6 +923,11 @@ document.getElementById('InvoicePost').addEventListener('click', copiarAlPortapa
 document.getElementById('InvoicePathID').addEventListener('click', copiarAlPortapapeles);
 document.getElementById('InvoiceDeleteID').addEventListener('click', copiarAlPortapapeles); 
 
+document.getElementById('StateGet').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('StateGetID').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('StatePost').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('StatePathID').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('StateDeleteID').addEventListener('click', copiarAlPortapapeles); 
 
 
 

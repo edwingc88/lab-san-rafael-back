@@ -40,10 +40,10 @@ export class StateModel {
 
   static async create ({ input }) {
     // eslint-disable-next-line camelcase
-    const { type } = input
+    const { name, description } = input
     try {
       // eslint-disable-next-line camelcase
-      const resultID = await conn.query('INSERT INTO states( states_id,states_dni , states_password,states_firstname,states_lastname ,states_email ,states_address,states_mobilephone,states_created, states_picture_url,states_id_role) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11 ) RETURNING *;', [type])
+      const resultID = await conn.query('INSERT INTO states(states_name,states_description) VALUES ($1, $2) RETURNING *;', [name, description])
       return (resultID.rows)
     } catch (e) {
       throw new Error('Errro creating states')

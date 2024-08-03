@@ -1,4 +1,5 @@
 import { validateState, validatePartialState } from '../schemas/states.js'
+import multiparty from 'multiparty'
 
 export class StateController {
   constructor ({ stateModel }) {
@@ -26,7 +27,7 @@ export class StateController {
     }
   }
 
-  create = async (req, res) => {
+  /*   create = async (req, res) => {
     const result = validateState(req.body)
 
     if (result.error) {
@@ -36,6 +37,39 @@ export class StateController {
     const newstate = await this.stateModel.create({ input: result.data })
 
     res.status(201).json(newstate)
+  }
+ */
+  create = async (req, res, next) => {
+    try {
+      const form = new multiparty.Form()
+      form.parse(req, async (err, fields) => {
+        if (err) return res.status(500).json({ error: 'Error msj formdata' })
+
+        let newvalue = {}
+
+        const claves = Object.keys(fields)
+
+        for (let i = 0; i < claves.length; i++) {
+          const clave = claves[i]
+          const valor = { [clave]: fields[clave][0] }
+          newvalue = { ...newvalue, ...valor }
+        }
+
+        /**  Validar Datos con Zot **/
+        const resultZod = validateState(newvalue)
+
+        if (resultZod.error) {
+          return res.status(400).json({ error: JSON.parse(resultZod.error) })
+        }
+        console.log('Zot : ', resultZod.data)
+
+        /**  Registrar en Base de Datos **/
+        const newUserResult = await this.stateModel.create({ input: resultZod.data })
+        return res.status(201).json(newUserResult)
+      })
+    } catch (error) {
+      next(error)
+    }
   }
 
   update = async (req, res) => {
