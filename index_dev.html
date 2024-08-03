@@ -818,7 +818,7 @@
                 <span class="listo">PATH :</span>
                 Devuelve Factura por ID
               </h2>
-              <p><span class="negrita">EndPoint : </span>http://localhost:1234/invoices/:id</p>
+              <p><span class="negrita">EndPoint : </span>http://localhost:1234/states/:id</p>
               <button id="StatePathID" class="btn">Copiar</button>
               <p><span class="negrita">Headers : </span> Content-Type: Application/json</p>
               <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
@@ -826,9 +826,9 @@
             <li > 
               <h2 class="negrita">
                 <span class="listo">DELETE :</span>
-                Devuelve Factura por ID
+                Elimina Estado por ID
               </h2>
-              <p><span class="negrita">EndPoint : </span>http://localhost:1234/invoices/:id</p>
+              <p><span class="negrita">EndPoint : </span>http://localhost:1234/states/:id</p>
               <button id="StateDeleteID" class="btn">Copiar</button>
               <p><span class="negrita">Headers : </span> Content-Type: Application/json</p>
               <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
@@ -883,8 +883,8 @@ document.getElementById('SignupPost').addEventListener('click', copiarAlPortapap
 
 document.getElementById('ImagenGetDefault').addEventListener('click', copiarAlPortapapeles);
 document.getElementById('ImagenGetNone').addEventListener('click', copiarAlPortapapeles);
-document.getElementById('ImagenPathID').addEventListener('click', copiarAlPortapapeles);
-document.getElementById('ImagenDelete').addEventListener('click', copiarAlPortapapeles);
+/* document.getElementById('ImagenPathID').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('ImagenDelete').addEventListener('click', copiarAlPortapapeles); */
 
 document.getElementById('ExamGet').addEventListener('click', copiarAlPortapapeles);
 document.getElementById('ExamGetID').addEventListener('click', copiarAlPortapapeles);
@@ -928,7 +928,6 @@ document.getElementById('StateGetID').addEventListener('click', copiarAlPortapap
 document.getElementById('StatePost').addEventListener('click', copiarAlPortapapeles);
 document.getElementById('StatePathID').addEventListener('click', copiarAlPortapapeles);
 document.getElementById('StateDeleteID').addEventListener('click', copiarAlPortapapeles); 
-
 
 
 </script>
