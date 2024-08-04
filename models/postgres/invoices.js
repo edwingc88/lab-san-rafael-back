@@ -46,9 +46,9 @@ export class InvoiceModel {
   static async update ({ idupdate, input }) {
     try {
       // eslint-disable-next-line camelcase
-      const { id, name } = input
+      const { total, method_payment, reference_payment, states_payment, states_date, id_orders } = input
       // eslint-disable-next-line camelcase
-      const result = await conn.query('UPDATE invoice SET invoice_total = $1,invoice_method_payment = $2 , invoice_reference_payment = $3, invoice_states_payment = $4 , invoice_states_date = $5 , invoice_id_orders = $6  WHERE invoice_id = $3 RETURNING *;', [id, name, idupdate])
+      const result = await conn.query('UPDATE invoice SET invoice_total = $1,invoice_method_payment = $2 , invoice_reference_payment = $3, invoice_states_payment = $4 , invoice_states_date = $5 , invoice_id_orders = $6  WHERE invoice_id = $7 RETURNING *;', [total, method_payment, reference_payment, states_payment, states_date, id_orders, idupdate])
       console.log(result.rows)
       return result.rows
     } catch (error) {

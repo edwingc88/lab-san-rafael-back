@@ -65,7 +65,7 @@ export class InvoiceController {
     })
   }
 
-  update = async (req, res, next) => {
+  /*  update = async (req, res, next) => {
     try {
       const result = validatePartialInvoice(req.body)
       if (!result.success) {
@@ -75,6 +75,43 @@ export class InvoiceController {
       const updatedinvoices = await this.invoicesModel.update({ id, input: result.data })
       if (!updatedinvoices) return res.status(404).json({ error: 'Not found invoices' })
       return res.json(updatedinvoices)
+    } catch (error) {
+      next(error)
+    }
+  } */
+
+  update = async (req, res, next) => {
+    try {
+      const form = new multiparty.Form({})
+      const { id } = req.params
+      form.parse(req, async (err, fields) => {
+        if (err) {
+          console.error(err)
+          return res.status(500).json({ error: 'Error msj formdata Update' })
+        }
+
+        /// RECUPERANDO DATOS ITERANDO OBJETO
+        const claves = Object.keys(fields)
+        let newvalue = {}
+
+        for (let i = 0; i < claves.length; i++) {
+          const clave = claves[i]
+          const valor = { [clave]: fields[clave][0] }
+          newvalue = { ...newvalue, ...valor }
+        }
+
+        const result = validatePartialInvoice(newvalue)
+
+        if (result.error) {
+          return res.status(400).json({ error: JSON.parse(result.error.message) })
+        }
+
+        const updatedlabResult = await this.invoicesModel.update({ idupdate: id, input: result.data })
+
+        /* if (updatedlabResult.length === 0) res.status(404).json({ error: 'Invoice Error' }) */
+
+        return res.status(201).json(updatedlabResult)
+      })
     } catch (error) {
       next(error)
     }
