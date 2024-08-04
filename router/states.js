@@ -2,7 +2,7 @@ import { Router } from 'express'
 
 import { StateController } from '../controllers/states.js'
 
-import { verifyToken, isAdmin } from '../middlewares/authjwt.js'
+// import { verifyToken, isAdmin } from '../middlewares/authjwt.js'
 
 export const createStateRouter = ({ stateModel }) => {
   const statesRouter = Router()
@@ -15,7 +15,7 @@ export const createStateRouter = ({ stateModel }) => {
 
   statesRouter.post('/', stateController.create)
 
-  statesRouter.patch('/:id', [verifyToken, isAdmin], stateController.update)
+  statesRouter.patch('/:id', /* [verifyToken, isAdmin], */ stateController.update)
 
   statesRouter.delete('/:id', stateController.delete)
 

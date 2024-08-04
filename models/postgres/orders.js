@@ -13,7 +13,8 @@ export class OrderModel {
       console.log('entro a order Model')
       return result.rows
     } catch (e) {
-      return null
+      console.log(e)
+      throw new Error(e)
     }
   }
 

@@ -43,7 +43,7 @@ export class InvoiceController {
       /** RECUPERANDO DATOS ITERANDO OBJETO **/
       let newvalue = {}
 
-      const claves = Object.keys(fields) // claves = ["nombre", "color", "macho", "edad"]
+      const claves = Object.keys(fields)
 
       for (let i = 0; i < claves.length; i++) {
         const clave = claves[i]
@@ -60,7 +60,7 @@ export class InvoiceController {
       console.log(resultZod.data)
 
       /**  Registrar en Base de Datos **/
-      const newResult = await this.labModel.create({ input: resultZod.data })
+      const newResult = await this.invoicesModel.create({ input: resultZod.data })
       res.status(201).json(newResult)
     })
   }

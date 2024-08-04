@@ -166,7 +166,8 @@ CREATE TABLE IF NOT EXISTS orders (
 
 INSERT INTO orders (orders_id, orders_number, orders_date, orders_observation, orders_id_users, orders_id_states) VALUES
 (1, 1, '2023-05-01', 'ninguna', 1, 1),
-(2, 2, '2023-05-02', 'ninguna', 2, 1);
+(2, 2, '2023-05-02', 'ninguna', 2, 1),
+(3, 3, '2023-05-03', 'ninguna', 3, 1);
 
 
 CREATE TABLE IF NOT EXISTS exam_order(
@@ -222,15 +223,16 @@ CREATE TABLE IF NOT EXISTS invoice(
   invoice_total FLOAT,
   invoice_method_payment VARCHAR(255),
   invoice_reference_payment VARCHAR(255) NULL,
-  invoice_type_payment VARCHAR(255),
   invoice_states_payment BOOLEAN,
   invoice_states_date DATE,
   invoice_id_orders INT NOT NULL,
   FOREIGN KEY (invoice_id_orders) REFERENCES orders(orders_id) ON DELETE CASCADE
 );
 
-INSERT INTO invoice (invoice_id, invoice_total, invoice_method_payment, invoice_reference_payment, invoice_type_payment, invoice_states_payment, invoice_states_date, invoice_id_orders) VALUES
-(1, 100.0, 'efectivo', 'efectivo', 'efectivo', true, '2023-05-01', 1),
-(2, 200.0, 'efectivo', 'efectivo', 'efectivo', true, '2023-05-02', 2);
+INSERT INTO invoice (invoice_id, invoice_total, invoice_method_payment, invoice_reference_payment, invoice_states_payment, invoice_states_date, invoice_id_orders) VALUES
+(1, 100.0, 'efectivo', 'efectivo', true, '2023-05-01', 1),
+(2, 200.0, 'efectivo', 'efectivo', true, '2023-05-02', 2);
 
  ALTER SEQUENCE exam_exam_id_seq RESTART WITH 13; 
+ ALTER SEQUENCE orders_orders_id_seq RESTART WITH 4;
+ ALTER SEQUENCE invoice_invoice_id_seq RESTART WITH 3;

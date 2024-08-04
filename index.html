@@ -786,7 +786,7 @@
                 <li > 
                     <h2 class="negrita">
                       <span class="listo">GET :</span>
-                      Devuelve todos los Estados
+                      Devuelve todos los Estados disponible para las ordenes
                     </h2>
                     <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/states</p>
                     <button id="StateGet" class="btn">Copiar</button>
@@ -796,7 +796,7 @@
                 <li > 
                   <h2 class="negrita">
                     <span class="listo">GET :</span>
-                    Devuelve Factura por ID
+                    Devuelve Estado de orden por ID
                   </h2>
                   <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/states/:id</p>
                   <button id="StateGetID" class="btn">Copiar</button>
@@ -806,7 +806,7 @@
               <li > 
                 <h2 class="negrita">
                   <span class="listo">POST :</span>
-                  Devuelve Factura por ID
+                  Crea Estado de la orden
                 </h2>
                 <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/invoices</p>
                 <button id="StatePost" class="btn">Copiar</button>
@@ -816,9 +816,9 @@
             <li > 
               <h2 class="negrita">
                 <span class="listo">PATH :</span>
-                Devuelve Factura por ID
+                Actualiza Estado de la orden
               </h2>
-              <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/invoices/:id</p>
+              <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/states/:id</p>
               <button id="StatePathID" class="btn">Copiar</button>
               <p><span class="negrita">Headers : </span> Content-Type: Application/json</p>
               <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
@@ -826,16 +826,15 @@
             <li > 
               <h2 class="negrita">
                 <span class="listo">DELETE :</span>
-                Devuelve Factura por ID
+                Elimina Estado por ID de la orden
               </h2>
-              <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/invoices/:id</p>
+              <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/states/:id</p>
               <button id="StateDeleteID" class="btn">Copiar</button>
               <p><span class="negrita">Headers : </span> Content-Type: Application/json</p>
               <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
              </li>
               </ul>
             </details>
-
     </article>
   </section>
 
@@ -928,7 +927,6 @@ document.getElementById('StateGetID').addEventListener('click', copiarAlPortapap
 document.getElementById('StatePost').addEventListener('click', copiarAlPortapapeles);
 document.getElementById('StatePathID').addEventListener('click', copiarAlPortapapeles);
 document.getElementById('StateDeleteID').addEventListener('click', copiarAlPortapapeles); 
-
 
 
 </script>

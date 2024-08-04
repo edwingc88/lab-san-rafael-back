@@ -1,5 +1,5 @@
 import conn from './db.js'
-import bc from 'bcrypt'
+// import bc from 'bcrypt'
 
 export class StateModel {
   static async getAll () {
@@ -51,13 +51,17 @@ export class StateModel {
   }
 
   static async update ({ id, input }) {
-    // eslint-disable-next-line camelcase
-    const { dni, password, firstname, lastname, email, birthdate, states, address, mobilephone, homephone, blood_typing, created, picture_url, role_id } = input
-    const passwordHash = await bc.hash(password, 10)
-    // eslint-disable-next-line camelcase
-    const result = await conn.query('UPDATE states SET dni = $1, password = $2 , firstname= $3 , lastname= $4, email= $5, birthdate=$6, states=$7 , address=$8 , mobilephone=$9, homephone=$10, blood_typing=$11, created=$12 , picture_url=$13 , role_id=$14  WHERE id = $15 RETURNING *;', [dni, passwordHash, firstname, lastname, email, birthdate, states, address, mobilephone, homephone, blood_typing, created, picture_url, role_id, id])
-    console.log(result.rows)
-    return result.rows
+    try {
+      // eslint-disable-next-line camelcase
+      const { name, description } = input
+      // const passwordHash = await bc.hash(password, 10)
+      // eslint-disable-next-line camelcase
+      const result = await conn.query('UPDATE states SET states_name = $1, states_description = $2  WHERE states_id = $3 RETURNING *;', [name, description, id])
+      console.log(result.rows)
+      return result.rows
+    } catch (error) {
+      throw new Error('Errro creating states')
+    }
   }
 
   static async delete ({ id }) {

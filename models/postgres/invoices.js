@@ -33,23 +33,27 @@ export class InvoiceModel {
   static async create ({ input }) {
     try {
     // eslint-disable-next-line camelcase
-      const { name, id_category } = input
+      const { total, method_payment, reference_payment, states_payment, states_date, id_orders } = input
       // eslint-disable-next-line camelcase
-      const resultID = await conn.query('INSERT INTO invoice( name ,id_category ) VALUES ($1, $2 ) RETURNING *;', [name, id_category])
+      const resultID = await conn.query('INSERT INTO invoice( invoice_total,invoice_method_payment,invoice_reference_payment,invoice_states_payment,invoice_states_date,invoice_id_orders ) VALUES ($1, $2, $3, $4, $5, $6 ) RETURNING *;', [total, method_payment, reference_payment, states_payment, states_date, id_orders])
       return (resultID.rows)
     } catch (e) {
+      console.log(e)
       throw new Error('Errro creating Invoice')
     }
   }
 
   static async update ({ idupdate, input }) {
-    // eslint-disable-next-line camelcase
-    const { id, name } = input
-
-    // eslint-disable-next-line camelcase
-    const result = await conn.query('UPDATE invoice SET id = $1, name = $2  WHERE id = $3 RETURNING *;', [id, name, idupdate])
-    console.log(result.rows)
-    return result.rows
+    try {
+      // eslint-disable-next-line camelcase
+      const { id, name } = input
+      // eslint-disable-next-line camelcase
+      const result = await conn.query('UPDATE invoice SET invoice_total = $1,invoice_method_payment = $2 , invoice_reference_payment = $3, invoice_states_payment = $4 , invoice_states_date = $5 , invoice_id_orders = $6  WHERE invoice_id = $3 RETURNING *;', [id, name, idupdate])
+      console.log(result.rows)
+      return result.rows
+    } catch (error) {
+      return null
+    }
   }
 
   static async delete ({ id }) {
