@@ -234,11 +234,23 @@ export class UserController {
     }
   }
 
-  deleteImg = async (req, res, next) => {
+  /*   deleteImg = async (req, res, next) => {
     try {
       const { id } = req.params
       const result = await this.userModel.deleteImgByID({ id })
       console.log(result)
+      return res.status(201).json({ message: 'Imagen deleted' })
+    } catch (error) {
+      next(error)
+    }
+  } */
+
+  deleteImg = async (req, res, next) => {
+    try {
+      const { id } = req.params
+      const rutaImgDefault = process.env.WEB_URL + IMAGEN_UPLOAD_DIR + 'default.jpg'
+      const result = await this.userModel.deleteImg({ id, rutaImgDefault })
+      if (result.length === 0) return res.status(404).json({ error: 'Not found image' })
       return res.status(201).json({ message: 'Imagen deleted' })
     } catch (error) {
       next(error)

@@ -18,7 +18,6 @@ export const createUserRouter = ({ userModel }) => {
   usersRouter.patch('/:id'/*, [verifyToken, isAdmin] */, userController.update)
   usersRouter.patch('/updateimg/:id', userController.updateImg)
   usersRouter.delete('/:id', userController.delete)
-
   usersRouter.delete('/deleteimg/:id', userController.deleteImg)
 
   return usersRouter

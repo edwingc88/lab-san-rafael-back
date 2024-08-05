@@ -116,14 +116,36 @@ export class UserModel {
     }
   }
 
-  static async deleteImgByID ({ id }) {
+  /*   static async deleteImgByID ({ id }) {
     try {
-      // const result = await conn.query('UPDATE users SET users_abatar = $1  WHERE users_id = $2 RETURNING *;', [rutaImgDefault, id])
-      // console.log(result.rows)
-      // return result.rows
-      return (id)
+      const result = await conn.query('UPDATE users SET users_abatar = $1  WHERE users_id = $2 RETURNING *;', [rutaImgDefault, id])
+      console.log(result.rows)
+      return result.rows
     } catch (e) {
       console.log('Error DB en lab By DeleteIMG ')
+      throw new Error(e)
+    }
+  } */
+
+  static async deleteImg ({ id, rutaImgDefault }) {
+    try {
+      console.log('entro en deleteIMG MODEL')
+      const resultUrlDelete = await conn.query('SELECT users_abatar FROM users WHERE users_id = $1;', [id])
+
+      if (resultUrlDelete.row === 0) return resultUrlDelete.row
+
+      const abatarUrlDelete = resultUrlDelete.rows[0].users_abatar
+      const nombreImgDelete = nombreFinalImagenByUrl(abatarUrlDelete)
+
+      if (nombreImgDelete !== 'default.jpg') {
+        console.log('Condicion de BOORANDO ARCHIVO que a ingresado')
+        await borrarImagen(nombreImgDelete)
+      }
+
+      const result = await conn.query('UPDATE users SET users_abatar = $1  WHERE users_id = $2 RETURNING *;', [rutaImgDefault, id])
+      return result.rows
+    } catch (e) {
+      console.log('Error DB en lab By DeleteIMG Users ')
       throw new Error(e)
     }
   }
