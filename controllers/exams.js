@@ -6,13 +6,17 @@ export class ExamController {
     this.examModel = examModel
   }
 
-  getAll = async (req, res) => {
-    const { _category } = req.query
-    // console.log(_category)
+  getAll = async (req, res, next) => {
+    try {
+      const { _category } = req.query
+      // console.log(_category)
 
-    const exams = await this.examModel.getAll({ _category })
-    if (exams.length === 0 || exams.length == null || exams.length === undefined) return res.status(201).json({ msj: 'Empty  exams' })
-    res.json(exams)
+      const exams = await this.examModel.getAll({ _category })
+      if (exams.length === 0 || exams.length == null || exams.length === undefined) return res.status(201).json({ msj: 'Empty  exams' })
+      res.json(exams)
+    } catch (error) {
+      next(error)
+    }
   }
 
   getById = async (req, res, next) => {

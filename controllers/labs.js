@@ -224,19 +224,14 @@ export class LabController {
     const form = new multiparty.Form({ uploadDir: './' + IMAGEN_UPLOAD_DIR })
     try {
       form.parse(req, async (err, fields, files) => {
-        // console.log(files)
         if (err) return res.status(500).json({ error: 'Error msj formdata' })
-        console.log(fields)
-        const mombreRandomImagenCompleta = nombreFinalImagenByFile(files) // Nombre Ramdom de la imagen  . Transformando los datos que vienen de files , quitando los [] que vienen en cada valor, para luego validarlos.
 
-        console.log('Nombre random' + mombreRandomImagenCompleta)
-        /* Condicional para actulizar o NO */
-        // let ifUpdate = true
-        const rutaURLTotal = process.env.WEB_URL + IMAGEN_UPLOAD_DIR + mombreRandomImagenCompleta
-
+        // Validando si viene imagen
         const objectImagen = JSON.stringify(files, null, 2)
-        const mombreRealImagenCompleta = JSON.parse(objectImagen).logo[0].originalFilename // Obeteniendo Nombre Real de la imagen para ver si se subio o no
-        console.log('Nombre Real' + mombreRealImagenCompleta)
+        const mombreRealImagenCompleta = JSON.parse(objectImagen).logo[0].originalFilename // Obteniendo Nombre Real de la imagen para ver si se subio
+        console.log('Nombre Real Imegen Completa' + mombreRealImagenCompleta)
+
+        const mombreRandomImagenCompleta = nombreFinalImagenByFile(files) // Nombre Ramdom de la imagen  . Transformando los datos que vienen de files , quitando los [] que vienen en cada valor, para luego validarlos.
 
         if (mombreRealImagenCompleta === '') {
           console.log('vacio el Nombre Real')
@@ -245,6 +240,8 @@ export class LabController {
           // rutaURLTotal = ''
           return res.status(404).json({ error: 'No hay archivo que actualizar . Ingrese una imagen!' })
         }
+
+        const rutaURLTotal = process.env.WEB_URL + IMAGEN_UPLOAD_DIR + mombreRandomImagenCompleta
 
         const updatedclient = await this.labModel.updateImg({ id, input: rutaURLTotal })
 

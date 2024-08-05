@@ -145,6 +145,23 @@
     }
   </pre>
                 </li>
+                <li>     
+                  <h2 class="negrita"> <span class="listo">PATH : </span>Actualizar IMAGEN logo del  Laboratorio por ID</h2> 
+                  <p><span class="negrita">EndPoint : </span>http://localhost:1234/labs/updateimg/:id</p>
+                  <button id="LabPathID" class="btn">Copiar</button>
+                  <p><span class="negrita">Headers : </span> multipart/form-data;</p>
+  <pre style="box-sizing: border-box;overflow-x: scroll;">
+    {
+      "logo": "04143859751129"
+    }
+  </pre>
+                </li>
+                <li>
+                  <h2 class="negrita"><span class="listo">DELETE IMG (Logo): </span>Eliminar IMAGEN logo del por ID lab</h2> 
+                  <p><span class="negrita">EndPoint : </span>http://localhost:1234/labs/deleteimg/:id</p>
+                  <button id="LabDeleteID" class="btn">Copiar</button>
+                </li>
+                
                 <li>
                   <h2 class="negrita"><span class="listo">DELETE : </span>Eliminar Lab por ID </h2> 
                   <p><span class="negrita">EndPoint : </span>http://localhost:1234/labs/:id</p>
@@ -672,7 +689,7 @@
 
       <!--------------------- API Ordenes+Examenes -------------------------->
       
-      <details>
+<!--       <details>
         <summary style="margin: 1rem; font-size: x-large; font-weight: 600;">
             API Ordenes+Examenes <span class="proceso">&#x2615;&#xfe0e;</span>
         </summary>
@@ -729,7 +746,7 @@
   </li>
         </ul>
       </details>
-
+ -->
       <!---------------------------- API Invoices ---------------------------------->
           
       <details>
@@ -908,6 +925,7 @@ document.getElementById('LabGetID').addEventListener('click', copiarAlPortapapel
 document.getElementById('LabPost').addEventListener('click', copiarAlPortapapeles);
 document.getElementById('LabPathID').addEventListener('click', copiarAlPortapapeles);
 document.getElementById('LabDeleteID').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('LabDeleteIMGID').addEventListener('click', copiarAlPortapapeles);
 
 document.getElementById('UserGet').addEventListener('click', copiarAlPortapapeles);
 document.getElementById('UserGetID').addEventListener('click', copiarAlPortapapeles);
@@ -954,11 +972,11 @@ document.getElementById('ResultPost').addEventListener('click', copiarAlPortapap
 document.getElementById('ResultPathID').addEventListener('click', copiarAlPortapapeles);
 document.getElementById('ResultDeleteID').addEventListener('click', copiarAlPortapapeles);
 
-document.getElementById('OEGet').addEventListener('click', copiarAlPortapapeles);
+/* document.getElementById('OEGet').addEventListener('click', copiarAlPortapapeles);
 document.getElementById('OEGetID').addEventListener('click', copiarAlPortapapeles);
 document.getElementById('OEPost').addEventListener('click', copiarAlPortapapeles);
 document.getElementById('OEPathID').addEventListener('click', copiarAlPortapapeles);
-document.getElementById('OEDeleteID').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('OEDeleteID').addEventListener('click', copiarAlPortapapeles); */
 
 
 document.getElementById('InvoiceGet').addEventListener('click', copiarAlPortapapeles);
