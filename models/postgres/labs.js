@@ -88,28 +88,28 @@ export class LabModel {
   static async updateImg ({ id, input }) {
     try {
       // eslint-disable-next-line camelcase
-      const logo = input
+      const abatar = input
 
-      console.log('entro en model udate img: ' + logo + id)
+      console.log('entro en model udate img: ' + abatar + id)
 
-      const resultUrlDelete = await conn.query('SELECT lab_logo FROM lab WHERE lab_id = $1;', [id])
+      const resultUrlDelete = await conn.query('SELECT users_abatar FROM users WHERE users_id = $1;', [id])
 
       if (resultUrlDelete.row === 0) return resultUrlDelete.row
 
-      const abatarUrlDelete = resultUrlDelete.rows[0].lab_logo
+      const abatarUrlDelete = resultUrlDelete.rows[0].users_abatar
       const nombreImgDelete = nombreFinalImagenByUrl(abatarUrlDelete)
       console.log(abatarUrlDelete)
       console.log(nombreImgDelete)
 
-      if (nombreImgDelete !== 'noimage.jpg') {
+      if (nombreImgDelete !== 'default.jpg') {
         console.log('BOORANDO ARCHIVO')
         await borrarImagen(nombreImgDelete)
       }
 
-      const result = await conn.query('UPDATE lab SET  lab_logo=$1 WHERE lab_id=$2 RETURNING *;', [logo, id])
+      const result = await conn.query('UPDATE users SET  users_abatar=$1 WHERE users_id=$2 RETURNING *;', [abatar, id])
       return result.rows
     } catch (e) {
-      console.log('Error DB en lab IMG update')
+      console.log('Error DB en Users IMG update')
       throw new Error(e)
     }
   }

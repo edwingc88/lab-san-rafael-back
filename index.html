@@ -66,6 +66,20 @@
       cursor: pointer;
     }
 
+
+    section{
+      display: flex;
+      flex-wrap: nowrap; 
+    }
+
+    @media (width < 550px){
+      section{
+        display: flex;
+        flex-wrap: wrap; 
+      }
+    }
+
+
     /*
      LISTO :  ;
       PROCESO : &#x2615;&#xfe0e
@@ -76,7 +90,7 @@
 </head>
 <body>
   <h1 style="padding: .5rem;align-items: center; margin: 0 auto;text-align: center;"> API Local - Laboratorio Clinico <span style="color: green;">"San Rafael"</span></h1>
-  <section style="display: flex; align-content: center; padding: .5rem; gap: 2rem;border-top: 2px solid rgb(32, 32, 32);min-width: 1300px; margin: 0 auto; width: 1300px;">
+  <section style="align-content: center; padding: .5rem; gap: 2rem;border-top: 2px solid rgb(32, 32, 32);min-width: 1300px; margin: 0 auto; width: 1300px;">
     <!-- Lab, User , Patient , Role,  Auth, Imagenes -->
     <article id="colum1" style="width: 650px;min-width:650px;border-right: 2px solid  rgb(11, 11, 11); overflow-x: hidden;">
 
@@ -148,7 +162,7 @@
                 <li>     
                   <h2 class="negrita"> <span class="listo">PATH : </span>Actualizar IMAGEN logo del  Laboratorio por ID</h2> 
                   <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/labs/updateimg/:id</p>
-                  <button id="LabPathID" class="btn">Copiar</button>
+                  <button id="LabPathIDimg" class="btn">Copiar</button>
                   <p><span class="negrita">Headers : </span> multipart/form-data;</p>
   <pre style="box-sizing: border-box;overflow-x: scroll;">
     {
@@ -165,7 +179,7 @@
                 <li>
                   <h2 class="negrita"><span class="listo">DELETE : </span>Eliminar Lab por ID </h2> 
                   <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/labs/:id</p>
-                  <button id="LabDeleteID" class="btn">Copiar</button>
+                  <button id="LabDeleteIDimg" class="btn">Copiar</button>
                 </li>
           </ul>
       </details>   
@@ -224,32 +238,44 @@
   </pre>
               </li>
               <li>
-                <h2 class="negrita"><span class="listo">PATH : </span>Editar Imagen User</h2> 
+                <h2 class="negrita"><span class="listo">PATH : </span>Editar User</h2> 
                 <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/users</p>
                 <button id="UserPathID" class="btn">Copiar</button>
                 <p><span class="negrita">Headers : </span> Content-Type: multipart/form-data;</p>
                 <p><span class="negrita">Bearer Token:  </span> "UseToken"</p>
 <pre style="box-sizing: border-box;overflow-x: scroll;">
-                  {
-                  "dni":"v-1111",
-                  "email":"J-12345678",
-                  "username":"pedrito",
-                  "password":"11111",
-                  "firstname":"65JG+H7V, Ciudad Guayana 8050, Bolívar. Urb Gran Sabana",
-                  "lastname":"0286-9530505",
-                  "gender":"lab@gmail.com",
-                  "address":"imagen.jpg",
-                  "firstphone":"objetivos de lab",
-                  "secondphone":"misiones de lab",
-                  "birthdate":"vision de lab",
-                  "bloodtyping":"vision de lab",
-                  "type_relationship": No Aplica,
-                  "name_relationship": No Aplica,
-                  "type_relationship":"vision de lab",
-                  "name_relationship":"vision de lab",
-                  "created":"vision de lab",
-                  "id_role":"vision de lab",
-                  }
+    {
+    "dni":"v-1111",
+    "email":"J-12345678",
+    "username":"pedrito",
+    "password":"11111",
+    "firstname":"65JG+H7V, Ciudad Guayana 8050, Bolívar. Urb Gran Sabana",
+    "lastname":"0286-9530505",
+    "gender":"lab@gmail.com",
+    "address":"imagen.jpg",
+    "firstphone":"objetivos de lab",
+    "secondphone":"misiones de lab",
+    "birthdate":"vision de lab",
+    "bloodtyping":"vision de lab",
+    "type_relationship": No Aplica,
+    "name_relationship": No Aplica,
+    "type_relationship":"vision de lab",
+    "name_relationship":"vision de lab",
+    "created":"vision de lab",
+    "id_role":"vision de lab",
+    }
+</pre>
+              </li>
+              <li>
+                <h2 class="negrita"><span class="listo">PATH : </span>Editar Imagen  por ID de User</h2> 
+                <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/users/updateimg/:id</p>
+                <button id="UserPathIDimg" class="btn">Copiar</button>
+                <p><span class="negrita">Headers : </span> Content-Type: multipart/form-data;</p>
+                <p><span class="negrita">Bearer Token:  </span> "UseToken"</p>
+<pre style="box-sizing: border-box;overflow-x: scroll;">
+  {
+    "abatar": "https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg",
+  }
 </pre>
               </li>
               <li>
@@ -258,6 +284,12 @@
                   <button id="UserDeleteID" class="btn">Copiar</button>
                   <p><span class="negrita">Bearer Token:  </span> "UseToken"</p>
               </li>
+              <li>
+                <h2 class="negrita"><span class="listo">DELETE : </span>Eliminar Imagen ID de User </h2> 
+                <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/users/deleteimg/:id</p>
+                <button id="UserDeleteIDimg" class="btn">Copiar</button>
+                <p><span class="negrita">Bearer Token:  </span> "UseToken"</p>
+            </li>
             </ul>
       </details>
 
@@ -924,14 +956,17 @@ document.getElementById('LabGet').addEventListener('click', copiarAlPortapapeles
 document.getElementById('LabGetID').addEventListener('click', copiarAlPortapapeles);
 document.getElementById('LabPost').addEventListener('click', copiarAlPortapapeles);
 document.getElementById('LabPathID').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('LabPathIDimg').addEventListener('click', copiarAlPortapapeles);
 document.getElementById('LabDeleteID').addEventListener('click', copiarAlPortapapeles);
-document.getElementById('LabDeleteIMGID').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('LabDeleteIDimg').addEventListener('click', copiarAlPortapapeles);
 
 document.getElementById('UserGet').addEventListener('click', copiarAlPortapapeles);
 document.getElementById('UserGetID').addEventListener('click', copiarAlPortapapeles);
 document.getElementById('UserPost').addEventListener('click', copiarAlPortapapeles);
 document.getElementById('UserPathID').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('UserPathIDimg').addEventListener('click', copiarAlPortapapeles);
 document.getElementById('UserDeleteID').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('UserDeleteIDimg').addEventListener('click', copiarAlPortapapeles);
 
 document.getElementById('RoleGet').addEventListener('click', copiarAlPortapapeles);
 document.getElementById('RoleGetID').addEventListener('click', copiarAlPortapapeles);

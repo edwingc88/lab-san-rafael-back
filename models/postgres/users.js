@@ -90,8 +90,6 @@ export class UserModel {
 
       const abatarUrlDelete = resultUrlDelete.rows[0].users_abatar
       const nombreImgDelete = nombreFinalImagenByUrl(abatarUrlDelete)
-      console.log(abatarUrlDelete)
-      console.log(nombreImgDelete)
 
       if (nombreImgDelete !== 'default.jpg') {
         console.log('BOORANDO ARCHIVO')
