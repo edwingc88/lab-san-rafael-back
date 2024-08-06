@@ -8,10 +8,9 @@ export class ExamController {
 
   getAll = async (req, res, next) => {
     try {
-      const { _category } = req.query
-      // console.log(_category)
+      const { category } = req.query
 
-      const exams = await this.examModel.getAll({ _category })
+      const exams = await this.examModel.getAll({ category })
       if (exams.length === 0 || exams.length == null || exams.length === undefined) return res.status(201).json({ msj: 'Empty  exams' })
       res.json(exams)
     } catch (error) {

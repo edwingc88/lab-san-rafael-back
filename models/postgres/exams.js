@@ -1,16 +1,15 @@
 import conn from './db.js'
 export class ExamModel {
-  static async getAll ({ _category }) {
+  static async getAll ({ category }) {
+    console.log('category', category)
     try {
-      if (_category) {
-        const loweCaseCategoryID = _category.toLowerCase()
-        const res = await conn.query('SELECT * FROM exam JOIN exam_category ON exam.exam_id = exam_category.ec_id_exam  WHERE exam_category.ec_id_category=$1;', [loweCaseCategoryID])
+      if (category) {
+        const loweCaseCategoryID = category.toLowerCase()
+        const res = await conn.query('SELECT * FROM exam JOIN category ON exam.exam_id_category= category.category_id  WHERE category.category_id=$1;', [loweCaseCategoryID])
         return res.rows
       }
       const result = await conn.query('SELECT * FROM exam;')
-      // const result = await conn.query('SELECT * FROM exam;')
       console.log(result.rows)
-      console.log('entro a Exam Model')
       return result.rows
     } catch (e) {
       return null

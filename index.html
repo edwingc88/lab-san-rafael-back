@@ -94,7 +94,7 @@
     <!-- Lab, User , Patient , Role,  Auth, Imagenes -->
     <article id="colum1" style="width: 650px;min-width:650px;border-right: 2px solid  rgb(11, 11, 11); overflow-x: hidden;">
 
-      <!---------------------------------- API Lab------------------------------------->
+      <!--------------------------------- API Lab------------------------------------>
         
       <details >
           <summary style="margin: 1rem; font-size: x-large; font-weight: 600;">
@@ -184,7 +184,7 @@
           </ul>
       </details>   
 
-      <!---------------------------------- API User ------------------------------------>
+      <!--------------------------------- API User ----------------------------------->
       
       <details  >
             <summary style="margin: 1rem; font-size: x-large; font-weight: 600;">
@@ -198,6 +198,16 @@
                 </h2>
                 <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/users</p>
                 <button id="UserGet" class="btn">Copiar</button>
+                <p><span class="negrita">Headers : </span> Content-Type: multipart/form-data;</p>
+                <p><span class="negrita">Bearer Token:  </span> "UseToken"</p>
+              </li>
+              <li>
+                <h2 class="negrita">
+                  <span class="listo">GET :</span>
+                  Consultar Usuarios por ID de Role
+                </h2>
+                <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/users?role=1</p>
+                <button id="LabGetRoleID" class="btn">Copiar</button>
                 <p><span class="negrita">Headers : </span> Content-Type: multipart/form-data;</p>
                 <p><span class="negrita">Bearer Token:  </span> "UseToken"</p>
               </li>
@@ -445,7 +455,7 @@
             <li> 
               <h2 class="negrita">
                   <span class="listo">GET :</span>
-                  Devuelve todos los Examenes con sus categorias
+                  Devuelve todos los Examenes 
                 </h2>
                 <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/exams</p>
                 <button id="ExamGet" class="btn">Copiar</button>
@@ -455,7 +465,17 @@
             <li> 
               <h2 class="negrita">
                   <span class="listo">GET :</span>
-                  Devuelve todos los Examenescon sus categorias
+                  Devuelve todos los Examenes 
+                </h2>
+                <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/exams?category=1</p>
+                <button id="ExamGetCategoryID" class="btn">Copiar</button>
+                <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
+                <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+            </li>
+            <li> 
+              <h2 class="negrita">
+                  <span class="listo">GET :</span>
+                  Devuelve Examen por su ID 
                 </h2>
                 <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/exams/:id</p>
                 <button id="ExamGetID" class="btn">Copiar</button>
@@ -954,6 +974,7 @@
 
 document.getElementById('LabGet').addEventListener('click', copiarAlPortapapeles);
 document.getElementById('LabGetID').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('LabGetRoleID').addEventListener('click', copiarAlPortapapeles);
 document.getElementById('LabPost').addEventListener('click', copiarAlPortapapeles);
 document.getElementById('LabPathID').addEventListener('click', copiarAlPortapapeles);
 document.getElementById('LabPathIDimg').addEventListener('click', copiarAlPortapapeles);
@@ -990,6 +1011,7 @@ document.getElementById('ExamPathID').addEventListener('click', copiarAlPortapap
 document.getElementById('ExamDeleteID').addEventListener('click', copiarAlPortapapeles);
 
 document.getElementById('CategoryGet').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('ExamGetCategoryID').addEventListener('click', copiarAlPortapapeles);
 document.getElementById('CategoryGetID').addEventListener('click', copiarAlPortapapeles);
 document.getElementById('CategoryPost').addEventListener('click', copiarAlPortapapeles);
 document.getElementById('CategoryPathID').addEventListener('click', copiarAlPortapapeles);

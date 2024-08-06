@@ -6,15 +6,16 @@ import { borrarImagen } from '../../middlewares/borrar_imagen.js'
 export class UserModel {
   static async getAll (role) {
     try {
+      console.log('entro el role en Model ', role)
       if (role) {
-        console.log(role)
+        /*         console.log(role)
         const loweCaseRole = role.toLowerCase()
         const result = await conn.query('SELECT role_id FROM role WHERE LOWER(role_name) = $1;', [loweCaseRole])
         const roles = result.rows
         if (roles.length === 0) return roles
-        const idRole = roles[0].role_id
-        console.log(idRole)
-        const resultUsersByRole = await conn.query('SELECT * FROM users INNER JOIN role ON users.users_id_role = role.role_id WHERE role.role_id = $1;', [idRole])
+        const idRole = roles[0].role_id */
+
+        const resultUsersByRole = await conn.query('SELECT * FROM users INNER JOIN role ON users.users_id_role = role.role_id WHERE role.role_id = $1;', [role])
         return resultUsersByRole.rows
       }
       const res = await conn.query('SELECT * FROM users;')

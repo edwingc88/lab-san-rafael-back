@@ -16,6 +16,7 @@ export class UserController {
   getAll = async (req, res, next) => {
     try {
       const { role } = req.query
+      console.log('Entro en controller el Role ', role)
       const users = await this.userModel.getAll(role)
       if (users.length === 0) return res.status(404).json({ error: 'Not found user' })
       return res.status(201).json(users)
