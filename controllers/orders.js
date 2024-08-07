@@ -7,10 +7,9 @@ export class OrderController {
 
   getAll = async (req, res, next) => {
     try {
-    // const { _category } = req.query
-    // console.log(_category)
-      console.log('hola controller')
-      const orders = await this.orderModel.getAll()
+      const { user } = req.query
+      console.log('hola controller', user)
+      const orders = await this.orderModel.getAll(user)
       if (!orders) return res.status(404).json({ error: 'Not found order' })
       /*     if (orders.length === 0) return res.status(404).json({ msj: 'Empty  orders' }) */
       res.json(orders)

@@ -1,12 +1,15 @@
 import conn from './db.js'
 export class OrderModel {
-  static async getAll () {
+  static async getAll (user) {
     try {
-      /* if (_category) {
-        const loweCaseCategoryID = _category.toLowerCase()
-        const res = await conn.query('SELECT * FROM orders WHERE orders_id_category = $1;', [loweCaseCategoryID])
+      console.log('Entro en Model ', user)
+      if (user) {
+        const loweCaseUserID = user.toLowerCase()
+        // const res = await conn.query('SELECT * FROM orders WHERE orders_id_users = $1;', [loweCaseUserID])
+        const res = await conn.query('SELECT * FROM orders JOIN users ON users.users_id = orders.orders_id WHERE users.users_id=$1;', [loweCaseUserID])
+
         return res.rows
-      } */
+      }
       // const result = await conn.query('SELECT * FROM orders INNER JOIN exam ON exam.exam_id = orders.orders_id_exam ;')
       const result = await conn.query('SELECT * FROM orders;')
       console.log(result.rows)
