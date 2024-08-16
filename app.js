@@ -3,6 +3,7 @@ import cors from 'cors'
 import { notFound, errorHandler } from './middlewares/errors.js'
 
 import { createExamRouter } from './router/exams.js'
+import { createParameterRouter } from './router/parameters.js'
 import { createUserRouter } from './router/users.js'
 import { createRoleRouter } from './router/roles.js'
 import { createLabRouter } from './router/labs.js'
@@ -30,7 +31,7 @@ const __dirname = dirname(__filename)
 
 const pkg = JSON.parse(readFileSync('./package.json'))
 
-export const createApp = ({ stateModel, userModel, roleModel, labModel, invoiceModel, examModel, examOrderResultModel, orderModel, resultModel, categoryModel, authModel }) => {
+export const createApp = ({ stateModel, userModel, roleModel, labModel, invoiceModel, examModel, examOrderResultModel, parameterModel, orderModel, resultModel, categoryModel, authModel }) => {
   const app = express()
   app.set('pkg', pkg)
   app.use(json())
@@ -73,7 +74,8 @@ export const createApp = ({ stateModel, userModel, roleModel, labModel, invoiceM
   app.use('/roles', createRoleRouter({ roleModel }))
   app.use('/auth', createAuthRouter({ authModel }))
   app.use('/exams', createExamRouter({ examModel }))
-  app.use('/exam_order_results', createExamOrderResultRouter({ examOrderResultModel }))
+  app.use('/exams_orders', createExamOrderResultRouter({ examOrderResultModel }))
+  app.use('/parameters', createParameterRouter({ parameterModel }))
   app.use('/invoices', createInvoiceRouter({ invoiceModel }))
   app.use('/orders', createOrderRouter({ orderModel }))
   app.use('/results', createResultRouter({ resultModel }))

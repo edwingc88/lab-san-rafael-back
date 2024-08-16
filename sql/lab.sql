@@ -1,4 +1,4 @@
--- creacion de databasecoles
+ -- creacion de databasecoles
 -- DROP DATABASE IF EXISTS laboratory;
 -- CREATE DATABASE laboratory;
 -- USE laboratory;
@@ -120,37 +120,55 @@ CREATE TABLE IF NOT EXISTS category (
 );
 
 INSERT INTO category (category_id,category_name,category_price) VALUES
-(1,'HEMATOLOGÍA',20.0),
-(2,'BIOQUÍMICA SANGUÍNEA',null),
-(3,'ORINA',10.0),
-(4,'HECES',8.0),
-(5,'INMUNOLOGIA',5.0);
+(1,'HEMATOLOGÍA y BIOQUIMICA SANGUINEA',20.0),
+(2,'UROLOGIA - NEFROLOGIA',null),
+(3,'HECES',10.0),
+(4,'INMUNO - DIAGNOSTICO',8.0);
 
 CREATE TABLE IF NOT EXISTS exam (
    exam_id serial PRIMARY KEY ,
    exam_name VARCHAR(255) NOT NULL,
    exam_description VARCHAR(255),
-   exam_indicator VARCHAR(255),
-   exam_unit VARCHAR(255),
    exam_price FLOAT,
-   exam_id_category INT ,
+   exam_id_category INT,
    FOREIGN KEY (exam_id_category) REFERENCES category(category_id) ON DELETE SET NULL
 );
 
-INSERT INTO exam (exam_id,exam_name,exam_description,exam_indicator,exam_unit,exam_price,exam_id_category) VALUES
-(1,'Lymph#','examen de hermatogolia','10-15','hz',4.0,1),
-(2,'Mid#','examen de hermatogolia','hz','10-15',4.0,1),
-(3,'Gran#','examen de hermatogolia','hz','10-15',4.0,1),
-(4,'Lymph%','examen de hermatogolia','hz','10-15',4.0,1),
-(5,'Urea','examen de Bioquimica','hz','10-15',4.0,2),
-(6,'glicemia','examen de Bioquimica','hz','10-15',4.0,2),
-(7,'creatinina','examen de Bioquimica','hz','10-15',4.0,2),
-(8,'trigliceridos','examen de Bioquimica','hz','10-15',4.0,2),
-(9,'Orina color','examen de Orina','hz','10-15',4.0,3),
-(10,'Orina aspecto','examen de Orina','hz','10-15',4.0,3),
-(11,'Heces color','examen de Heces','hz','10-15',4.0,4),
-(12,'Heces aspecto','examen de Heces','hz','10-15',4.0,4),
-(13,'Prueba de embarazo','examen de INMUNOLOGIA','hz','10-15',4.0,5);
+INSERT INTO exam (exam_id,exam_name,exam_description,exam_price,exam_id_category) VALUES
+(1,'Hematologia','examen de hermatogolia',4.0,1),
+(2,'Urea','examen de Bioquimica',4.0,1),
+(3,'glicemia','examen de Bioquimica',4.0,1),
+(4,'creatinina','examen de Bioquimica',4.0,1),
+(5,'trigliceridos','examen de Bioquimica',4.0,1),
+(6,'Orina','examen de Orina',4.0,2),
+(7,'Heces','examen de Heces',4.0,3),
+(8,'Prueba de embarazo','examen de INMUNOLOGIA',4.0,4);
+
+CREATE TABLE IF NOT EXISTS parameter (
+   parameter_id serial PRIMARY KEY ,
+   parameter_name VARCHAR(255) NOT NULL,
+   parameter_description VARCHAR(255),
+   parameter_value VARCHAR(255),
+   parameter_unit VARCHAR(255),
+   parameter_price FLOAT,
+   parameter_id_exam INT,
+   FOREIGN KEY (parameter_id_exam) REFERENCES exam(exam_id) ON DELETE SET NULL
+);
+
+INSERT INTO parameter (parameter_id,parameter_name,parameter_value,parameter_unit,parameter_price,parameter_id_exam) VALUES
+(1,'Lymph#','10-15','hz',4.0,1),
+(2,'Mid#','hz','10-15',4.0,1),
+(3,'Gran#','hz','10-15',4.0,1),
+(4,'Lymph%','hz','10-15',4.0,1),
+(5,'Urea','hz','10-15',4.0,2),
+(6,'glicemia','hz','10-15',4.0,3),
+(7,'creatinina','hz','10-15',4.0,4),
+(8,'trigliceridos','hz','10-15',4.0,5),
+(9,'Orina color','hz','10-15',4.0,6),
+(10,'Orina aspecto','hz','10-15',4.0,6),
+(11,'Heces color','hz','10-15',4.0,7),
+(12,'Heces aspecto','hz','10-15',4.0,7),
+(13,'Prueba de embarazo PCR','hz','10-15',4.0,8);
 
 
 CREATE TABLE IF NOT EXISTS orders (
@@ -170,7 +188,7 @@ INSERT INTO orders (orders_id, orders_number, orders_date, orders_observation, o
 (3, 3, '2023-05-03', 'ninguna', 3, 1);
 
 
-/* CREATE TABLE IF NOT EXISTS exam_order(
+CREATE TABLE IF NOT EXISTS exam_order(
    exam_order_id serial PRIMARY KEY ,
    exam_order_id_exam INT NOT NULL,
    exam_order_id_orders INT NOT NULL,
@@ -184,42 +202,36 @@ INSERT INTO exam_order (exam_order_id, exam_order_id_exam, exam_order_id_orders)
 (3, 3, 1),
 (4, 4, 1),
 (5, 5, 1),
-(6, 6, 1),
-(7, 7, 1),
-(8, 8, 1),
-(9, 9, 1),
-(10, 10, 1),
-(11, 11, 2),
-(12, 12, 2),
-(13, 13, 2); */
+(6, 6, 2),
+(7, 7, 2),
+(8, 8, 3);
 
 
 CREATE TABLE IF NOT EXISTS result (
   result_id serial PRIMARY KEY ,
-  result_observation VARCHAR(255),
   result_value FLOAT,
-  result_id_exam INT NOT NULL,
+  result_id_parameter INT NOT NULL,
   result_id_order INT NOT NULL,
-  FOREIGN KEY (result_id_exam) REFERENCES exam(exam_id) ON DELETE CASCADE,
-  FOREIGN KEY (result_id_order) REFERENCES orders(orders_id) ON DELETE CASCADE
+  FOREIGN KEY (result_id_parameter) REFERENCES parameter(parameter_id) ON DELETE CASCADE,
+  FOREIGN KEY (result_id_order) REFERENCES orders(orders_id) ON DELETE CASCADE,
+  CONSTRAINT u_result_parameter_order UNIQUE (result_id_parameter, result_id_order)
 );
 
 
-INSERT INTO result (result_id, result_observation, result_value, result_id_exam, result_id_order) VALUES
-(1, 'Lymph#', 10.0,1, 1),
-(2, 'Mid#', 10.0,1, 1),
-(3, 'Gran#', 10.0,1, 1),
-(4, 'Lymph%', 10.0,1, 1),
-(5, 'Urea', 10.0, 5, 1),
-(6, 'glicemia', 10.0, 5, 1),
-(7, 'creatinina', 10.0, 5, 1),
-(8, 'trigliceridos', 10.0, 5, 1),
-(9, 'Orina color', 10.0, 9, 1),
-(10, 'Orina aspecto', 10.0, 9, 1),
-(11, 'Heces color', 10.0, 11, 2),
-(12, 'Heces aspecto', 10.0, 11, 2),
-(13, 'Prueba de embarazo', 10.0, 13, 2);
-
+INSERT INTO result (result_id, result_value, result_id_parameter, result_id_order) VALUES
+(1, 10.0, 1, 1),
+(2, 20.0, 2, 1),
+(3, 30.0, 3, 1),
+(4, 40.0, 4, 1),
+(5, 50.0, 5, 1),
+(6, 60.0, 6, 1),
+(7, 70.0, 7, 1),
+(8, 80.0, 8, 1),
+(9, 90.0, 9, 2),
+(10, 100.0, 10, 2),
+(11, 110.0, 11, 2),
+(12, 120.0, 12, 2),
+(16, 160.0, 13, 3);
 
 
 CREATE TABLE IF NOT EXISTS invoice(
@@ -240,3 +252,5 @@ INSERT INTO invoice (invoice_id, invoice_total, invoice_method_payment, invoice_
  ALTER SEQUENCE exam_exam_id_seq RESTART WITH 14; 
  ALTER SEQUENCE orders_orders_id_seq RESTART WITH 4;
  ALTER SEQUENCE invoice_invoice_id_seq RESTART WITH 3;
+ 
+ 
