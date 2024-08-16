@@ -7,6 +7,7 @@
 DROP TABLE IF EXISTS role CASCADE;
 DROP TABLE IF EXISTS relationship CASCADE;
 DROP TABLE IF EXISTS person;
+DROP TABLE IF EXISTS parameter CASCADE;
 DROP TABLE IF EXISTS exam CASCADE;
 DROP TABLE IF EXISTS exam_category CASCADE;
 DROP TABLE IF EXISTS lab;
@@ -150,25 +151,24 @@ CREATE TABLE IF NOT EXISTS parameter (
    parameter_description VARCHAR(255),
    parameter_value VARCHAR(255),
    parameter_unit VARCHAR(255),
-   parameter_price FLOAT,
    parameter_id_exam INT,
    FOREIGN KEY (parameter_id_exam) REFERENCES exam(exam_id) ON DELETE SET NULL
 );
 
-INSERT INTO parameter (parameter_id,parameter_name,parameter_value,parameter_unit,parameter_price,parameter_id_exam) VALUES
-(1,'Lymph#','10-15','hz',4.0,1),
-(2,'Mid#','hz','10-15',4.0,1),
-(3,'Gran#','hz','10-15',4.0,1),
-(4,'Lymph%','hz','10-15',4.0,1),
-(5,'Urea','hz','10-15',4.0,2),
-(6,'glicemia','hz','10-15',4.0,3),
-(7,'creatinina','hz','10-15',4.0,4),
-(8,'trigliceridos','hz','10-15',4.0,5),
-(9,'Orina color','hz','10-15',4.0,6),
-(10,'Orina aspecto','hz','10-15',4.0,6),
-(11,'Heces color','hz','10-15',4.0,7),
-(12,'Heces aspecto','hz','10-15',4.0,7),
-(13,'Prueba de embarazo PCR','hz','10-15',4.0,8);
+INSERT INTO parameter (parameter_id,parameter_name,parameter_value,parameter_unit,parameter_id_exam) VALUES
+(1,'Lymph#','10-15','hz',1),
+(2,'Mid#','hz','10-15',1),
+(3,'Gran#','hz','10-15',1),
+(4,'Lymph%','hz','10-15',1),
+(5,'Urea','hz','10-15',2),
+(6,'glicemia','hz','10-15',3),
+(7,'creatinina','hz','10-15',4),
+(8,'trigliceridos','hz','10-15',5),
+(9,'Orina color','hz','10-15',6),
+(10,'Orina aspecto','hz','10-15',6),
+(11,'Heces color','hz','10-15',7),
+(12,'Heces aspecto','hz','10-15',7),
+(13,'Prueba de embarazo PCR','hz','10-15',8);
 
 
 CREATE TABLE IF NOT EXISTS orders (
@@ -249,7 +249,8 @@ INSERT INTO invoice (invoice_id, invoice_total, invoice_method_payment, invoice_
 (1, 100.0, 'efectivo', 'efectivo', true, '2023-05-01', 1),
 (2, 200.0, 'efectivo', 'efectivo', true, '2023-05-02', 2);
 
- ALTER SEQUENCE exam_exam_id_seq RESTART WITH 14; 
+ ALTER SEQUENCE exam_exam_id_seq RESTART WITH 9; 
+  ALTER SEQUENCE parameter_parameter_id_seq RESTART WITH 14;
  ALTER SEQUENCE orders_orders_id_seq RESTART WITH 4;
  ALTER SEQUENCE invoice_invoice_id_seq RESTART WITH 3;
  
