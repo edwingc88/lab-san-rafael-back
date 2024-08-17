@@ -130,7 +130,7 @@ CREATE TABLE IF NOT EXISTS exam (
    exam_id serial PRIMARY KEY ,
    exam_name VARCHAR(255) NOT NULL,
    exam_description VARCHAR(255),
-   exam_price FLOAT,
+   exam_price NUMERIC,
    exam_id_category INT,
    FOREIGN KEY (exam_id_category) REFERENCES category(category_id) ON DELETE SET NULL
 );
@@ -236,7 +236,7 @@ INSERT INTO result (result_id, result_value, result_id_parameter, result_id_orde
 
 CREATE TABLE IF NOT EXISTS invoice(
   invoice_id serial PRIMARY KEY,
-  invoice_total FLOAT,
+  invoice_total NUMERIC,
   invoice_method_payment VARCHAR(255),
   invoice_reference_payment VARCHAR(255) NULL,
   invoice_states_payment BOOLEAN,
@@ -250,7 +250,8 @@ INSERT INTO invoice (invoice_id, invoice_total, invoice_method_payment, invoice_
 (2, 200.0, 'efectivo', 'efectivo', true, '2023-05-02', 2);
 
  ALTER SEQUENCE exam_exam_id_seq RESTART WITH 9; 
-  ALTER SEQUENCE parameter_parameter_id_seq RESTART WITH 14;
+ ALTER SEQUENCE users_users_id_seq RESTART WITH 5;
+ ALTER SEQUENCE parameter_parameter_id_seq RESTART WITH 14;
  ALTER SEQUENCE orders_orders_id_seq RESTART WITH 4;
  ALTER SEQUENCE invoice_invoice_id_seq RESTART WITH 3;
  

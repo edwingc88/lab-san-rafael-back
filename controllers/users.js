@@ -39,9 +39,8 @@ export class UserController {
   create = async (req, res, next) => {
     // const result = validateUser(req.body)
     // console.log(result)
-
-    const form = new multiparty.Form({ uploadDir: './' + IMAGEN_UPLOAD_DIR })
     try {
+      const form = new multiparty.Form({ uploadDir: './' + IMAGEN_UPLOAD_DIR })
       form.parse(req, async (err, fields, files) => {
         if (err) return res.status(500).json({ error: 'Error msj formdata' })
 
