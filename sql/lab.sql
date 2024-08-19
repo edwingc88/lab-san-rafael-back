@@ -88,7 +88,7 @@ CREATE TABLE IF NOT EXISTS users (
     users_bloodtyping VARCHAR(255),
     users_type_relationship VARCHAR(255) NULL,
     users_name_relationship VARCHAR(255) NULL,
-    users_created DATE,
+    users_created DATE DEFAULT CURRENT_TIMESTAMP,
     users_abatar VARCHAR(255),
     users_id_role INT NULL,
     FOREIGN KEY (users_id_role) REFERENCES role(role_id) ON DELETE CASCADE
@@ -116,15 +116,14 @@ INSERT INTO states (states_name,states_description) VALUES
 
 CREATE TABLE IF NOT EXISTS category (
    category_id serial PRIMARY KEY,
-   category_name VARCHAR(255) NOT NULL UNIQUE,
-   category_price FLOAT
+   category_name VARCHAR(255) NOT NULL UNIQUE
 );
 
-INSERT INTO category (category_id,category_name,category_price) VALUES
-(1,'HEMATOLOGÍA y BIOQUIMICA SANGUINEA',20.0),
-(2,'UROLOGIA - NEFROLOGIA',null),
-(3,'HECES',10.0),
-(4,'INMUNO - DIAGNOSTICO',8.0);
+INSERT INTO category (category_id,category_name) VALUES
+(1,'HEMATOLOGÍA y BIOQUIMICA SANGUINEA'),
+(2,'UROLOGIA - NEFROLOGIA'),
+(3,'HECES'),
+(4,'INMUNO - DIAGNOSTICO');
 
 CREATE TABLE IF NOT EXISTS exam (
    exam_id serial PRIMARY KEY ,
@@ -179,7 +178,7 @@ CREATE TABLE IF NOT EXISTS orders (
   orders_id_users INT NOT NULL,  
   orders_id_states INT NULL,
   FOREIGN KEY (orders_id_users) REFERENCES users(users_id) ON DELETE CASCADE,
-  FOREIGN KEY (orders_id_states) REFERENCES states(states_id) 
+  FOREIGN KEY (orders_id_states) REFERENCES states(states_id)  ON DELETE SET NULL
 );
 
 INSERT INTO orders (orders_id, orders_number, orders_date, orders_observation, orders_id_users, orders_id_states) VALUES
@@ -239,7 +238,7 @@ CREATE TABLE IF NOT EXISTS invoice(
   invoice_total NUMERIC,
   invoice_method_payment VARCHAR(255),
   invoice_reference_payment VARCHAR(255) NULL,
-  invoice_states_payment BOOLEAN,
+  invoice_states_payment BOOLEAN CONSTRAINT invoice_states_payment_valido CHECK(invoice_states_payment IN ('true','false')) DEFAULT 'false',
   invoice_states_date DATE,
   invoice_id_orders INT NOT NULL,
   FOREIGN KEY (invoice_id_orders) REFERENCES orders(orders_id) ON DELETE CASCADE

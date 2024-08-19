@@ -12,26 +12,26 @@ export class CategoryModel {
 
   static async getById (id) {
     try {
-      const result = await conn.query('SELECT * FROM category WHERE id = $1;', [id])
-      const [clients] = result.rows
-
-      if (clients.length === 0) return null
-      return clients
+      const result = await conn.query('SELECT * FROM category WHERE category_id = $1;', [id])
+      /*       const [clients] = result.rows
+      if (clients.length === 0) return null */
+      return result.rows
     } catch (e) {
       return null
     }
   }
 
   static async create ({ input }) {
-    // eslint-disable-next-line camelcase
-    const { id, name } = input
-
     try {
       // eslint-disable-next-line camelcase
-      const resultID = await conn.query('INSERT INTO category( id,name ) VALUES ($1, $2 ) RETURNING *;', [id, name])
+      const { name } = input
+      console.log(name)
+
+      // eslint-disable-next-line camelcase
+      const resultID = await conn.query('INSERT INTO category(category_name) VALUES ($1) RETURNING *;', [name])
       return (resultID.rows)
     } catch (e) {
-      throw new Error('Errro creating client')
+      return e
     }
   }
 
