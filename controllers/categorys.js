@@ -70,15 +70,47 @@ export class CategoryController {
     }
   }
 
-  update = async (req, res) => {
-    const result = validatePartialCategory(req.body)
+  update = async (req, res, next) => {
+    /*     const result = validatePartialCategory(req.body)
     if (!result.success) {
       return res.status(400).json({ error: JSON.parse(result.error.message) })
     }
     const { id } = req.params
     const updatedcategory = await this.categoryModel.update({ id, input: result.data })
     if (!updatedcategory) return res.status(404).json({ error: 'Not found category' })
-    return res.json(updatedcategory)
+    return res.json(updatedcategory) */
+
+    try {
+      console.log('Iniciando update en controllers Category')
+      const { id } = req.params
+      const form = new multiparty.Form()
+      form.parse(req, async (err, fields) => {
+        if (err) return res.status(500).json({ error: 'Error msj formdata' })
+
+        let newvalue = {}
+
+        const claves = Object.keys(fields)
+
+        for (let i = 0; i < claves.length; i++) {
+          const clave = claves[i]
+          const valor = { [clave]: fields[clave][0] }
+          newvalue = { ...newvalue, ...valor }
+        }
+
+        const result = validatePartialCategory(newvalue)
+        if (!result.success) {
+          return res.status(400).json({ error: JSON.parse(result.error.message) })
+        }
+
+        const updatedCategory = await this.categoryModel.update({ id, input: result.data })
+
+        if (!updatedCategory) return res.status(404).json({ error: 'Not found Exam en Controllers' })
+
+        return res.status(201).json(updatedCategory)
+      })
+    } catch (error) {
+      next(error)
+    }
   }
 
   delete = async (req, res) => {

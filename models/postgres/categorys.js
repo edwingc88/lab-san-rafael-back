@@ -35,14 +35,19 @@ export class CategoryModel {
     }
   }
 
-  static async update ({ idupdate, input }) {
-    // eslint-disable-next-line camelcase
-    const { id, name } = input
+  static async update ({ id, input }) {
+    try {
+      // eslint-disable-next-line camelcase
+      const { name } = input
 
-    // eslint-disable-next-line camelcase
-    const result = await conn.query('UPDATE category SET id = $1, name = $2  WHERE id = $3 RETURNING *;', [id, name, idupdate])
-    console.log(result.rows)
-    return result.rows
+      // eslint-disable-next-line camelcase
+      const result = await conn.query('UPDATE category SET category_name = $1  WHERE category_id = $2 RETURNING *;', [name, id])
+      console.log(result.rows)
+      return result.rows
+    } catch (error) {
+      console.log(error)
+      return null
+    }
   }
 
   static async delete ({ id }) {
