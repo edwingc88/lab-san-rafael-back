@@ -8,7 +8,7 @@ export class ExamModel {
         const res = await conn.query('SELECT * FROM exam JOIN category ON exam.exam_id_category= category.category_id  WHERE category.category_id=$1;', [loweCaseCategoryID])
         return res.rows
       }
-      const result = await conn.query('SELECT * FROM exam;')
+      const result = await conn.query('SELECT * FROM exam JOIN category ON exam.exam_id_category= category.category_id ;')
       console.log(result.rows)
       return result.rows
     } catch (e) {

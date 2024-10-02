@@ -20,7 +20,7 @@ export class ExamOrderResultModel {
 
   static async getAll () {
     try {
-      const result = await conn.query('SELECT * FROM exam_order;')
+      const result = await conn.query('SELECT * FROM exam_order JOIN exam ON exam.exam_id = exam_order.exam_order_id_exam JOIN orders ON orders.orders_id = exam_order.exam_order_id JOIN users ON users.users_id = orders.orders_id_users  JOIN states ON states.states_id = orders.orders_id_states;')
       console.log(result.rows)
       console.log('entro a ExamOrderResult Model')
       return result.rows

@@ -213,7 +213,7 @@
               <li>
                 <h2 class="negrita">
                   <span class="verde">GET :</span>
-                  Consultar Usuarios por ID de Role
+                  Consultar usuarios por ID del Role
                 </h2>
                 <p><span class="negrita">EndPoint : </span>http://localhost:1234/users?role=1</p>
                 <button id="LabGetRoleID" class="btn">Copiar</button>
@@ -221,7 +221,7 @@
                 <p><span class="negrita">Bearer Token:  </span> "UseToken"</p>
               </li>
               <li>
-                <h2 class="negrita"><span class="verde">GET : </span>Consultar usuario por ID </h2> 
+                <h2 class="negrita"><span class="verde">GET : </span>Consultar usuario por ID del Usuario </h2> 
                 <p><span class="negrita">EndPoint : </span>http://localhost:1234/users/:id</p>
                 <button id="UserGetID" class="btn">Copiar</button>
                 <p><span class="negrita">Headers : </span> Content-Type: multipart/form-data;</p>
@@ -605,7 +605,7 @@
                 <span class="verde">GET :</span>
                 Devuelve todos los Examenescon sus categorias
               </h2>
-              <p><span class="negrita">EndPoint : </span>http://localhost:1234/exam_order_results</p>
+              <p><span class="negrita">EndPoint : </span>http://localhost:1234/exams_orders</p>
               <button id="OEGet" class="btn">Copiar</button>
               <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
               <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
@@ -615,7 +615,7 @@
               <span class="verde">GET :</span>
               Devuelve todos los Examenescon sus categorias
             </h2>
-            <p><span class="negrita">EndPoint : </span>http://localhost:1234/exam_order_results/:id</p>
+            <p><span class="negrita">EndPoint : </span>http://localhost:1234/exams_orders/:id</p>
             <button id="OEGetID" class="btn">Copiar</button>
             <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
             <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
@@ -625,7 +625,7 @@
             <span class="azul">POST :</span>
             Devuelve todos los Examenescon sus categorias
           </h2>
-          <p><span class="negrita">EndPoint : </span>http://localhost:1234/exam_order_results</p>
+          <p><span class="negrita">EndPoint : </span>http://localhost:1234/exams_orders</p>
           <button id="OEPost" class="btn">Copiar</button>
           <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
           <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
@@ -635,7 +635,7 @@
           <span class="amarillo">PATH :</span>
           Devuelve todos los Examenescon sus categorias
         </h2>
-        <p><span class="negrita">EndPoint : </span>http://localhost:1234/exam_order_results</p>
+        <p><span class="negrita">EndPoint : </span>http://localhost:1234/exams_orders</p>
         <button id="OEPathID" class="btn">Copiar</button>
         <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
         <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
@@ -645,7 +645,7 @@
         <span class="rojo">DELETE :</span>
         Devuelve todos los Examenescon sus categorias
       </h2>
-      <p><span class="negrita">EndPoint : </span>http://localhost:1234/exam_order_results</p>
+      <p><span class="negrita">EndPoint : </span>http://localhost:1234/exams_orders</p>
       <button id="OEDeleteID" class="btn">Copiar</button>
       <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
       <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
@@ -765,12 +765,22 @@
               <li> 
                 <h2 class="negrita">
                     <span class="verde">GET :</span>
-                    Devuelve Parametros por su ID 
+                    Devuelve parametro por su ID 
                   </h2>
                   <p><span class="negrita">EndPoint : </span>http://localhost:1234/parameters/:id</p>
                   <button id="ParameterGetID" class="btn">Copiar</button>
                   <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
                   <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+              </li>
+              <li>
+                <h2 class="negrita">
+                  <span class="verde">GET :</span>
+                  Consultar parametros por ID del Exam
+                </h2>
+                <p><span class="negrita">EndPoint : </span>http://localhost:1234/parameters?exam=:id</p>
+                <button id="ParameterGetIDExam" class="btn">Copiar</button>
+                <p><span class="negrita">Headers : </span> Content-Type: multipart/form-data;</p>
+                <p><span class="negrita">Bearer Token:  </span> "UseToken"</p>
               </li>
               <li> 
                 <h2 class="negrita">
@@ -1117,6 +1127,7 @@ document.getElementById('ExamDeleteID').addEventListener('click', copiarAlPortap
 
 document.getElementById('ParameterGet').addEventListener('click', copiarAlPortapapeles);
 document.getElementById('ParameterGetID').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('ParameterGetIDExam').addEventListener('click', copiarAlPortapapeles);
 document.getElementById('ParameterPost').addEventListener('click', copiarAlPortapapeles);
 document.getElementById('ParameterPathID').addEventListener('click', copiarAlPortapapeles);
 document.getElementById('ParameterDeleteID').addEventListener('click', copiarAlPortapapeles);
@@ -1141,11 +1152,11 @@ document.getElementById('ResultPost').addEventListener('click', copiarAlPortapap
 document.getElementById('ResultPathID').addEventListener('click', copiarAlPortapapeles);
 document.getElementById('ResultDeleteID').addEventListener('click', copiarAlPortapapeles);
 
-/* document.getElementById('OEGet').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('OEGet').addEventListener('click', copiarAlPortapapeles);
 document.getElementById('OEGetID').addEventListener('click', copiarAlPortapapeles);
 document.getElementById('OEPost').addEventListener('click', copiarAlPortapapeles);
 document.getElementById('OEPathID').addEventListener('click', copiarAlPortapapeles);
-document.getElementById('OEDeleteID').addEventListener('click', copiarAlPortapapeles); */
+document.getElementById('OEDeleteID').addEventListener('click', copiarAlPortapapeles);
 
 
 document.getElementById('InvoiceGet').addEventListener('click', copiarAlPortapapeles);

@@ -1,14 +1,14 @@
 import conn from './db.js'
 export class ParameterModel {
-  static async getAll ({ category }) {
-    console.log('category', category)
+  static async getAll ({ exam }) {
+    console.log('category', exam)
     try {
-      if (category) {
-        const loweCaseCategoryID = category.toLowerCase()
-        const res = await conn.query('SELECT * FROM parameter JOIN category ON parameter.parameter_id_category= category.category_id  WHERE category.category_id=$1;', [loweCaseCategoryID])
+      if (exam) {
+        /*         const loweCaseCategoryID = category.toLowerCase() */
+        const res = await conn.query('SELECT * FROM parameter JOIN exam ON parameter.parameter_id_exam= exam.exam_id WHERE exam.exam_id=$1;', [exam])
         return res.rows
       }
-      const result = await conn.query('SELECT * FROM parameter;')
+      const result = await conn.query('SELECT * FROM parameter JOIN exam ON parameter.parameter_id_exam= exam.exam_id;')
       console.log(result.rows)
       return result.rows
     } catch (e) {

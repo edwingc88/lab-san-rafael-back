@@ -18,7 +18,7 @@ export class UserModel {
         const resultUsersByRole = await conn.query('SELECT * FROM users INNER JOIN role ON users.users_id_role = role.role_id WHERE role.role_id = $1;', [role])
         return resultUsersByRole.rows
       }
-      const res = await conn.query('SELECT * FROM users;')
+      const res = await conn.query('SELECT * FROM users INNER JOIN role ON users.users_id_role = role.role_id;')
       return res.rows
     } catch (e) {
       console.log('Error DB en User ')
