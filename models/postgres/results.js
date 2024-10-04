@@ -8,7 +8,7 @@ export class ResultModel {
         return res.rows
       } */
       // const result = await conn.query('SELECT * FROM result INNER JOIN category ON result.result_id_category = category.category_id INNER JOIN sub_category ON category.category_id_sub_category = sub_category.sub_category_id;')
-      const result = await conn.query('SELECT * FROM result;')
+      const result = await conn.query('SELECT * FROM result')
       console.log(result.rows)
       console.log('entro a Result Model')
       return result.rows

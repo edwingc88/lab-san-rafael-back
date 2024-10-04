@@ -9,7 +9,7 @@ export class InvoiceModel {
         return res.rows
       }
       const result = await conn.query('SELECT * FROM invoice INNER JOIN category ON invoice.invoice_id_category = category.category_id INNER JOIN sub_category ON category.category_id_sub_category = sub_category.sub_category_id;') */
-      const result = await conn.query('SELECT * FROM invoice;')
+      const result = await conn.query('SELECT * FROM invoice INNER JOIN orders ON invoice.invoice_id_orders = orders.orders_id;')
       console.log(result.rows)
       console.log('entro a Invoice Model')
       return result.rows

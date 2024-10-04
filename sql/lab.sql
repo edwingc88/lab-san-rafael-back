@@ -66,10 +66,10 @@ CREATE TABLE IF NOT EXISTS role (
 );
 
 INSERT INTO role (role_name) VALUES
-('manager'),
-('admin'),
-('bio'),
-('patient'); 
+('gerente'),
+('administrado'),
+('bioanalista'),
+('paciente'); 
 
 CREATE TABLE IF NOT EXISTS users (
     /* users_id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),*/
@@ -94,7 +94,7 @@ CREATE TABLE IF NOT EXISTS users (
     FOREIGN KEY (users_id_role) REFERENCES role(role_id) ON DELETE CASCADE
 );
 
-INSERT INTO users (users_dni,users_email,users_username,users_password,users_firstname,users_lastname,users_gender,users_address,users_firstphone,users_secondphone,users_birthdate,users_bloodtyping,users_type_relationship,users_name_relationship, users_created,users_abatar,users_id_role) VALUES ('v-1234','michelledellosa7@gmail.com','michelle','12345678','Michelle','Dellza','Femenino','San Felix','041432','0412','1900-01-01','O+',null,null,now(),'https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',1),('v-24796','edwin@gmail.com','edwin','1234','edwin','mendez','Masculino','San Felix','041432','0412','1900-01-01','O+',null,null,now(),'https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',2),('v-333','bio@gmail.com','bio','33333','Michelle','Dellza','Masculino','San Felix','041432','0412','1900-01-01','O+',null,null,now(),'https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',3),('v-4444','patient@gmail.com','patient','44444','Patient','Dellza','Masculino','San Felix','041432','0412','1900-01-01','O+',null,null,now(),'https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',4);
+INSERT INTO users (users_dni,users_email,users_username,users_password,users_firstname,users_lastname,users_gender,users_address,users_firstphone,users_secondphone,users_birthdate,users_bloodtyping,users_type_relationship,users_name_relationship, users_created,users_abatar,users_id_role) VALUES ('v-1234','michelledellosa7@gmail.com','michelle','12345678','Michelle','Dellza','Femenino','San Felix','041432','0412','1900-01-01','O+',null,null,now(),'https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',1),('v-24796','edwin@gmail.com','edwin','1234','edwin','mendez','Masculino','San Felix','041432','0412','1900-01-01','O+',null,null,now(),'https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',2),('v-333','bio@gmail.com','bio','33333','Michelle','Dellza','Masculino','San Felix','041432','0412','1900-01-01','O+',null,null,now(),'https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',3),('v-4444','patient@gmail.com','patient4','12345678','maria','perez','Femenino','San Felix','041432','0412','1900-01-01','O+',null,null,now(),'https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',4),('v-5555','patient5@gmail.com','patient5','12345678','jose','rodriguez','Masculino','San Felix','041432','0412','1900-01-01','O+',null,null,now(),'https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',4),('v-666','patient6@gmail.com','patient6','12345678','pedro','garcias','Masculino','San Felix','041432','0412','1900-01-01','O+',null,null,now(),'https://lab-san-rafael-api.onrender.com/sources/images/public/default.jpg',4);
 
 
 
@@ -140,9 +140,11 @@ INSERT INTO exam (exam_id,exam_name,exam_description,exam_price,exam_id_category
 (3,'glicemia','examen de Bioquimica',4.0,1),
 (4,'creatinina','examen de Bioquimica',4.0,1),
 (5,'trigliceridos','examen de Bioquimica',4.0,1),
-(6,'Orina','examen de Orina',4.0,2),
-(7,'Heces','examen de Heces',4.0,3),
-(8,'Prueba de embarazo','examen de INMUNOLOGIA',4.0,4);
+(6,'Acido Urico','examen de Bioquimica',1.0,1),
+(7,'Calcio','examen de Bioquimica',4.0,1),
+(8,'Orina','examen de Orina',4.0,2),
+(9,'Heces','examen de Heces',4.0,3),
+(10,'Prueba de embarazo','examen de INMUNOLOGIA',4.0,4);
 
 CREATE TABLE IF NOT EXISTS parameter (
    parameter_id serial PRIMARY KEY ,
@@ -163,11 +165,13 @@ INSERT INTO parameter (parameter_id,parameter_name,parameter_value,parameter_uni
 (6,'glicemia','hz','10-15',3),
 (7,'creatinina','hz','10-15',4),
 (8,'trigliceridos','hz','10-15',5),
-(9,'Orina color','hz','10-15',6),
-(10,'Orina aspecto','hz','10-15',6),
-(11,'Heces color','hz','10-15',7),
-(12,'Heces aspecto','hz','10-15',7),
-(13,'Prueba de embarazo PCR','hz','10-15',8);
+(9, 'Acido Urico', 'hz', '10-15', 6),
+(10, 'Calcio', 'hz', '10-15', 7),
+(11,'Orina color','hz','10-15',8),
+(12,'Orina aspecto','hz','10-15',8),
+(13,'Heces color','hz','10-15',9),
+(14,'Heces aspecto','hz','10-15',9),
+(15,'Prueba de embarazo PCR','hz','10-15',10);
 
 
 CREATE TABLE IF NOT EXISTS orders (
@@ -182,9 +186,9 @@ CREATE TABLE IF NOT EXISTS orders (
 );
 
 INSERT INTO orders (orders_id, orders_number, orders_date, orders_observation, orders_id_users, orders_id_states) VALUES
-(1, 1, '2023-05-01', 'ninguna', 1, 1),
-(2, 2, '2023-05-02', 'ninguna', 2, 1),
-(3, 3, '2023-05-03', 'ninguna', 3, 1);
+(1, 1, '2023-05-01', 'ninguna', 4, 1),
+(2, 2, '2023-05-02', 'ninguna', 5, 1),
+(3, 3, '2023-05-03', 'ninguna', 6, 1);
 
 
 CREATE TABLE IF NOT EXISTS exam_order(
@@ -201,36 +205,38 @@ INSERT INTO exam_order (exam_order_id, exam_order_id_exam, exam_order_id_orders)
 (3, 3, 1),
 (4, 4, 1),
 (5, 5, 1),
-(6, 6, 2),
-(7, 7, 2),
-(8, 8, 3);
+(6, 8, 2),
+(7, 9, 2),
+(8, 10, 3);
 
 
 CREATE TABLE IF NOT EXISTS result (
   result_id serial PRIMARY KEY ,
   result_value FLOAT,
   result_id_parameter INT NOT NULL,
+  result_id_exam INT NOT NULL,
   result_id_order INT NOT NULL,
   FOREIGN KEY (result_id_parameter) REFERENCES parameter(parameter_id) ON DELETE CASCADE,
+  FOREIGN KEY (result_id_exam) REFERENCES exam(exam_id) ON DELETE CASCADE,
   FOREIGN KEY (result_id_order) REFERENCES orders(orders_id) ON DELETE CASCADE,
-  CONSTRAINT u_result_parameter_order UNIQUE (result_id_parameter, result_id_order)
+  CONSTRAINT u_result_parameter_order UNIQUE (result_id_parameter,  result_id_exam, result_id_order)
 );
 
 
-INSERT INTO result (result_id, result_value, result_id_parameter, result_id_order) VALUES
-(1, 10.0, 1, 1),
-(2, 20.0, 2, 1),
-(3, 30.0, 3, 1),
-(4, 40.0, 4, 1),
-(5, 50.0, 5, 1),
-(6, 60.0, 6, 1),
-(7, 70.0, 7, 1),
-(8, 80.0, 8, 1),
-(9, 90.0, 9, 2),
-(10, 100.0, 10, 2),
-(11, 110.0, 11, 2),
-(12, 120.0, 12, 2),
-(16, 160.0, 13, 3);
+INSERT INTO result (result_id, result_value, result_id_parameter, result_id_exam, result_id_order) VALUES
+(1, 10.0, 1, 1, 1),
+(2, 20.0, 2, 1, 1),
+(3, 30.0, 3, 1, 1),
+(4, 40.0, 4, 1, 1),
+(5, 50.0, 5, 2, 1),
+(6, 60.0, 6, 3, 1),
+(7, 70.0, 7, 4, 1),
+(8, 80.0, 8, 5, 1),
+(9, 90.0, 11, 8, 2),
+(10, 100.0, 12,8, 2),
+(11, 110.0, 13,9, 2),
+(12, 120.0, 14,9, 2),
+(13, 120.0, 15,10, 3);
 
 
 CREATE TABLE IF NOT EXISTS invoice(

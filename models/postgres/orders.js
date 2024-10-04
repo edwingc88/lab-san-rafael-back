@@ -5,13 +5,14 @@ export class OrderModel {
       console.log('Entro en Model ', user)
       if (user) {
         const loweCaseUserID = user.toLowerCase()
-        // const res = await conn.query('SELECT * FROM orders WHERE orders_id_users = $1;', [loweCaseUserID])
-        const res = await conn.query('SELECT * FROM orders JOIN users ON users.users_id = orders.orders_id WHERE users.users_id=$1;', [loweCaseUserID])
+        const res = await conn.query('SELECT * FROM orders WHERE orders_id_users = $1;', [loweCaseUserID])
+        //  const res = await conn.query('SELECT * FROM orders JOIN users ON users.users_id = orders.orders_id_users ;')
 
         return res.rows
       }
       // const result = await conn.query('SELECT * FROM orders INNER JOIN exam ON exam.exam_id = orders.orders_id_exam ;')
-      const result = await conn.query('SELECT * FROM orders;')
+      /*       const result = await conn.query('SELECT * FROM orders;') */
+      const result = await conn.query('SELECT * FROM orders JOIN users ON users.users_id = orders.orders_id_users  JOIN states ON states.states_id = orders.orders_id_states ;')
       console.log(result.rows)
       console.log('entro a order Model')
       return result.rows
