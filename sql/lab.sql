@@ -120,10 +120,11 @@ CREATE TABLE IF NOT EXISTS category (
 );
 
 INSERT INTO category (category_id,category_name) VALUES
-(1,'HEMATOLOGÍA y BIOQUIMICA SANGUINEA'),
-(2,'UROLOGIA - NEFROLOGIA'),
-(3,'HECES'),
-(4,'INMUNO - DIAGNOSTICO');
+(1,'HEMATOLOGÍA'),
+(2,'BIOQUIMICA SANGUINEA '),
+(3,'UROLOGIA'),
+(4,'HECES'),
+(5,'INMUNOLOGIA');
 
 CREATE TABLE IF NOT EXISTS exam (
    exam_id serial PRIMARY KEY ,
@@ -136,20 +137,19 @@ CREATE TABLE IF NOT EXISTS exam (
 
 INSERT INTO exam (exam_id,exam_name,exam_description,exam_price,exam_id_category) VALUES
 (1,'Hematologia','examen de hermatogolia',4.0,1),
-(2,'Urea','examen de Bioquimica',4.0,1),
-(3,'glicemia','examen de Bioquimica',4.0,1),
-(4,'creatinina','examen de Bioquimica',4.0,1),
-(5,'trigliceridos','examen de Bioquimica',4.0,1),
-(6,'Acido Urico','examen de Bioquimica',1.0,1),
-(7,'Calcio','examen de Bioquimica',4.0,1),
-(8,'Orina','examen de Orina',4.0,2),
-(9,'Heces','examen de Heces',4.0,3),
-(10,'Prueba de embarazo','examen de INMUNOLOGIA',4.0,4);
+(2,'Urea','examen de Bioquimica',4.0,2),
+(3,'glicemia','examen de Bioquimica',4.0,2),
+(4,'creatinina','examen de Bioquimica',4.0,2),
+(5,'trigliceridos','examen de Bioquimica',4.0,2),
+(6,'Acido Urico','examen de Bioquimica',1.0,2),
+(7,'Calcio','examen de Bioquimica',4.0,2),
+(8,'Orina','examen de Orina',4.0,3),
+(9,'Heces','examen de Heces',4.0,4),
+(10,'Prueba de embarazo','examen de INMUNOLOGIA',4.0,5);
 
 CREATE TABLE IF NOT EXISTS parameter (
    parameter_id serial PRIMARY KEY ,
    parameter_name VARCHAR(255) NOT NULL,
-   parameter_description VARCHAR(255),
    parameter_value VARCHAR(255),
    parameter_unit VARCHAR(255),
    parameter_id_exam INT,
@@ -157,21 +157,33 @@ CREATE TABLE IF NOT EXISTS parameter (
 );
 
 INSERT INTO parameter (parameter_id,parameter_name,parameter_value,parameter_unit,parameter_id_exam) VALUES
-(1,'Lymph#','10-15','hz',1),
-(2,'Mid#','hz','10-15',1),
-(3,'Gran#','hz','10-15',1),
-(4,'Lymph%','hz','10-15',1),
-(5,'Urea','hz','10-15',2),
-(6,'glicemia','hz','10-15',3),
-(7,'creatinina','hz','10-15',4),
-(8,'trigliceridos','hz','10-15',5),
-(9, 'Acido Urico', 'hz', '10-15', 6),
-(10, 'Calcio', 'hz', '10-15', 7),
-(11,'Orina color','hz','10-15',8),
-(12,'Orina aspecto','hz','10-15',8),
-(13,'Heces color','hz','10-15',9),
-(14,'Heces aspecto','hz','10-15',9),
-(15,'Prueba de embarazo PCR','hz','10-15',10);
+(1,'Globulos Rojos','4.50 - 5.30','millones/ul',1),
+(2,'Hemoglobina','13.00 - 16.00','gr/dl',1),
+(3,'Hematocrito','37.00 - 49.00','%',1),
+(4,'Recuento Globulos Blancos','4.50 - 11.00','miles/ul',1),
+(5,'Eosinofilos','0 - 6','%',1),
+(6,'Basofilos','0 - 2','%',1),
+(7,'Neutrofilos','43 - 70','%',1),
+(8,'Linfositos','21 - 50','%',1),
+(9,'Monocitos','2 - 8','%',1),
+(10,'Recuento de Plaquetas','142.00 - 424.00','miles/ul',1),
+(11,'MCV','78.00 - 98.00','Femtolitro',1),
+(12,'MCH','25.00 - 35.00','picogramos',1),
+(13,'MCHC','31.00 - 37.00','gramp/decilitro',1),
+(14,'Velocidad de Sedimiento','0.00 - 20.00','mm/1hora',1),
+(15,'Urea','10-15','hz',2),
+(16,'glicemia','10-15','hz',3),
+(17,'creatinina','10-15','hz',4),
+(18,'trigliceridos','10-15','hz',5),
+(19,'Acido Urico', '10-15','hz', 6),
+(20,'Calcio','10-15','hz', 7),
+(21,'Orina color','','',8),
+(22,'Orina aspecto','','',8),
+(23,'Heces color','','',9),
+(24,'Heces Consistencia','','',9),
+(25,'Heces Restos Alimenticios','','',9),
+(26,'Reaccion PH','','',9),
+(27,'Prueba de embarazo PCR','10-15','hz',10);
 
 
 CREATE TABLE IF NOT EXISTS orders (
@@ -213,6 +225,7 @@ INSERT INTO exam_order (exam_order_id, exam_order_id_exam, exam_order_id_orders)
 CREATE TABLE IF NOT EXISTS result (
   result_id serial PRIMARY KEY ,
   result_value FLOAT,
+  result_observation VARCHAR(255),
   result_id_parameter INT NOT NULL,
   result_id_exam INT NOT NULL,
   result_id_order INT NOT NULL,
@@ -223,20 +236,32 @@ CREATE TABLE IF NOT EXISTS result (
 );
 
 
-INSERT INTO result (result_id, result_value, result_id_parameter, result_id_exam, result_id_order) VALUES
-(1, 10.0, 1, 1, 1),
-(2, 20.0, 2, 1, 1),
-(3, 30.0, 3, 1, 1),
-(4, 40.0, 4, 1, 1),
-(5, 50.0, 5, 2, 1),
-(6, 60.0, 6, 3, 1),
-(7, 70.0, 7, 4, 1),
-(8, 80.0, 8, 5, 1),
-(9, 90.0, 11, 8, 2),
-(10, 100.0, 12,8, 2),
-(11, 110.0, 13,9, 2),
-(12, 120.0, 14,9, 2),
-(13, 120.0, 15,10, 3);
+INSERT INTO result (result_id, result_value,result_observation, result_id_parameter, result_id_exam, result_id_order) VALUES
+(1, 10.0,'', 1, 1, 1),
+(2, 20.0,'', 2, 1, 1),
+(3, 30.0,'', 3, 1, 1),
+(4, 40.0,'', 4, 1, 1),
+(5, 50.0,'', 5, 1, 1),
+(6, 60.0,'', 6, 1, 1),
+(7, 70.0,'', 7, 1, 1),
+(8, 80.0,'', 8, 1, 1),
+(9, 90.0,'', 11, 1, 1),
+(10, 100.0,'', 12,1, 1),
+(11, 110.0,'', 13,1, 1),
+(12, 120.0,'', 14,1, 1),
+(13, 120.0,'', 15,2, 1),
+(14, 120.0,'', 16, 3, 1),
+(15, 120.0,'', 17, 4, 1),
+(16, 120.0,'', 18, 5, 1),
+(17, 120.0,'', 19, 6, 1),
+(18, 120.0,'', 20, 7, 1),
+(19, null,'Amarillo', 21, 8, 2),
+(20, null,'Liquido', 22, 8, 2),
+(21, null,'Cafe', 23, 9, 2),
+(22, null,'Pastosa', 24, 9, 2),
+(23, null,'No se observa', 25, 9, 2),
+(24, 6.00,'', 26, 9, 2),
+(25, null,'positivo', 27, 10, 3);
 
 
 CREATE TABLE IF NOT EXISTS invoice(

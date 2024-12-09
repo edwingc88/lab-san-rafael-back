@@ -32,19 +32,6 @@ export class ResultController {
     res.status(404).json({ error: 'Not found result' })
   }
 
-  /*   create = async (req, res) => {
-    const result = validateResult(req.body)
-
-    if (result.error) {
-      return res.status(400).json({ error: JSON.parse(result.error.message) })
-    }
-
-    const newresult = await this.resultModel.create({ input: result.data })
-
-    res.status(201).json(newresult)
-  }
- */
-
   create = async (req, res) => {
     const form = new multiparty.Form()
 

@@ -30,11 +30,10 @@ export class ResultModel {
 
   static async create ({ input }) {
     // eslint-disable-next-line camelcase
-    const { observation, value, id_exam_order } = input
-
+    const { observation, value, id_parameter, id_exam, id_order } = input
     try {
       // eslint-disable-next-line camelcase
-      const resultID = await conn.query('INSERT INTO result( result_observation ,result_value,result_id_exam_order ) VALUES ($1, $2, $3 ) RETURNING *;', [observation, value, id_exam_order])
+      const resultID = await conn.query('INSERT INTO result( result_value,result_observation ,result_id_parameter, result_id_exam, result_id_order ) VALUES ($1, $2, $3, $4, $5) RETURNING *;', [observation, value, id_parameter, id_exam, id_order])
       return (resultID.rows)
     } catch (e) {
       throw new Error('Errro creating client')
