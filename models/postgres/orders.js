@@ -1,13 +1,12 @@
 import conn from './db.js'
 export class OrderModel {
-  static async getAll (user) {
+  static async getAll (idUser) {
     try {
-      console.log('Entro en Model ', user)
-      if (user) {
-        const loweCaseUserID = user.toLowerCase()
+      console.log('Entro en Model ', idUser)
+      if (idUser) {
+        const loweCaseUserID = idUser.toLowerCase()
         const res = await conn.query('SELECT * FROM orders WHERE orders_id_users = $1;', [loweCaseUserID])
         //  const res = await conn.query('SELECT * FROM orders JOIN users ON users.users_id = orders.orders_id_users ;')
-
         return res.rows
       }
       // const result = await conn.query('SELECT * FROM orders INNER JOIN exam ON exam.exam_id = orders.orders_id_exam ;')
@@ -24,13 +23,14 @@ export class OrderModel {
 
   static async getById (id) {
     try {
-      const result = await conn.query('SELECT * FROM orders WHERE id_orders = $1;', [id])
-      const [clients] = result.rows
-
-      if (clients.length === 0) return null
-      return clients
+      console.log('Entro en Model ', id)
+      const result = await conn.query('SELECT * FROM orders WHERE orders_id = $1;', [id])
+      /*       const [clients] = result.rows
+      if (clients.length === 0) return null */
+      return result.rows
     } catch (e) {
-      return null
+      console.log(e)
+      throw new Error(e)
     }
   }
 

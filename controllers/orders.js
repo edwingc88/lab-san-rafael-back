@@ -7,9 +7,9 @@ export class OrderController {
 
   getAll = async (req, res, next) => {
     try {
-      const { user } = req.query
-      console.log('hola controller', user)
-      const orders = await this.orderModel.getAll(user)
+      const { id_user: idUser } = req.query
+      console.log('hola controller', idUser)
+      const orders = await this.orderModel.getAll(idUser)
       if (!orders) return res.status(404).json({ error: 'Not found order' })
       /*     if (orders.length === 0) return res.status(404).json({ msj: 'Empty  orders' }) */
       res.json(orders)
@@ -20,10 +20,10 @@ export class OrderController {
 
   getById = async (req, res) => {
     const { id } = req.params
-    const order = await this.orderModel.getById(id)
-    console.log(order)
-    if (order) return res.json(order)
-    res.status(404).json({ error: 'Not found order' })
+    console.log('hola controller', id)
+    const result = await this.orderModel.getById(id)
+    if (result.length === 0) return res.status(404).json({ error: 'Not content. Empty database' })
+    res.json(result)
   }
 
   create = async (req, res) => {

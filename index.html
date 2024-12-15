@@ -517,7 +517,7 @@
     
     </article>
 
-    <!--  Exam , Category , Ordenes , Resultados, Facturas  -->
+    <!--  Exam , Ordenes , Resultados, Facturas  -->
 
     <article id="colum2" style="width: 650px;min-width:650px;overflow-x: hidden;">
  
@@ -542,9 +542,9 @@
           <li> 
             <h2 class="negrita">
                 <span class="verde">GET :</span>
-                Devuelve Orden + estado por ID de usuario 
+                Devuelve Ordenes por ID de usuario 
             </h2>
-            <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/orders?user=1</p>
+            <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/orders?id_user={1}</p>
             <button id="OrderGetUserID" class="btn">Copiar</button>
             <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
             <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
@@ -554,7 +554,7 @@
                 <span class="verde">GET :</span>
                 Devuelve Orden por ID
             </h2>
-            <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/orders/:id</p>
+            <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/orders/{1}</p>
             <button id="OrderGetID" class="btn">Copiar</button>
             <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
             <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
@@ -564,7 +564,7 @@
                 <span class="azul">POST :</span>
                 Devuelve Orden por ID
             </h2>
-            <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/orders/:id</p>
+            <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/orders/{1}</p>
             <button id="OrderPost" class="btn">Copiar</button>
             <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
             <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
@@ -574,7 +574,7 @@
                 <span class="amarillo">PATH :</span>
                 Devuelve Orden por ID
             </h2>
-            <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/orders/:id</p>
+            <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/orders/{1}</p>
             <button id="OrderPathID" class="btn">Copiar</button>
             <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
             <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
@@ -594,16 +594,16 @@
 
 
 
-     <!--------------------- API Ordenes+Examenes -------------------------->
+     <!--------------------- API Examenes por Ordenes -------------------------->
       <details>
         <summary style="margin: 1rem; font-size: x-large; font-weight: 600;">
-            API Ordenes+Examenes <span class="amarillo">&#x2615;&#xfe0e;</span>
+            API Examenes por Ordenes <span class="amarillo">&#x2615;&#xfe0e;</span>
         </summary>
         <ul style="padding-bottom: .5rem;">
           <li> 
               <h2 class="negrita">
                 <span class="verde">GET :</span>
-                Devuelve todos los Examenescon sus categorias
+                Devuelve todos los Examenes con sus categorias
               </h2>
               <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/exams_orders</p>
               <button id="OEGet" class="btn">Copiar</button>

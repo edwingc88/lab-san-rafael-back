@@ -23,7 +23,7 @@ export class ExamModel {
       if (clients.length === 0) return null */
       return result.rows
     } catch (e) {
-      return null
+      throw new Error(e)
     }
   }
 
