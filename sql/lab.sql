@@ -266,7 +266,8 @@ INSERT INTO result (result_id, result_value,result_observation, result_id_parame
 
 CREATE TABLE IF NOT EXISTS invoice(
   invoice_id serial PRIMARY KEY,
-  invoice_total NUMERIC,
+  invoice_bs NUMERIC,
+  invoice_dolar NUMERIC,
   invoice_method_payment VARCHAR(255),
   invoice_reference_payment VARCHAR(255) NULL,
   invoice_states_payment BOOLEAN CONSTRAINT invoice_states_payment_valido CHECK(invoice_states_payment IN ('true','false')) DEFAULT 'false',
@@ -275,9 +276,9 @@ CREATE TABLE IF NOT EXISTS invoice(
   FOREIGN KEY (invoice_id_orders) REFERENCES orders(orders_id) ON DELETE CASCADE
 );
 
-INSERT INTO invoice (invoice_id, invoice_total, invoice_method_payment, invoice_reference_payment, invoice_states_payment, invoice_states_date, invoice_id_orders) VALUES
-(1, 100.0, 'efectivo', 'efectivo', true, '2023-05-01', 1),
-(2, 200.0, 'efectivo', 'efectivo', true, '2023-05-02', 2);
+INSERT INTO invoice (invoice_id, invoice_bs, invoice_dolar, invoice_method_payment, invoice_reference_payment, invoice_states_payment, invoice_states_date, invoice_id_orders) VALUES
+(1, 100.20,0, 'efectivo', 'efectivo', true, '2023-05-01', 1),
+(2, 0, 10,'efectivo', 'efectivo', true, '2023-05-02', 2);
 
  ALTER SEQUENCE category_category_id_seq RESTART WITH 6; 
  ALTER SEQUENCE exam_exam_id_seq RESTART WITH 9; 
