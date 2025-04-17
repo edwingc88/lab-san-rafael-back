@@ -43,10 +43,10 @@ export class ExamModel {
   static async create ({ input }) {
     try {
       // eslint-disable-next-line camelcase
-      const { name, description, indicator, unit, price, id_category } = input
+      const { name, description, price, id_category } = input
       console.log('entro en IUPNU DB', input)
       // eslint-disable-next-line camelcase
-      const results = await conn.query('INSERT INTO exam( exam_name ,exam_description, exam_indicator, exam_unit, exam_price, exam_id_category ) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;', [name, description, indicator, unit, price, id_category])
+      const results = await conn.query('INSERT INTO exam( exam_name ,exam_description , exam_price, exam_id_category ) VALUES ($1, $2, $3, $4 ) RETURNING *;', [name, description, price, id_category])
       return results.rows
     } catch (error) {
       console.log(error)

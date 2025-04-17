@@ -31,7 +31,7 @@ export class ExamOrderResultModel {
 
   static async getById (id) {
     try {
-      const result = await conn.query('SELECT * FROM exam_orders_result WHERE id_exam_orders_result = $1;', [id])
+      const result = await conn.query('SELECT * FROM exam_order WHERE exam_order_id = $1;', [id])
       const [clients] = result.rows
 
       if (clients.length === 0) return null

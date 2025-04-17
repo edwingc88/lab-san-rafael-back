@@ -1,4 +1,5 @@
 import { validateOrder, validatePartialOrder } from '../schemas/orders.js'
+import multiparty from 'multiparty'
 
 export class OrderController {
   constructor ({ orderModel }) {
@@ -26,8 +27,9 @@ export class OrderController {
     res.json(result)
   }
 
-  create = async (req, res) => {
+  /*   create = async (req, res) => {
     const result = validateOrder(req.body)
+    console.log('entro en create controller', result)
 
     if (result.error) {
       return res.status(400).json({ error: JSON.parse(result.error.message) })
@@ -36,6 +38,39 @@ export class OrderController {
     const neworder = await this.orderModel.create({ input: result.data })
 
     res.status(201).json(neworder)
+  } */
+
+  create = async (req, res, next) => {
+    try {
+      const form = new multiparty.Form()
+      form.parse(req, async (err, fields) => {
+        if (err) return res.status(500).json({ error: 'Error msj formdata' })
+
+        let newvalue = {}
+
+        const claves = Object.keys(fields)
+
+        for (let i = 0; i < claves.length; i++) {
+          const clave = claves[i]
+          const valor = { [clave]: fields[clave][0] }
+          newvalue = { ...newvalue, ...valor }
+        }
+
+        /**  Validar Datos con Zot **/
+        const resultZod = validateOrder(newvalue)
+
+        if (resultZod.error) {
+          return res.status(400).json({ error: JSON.parse(resultZod.error) })
+        }
+        console.log('Zot : ', resultZod.data)
+
+        /**  Registrar en Base de Datos **/
+        const newUserResult = await this.orderModel.create({ input: resultZod.data })
+        return res.status(201).json(newUserResult)
+      })
+    } catch (error) {
+      next(error)
+    }
   }
 
   update = async (req, res) => {

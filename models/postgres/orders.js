@@ -36,11 +36,11 @@ export class OrderModel {
 
   static async create ({ input }) {
     // eslint-disable-next-line camelcase
-    const { name, id_category } = input
-
+    const { number, date, observation, id_users, id_states } = input
+    console.log('debug models')
     try {
       // eslint-disable-next-line camelcase
-      const resultID = await conn.query('INSERT INTO orders( name ,id_category ) VALUES ($1, $2 ) RETURNING *;', [name, id_category])
+      const resultID = await conn.query('INSERT INTO orders( orders_number ,orders_date , orders_observation, orders_id_users, orders_id_states ) VALUES ($1, $2,$3,$4,$5 ) RETURNING *;', [number, date, observation, id_users, id_states])
       return (resultID.rows)
     } catch (e) {
       throw new Error('Errro creating client')

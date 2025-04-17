@@ -203,7 +203,7 @@
               <li>
                 <h2 class="negrita">
                   <span class="verde">GET :</span>
-                  Consulta todos los  Users
+                  Consulta todos los USUARIOS
                 </h2>
                 <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/users</p>
                 <button id="UserGet" class="btn">Copiar</button>
@@ -213,7 +213,7 @@
               <li>
                 <h2 class="negrita">
                   <span class="verde">GET :</span>
-                  Consultar usuarios por ID del Role
+                  Consultar todos los USUARIOS por id del Role
                 </h2>
                 <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/users?role=1</p>
                 <button id="LabGetRoleID" class="btn">Copiar</button>
@@ -221,14 +221,14 @@
                 <p><span class="negrita">Bearer Token:  </span> "UseToken"</p>
               </li>
               <li>
-                <h2 class="negrita"><span class="verde">GET : </span>Consultar usuario por ID del Usuario </h2> 
+                <h2 class="negrita"><span class="verde">GET : </span>Consultar USUARIO por id </h2> 
                 <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/users/:id</p>
                 <button id="UserGetID" class="btn">Copiar</button>
                 <p><span class="negrita">Headers : </span> Content-Type: multipart/form-data;</p>
                 <p><span class="negrita">Bearer Token:  </span> "UseToken"</p>
               </li>
               <li>
-              <h2 class="negrita"><span class="azul">POST : </span>Crear Un User</h2> 
+              <h2 class="negrita"><span class="azul">POST : </span>Crear un USUARIO</h2> 
               <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/users</p>
               <button id="UserPost" class="btn">Copiar</button>
               <p><span class="negrita">Headers : </span> Content-Type: multipart/form-data;</p>
@@ -620,16 +620,24 @@
             <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
             <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
         </li>
-        <li> 
-          <h2 class="negrita">
+      <li> 
+        <h2 class="negrita">
             <span class="azul">POST :</span>
-            Devuelve todos los Examenescon sus categorias
+            Devuelve todos los Examenes con Ordenes 
           </h2>
           <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/exams_orders</p>
-          <button id="OEPost" class="btn">Copiar</button>
+          <button id="ExamPost" class="btn">Copiar</button>
           <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
           <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+<pre style="box-sizing: border-box;overflow-x: scroll;">
+{
+  "id": 1,
+  "id_exam": 1,
+  "id_orders": 1,
+}
+</pre>
       </li>
+      <li> 
       <li> 
         <h2 class="negrita">
           <span class="amarillo">PATH :</span>

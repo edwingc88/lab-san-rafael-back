@@ -139,18 +139,18 @@ CREATE TABLE IF NOT EXISTS exam (
 
 INSERT INTO exam (exam_id,exam_name,exam_description,exam_indicator,exam_unit,exam_price,exam_id_category) VALUES
 (1,'Lymph#','examen de hermatogolia','10-15','hz',4.0,1),
-(2,'Mid#','examen de hermatogolia','hz','10-15',4.0,1),
-(3,'Gran#','examen de hermatogolia','hz','10-15',4.0,1),
-(4,'Lymph%','examen de hermatogolia','hz','10-15',4.0,1),
-(5,'Urea','examen de Bioquimica','hz','10-15',4.0,2),
-(6,'glicemia','examen de Bioquimica','hz','10-15',4.0,2),
-(7,'creatinina','examen de Bioquimica','hz','10-15',4.0,2),
-(8,'trigliceridos','examen de Bioquimica','hz','10-15',4.0,2),
-(9,'Orina color','examen de Orina','hz','10-15',4.0,3),
-(10,'Orina aspecto','examen de Orina','hz','10-15',4.0,3),
-(11,'Heces color','examen de Heces','hz','10-15',4.0,4),
-(12,'Heces aspecto','examen de Heces','hz','10-15',4.0,4),
-(13,'Prueba de embarazo','examen de INMUNOLOGIA','hz','10-15',4.0,5);
+(2,'Mid#','examen de hermatogolia','10-15','hz',4.0,1),
+(3,'Gran#','examen de hermatogolia','10-15','hz',4.0,1),
+(4,'Lymph%','examen de hermatogolia','10-15','hz',4.0,1),
+(5,'Urea','examen de Bioquimica','10-15','hz',4.0,2),
+(6,'glicemia','examen de Bioquimica','10-15','hz',4.0,2),
+(7,'creatinina','examen de Bioquimica','10-15','hz',4.0,2),
+(8,'trigliceridos','examen de Bioquimica','10-15','hz',4.0,2),
+(9,'Orina color','examen de Orina','10-15','hz',4.0,3),
+(10,'Orina aspecto','examen de Orina','10-15','hz',4.0,3),
+(11,'Heces color','examen de Heces','10-15','hz',4.0,4),
+(12,'Heces aspecto','examen de Heces','10-15','hz',4.0,4),
+(13,'Prueba de embarazo','examen de INMUNOLOGIA','10-15','hz',4.0,5);
 
 
 CREATE TABLE IF NOT EXISTS orders (
@@ -170,7 +170,7 @@ INSERT INTO orders (orders_id, orders_number, orders_date, orders_observation, o
 (3, 3, '2023-05-03', 'ninguna', 3, 1);
 
 
-/* CREATE TABLE IF NOT EXISTS exam_order(
+ CREATE TABLE IF NOT EXISTS exam_order(
    exam_order_id serial PRIMARY KEY ,
    exam_order_id_exam INT NOT NULL,
    exam_order_id_orders INT NOT NULL,
@@ -191,7 +191,7 @@ INSERT INTO exam_order (exam_order_id, exam_order_id_exam, exam_order_id_orders)
 (10, 10, 1),
 (11, 11, 2),
 (12, 12, 2),
-(13, 13, 2); */
+(13, 13, 2); 
 
 
 CREATE TABLE IF NOT EXISTS result (
@@ -240,3 +240,7 @@ INSERT INTO invoice (invoice_id, invoice_total, invoice_method_payment, invoice_
  ALTER SEQUENCE exam_exam_id_seq RESTART WITH 14; 
  ALTER SEQUENCE orders_orders_id_seq RESTART WITH 4;
  ALTER SEQUENCE invoice_invoice_id_seq RESTART WITH 3;
+ 
+ ALTER SEQUENCE category_category_id_seq RESTART WITH 6; 
+ ALTER SEQUENCE users_users_id_seq RESTART WITH 5;
+ ALTER SEQUENCE parameter_parameter_id_seq RESTART WITH 14;

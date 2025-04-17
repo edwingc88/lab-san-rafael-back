@@ -281,7 +281,7 @@ INSERT INTO invoice (invoice_id, invoice_bs, invoice_dolar, invoice_method_payme
 (2, 0, 10,'efectivo', 'efectivo', true, '2023-05-02', 2);
 
  ALTER SEQUENCE category_category_id_seq RESTART WITH 6; 
- ALTER SEQUENCE exam_exam_id_seq RESTART WITH 9; 
+ ALTER SEQUENCE exam_exam_id_seq RESTART WITH 11; 
  ALTER SEQUENCE users_users_id_seq RESTART WITH 5;
  ALTER SEQUENCE parameter_parameter_id_seq RESTART WITH 14;
  ALTER SEQUENCE orders_orders_id_seq RESTART WITH 4;

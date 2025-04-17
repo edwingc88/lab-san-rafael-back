@@ -1,3 +1,4 @@
+import { console } from 'inspector'
 import { validateExamOrderResult, validatePartialExamOrderResult } from '../schemas/exams_orders.js'
 
 export class ExamOrderResultController {
@@ -6,8 +7,8 @@ export class ExamOrderResultController {
   }
 
   getAll = async (req, res, next) => {
-  /*     const { _category } = req.query */
-    // console.log(_category)
+    /*     const { _category } = req.query
+    console.log('query', _category) */
     try {
       const examsCategorys = await this.examOrderResultModel.getAll()
       if (examsCategorys.length === null) return res.status(404).json({ msj: 'Empty  examsCategorys' })
@@ -17,12 +18,13 @@ export class ExamOrderResultController {
     }
   }
 
-  getById = async (req, res) => {
+  getById = async (req, res, next) => {
     const { id } = req.params
-    const exam = await this.examOrderResultModel.getById(id)
-    console.log(exam)
-    if (exam) return res.json(exam)
-    res.status(404).json({ error: 'Not found exam' })
+    console.log('hola controller examen orders', id)
+    const examsOrders = await this.examOrderResultModel.getById(id)
+    console.log(examsOrders)
+    if (examsOrders) return res.json(examsOrders)
+    res.status(404).json({ error: 'Not found Exams Orders' })
   }
 
   create = async (req, res) => {
