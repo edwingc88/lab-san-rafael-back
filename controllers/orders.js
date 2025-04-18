@@ -86,6 +86,7 @@ export class OrderController {
 
   delete = async (req, res) => {
     const { id } = req.params
+    console.log('hola controller delete', id)
     const result = await this.orderModel.delete({ id })
     if (result === false) return res.status(404).json({ error: 'Not found order' })
     return res.json({ message: 'order deleted' })

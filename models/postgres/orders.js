@@ -58,8 +58,8 @@ export class OrderModel {
   }
 
   static async delete ({ id }) {
-    console.log(id)
-    const result = await conn.query('DELETE FROM orders WHERE id = $1 returning *;', [id])
+    console.log('id en model', id)
+    const result = await conn.query('DELETE FROM orders WHERE orders_id = $1 returning *;', [id])
 
     console.log(result.rows)
 
