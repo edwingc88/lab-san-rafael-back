@@ -57,9 +57,9 @@ export class ParameterModel {
   static async update ({ id, input }) {
     try {
       // eslint-disable-next-line camelcase
-      const { name, description, indicator, unit, price, id_category } = input
+      const { name, value, unit, id_exam } = input
       // eslint-disable-next-line camelcase
-      const result = await conn.query('UPDATE parameter SET parameter_name = $1, parameter_description = $2, parameter_indicator= $3, parameter_unit=$4, parameter_price=$5, parameter_id_category=$6 WHERE parameter_id = $7 RETURNING *;', [name, description, indicator, unit, price, id_category, id])
+      const result = await conn.query('UPDATE parameter SET parameter_name = $1, parameter_value = $2,  parameter_unit=$3, parameter_id_exam=$4 WHERE parameter_id = $7 RETURNING *;', [name, value, unit, id_exam, id])
       console.log(' update en Model')
       return result.rows
     } catch (error) {

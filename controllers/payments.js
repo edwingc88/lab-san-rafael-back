@@ -1,37 +1,37 @@
-import { validateInvoice, validatePartialInvoice } from '../schemas/invoices.js'
+import { validatePayment, validatePartialPayment } from '../schemas/payments.js'
 import multiparty from 'multiparty'
 
-export class InvoiceController {
-  constructor ({ invoiceModel }) {
-    this.invoicesModel = invoiceModel
+export class PaymentController {
+  constructor ({ paymentModel }) {
+    this.paymentsModel = paymentModel
   }
 
   getAll = async (req, res) => {
     const { _category } = req.query
     // console.log(_category)
 
-    const invoicess = await this.invoicesModel.getAll({ _category })
-    if (invoicess.length === 0) return res.status(404).json({ msj: 'Empty  invoicess' })
-    res.json(invoicess)
+    const payments = await this.paymentsModel.getAll({ _category })
+    if (payments.length === 0) return res.status(404).json({ msj: 'Empty  paymentss' })
+    res.json(payments)
   }
 
   getById = async (req, res) => {
     const { id } = req.params
-    const invoices = await this.invoicesModel.getById(id)
-    if (invoices) return res.json(invoices)
-    res.status(404).json({ error: 'Not found invoices' })
+    const payments = await this.paymentsModel.getById(id)
+    if (payments) return res.json(payments)
+    res.status(404).json({ error: 'Not found payments' })
   }
 
   /*   create = async (req, res) => {
-    const result = validateInvoice(req.body)
+    const result = validatePayment(req.body)
 
     if (result.error) {
       return res.status(400).json({ error: JSON.parse(result.error.message) })
     }
 
-    const newinvoices = await this.invoicesModel.create({ input: result.data })
+    const newpayments = await this.paymentsModel.create({ input: result.data })
 
-    res.status(201).json(newinvoices)
+    res.status(201).json(newpayments)
   } */
 
   create = async (req, res) => {
@@ -52,7 +52,7 @@ export class InvoiceController {
       }
 
       /**  Validar Datos con Zot **/
-      const resultZod = validateInvoice(newvalue)
+      const resultZod = validatePayment(newvalue)
 
       if (resultZod.error) {
         return res.status(400).json({ error: JSON.parse(resultZod.error) })
@@ -60,21 +60,21 @@ export class InvoiceController {
       console.log(resultZod.data)
 
       /**  Registrar en Base de Datos **/
-      const newResult = await this.invoicesModel.create({ input: resultZod.data })
+      const newResult = await this.paymentsModel.create({ input: resultZod.data })
       res.status(201).json(newResult)
     })
   }
 
   /*  update = async (req, res, next) => {
     try {
-      const result = validatePartialInvoice(req.body)
+      const result = validatePartialPayment(req.body)
       if (!result.success) {
         return res.status(400).json({ error: JSON.parse(result.error.message) })
       }
       const { id } = req.params
-      const updatedinvoices = await this.invoicesModel.update({ id, input: result.data })
-      if (!updatedinvoices) return res.status(404).json({ error: 'Not found invoices' })
-      return res.json(updatedinvoices)
+      const updatedpayments = await this.paymentsModel.update({ id, input: result.data })
+      if (!updatedpayments) return res.status(404).json({ error: 'Not found payments' })
+      return res.json(updatedpayments)
     } catch (error) {
       next(error)
     }
@@ -100,15 +100,15 @@ export class InvoiceController {
           newvalue = { ...newvalue, ...valor }
         }
 
-        const result = validatePartialInvoice(newvalue)
+        const result = validatePartialPayment(newvalue)
 
         if (result.error) {
           return res.status(400).json({ error: JSON.parse(result.error.message) })
         }
 
-        const updatedlabResult = await this.invoicesModel.update({ idupdate: id, input: result.data })
+        const updatedlabResult = await this.paymentsModel.update({ idupdate: id, input: result.data })
 
-        /* if (updatedlabResult.length === 0) res.status(404).json({ error: 'Invoice Error' }) */
+        /* if (updatedlabResult.length === 0) res.status(404).json({ error: 'Payment Error' }) */
 
         return res.status(201).json(updatedlabResult)
       })
@@ -119,8 +119,8 @@ export class InvoiceController {
 
   delete = async (req, res) => {
     const { id } = req.params
-    const result = await this.invoicesModel.delete({ id })
-    if (result === false) return res.status(404).json({ error: 'Not found invoices' })
-    return res.json({ message: 'invoices deleted' })
+    const result = await this.paymentsModel.delete({ id })
+    if (result === false) return res.status(404).json({ error: 'Not found payments' })
+    return res.json({ message: 'payments deleted' })
   }
 }

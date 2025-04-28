@@ -18,9 +18,15 @@ export class ExamOrderResultModel {
     }
   } */
 
-  static async getAll () {
+  static async getAll ({ orderId }) {
+    if (orderId) {
+      console.log('Entro en Model ', orderId)
+      const resultByOrder = await conn.query('SELECT * FROM exam_order_relation JOIN exam ON exam.exam_id = exam_order_relation.exam_order_relation_id_exam JOIN orders ON orders.orders_id = exam_order_relation.exam_order_relation_id_order WHERE orders.orders_id = $1;', [orderId])
+      return resultByOrder.rows
+    }
+
     try {
-      const result = await conn.query('SELECT * FROM exam_order JOIN exam ON exam.exam_id = exam_order.exam_order_id_exam JOIN orders ON orders.orders_id = exam_order.exam_order_id_orders;')
+      const result = await conn.query('SELECT * FROM exam_order_relation JOIN exam ON exam.exam_id = exam_order_relation.exam_order_relation_id_exam JOIN orders ON orders.orders_id = exam_order_relation.exam_order_relation_id_order;')
       console.log(result.rows)
       console.log('entro a ExamOrderResult Model')
       return result.rows

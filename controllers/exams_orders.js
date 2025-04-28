@@ -7,11 +7,10 @@ export class ExamOrderResultController {
   }
 
   getAll = async (req, res, next) => {
-    /*     const { _category } = req.query
-    console.log('query', _category) */
+    const { orderId } = req.query
     try {
-      const examsCategorys = await this.examOrderResultModel.getAll()
-      if (examsCategorys.length === null) return res.status(404).json({ msj: 'Empty  examsCategorys' })
+      const examsCategorys = await this.examOrderResultModel.getAll({ orderId })
+      if (examsCategorys.length === null) return res.status(404).json({ msj: 'Empty  examsOrders' })
       res.json(examsCategorys)
     } catch (error) {
       next(error)

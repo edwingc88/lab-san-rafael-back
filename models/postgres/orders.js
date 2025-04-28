@@ -47,6 +47,40 @@ export class OrderModel {
     }
   }
 
+  static async createOrdenDeUsuario ({ input }) {
+    // eslint-disable-next-line camelcase
+    const { idCustomer, date, observation, exams, payment, states } = input
+    const { transferencia, divisas } = payment
+    const { bs, ref } = transferencia
+    const { dolar } = divisas
+
+    console.log('Model creandoOrdenDeUsuario', idCustomer, observation, exams, transferencia, divisas)
+
+    const results = await conn.query('INSERT INTO orders( orders_date, orders_observation, orders_id_users, orders_id_states ) VALUES ($1, $2,$3,$4) RETURNING *;', [date, observation, idCustomer, states])
+
+    // eslint-disable-next-line camelcase
+    const { orders_id } = results.rows[0]
+    console.log('Model creandoOrdenDeUsuario', orders_id)
+
+    if (results.rows[0]) {
+      for (let i = 0; i < exams.length; i++) {
+        const { id } = exams[i]
+        console.log('Model creandoOrdenDeUsuario', id)
+        // eslint-disable-next-line camelcase
+        await conn.query('INSERT INTO exam_order_relation(exam_order_relation_id_exam, exam_order_relation_id_order ) VALUES ($1, $2);', [id, orders_id])
+      }
+      // eslint-disable-next-line camelcase
+      await conn.query('INSERT INTO payment( payment_bs, payment_dolar, payment_reference, payment_id_payment_status, payment_id_orders ) VALUES ($1, $2, $3, $4, $5) RETURNING *;', [bs, dolar, ref, 1, orders_id])
+    }
+
+    /*     console.log('Model creandoOrdenDeUsuario', idCustomer, exams, payment) */
+
+    // eslint-disable-next-line camelcase
+    /* const results = await conn.query('INSERT INTO exam_orders_result( exam_orders_result_id_exam ,exam_orders_result_id_category, exam_orders_result_id_orders ) VALUES ($1, $2, $3) RETURNING *;', [id_exam, id_category, id]) */
+    /*     return results.rows */
+    return results.rows
+  }
+
   static async update ({ idupdate, input }) {
     // eslint-disable-next-line camelcase
     const { id, name } = input

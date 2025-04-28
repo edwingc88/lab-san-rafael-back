@@ -31,6 +31,9 @@ DROP TABLE IF EXISTS gender CASCADE;
 DROP TABLE IF EXISTS client CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS invoice CASCADE;
+DROP TABLE IF EXISTS payment CASCADE;
+DROP TABLE IF EXISTS exam_order_relation CASCADE;
+DROP TABLE IF EXISTS payment_status CASCADE;
 
 create extension if not exists "uuid-ossp";
 
@@ -188,7 +191,7 @@ INSERT INTO parameter (parameter_id,parameter_name,parameter_value,parameter_uni
 
 CREATE TABLE IF NOT EXISTS orders (
   orders_id serial PRIMARY KEY,
-  orders_number INT,
+  orders_number serial NOT NULL UNIQUE,
   orders_date DATE,
   orders_observation VARCHAR(255),
   orders_id_users INT NOT NULL,  
@@ -203,15 +206,15 @@ INSERT INTO orders (orders_id, orders_number, orders_date, orders_observation, o
 (3, 3, '2023-05-03', 'ninguna', 6, 1);
 
 
-CREATE TABLE IF NOT EXISTS exam_order(
-   exam_order_id serial PRIMARY KEY ,
-   exam_order_id_exam INT NOT NULL,
-   exam_order_id_orders INT NOT NULL,
-   FOREIGN KEY (exam_order_id_exam) REFERENCES exam(exam_id) ON DELETE CASCADE,
-   FOREIGN KEY (exam_order_id_orders) REFERENCES orders(orders_id) ON DELETE CASCADE
+CREATE TABLE IF NOT EXISTS exam_order_relation(
+   exam_order_relation_id serial PRIMARY KEY ,
+   exam_order_relation_id_exam INT NOT NULL,
+   exam_order_relation_id_order INT NOT NULL,
+   FOREIGN KEY (exam_order_relation_id_exam) REFERENCES exam(exam_id) ON DELETE CASCADE,
+   FOREIGN KEY (exam_order_relation_id_order) REFERENCES orders(orders_id) ON DELETE CASCADE
 );
 
-INSERT INTO exam_order (exam_order_id, exam_order_id_exam, exam_order_id_orders) VALUES
+INSERT INTO exam_order_relation (exam_order_relation_id, exam_order_relation_id_exam, exam_order_relation_id_order) VALUES
 (1, 1, 1),
 (2, 2, 1),
 (3, 3, 1),
@@ -264,7 +267,7 @@ INSERT INTO result (result_id, result_value,result_observation, result_id_parame
 (25, null,'positivo', 27, 10, 3);
 
 
-CREATE TABLE IF NOT EXISTS invoice(
+/* CREATE TABLE IF NOT EXISTS invoice(
   invoice_id serial PRIMARY KEY,
   invoice_bs NUMERIC,
   invoice_dolar NUMERIC,
@@ -278,13 +281,45 @@ CREATE TABLE IF NOT EXISTS invoice(
 
 INSERT INTO invoice (invoice_id, invoice_bs, invoice_dolar, invoice_method_payment, invoice_reference_payment, invoice_states_payment, invoice_states_date, invoice_id_orders) VALUES
 (1, 100.20,0, 'efectivo', 'efectivo', true, '2023-05-01', 1),
-(2, 0, 10,'efectivo', 'efectivo', true, '2023-05-02', 2);
+(2, 0, 10,'efectivo', 'efectivo', true, '2023-05-02', 2); */
+
+CREATE TABLE IF NOT EXISTS payment_status(
+  payment_status_id serial PRIMARY KEY,
+  payment_status_name VARCHAR(255) NOT NULL UNIQUE
+);
+
+INSERT INTO payment_status (payment_status_id, payment_status_name) VALUES
+(1,'PAGADO'),
+(2,'ANULADO'),
+(3,'PENDIENTE');
+
+CREATE TABLE IF NOT EXISTS payment(
+  payment_id serial PRIMARY KEY,
+  payment_bs NUMERIC,
+  payment_dolar NUMERIC,
+  payment_reference VARCHAR(255) NULL,
+/*   payment_status BOOLEAN CONSTRAINT payment_states_valido CHECK(payment_status IN ('true','false')) DEFAULT 'false', */
+  payment_id_payment_status INT NOT NULL,
+  payment_id_orders INT NOT NULL,
+  FOREIGN KEY (payment_id_payment_status) REFERENCES payment_status(payment_status_id) ON DELETE CASCADE,
+  FOREIGN KEY (payment_id_orders) REFERENCES orders(orders_id) ON DELETE CASCADE
+);
+
+INSERT INTO payment (payment_id, payment_bs, payment_dolar, payment_reference, payment_id_payment_status, payment_id_orders) VALUES
+(1, 100.20,0, '1623153215',1, 1),
+(2, 0, 10,'', 1, 2);
+
+
 
  ALTER SEQUENCE category_category_id_seq RESTART WITH 6; 
  ALTER SEQUENCE exam_exam_id_seq RESTART WITH 11; 
  ALTER SEQUENCE users_users_id_seq RESTART WITH 5;
- ALTER SEQUENCE parameter_parameter_id_seq RESTART WITH 14;
+ ALTER SEQUENCE parameter_parameter_id_seq RESTART WITH 28;
  ALTER SEQUENCE orders_orders_id_seq RESTART WITH 4;
- ALTER SEQUENCE invoice_invoice_id_seq RESTART WITH 3;
+ ALTER SEQUENCE orders_orders_number_seq RESTART WITH 4;
+/*ALTER SEQUENCE invoice_invoice_id_seq RESTART WITH 3;*/
+ ALTER SEQUENCE payment_payment_id_seq RESTART WITH 3;
+ ALTER SEQUENCE exam_order_relation_exam_order_relation_id_seq RESTART WITH 9;
+ 
  
  

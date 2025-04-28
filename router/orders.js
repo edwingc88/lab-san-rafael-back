@@ -15,6 +15,8 @@ export const createOrderRouter = ({ orderModel }) => {
 
   ordersRouter.post('/', orderController.create)
 
+  ordersRouter.post('/new/', orderController.createOrdenDeUsuario)
+
   ordersRouter.patch('/:id', /*  [verifyToken, isAdmin], */ orderController.update)
 
   ordersRouter.delete('/:id', /* [verifyToken, isAdmin], */ orderController.delete)

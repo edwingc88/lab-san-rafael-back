@@ -1,5 +1,4 @@
 import { createApp } from './app.js'
-
 import { RoleModel } from './models/postgres/roles.js'
 import { LabModel } from './models/postgres/labs.js'
 import { StateModel } from './models/postgres/states.js'
@@ -8,7 +7,7 @@ import { AuthModel } from './models/postgres/auth.js'
 import { ExamModel } from './models/postgres/exams.js'
 import { ExamOrderResultModel } from './models/postgres/exams_orders.js'
 import { ParameterModel } from './models/postgres/parameters.js'
-import { InvoiceModel } from './models/postgres/invoices.js'
+import { PaymentModel } from './models/postgres/payments.js'
 import { OrderModel } from './models/postgres/orders.js'
 import { ResultModel } from './models/postgres/results.js'
 import { CategoryModel } from './models/postgres/categorys.js'
@@ -22,6 +21,6 @@ try {
   console.log(error)
 } */
 
-createApp({ stateModel: StateModel, userModel: UserModel, roleModel: RoleModel, labModel: LabModel, examModel: ExamModel, examOrderResultModel: ExamOrderResultModel, parameterModel: ParameterModel, invoiceModel: InvoiceModel, orderModel: OrderModel, resultModel: ResultModel, categoryModel: CategoryModel, authModel: AuthModel })
+createApp({ stateModel: StateModel, userModel: UserModel, roleModel: RoleModel, labModel: LabModel, examModel: ExamModel, examOrderResultModel: ExamOrderResultModel, parameterModel: ParameterModel, paymentModel: PaymentModel, orderModel: OrderModel, resultModel: ResultModel, categoryModel: CategoryModel, authModel: AuthModel })
 
 export default createApp

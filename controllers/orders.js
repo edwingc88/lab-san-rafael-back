@@ -1,4 +1,4 @@
-import { validateOrder, validatePartialOrder } from '../schemas/orders.js'
+import { validateOrder, validatePartialOrder, validateOrdenDeUsuario } from '../schemas/orders.js'
 import multiparty from 'multiparty'
 
 export class OrderController {
@@ -71,6 +71,16 @@ export class OrderController {
     } catch (error) {
       next(error)
     }
+  }
+
+  createOrdenDeUsuario = async (req, res) => {
+    const result = validateOrdenDeUsuario(req.body)
+
+    if (result.error) {
+      return res.status(400).json({ error: JSON.parse(result.error.message) })
+    }
+    const newexam = await this.orderModel.createOrdenDeUsuario({ input: result.data })
+    res.status(201).json(newexam)
   }
 
   update = async (req, res) => {
