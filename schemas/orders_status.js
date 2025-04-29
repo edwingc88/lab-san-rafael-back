@@ -5,10 +5,10 @@ const genderSchema = z.object({
   description: z.string().min(1, { message: 'This field has to be filled.' })
 })
 
-export function validateState (object) {
+export function validateOrderStatu (object) {
   return genderSchema.safeParse(object)
 }
 
-export function validatePartialState (object) {
+export function validatePartialOrderStatu (object) {
   return genderSchema.partial().safeParse(object)
 }

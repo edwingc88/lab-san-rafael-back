@@ -1,7 +1,7 @@
 import conn from './db.js'
 // import bc from 'bcrypt'
 
-export class StateModel {
+export class PaymentStatuModel {
   static async getAll () {
     try {
       //  console.log(role)

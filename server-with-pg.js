@@ -1,7 +1,8 @@
 import { createApp } from './app.js'
 import { RoleModel } from './models/postgres/roles.js'
 import { LabModel } from './models/postgres/labs.js'
-import { StateModel } from './models/postgres/states.js'
+import { OrderStatuModel } from './models/postgres/orders_status.js'
+import { PaymentStatuModel } from './models/postgres/payments_status.js'
 import { UserModel } from './models/postgres/users.js'
 import { AuthModel } from './models/postgres/auth.js'
 import { ExamModel } from './models/postgres/exams.js'
@@ -21,6 +22,6 @@ try {
   console.log(error)
 } */
 
-createApp({ stateModel: StateModel, userModel: UserModel, roleModel: RoleModel, labModel: LabModel, examModel: ExamModel, examOrderResultModel: ExamOrderResultModel, parameterModel: ParameterModel, paymentModel: PaymentModel, orderModel: OrderModel, resultModel: ResultModel, categoryModel: CategoryModel, authModel: AuthModel })
+createApp({ orderStatuModel: OrderStatuModel, paymentStatuModel: PaymentStatuModel, userModel: UserModel, roleModel: RoleModel, labModel: LabModel, examModel: ExamModel, examOrderResultModel: ExamOrderResultModel, parameterModel: ParameterModel, paymentModel: PaymentModel, orderModel: OrderModel, resultModel: ResultModel, categoryModel: CategoryModel, authModel: AuthModel })
 
 export default createApp

@@ -12,7 +12,7 @@ DROP TABLE IF EXISTS exam CASCADE;
 DROP TABLE IF EXISTS exam_category CASCADE;
 DROP TABLE IF EXISTS lab;
 DROP TABLE IF EXISTS reference;
-DROP TABLE IF EXISTS states CASCADE;
+DROP TABLE IF EXISTS status CASCADE;
 DROP TABLE IF EXISTS patient CASCADE;
 DROP TABLE IF EXISTS category CASCADE;
 DROP TABLE IF EXISTS category_orders_result;
@@ -34,6 +34,7 @@ DROP TABLE IF EXISTS invoice CASCADE;
 DROP TABLE IF EXISTS payment CASCADE;
 DROP TABLE IF EXISTS exam_order_relation CASCADE;
 DROP TABLE IF EXISTS payment_status CASCADE;
+DROP TABLE IF EXISTS order_status CASCADE;
 
 create extension if not exists "uuid-ossp";
 
@@ -101,20 +102,19 @@ INSERT INTO users (users_dni,users_email,users_username,users_password,users_fir
 
 
 
- CREATE TABLE IF NOT EXISTS states(
-   states_id serial PRIMARY KEY,
-   states_name VARCHAR(255),
-   states_description VARCHAR(255)
+ CREATE TABLE IF NOT EXISTS order_status(
+   order_status_id serial PRIMARY KEY,
+   order_status_name VARCHAR(255),
+   order_status_description VARCHAR(255)
 );
 
-INSERT INTO states (states_name,states_description) VALUES
-('PENDIENTE','PENDIENTE por pagar'),
-('PAGADO','PAGADO, Listo para tomar muestra'),
-('ANULADO','ANULADO o cancelado'),
-('MUESTRA TOMADA', 'MUESTRA TOMADA listo para analizar'),
-('ANALISIS REALIZADO', 'ANALISIS REALIZADO listo para verificar datos '),
-('ANALISIS VERIFICADO', 'ANALISIS VERIFICADO listo para entregar resultados'),
-('RESULTADO ENTREGADO', 'RESULTADO ENTREGADO proceso terminada ya entregado');
+INSERT INTO order_status (order_status_name,order_status_description) VALUES
+  ('PENDIENTE', 'PENDIENTE listo para tomar muestra'),
+  ('MUESTRA TOMADA', 'MUESTRA TOMADA listo para analizar'),
+  ('EN ANALISIS', 'ANALISIS REALIZADO listo para verificar datos '),
+  ('COMPLETADO', 'ANALISIS VERIFICADO listo para entregar resultados'),
+  ('ENTREGADO', 'RESULTADO ENTREGADO al usuario'),
+  ('CANCELADO', 'ORDEN CANCELADA proceso cancelado');
 
 
 CREATE TABLE IF NOT EXISTS category (
@@ -195,12 +195,12 @@ CREATE TABLE IF NOT EXISTS orders (
   orders_date DATE,
   orders_observation VARCHAR(255),
   orders_id_users INT NOT NULL,  
-  orders_id_states INT NULL,
+  orders_id_order_status INT NULL,
   FOREIGN KEY (orders_id_users) REFERENCES users(users_id) ON DELETE CASCADE,
-  FOREIGN KEY (orders_id_states) REFERENCES states(states_id)  ON DELETE SET NULL
+  FOREIGN KEY (orders_id_order_status) REFERENCES order_status(order_status_id)  ON DELETE SET NULL
 );
 
-INSERT INTO orders (orders_id, orders_number, orders_date, orders_observation, orders_id_users, orders_id_states) VALUES
+INSERT INTO orders (orders_id, orders_number, orders_date, orders_observation, orders_id_users, orders_id_order_status) VALUES
 (1, 1, '2023-05-01', 'ninguna', 4, 1),
 (2, 2, '2023-05-02', 'ninguna', 5, 1),
 (3, 3, '2023-05-03', 'ninguna', 6, 1);
@@ -273,13 +273,13 @@ INSERT INTO result (result_id, result_value,result_observation, result_id_parame
   invoice_dolar NUMERIC,
   invoice_method_payment VARCHAR(255),
   invoice_reference_payment VARCHAR(255) NULL,
-  invoice_states_payment BOOLEAN CONSTRAINT invoice_states_payment_valido CHECK(invoice_states_payment IN ('true','false')) DEFAULT 'false',
-  invoice_states_date DATE,
+  invoice_status_payment BOOLEAN CONSTRAINT invoice_status_payment_valido CHECK(invoice_status_payment IN ('true','false')) DEFAULT 'false',
+  invoice_status_date DATE,
   invoice_id_orders INT NOT NULL,
   FOREIGN KEY (invoice_id_orders) REFERENCES orders(orders_id) ON DELETE CASCADE
 );
 
-INSERT INTO invoice (invoice_id, invoice_bs, invoice_dolar, invoice_method_payment, invoice_reference_payment, invoice_states_payment, invoice_states_date, invoice_id_orders) VALUES
+INSERT INTO invoice (invoice_id, invoice_bs, invoice_dolar, invoice_method_payment, invoice_reference_payment, invoice_status_payment, invoice_status_date, invoice_id_orders) VALUES
 (1, 100.20,0, 'efectivo', 'efectivo', true, '2023-05-01', 1),
 (2, 0, 10,'efectivo', 'efectivo', true, '2023-05-02', 2); */
 
@@ -298,7 +298,7 @@ CREATE TABLE IF NOT EXISTS payment(
   payment_bs NUMERIC,
   payment_dolar NUMERIC,
   payment_reference VARCHAR(255) NULL,
-/*   payment_status BOOLEAN CONSTRAINT payment_states_valido CHECK(payment_status IN ('true','false')) DEFAULT 'false', */
+/*   payment_status BOOLEAN CONSTRAINT payment_status_valido CHECK(payment_status IN ('true','false')) DEFAULT 'false', */
   payment_id_payment_status INT NOT NULL,
   payment_id_orders INT NOT NULL,
   FOREIGN KEY (payment_id_payment_status) REFERENCES payment_status(payment_status_id) ON DELETE CASCADE,

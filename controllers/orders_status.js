@@ -1,16 +1,16 @@
-import { validateState, validatePartialState } from '../schemas/states.js'
+import { validateOrderStatu, validatePartialOrderStatu } from '../schemas/orders_status.js'
 import multiparty from 'multiparty'
 
-export class StateController {
-  constructor ({ stateModel }) {
-    this.stateModel = stateModel
+export class OrderStatuController {
+  constructor ({ orderStatuModel }) {
+    this.orderStatuModel = orderStatuModel
   }
 
   getAll = async (req, res, next) => {
     try {
-      const states = await this.stateModel.getAll()
-      if (states.length === 0) return res.status(404).json({ msj: 'Empty  states' })
-      return res.status(201).json(states)
+      const orderStatus = await this.orderStatuModel.getAll()
+      if (orderStatus.length === 0) return res.status(404).json({ msj: 'Empty  orderStatus' })
+      return res.status(201).json(orderStatus)
     } catch (error) {
       next(error)
     }
@@ -19,24 +19,24 @@ export class StateController {
   getById = async (req, res, next) => {
     try {
       const { id } = req.params
-      const states = await this.stateModel.getById(id)
-      if (states.length === 0) return res.status(404).json({ error: 'Not found state' })
-      return res.status(201).json(states) // 200 = OK, 201 = Created, 204 = No content, 400 = Bad request, 401 = Unauthorized, 403 = Forbidden, 404 = Not found, 500 = Internal server error, 503 = Service unavailable
+      const orderStatus = await this.orderStatuModel.getById(id)
+      if (orderStatus.length === 0) return res.status(404).json({ error: 'Not found orderStatu' })
+      return res.status(201).json(orderStatus) // 200 = OK, 201 = Created, 204 = No content, 400 = Bad request, 401 = Unauthorized, 403 = Forbidden, 404 = Not found, 500 = Internal server error, 503 = Service unavailable
     } catch (error) {
       next(error)
     }
   }
 
   /*   create = async (req, res) => {
-    const result = validateState(req.body)
+    const result = validateOrderStatu(req.body)
 
     if (result.error) {
       return res.status(400).json({ error: JSON.parse(result.error.message) })
     }
 
-    const newstate = await this.stateModel.create({ input: result.data })
+    const neworderStatu = await this.orderStatuModel.create({ input: result.data })
 
-    res.status(201).json(newstate)
+    res.status(201).json(neworderStatu)
   }
  */
   create = async (req, res, next) => {
@@ -56,7 +56,7 @@ export class StateController {
         }
 
         /**  Validar Datos con Zot **/
-        const resultZod = validateState(newvalue)
+        const resultZod = validateOrderStatu(newvalue)
 
         if (resultZod.error) {
           return res.status(400).json({ error: JSON.parse(resultZod.error) })
@@ -64,7 +64,7 @@ export class StateController {
         console.log('Zot : ', resultZod.data)
 
         /**  Registrar en Base de Datos **/
-        const newUserResult = await this.stateModel.create({ input: resultZod.data })
+        const newUserResult = await this.orderStatuModel.create({ input: resultZod.data })
         return res.status(201).json(newUserResult)
       })
     } catch (error) {
@@ -73,14 +73,14 @@ export class StateController {
   }
 
   /*   update = async (req, res) => {
-    const result = validatePartialState(req.body)
+    const result = validatePartialOrderStatu(req.body)
     if (!result.success) {
       return res.status(400).json({ error: JSON.parse(result.error.message) })
     }
     const { id } = req.params
-    const updatedstate = await this.stateModell.update({ id, input: result.data })
-    if (!updatedstate) return res.status(404).json({ error: 'Not found state' })
-    return res.json(updatedstate)
+    const updatedorderStatu = await this.orderStatuModell.update({ id, input: result.data })
+    if (!updatedorderStatu) return res.status(404).json({ error: 'Not found orderStatu' })
+    return res.json(updatedorderStatu)
   } */
 
   update = async (req, res, next) => {
@@ -101,12 +101,12 @@ export class StateController {
           newvalue = { ...newvalue, ...valor }
         }
 
-        const result = validatePartialState(newvalue)
+        const result = validatePartialOrderStatu(newvalue)
         if (!result.success) {
           return res.status(400).json({ error: JSON.parse(result.error.message) })
         }
 
-        const updateduser = await this.stateModel.update({ id, input: result.data })
+        const updateduser = await this.orderStatuModel.update({ id, input: result.data })
         /*
         if (updateduser.length === 0) return res.status(404).json({ error: 'Not found Exam en Controllers' }) */
 
@@ -120,9 +120,9 @@ export class StateController {
   delete = async (req, res, next) => {
     try {
       const { id } = req.params
-      const result = await this.stateModel.delete({ id })
-      if (result.length === 0) return res.status(404).json({ error: 'Not found state' })
-      return res.status(201).json({ message: 'state deleted' })
+      const result = await this.orderStatuModel.delete({ id })
+      if (result.length === 0) return res.status(404).json({ error: 'Not found orderStatu' })
+      return res.status(201).json({ message: 'orderStatu deleted' })
     } catch (error) {
       next(error)
     }

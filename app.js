@@ -14,7 +14,8 @@ import { createExamOrderResultRouter } from './router/exams_orders.js'
 import { createOrderRouter } from './router/orders.js'
 import { createPaymentRouter } from './router/payments.js'
 import { createAuthRouter } from './router/auth.js'
-import { createStateRouter } from './router/states.js'
+import { createOrderStatuRouter } from './router/orders_status.js'
+import { createPaymentStatuRouter } from './router/payments_status.js'
 
 // Cors
 // import { corsMiddleware } from './middlewares/cors.js'
@@ -31,7 +32,7 @@ const __dirname = dirname(__filename)
 
 const pkg = JSON.parse(readFileSync('./package.json'))
 
-export const createApp = ({ stateModel, userModel, roleModel, labModel, paymentModel, examModel, examOrderResultModel, parameterModel, orderModel, resultModel, categoryModel, authModel }) => {
+export const createApp = ({ orderStatuModel, paymentStatuModel, userModel, roleModel, labModel, paymentModel, examModel, examOrderResultModel, parameterModel, orderModel, resultModel, categoryModel, authModel }) => {
   const app = express()
   app.set('pkg', pkg)
   app.use(json())
@@ -81,7 +82,8 @@ export const createApp = ({ stateModel, userModel, roleModel, labModel, paymentM
   app.use('/results', createResultRouter({ resultModel }))
   app.use('/categorys', createCategoryRouter({ categoryModel }))
   app.use('/labs', createLabRouter({ labModel }))
-  app.use('/states', createStateRouter({ stateModel }))
+  app.use('/orders_status', createOrderStatuRouter({ orderStatuModel }))
+  app.use('/payments_status', createPaymentStatuRouter({ paymentStatuModel }))
 
   /* app.use((req, res) => {
     res.status(404).json({ error: 'Error 404 not found' })
