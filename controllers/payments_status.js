@@ -3,12 +3,12 @@ import multiparty from 'multiparty'
 
 export class PaymentStatuController {
   constructor ({ paymentStatuModel }) {
-    this.paymentStatuModel = paymentStatuModel
+    this.paymentsStatusModel = paymentStatuModel
   }
 
   getAll = async (req, res, next) => {
     try {
-      const orderStatus = await this.paymentStatuModel.getAll()
+      const orderStatus = await this.paymentsStatusModel.getAll()
       if (orderStatus.length === 0) return res.status(404).json({ msj: 'Empty  orderStatus' })
       return res.status(201).json(orderStatus)
     } catch (error) {
@@ -19,7 +19,7 @@ export class PaymentStatuController {
   getById = async (req, res, next) => {
     try {
       const { id } = req.params
-      const orderStatus = await this.paymentStatuModel.getById(id)
+      const orderStatus = await this.paymentsStatusModel.getById(id)
       if (orderStatus.length === 0) return res.status(404).json({ error: 'Not found orderStatu' })
       return res.status(201).json(orderStatus) // 200 = OK, 201 = Created, 204 = No content, 400 = Bad request, 401 = Unauthorized, 403 = Forbidden, 404 = Not found, 500 = Internal server error, 503 = Service unavailable
     } catch (error) {
@@ -64,7 +64,7 @@ export class PaymentStatuController {
         console.log('Zot : ', resultZod.data)
 
         /**  Registrar en Base de Datos **/
-        const newUserResult = await this.paymentStatuModel.create({ input: resultZod.data })
+        const newUserResult = await this.paymentsStatusModel.create({ input: resultZod.data })
         return res.status(201).json(newUserResult)
       })
     } catch (error) {
@@ -106,7 +106,7 @@ export class PaymentStatuController {
           return res.status(400).json({ error: JSON.parse(result.error.message) })
         }
 
-        const updateduser = await this.paymentStatuModel.update({ id, input: result.data })
+        const updateduser = await this.paymentsStatusModel.update({ id, input: result.data })
         /*
         if (updateduser.length === 0) return res.status(404).json({ error: 'Not found Exam en Controllers' }) */
 
@@ -120,7 +120,7 @@ export class PaymentStatuController {
   delete = async (req, res, next) => {
     try {
       const { id } = req.params
-      const result = await this.paymentStatuModel.delete({ id })
+      const result = await this.paymentsStatusModel.delete({ id })
       if (result.length === 0) return res.status(404).json({ error: 'Not found orderStatu' })
       return res.status(201).json({ message: 'orderStatu deleted' })
     } catch (error) {

@@ -1068,6 +1068,79 @@
           </li>
           </ul>
       </details>
+
+          <!---------------------------- API PAYMENT STATU ---------------------------------->
+          
+          <details>
+            <summary style="margin: 1rem; font-size: x-large; font-weight: 600;">
+                API Payment Statu <span class="amarillo">&#x2615;&#xfe0e;</span>
+            </summary>
+            <ul style="padding-bottom: .5rem;">
+              <li > 
+                  <h2 class="negrita">
+                    <span class="verde">GET :</span>
+                    Devuelve todos los Estados disponible para las ordenes
+                  </h2>
+                  <p><span class="negrita">EndPoint : </span>http://localhost:1234/states</p>
+                  <button id="PaymentStatuGet" class="btn">Copiar</button>
+                  <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
+                  <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+              </li>
+              <li > 
+                <h2 class="negrita">
+                  <span class="verde">GET :</span>
+                  Devuelve Estado de orden por ID
+                </h2>
+                <p><span class="negrita">EndPoint : </span>http://localhost:1234/states/:id</p>
+                <button id="PaymentStatuGetID" class="btn">Copiar</button>
+                <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
+                <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+            </li>
+            <li > 
+              <h2 class="negrita">
+                <span class="azul">POST :</span>
+                Crea Estado de la orden
+              </h2>
+              <p><span class="negrita">EndPoint : </span>http://localhost:1234/states</p>
+              <button id="PaymentStatuPost" class="btn">Copiar</button>
+              <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
+              <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+    <pre style="box-sizing: border-box;overflow-x: scroll;">
+      {
+        "name": "ESTADO ENTREGADO",
+        "description": "description de ESTADO",
+      }
+    </pre>
+          </li>
+          <li > 
+            <h2 class="negrita">
+              <span class="amarillo">PATH :</span>
+              Actualiza Estado de la orden
+            </h2>
+            <p><span class="negrita">EndPoint : </span>http://localhost:1234/states/:id</p>
+            <button id="PaymentStatuPathID" class="btn">Copiar</button>
+            <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
+            <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+    <pre style="box-sizing: border-box;overflow-x: scroll;">
+      {
+        "name": "ESTADO ENTREGADO EDITADO",
+        "description": "description de ESTADO EDITADO ENTREGADO",
+      }
+    </pre>
+          </li>
+          <li > 
+            <h2 class="negrita">
+              <span class="rojo">DELETE :</span>
+              Elimina Estado por ID de la orden
+            </h2>
+            <p><span class="negrita">EndPoint : </span>http://localhost:1234/states/:id</p>
+            <button id="PaymentStatuDeleteID" class="btn">Copiar</button>
+            <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
+            <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+            </li>
+            </ul>
+        </details>
+  
     </article>
   </section>
 

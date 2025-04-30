@@ -3,6 +3,7 @@ import conn from './db.js'
 
 export class PaymentStatuModel {
   static async getAll () {
+    console.log('getAll')
     try {
       //  console.log(role)
       /*   if (role) {
@@ -20,7 +21,7 @@ export class PaymentStatuModel {
         const statess = resultRoles.rows
         return statess
       } */
-      const res = await conn.query('SELECT * FROM states;')
+      const res = await conn.query('SELECT * FROM payment_statu;')
       return res.rows
     } catch (e) {
       console.log('Error DB en consutar statess ')
@@ -30,7 +31,7 @@ export class PaymentStatuModel {
 
   static async getById (id) {
     try {
-      const result = await conn.query('SELECT * FROM states WHERE states_id = $1;', [id])
+      const result = await conn.query('SELECT * FROM payment_statu WHERE payment_statu_id = $1;', [id])
       return result.rows
     } catch (e) {
       console.log('Error DB en consutar ')
@@ -43,7 +44,7 @@ export class PaymentStatuModel {
     const { name, description } = input
     try {
       // eslint-disable-next-line camelcase
-      const resultID = await conn.query('INSERT INTO states(states_name,states_description) VALUES ($1, $2) RETURNING *;', [name, description])
+      const resultID = await conn.query('INSERT INTO payment_statu(payment_statu_name,payment_statu_description) VALUES ($1, $2) RETURNING *;', [name, description])
       return (resultID.rows)
     } catch (e) {
       throw new Error('Errro creating states')
@@ -56,8 +57,9 @@ export class PaymentStatuModel {
       const { name, description } = input
       // const passwordHash = await bc.hash(password, 10)
       // eslint-disable-next-line camelcase
-      const result = await conn.query('UPDATE states SET states_name = $1, states_description = $2  WHERE states_id = $3 RETURNING *;', [name, description, id])
+      const result = await conn.query('UPDATE payment_statu SET payment_statu_name = $1, payment_statu_description = $2  WHERE payment_statu_id = $3 RETURNING *;', [name, description, id])
       console.log(result.rows)
+
       return result.rows
     } catch (error) {
       throw new Error('Errro creating states')
@@ -67,7 +69,7 @@ export class PaymentStatuModel {
   static async delete ({ id }) {
     try {
       console.log(id)
-      const result = await conn.query('DELETE FROM states WHERE states_id = $1 returning *;', [id])
+      const result = await conn.query('DELETE FROM payment_statu WHERE payment_statu_id = $1 returning *;', [id])
       console.log(result.rows)
       return result.rows
     } catch (e) {

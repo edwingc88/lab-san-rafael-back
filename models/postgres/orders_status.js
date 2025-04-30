@@ -20,20 +20,20 @@ export class OrderStatuModel {
         const statess = resultRoles.rows
         return statess
       } */
-      const res = await conn.query('SELECT * FROM order_status;')
+      const res = await conn.query('SELECT * FROM order_statu;')
       return res.rows
     } catch (e) {
-      console.log('Error DB en consutar statess ')
+      console.log('Error DB en consutar order_statu ')
       throw new Error(e)
     }
   }
 
   static async getById (id) {
     try {
-      const result = await conn.query('SELECT * FROM states WHERE states_id = $1;', [id])
+      const result = await conn.query('SELECT * FROM order_statu WHERE order_statu_id = $1;', [id])
       return result.rows
     } catch (e) {
-      console.log('Error DB en consutar ')
+      console.log('Error DB en order_statu by ID  ')
       throw new Error(e)
     }
   }
@@ -43,10 +43,10 @@ export class OrderStatuModel {
     const { name, description } = input
     try {
       // eslint-disable-next-line camelcase
-      const resultID = await conn.query('INSERT INTO states(states_name,states_description) VALUES ($1, $2) RETURNING *;', [name, description])
+      const resultID = await conn.query('INSERT INTO order_statu(order_statu_name,order_statu_description) VALUES ($1, $2) RETURNING *;', [name, description])
       return (resultID.rows)
     } catch (e) {
-      throw new Error('Errro creating states')
+      throw new Error('Errro creating order_statu')
     }
   }
 
@@ -56,22 +56,22 @@ export class OrderStatuModel {
       const { name, description } = input
       // const passwordHash = await bc.hash(password, 10)
       // eslint-disable-next-line camelcase
-      const result = await conn.query('UPDATE states SET states_name = $1, states_description = $2  WHERE states_id = $3 RETURNING *;', [name, description, id])
+      const result = await conn.query('UPDATE order_statu SET order_statu_name = $1, order_statu_description = $2  WHERE order_statu_id = $3 RETURNING *;', [name, description, id])
       console.log(result.rows)
       return result.rows
     } catch (error) {
-      throw new Error('Errro creating states')
+      throw new Error('Errro creating order_statu')
     }
   }
 
   static async delete ({ id }) {
     try {
       console.log(id)
-      const result = await conn.query('DELETE FROM states WHERE states_id = $1 returning *;', [id])
+      const result = await conn.query('DELETE FROM order_statu WHERE order_statu_id = $1 returning *;', [id])
       console.log(result.rows)
       return result.rows
     } catch (e) {
-      console.log('Error Role DB in request by ID  ')
+      console.log('Error order_statu DB in request by ID  ')
       throw new Error(e)
     }
   }

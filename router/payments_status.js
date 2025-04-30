@@ -4,20 +4,20 @@ import { PaymentStatuController } from '../controllers/payments_status.js'
 
 // import { verifyToken, isAdmin } from '../middlewares/authjwt.js'
 
-export const createPaymentStatuRouter = ({ paymentStateModel }) => {
+export const createPaymentStatuRouter = ({ paymentStatuModel }) => {
   const paymentsStatusRouter = Router()
 
-  const paymentsStateController = new PaymentStatuController({ paymentStateModel })
+  const paymentStatuController = new PaymentStatuController({ paymentStatuModel })
 
-  paymentsStatusRouter.get('/', paymentsStateController.getAll)
+  paymentsStatusRouter.get('/', paymentStatuController.getAll)
 
-  paymentsStatusRouter.get('/:id', paymentsStateController.getById)
+  paymentsStatusRouter.get('/:id', paymentStatuController.getById)
 
-  paymentsStatusRouter.post('/', paymentsStateController.create)
+  paymentsStatusRouter.post('/', paymentStatuController.create)
 
-  paymentsStatusRouter.patch('/:id', /* [verifyToken, isAdmin], */ paymentsStateController.update)
+  paymentsStatusRouter.patch('/:id', /* [verifyToken, isAdmin], */ paymentStatuController.update)
 
-  paymentsStatusRouter.delete('/:id', paymentsStateController.delete)
+  paymentsStatusRouter.delete('/:id', paymentStatuController.delete)
 
   return paymentsStatusRouter
 }

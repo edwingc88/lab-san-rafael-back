@@ -35,6 +35,8 @@ DROP TABLE IF EXISTS payment CASCADE;
 DROP TABLE IF EXISTS exam_order_relation CASCADE;
 DROP TABLE IF EXISTS payment_status CASCADE;
 DROP TABLE IF EXISTS order_status CASCADE;
+DROP TABLE IF EXISTS payment_statu CASCADE;
+DROP TABLE IF EXISTS order_statu CASCADE;
 
 create extension if not exists "uuid-ossp";
 
@@ -102,13 +104,13 @@ INSERT INTO users (users_dni,users_email,users_username,users_password,users_fir
 
 
 
- CREATE TABLE IF NOT EXISTS order_status(
-   order_status_id serial PRIMARY KEY,
-   order_status_name VARCHAR(255),
-   order_status_description VARCHAR(255)
+ CREATE TABLE IF NOT EXISTS order_statu(
+   order_statu_id serial PRIMARY KEY,
+   order_statu_name VARCHAR(255),
+   order_statu_description VARCHAR(255)
 );
 
-INSERT INTO order_status (order_status_name,order_status_description) VALUES
+INSERT INTO order_statu (order_statu_name,order_statu_description) VALUES
   ('PENDIENTE', 'PENDIENTE listo para tomar muestra'),
   ('MUESTRA TOMADA', 'MUESTRA TOMADA listo para analizar'),
   ('EN ANALISIS', 'ANALISIS REALIZADO listo para verificar datos '),
@@ -195,12 +197,12 @@ CREATE TABLE IF NOT EXISTS orders (
   orders_date DATE,
   orders_observation VARCHAR(255),
   orders_id_users INT NOT NULL,  
-  orders_id_order_status INT NULL,
+  orders_id_order_statu INT NULL,
   FOREIGN KEY (orders_id_users) REFERENCES users(users_id) ON DELETE CASCADE,
-  FOREIGN KEY (orders_id_order_status) REFERENCES order_status(order_status_id)  ON DELETE SET NULL
+  FOREIGN KEY (orders_id_order_statu) REFERENCES order_statu(order_statu_id)  ON DELETE SET NULL
 );
 
-INSERT INTO orders (orders_id, orders_number, orders_date, orders_observation, orders_id_users, orders_id_order_status) VALUES
+INSERT INTO orders (orders_id, orders_number, orders_date, orders_observation, orders_id_users, orders_id_order_statu) VALUES
 (1, 1, '2023-05-01', 'ninguna', 4, 1),
 (2, 2, '2023-05-02', 'ninguna', 5, 1),
 (3, 3, '2023-05-03', 'ninguna', 6, 1);
@@ -283,15 +285,17 @@ INSERT INTO invoice (invoice_id, invoice_bs, invoice_dolar, invoice_method_payme
 (1, 100.20,0, 'efectivo', 'efectivo', true, '2023-05-01', 1),
 (2, 0, 10,'efectivo', 'efectivo', true, '2023-05-02', 2); */
 
-CREATE TABLE IF NOT EXISTS payment_status(
-  payment_status_id serial PRIMARY KEY,
-  payment_status_name VARCHAR(255) NOT NULL UNIQUE
+CREATE TABLE IF NOT EXISTS payment_statu(
+  payment_statu_id serial PRIMARY KEY,
+  payment_statu_name VARCHAR(255) NOT NULL UNIQUE,
+  payment_statu_description VARCHAR(255) NULL
 );
 
-INSERT INTO payment_status (payment_status_id, payment_status_name) VALUES
-(1,'PAGADO'),
-(2,'ANULADO'),
-(3,'PENDIENTE');
+INSERT INTO payment_statu (payment_statu_id, payment_statu_name, payment_statu_description) VALUES
+(1,'PAGADO','Pago realizado'),
+(2,'ANULADO','Pago anulado'),
+(3,'PENDIENTE','Pago pendiente');
+
 
 CREATE TABLE IF NOT EXISTS payment(
   payment_id serial PRIMARY KEY,
@@ -299,13 +303,13 @@ CREATE TABLE IF NOT EXISTS payment(
   payment_dolar NUMERIC,
   payment_reference VARCHAR(255) NULL,
 /*   payment_status BOOLEAN CONSTRAINT payment_status_valido CHECK(payment_status IN ('true','false')) DEFAULT 'false', */
-  payment_id_payment_status INT NOT NULL,
+  payment_id_payment_statu INT NOT NULL,
   payment_id_orders INT NOT NULL,
-  FOREIGN KEY (payment_id_payment_status) REFERENCES payment_status(payment_status_id) ON DELETE CASCADE,
+  FOREIGN KEY (payment_id_payment_statu) REFERENCES payment_statu(payment_statu_id) ON DELETE CASCADE,
   FOREIGN KEY (payment_id_orders) REFERENCES orders(orders_id) ON DELETE CASCADE
 );
 
-INSERT INTO payment (payment_id, payment_bs, payment_dolar, payment_reference, payment_id_payment_status, payment_id_orders) VALUES
+INSERT INTO payment (payment_id, payment_bs, payment_dolar, payment_reference, payment_id_payment_statu, payment_id_orders) VALUES
 (1, 100.20,0, '1623153215',1, 1),
 (2, 0, 10,'', 1, 2);
 
@@ -317,7 +321,6 @@ INSERT INTO payment (payment_id, payment_bs, payment_dolar, payment_reference, p
  ALTER SEQUENCE parameter_parameter_id_seq RESTART WITH 28;
  ALTER SEQUENCE orders_orders_id_seq RESTART WITH 4;
  ALTER SEQUENCE orders_orders_number_seq RESTART WITH 4;
-/*ALTER SEQUENCE invoice_invoice_id_seq RESTART WITH 3;*/
  ALTER SEQUENCE payment_payment_id_seq RESTART WITH 3;
  ALTER SEQUENCE exam_order_relation_exam_order_relation_id_seq RESTART WITH 9;
  
