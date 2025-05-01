@@ -75,7 +75,7 @@ export const createApp = ({ orderStatuModel, paymentStatuModel, userModel, roleM
   app.use('/roles', createRoleRouter({ roleModel }))
   app.use('/auth', createAuthRouter({ authModel }))
   app.use('/exams', createExamRouter({ examModel }))
-  app.use('/exams_orders', createExamOrderResultRouter({ examOrderResultModel }))
+  app.use('/exams_orders_relations', createExamOrderResultRouter({ examOrderResultModel }))
   app.use('/parameters', createParameterRouter({ parameterModel }))
   app.use('/payments', createPaymentRouter({ paymentModel }))
   app.use('/orders', createOrderRouter({ orderModel }))
