@@ -520,10 +520,164 @@
     <!--  Exam , Ordenes , Resultados, Facturas  -->
 
     <article id="colum2" style="width: 650px;min-width:650px;overflow-x: hidden;">
- 
       
+      <!----------------------------- API Examenes ----------------------------------->
+      <details>
+            <summary style="margin: 1rem; font-size: x-large; font-weight: 600;">
+                API Exam <span class="amarillo">&#x2615;&#xfe0e;</span>
+            </summary>
+            <ul style="padding-bottom: .5rem;">
+              <li> 
+                <h2 class="negrita">
+                    <span class="verde">GET :</span>
+                    Devuelve todos los Examenes 
+                  </h2>
+                  <p><span class="negrita">EndPoint : </span>http://localhost:1234/exams</p>
+                  <button id="ExamGet" class="btn">Copiar</button>
+                  <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
+                  <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+              </li>
+              <li> 
+                <h2 class="negrita">
+                    <span class="verde">GET :</span>
+                    Devuelve todos los Examenes por ID de categoria
+                  </h2>
+                  <p><span class="negrita">EndPoint : </span>http://localhost:1234/exams?category=1</p>
+                  <button id="ExamGetCategoryID" class="btn">Copiar</button>
+                  <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
+                  <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+              </li>
+              <li> 
+                <h2 class="negrita">
+                    <span class="verde">GET :</span>
+                    Devuelve Examen por su ID 
+                  </h2>
+                  <p><span class="negrita">EndPoint : </span>http://localhost:1234/exams/:id</p>
+                  <button id="ExamGetID" class="btn">Copiar</button>
+                  <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
+                  <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+              </li>
+              <li> 
+                <h2 class="negrita">
+                    <span class="azul">POST :</span>
+                    Devuelve todos los Examenescon sus categorias
+                  </h2>
+                  <p><span class="negrita">EndPoint : </span>http://localhost:1234/exams</p>
+                  <button id="ExamPost" class="btn">Copiar</button>
+                  <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
+                  <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+  <pre style="box-sizing: border-box;overflow-x: scroll;">
+    {
+      "name": "Lymph#",
+      "description": "examen de hermatogolia",
+      "indicator": "10-15",
+      "unit": "hz",
+      "price": 4,
+      "id_category": 1
+    }
+   </pre>
+              </li>
+              <li> 
+                <h2 class="negrita">
+                    <span class="amarillo">PATH :</span>
+                    Devuelve todos los Examenescon sus categorias
+                  </h2>
+                  <p><span class="negrita">EndPoint : </span>http://localhost:1234/exams/:id</p>
+                  <button id="ExamPathID" class="btn">Copiar</button>
+                  <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
+                  <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+  <pre style="box-sizing: border-box;overflow-x: scroll;">
+    {
+      "exam_name": "Lymph#",
+      "exam_description": "examen de hermatogolia",
+      "exam_indicator": "10-15",
+      "exam_unit": "hz",
+      "exam_price": 4,
+      "exam_id_category": 1
+     }
+    </pre>
+              </li>
+              <li> 
+                <h2 class="negrita">
+                    <span class="rojo">DELETE :</span>
+                    Devuelve todos los Examenescon sus categorias
+                  </h2>
+                  <p><span class="negrita">EndPoint : </span>http://localhost:1234/exams/:id</p>
+                  <button id="ExamDeleteID" class="btn">Copiar</button>
+                  <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
+                  <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+              </li>
+            </ul>
+      </details>
+      
+      <!--------------------- API Examenes Ordenes Relacion -------------------------->
+      <details>
+            <summary style="margin: 1rem; font-size: x-large; font-weight: 600;">
+                API Examenes Ordenes Relacion<span class="amarillo">&#x2615;&#xfe0e;</span>
+            </summary>
+            <ul style="padding-bottom: .5rem;">
+              <li> 
+                  <h2 class="negrita">
+                    <span class="verde">GET :</span>
+                    Devuelve todos los Examenes Ordenes Relacion
+                  </h2>
+                  <p><span class="negrita">EndPoint : </span>http://localhost:1234/exams_orders_relations</p>
+                  <button id="ExamOrderRelationGet" class="btn">Copiar</button>
+                  <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
+                  <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+              </li>
+              <li> 
+                <h2 class="negrita">
+                  <span class="verde">GET :</span>
+                  Devuelve todos los Examenescon sus categorias
+                </h2>
+                <p><span class="negrita">EndPoint : </span>http://localhost:1234/exams_orders_relations/:id</p>
+                <button id="ExamOrderRelationGetID" class="btn">Copiar</button>
+                <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
+                <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+            </li>
+          <li> 
+            <h2 class="negrita">
+                <span class="azul">POST :</span>
+                Devuelve todos los Examenes con Ordenes 
+              </h2>
+              <p><span class="negrita">EndPoint : </span>http://localhost:1234/exams_orders_relations</p>
+              <button id="ExamOrderRelationPost" class="btn">Copiar</button>
+              <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
+              <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+    <pre style="box-sizing: border-box;overflow-x: scroll;">
+    {
+      "id": 1,
+      "id_exam": 1,
+      "id_orders": 1,
+    }
+    </pre>
+          </li>
+          <li> 
+          <li> 
+            <h2 class="negrita">
+              <span class="amarillo">PATH :</span>
+              Devuelve todos los Examenescon sus categorias
+            </h2>
+            <p><span class="negrita">EndPoint : </span>http://localhost:1234/exams_orders_relations</p>
+            <button id="ExamOrderRelationPathID" class="btn">Copiar</button>
+            <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
+            <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+        </li>
+        <li> 
+          <h2 class="negrita">
+            <span class="rojo">DELETE :</span>
+            Devuelve todos los Examenescon sus categorias
+          </h2>
+          <p><span class="negrita">EndPoint : </span>http://localhost:1234/exams_orders_relations</p>
+          <button id="ExamOrderRelationDeleteID" class="btn">Copiar</button>
+          <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
+          <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+      </li>
+            </ul>
+      </details>
+  
       <!------------------------------ API Ordenes ----------------------------------->
-      
       <details>
         <summary style="margin: 1rem; font-size: x-large; font-weight: 600;">
             API Ordenes <span class="amarillo">&#x2615;&#xfe0e;</span>
@@ -592,170 +746,79 @@
         </ul>
       </details>
 
-
-
-     <!--------------------- API Examenes por Ordenes -------------------------->
+      <!---------------------------- API ORDER STATUS ---------------------------------->  
       <details>
-        <summary style="margin: 1rem; font-size: x-large; font-weight: 600;">
-            API Examenes por Ordenes <span class="amarillo">&#x2615;&#xfe0e;</span>
-        </summary>
-        <ul style="padding-bottom: .5rem;">
-          <li> 
+              <summary style="margin: 1rem; font-size: x-large; font-weight: 600;">
+                  API Order Statu <span class="amarillo">&#x2615;&#xfe0e;</span>
+              </summary>
+              <ul style="padding-bottom: .5rem;">
+                <li > 
+                    <h2 class="negrita">
+                      <span class="verde">GET :</span>
+                      Devuelve todos los Estados disponible para las ordenes
+                    </h2>
+                    <p><span class="negrita">EndPoint : </span>http://localhost:1234/order_statu</p>
+                    <button id="OrderStatuGet" class="btn">Copiar</button>
+                    <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
+                    <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+                </li>
+                <li > 
+                  <h2 class="negrita">
+                    <span class="verde">GET :</span>
+                    Devuelve Estado de orden por ID
+                  </h2>
+                  <p><span class="negrita">EndPoint : </span>http://localhost:1234/order_status/:id</p>
+                  <button id="OrderStatuGetID" class="btn">Copiar</button>
+                  <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
+                  <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+                </li>
+                <li> 
+                  <h2 class="negrita">
+                    <span class="azul">POST :</span>
+                    Crea Estado de la orden
+                  </h2>
+                  <p><span class="negrita">EndPoint : </span>http://localhost:1234/order_status</p>
+                  <button id="OrderStatuPost" class="btn">Copiar</button>
+                  <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
+                  <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+      <pre style="box-sizing: border-box;overflow-x: scroll;">
+        {
+          "name": "ESTADO ENTREGADO",
+          "description": "description de ESTADO",
+        }
+      </pre>
+                </li>
+                <li > 
               <h2 class="negrita">
-                <span class="verde">GET :</span>
-                Devuelve todos los Examenes con sus categorias
+                <span class="amarillo">PATH :</span>
+                Actualiza Estado de la orden
               </h2>
-              <p><span class="negrita">EndPoint : </span>http://localhost:1234/exams_orders</p>
-              <button id="OEGet" class="btn">Copiar</button>
+              <p><span class="negrita">EndPoint : </span>http://localhost:1234/order_status/:id</p>
+              <button id="OrderStatuPathID" class="btn">Copiar</button>
               <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
               <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
-          </li>
-          <li> 
-            <h2 class="negrita">
-              <span class="verde">GET :</span>
-              Devuelve todos los Examenescon sus categorias
-            </h2>
-            <p><span class="negrita">EndPoint : </span>http://localhost:1234/exams_orders/:id</p>
-            <button id="OEGetID" class="btn">Copiar</button>
-            <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
-            <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
-        </li>
-      <li> 
-        <h2 class="negrita">
-            <span class="azul">POST :</span>
-            Devuelve todos los Examenes con Ordenes 
-          </h2>
-          <p><span class="negrita">EndPoint : </span>http://localhost:1234/exams_orders</p>
-          <button id="ExamPost" class="btn">Copiar</button>
-          <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
-          <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
-<pre style="box-sizing: border-box;overflow-x: scroll;">
-{
-  "id": 1,
-  "id_exam": 1,
-  "id_orders": 1,
-}
-</pre>
-      </li>
-      <li> 
-      <li> 
-        <h2 class="negrita">
-          <span class="amarillo">PATH :</span>
-          Devuelve todos los Examenescon sus categorias
-        </h2>
-        <p><span class="negrita">EndPoint : </span>http://localhost:1234/exams_orders</p>
-        <button id="OEPathID" class="btn">Copiar</button>
-        <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
-        <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
-    </li>
-    <li> 
-      <h2 class="negrita">
-        <span class="rojo">DELETE :</span>
-        Devuelve todos los Examenescon sus categorias
-      </h2>
-      <p><span class="negrita">EndPoint : </span>http://localhost:1234/exams_orders</p>
-      <button id="OEDeleteID" class="btn">Copiar</button>
-      <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
-      <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
-  </li>
-        </ul>
+      <pre style="box-sizing: border-box;overflow-x: scroll;">
+        {
+          "name": "ESTADO ENTREGADO EDITADO",
+          "description": "description de ESTADO EDITADO ENTREGADO",
+        }
+      </pre>
+                </li>
+                <li> 
+                  <h2 class="negrita">
+                    <span class="rojo">DELETE :</span>
+                    Elimina Estado por ID de la orden
+                  </h2>
+                  <p><span class="negrita">EndPoint : </span>http://localhost:1234/order_status/:id</p>
+                  <button id="OrderStatuDeleteID" class="btn">Copiar</button>
+                  <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
+                  <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+                </li>
+              </ul>
       </details>
 
-
-
-      <!----------------------------- API Examenes ----------------------------------->
-        
+      <!----------------------------- API Parameter ----------------------------------->
       <details>
-          <summary style="margin: 1rem; font-size: x-large; font-weight: 600;">
-              API Exam <span class="amarillo">&#x2615;&#xfe0e;</span>
-          </summary>
-          <ul style="padding-bottom: .5rem;">
-            <li> 
-              <h2 class="negrita">
-                  <span class="verde">GET :</span>
-                  Devuelve todos los Examenes 
-                </h2>
-                <p><span class="negrita">EndPoint : </span>http://localhost:1234/exams</p>
-                <button id="ExamGet" class="btn">Copiar</button>
-                <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
-                <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
-            </li>
-            <li> 
-              <h2 class="negrita">
-                  <span class="verde">GET :</span>
-                  Devuelve todos los Examenes por ID de categoria
-                </h2>
-                <p><span class="negrita">EndPoint : </span>http://localhost:1234/exams?category=1</p>
-                <button id="ExamGetCategoryID" class="btn">Copiar</button>
-                <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
-                <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
-            </li>
-            <li> 
-              <h2 class="negrita">
-                  <span class="verde">GET :</span>
-                  Devuelve Examen por su ID 
-                </h2>
-                <p><span class="negrita">EndPoint : </span>http://localhost:1234/exams/:id</p>
-                <button id="ExamGetID" class="btn">Copiar</button>
-                <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
-                <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
-            </li>
-            <li> 
-              <h2 class="negrita">
-                  <span class="azul">POST :</span>
-                  Devuelve todos los Examenescon sus categorias
-                </h2>
-                <p><span class="negrita">EndPoint : </span>http://localhost:1234/exams</p>
-                <button id="ExamPost" class="btn">Copiar</button>
-                <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
-                <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
-<pre style="box-sizing: border-box;overflow-x: scroll;">
-  {
-    "name": "Lymph#",
-    "description": "examen de hermatogolia",
-    "indicator": "10-15",
-    "unit": "hz",
-    "price": 4,
-    "id_category": 1
-  }
- </pre>
-            </li>
-            <li> 
-              <h2 class="negrita">
-                  <span class="amarillo">PATH :</span>
-                  Devuelve todos los Examenescon sus categorias
-                </h2>
-                <p><span class="negrita">EndPoint : </span>http://localhost:1234/exams/:id</p>
-                <button id="ExamPathID" class="btn">Copiar</button>
-                <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
-                <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
-<pre style="box-sizing: border-box;overflow-x: scroll;">
-  {
-    "exam_name": "Lymph#",
-    "exam_description": "examen de hermatogolia",
-    "exam_indicator": "10-15",
-    "exam_unit": "hz",
-    "exam_price": 4,
-    "exam_id_category": 1
-   }
-  </pre>
-            </li>
-            <li> 
-              <h2 class="negrita">
-                  <span class="rojo">DELETE :</span>
-                  Devuelve todos los Examenescon sus categorias
-                </h2>
-                <p><span class="negrita">EndPoint : </span>http://localhost:1234/exams/:id</p>
-                <button id="ExamDeleteID" class="btn">Copiar</button>
-                <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
-                <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
-            </li>
-          </ul>
-      </details>
-
-          <!----------------------------- API Parameter ----------------------------------->
-        
-          <details>
             <summary style="margin: 1rem; font-size: x-large; font-weight: 600;">
                 API Parameter <span class="amarillo">&#x2615;&#xfe0e;</span>
             </summary>
@@ -838,12 +901,10 @@
                   <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
               </li>
             </ul>
-        </details>
-  
+      </details>
 
-            <!----------------------------- API Resultados --------------------------------->
-      
-            <details>
+      <!----------------------------- API Resultados --------------------------------->
+      <details>
               <summary style="margin: 1rem; font-size: x-large; font-weight: 600;">
                   API Resultados <span class="amarillo">&#x2615;&#xfe0e;</span>
               </summary>
@@ -915,14 +976,12 @@
                  <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
                 </li>
               </ul>
-            </details>
+      </details>
 
-
-      <!---------------------------- API Invoices ---------------------------------->
-          
+      <!---------------------------- API Payments ----------------------------------> 
       <details>
         <summary style="margin: 1rem; font-size: x-large; font-weight: 600;">
-            API Facturas <span class="amarillo">&#x2615;&#xfe0e;</span>
+            API Payment <span class="amarillo">&#x2615;&#xfe0e;</span>
         </summary>
         <ul style="padding-bottom: .5rem;">
           <li > 
@@ -930,8 +989,8 @@
                 <span class="verde">GET :</span>
                 Devuelve todas las Facturas
               </h2>
-              <p><span class="negrita">EndPoint : </span>http://localhost:1234/invoices</p>
-              <button id="InvoiceGet" class="btn">Copiar</button>
+              <p><span class="negrita">EndPoint : </span>http://localhost:1234/payments</p>
+              <button id="PaymentGet" class="btn">Copiar</button>
               <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
               <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
           </li>
@@ -940,8 +999,8 @@
               <span class="verde">GET :</span>
               Devuelve Factura por ID
             </h2>
-            <p><span class="negrita">EndPoint : </span>http://localhost:1234/invoices/:id</p>
-            <button id="InvoiceGetID" class="btn">Copiar</button>
+            <p><span class="negrita">EndPoint : </span>http://localhost:1234/payments/:id</p>
+            <button id="PaymentGetID" class="btn">Copiar</button>
             <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
             <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
         </li>
@@ -950,8 +1009,8 @@
             <span class="azul">POST :</span>
             Crear una Factura
           </h2>
-          <p><span class="negrita">EndPoint : </span>http://localhost:1234/invoices</p>
-          <button id="InvoicePost" class="btn">Copiar</button>
+          <p><span class="negrita">EndPoint : </span>http://localhost:1234/payments</p>
+          <button id="PaymentPost" class="btn">Copiar</button>
           <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
           <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
 <pre style="box-sizing: border-box;overflow-x: scroll;">
@@ -959,7 +1018,7 @@
     "total": "35",
     "method_payment": "efectivo",
     "reference_payment": "null",
-    "states_payment": "false",
+    "order_status_payment": "false",
     "id_orders": 1
   }
 </pre>
@@ -969,8 +1028,8 @@
           <span class="amarillo">PATH :</span>
           Edita Factura por ID
         </h2>
-        <p><span class="negrita">EndPoint : </span>http://localhost:1234/invoices/:id</p>
-        <button id="InvoicePathID" class="btn">Copiar</button>
+        <p><span class="negrita">EndPoint : </span>http://localhost:1234/payments/:id</p>
+        <button id="PaymentPathID" class="btn">Copiar</button>
         <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
         <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
 <pre style="box-sizing: border-box;overflow-x: scroll;">
@@ -978,8 +1037,8 @@
     "total": "35",
     "method_payment": "efectivo",
     "reference_payment": "1526135103",
-    "states_payment": "true",
-    "states_date": 2"024-08-04T04:00:00.000Z",
+    "order_status_payment": "true",
+    "order_status_date": 2"024-08-04T04:00:00.000Z",
     "id_orders": 1
   }
 </pre>
@@ -989,89 +1048,16 @@
           <span class="rojo">DELETE :</span>
           Elimina Factura por ID
         </h2>
-        <p><span class="negrita">EndPoint : </span>http://localhost:1234/invoices/:id</p>
-        <button id="InvoiceDeleteID" class="btn">Copiar</button>
+        <p><span class="negrita">EndPoint : </span>http://localhost:1234/payments/:id</p>
+        <button id="PaymentDeleteID" class="btn">Copiar</button>
         <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
         <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
        </li>
         </ul>
       </details>
 
-     <!---------------------------- API STATES ---------------------------------->
-          
+      <!---------------------------- API PAYMENT STATU ---------------------------------->
       <details>
-          <summary style="margin: 1rem; font-size: x-large; font-weight: 600;">
-              API Estados <span class="amarillo">&#x2615;&#xfe0e;</span>
-          </summary>
-          <ul style="padding-bottom: .5rem;">
-            <li > 
-                <h2 class="negrita">
-                  <span class="verde">GET :</span>
-                  Devuelve todos los Estados disponible para las ordenes
-                </h2>
-                <p><span class="negrita">EndPoint : </span>http://localhost:1234/states</p>
-                <button id="StateGet" class="btn">Copiar</button>
-                <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
-                <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
-            </li>
-            <li > 
-              <h2 class="negrita">
-                <span class="verde">GET :</span>
-                Devuelve Estado de orden por ID
-              </h2>
-              <p><span class="negrita">EndPoint : </span>http://localhost:1234/states/:id</p>
-              <button id="StateGetID" class="btn">Copiar</button>
-              <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
-              <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
-          </li>
-          <li > 
-            <h2 class="negrita">
-              <span class="azul">POST :</span>
-              Crea Estado de la orden
-            </h2>
-            <p><span class="negrita">EndPoint : </span>http://localhost:1234/states</p>
-            <button id="StatePost" class="btn">Copiar</button>
-            <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
-            <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
-  <pre style="box-sizing: border-box;overflow-x: scroll;">
-    {
-      "name": "ESTADO ENTREGADO",
-      "description": "description de ESTADO",
-    }
-  </pre>
-        </li>
-        <li > 
-          <h2 class="negrita">
-            <span class="amarillo">PATH :</span>
-            Actualiza Estado de la orden
-          </h2>
-          <p><span class="negrita">EndPoint : </span>http://localhost:1234/states/:id</p>
-          <button id="StatePathID" class="btn">Copiar</button>
-          <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
-          <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
-  <pre style="box-sizing: border-box;overflow-x: scroll;">
-    {
-      "name": "ESTADO ENTREGADO EDITADO",
-      "description": "description de ESTADO EDITADO ENTREGADO",
-    }
-  </pre>
-        </li>
-        <li > 
-          <h2 class="negrita">
-            <span class="rojo">DELETE :</span>
-            Elimina Estado por ID de la orden
-          </h2>
-          <p><span class="negrita">EndPoint : </span>http://localhost:1234/states/:id</p>
-          <button id="StateDeleteID" class="btn">Copiar</button>
-          <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
-          <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
-          </li>
-          </ul>
-      </details>
-
-          <!---------------------------- API PAYMENT STATU ---------------------------------->
-          
-          <details>
             <summary style="margin: 1rem; font-size: x-large; font-weight: 600;">
                 API Payment Statu <span class="amarillo">&#x2615;&#xfe0e;</span>
             </summary>
@@ -1081,7 +1067,7 @@
                     <span class="verde">GET :</span>
                     Devuelve todos los Estados disponible para las ordenes
                   </h2>
-                  <p><span class="negrita">EndPoint : </span>http://localhost:1234/states</p>
+                  <p><span class="negrita">EndPoint : </span>http://localhost:1234/payments_status</p>
                   <button id="PaymentStatuGet" class="btn">Copiar</button>
                   <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
                   <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
@@ -1091,7 +1077,7 @@
                   <span class="verde">GET :</span>
                   Devuelve Estado de orden por ID
                 </h2>
-                <p><span class="negrita">EndPoint : </span>http://localhost:1234/states/:id</p>
+                <p><span class="negrita">EndPoint : </span>http://localhost:1234/payments_status/:id</p>
                 <button id="PaymentStatuGetID" class="btn">Copiar</button>
                 <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
                 <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
@@ -1101,7 +1087,7 @@
                 <span class="azul">POST :</span>
                 Crea Estado de la orden
               </h2>
-              <p><span class="negrita">EndPoint : </span>http://localhost:1234/states</p>
+              <p><span class="negrita">EndPoint : </span>http://localhost:1234/payments_status</p>
               <button id="PaymentStatuPost" class="btn">Copiar</button>
               <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
               <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
@@ -1117,7 +1103,7 @@
               <span class="amarillo">PATH :</span>
               Actualiza Estado de la orden
             </h2>
-            <p><span class="negrita">EndPoint : </span>http://localhost:1234/states/:id</p>
+            <p><span class="negrita">EndPoint : </span>http://localhost:1234/payments_status/:id</p>
             <button id="PaymentStatuPathID" class="btn">Copiar</button>
             <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
             <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
@@ -1133,13 +1119,13 @@
               <span class="rojo">DELETE :</span>
               Elimina Estado por ID de la orden
             </h2>
-            <p><span class="negrita">EndPoint : </span>http://localhost:1234/states/:id</p>
+            <p><span class="negrita">EndPoint : </span>http://localhost:1234/payments_status/:id</p>
             <button id="PaymentStatuDeleteID" class="btn">Copiar</button>
             <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
             <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
             </li>
             </ul>
-        </details>
+      </details>
   
     </article>
   </section>
@@ -1206,19 +1192,12 @@ document.getElementById('ExamPathID').addEventListener('click', copiarAlPortapap
 document.getElementById('ExamDeleteID').addEventListener('click', copiarAlPortapapeles);
 
 
-document.getElementById('ParameterGet').addEventListener('click', copiarAlPortapapeles);
-document.getElementById('ParameterGetID').addEventListener('click', copiarAlPortapapeles);
-document.getElementById('ParameterGetIDExam').addEventListener('click', copiarAlPortapapeles);
-document.getElementById('ParameterPost').addEventListener('click', copiarAlPortapapeles);
-document.getElementById('ParameterPathID').addEventListener('click', copiarAlPortapapeles);
-document.getElementById('ParameterDeleteID').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('ExamOrderRelationGet').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('ExamOrderRelationGetID').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('ExamOrderRelationPost').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('ExamOrderRelationPathID').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('ExamOrderRelationDeleteID').addEventListener('click', copiarAlPortapapeles);
 
-document.getElementById('CategoryGet').addEventListener('click', copiarAlPortapapeles);
-document.getElementById('ExamGetCategoryID').addEventListener('click', copiarAlPortapapeles);
-document.getElementById('CategoryGetID').addEventListener('click', copiarAlPortapapeles);
-document.getElementById('CategoryPost').addEventListener('click', copiarAlPortapapeles);
-document.getElementById('CategoryPathID').addEventListener('click', copiarAlPortapapeles);
-document.getElementById('CategoryDeleteID').addEventListener('click', copiarAlPortapapeles);
 
 document.getElementById('OrderGet').addEventListener('click', copiarAlPortapapeles);
 document.getElementById('OrderGetID').addEventListener('click', copiarAlPortapapeles);
@@ -1227,31 +1206,47 @@ document.getElementById('OrderPathID').addEventListener('click', copiarAlPortapa
 document.getElementById('OrderDeleteID').addEventListener('click', copiarAlPortapapeles);
 document.getElementById('OrderGetUserID').addEventListener('click', copiarAlPortapapeles);
 
+
+document.getElementById('OrderStatuGet').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('OrderStatuGetID').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('OrderStatuPost').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('OrderStatuPathID').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('OrderStatuDeleteID').addEventListener('click', copiarAlPortapapeles); 
+
+document.getElementById('ParameterGet').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('ParameterGetID').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('ParameterGetIDExam').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('ParameterPost').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('ParameterPathID').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('ParameterDeleteID').addEventListener('click', copiarAlPortapapeles);
+
+
+document.getElementById('CategoryGet').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('ExamGetCategoryID').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('CategoryGetID').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('CategoryPost').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('CategoryPathID').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('CategoryDeleteID').addEventListener('click', copiarAlPortapapeles);
+
+
 document.getElementById('ResultGet').addEventListener('click', copiarAlPortapapeles);
 document.getElementById('ResultGetID').addEventListener('click', copiarAlPortapapeles);
 document.getElementById('ResultPost').addEventListener('click', copiarAlPortapapeles);
 document.getElementById('ResultPathID').addEventListener('click', copiarAlPortapapeles);
 document.getElementById('ResultDeleteID').addEventListener('click', copiarAlPortapapeles);
 
-document.getElementById('OEGet').addEventListener('click', copiarAlPortapapeles);
-document.getElementById('OEGetID').addEventListener('click', copiarAlPortapapeles);
-document.getElementById('OEPost').addEventListener('click', copiarAlPortapapeles);
-document.getElementById('OEPathID').addEventListener('click', copiarAlPortapapeles);
-document.getElementById('OEDeleteID').addEventListener('click', copiarAlPortapapeles);
 
+document.getElementById('PaymentGet').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('PaymentGetID').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('PaymentPost').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('PaymentPathID').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('PaymentDeleteID').addEventListener('click', copiarAlPortapapeles); 
 
-document.getElementById('InvoiceGet').addEventListener('click', copiarAlPortapapeles);
-document.getElementById('InvoiceGetID').addEventListener('click', copiarAlPortapapeles);
-document.getElementById('InvoicePost').addEventListener('click', copiarAlPortapapeles);
-document.getElementById('InvoicePathID').addEventListener('click', copiarAlPortapapeles);
-document.getElementById('InvoiceDeleteID').addEventListener('click', copiarAlPortapapeles); 
-
-document.getElementById('StateGet').addEventListener('click', copiarAlPortapapeles);
-document.getElementById('StateGetID').addEventListener('click', copiarAlPortapapeles);
-document.getElementById('StatePost').addEventListener('click', copiarAlPortapapeles);
-document.getElementById('StatePathID').addEventListener('click', copiarAlPortapapeles);
-document.getElementById('StateDeleteID').addEventListener('click', copiarAlPortapapeles); 
-
+document.getElementById('PaymentStatuGet').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('PaymentStatuGetID').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('PaymentStatuPost').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('PaymentStatuPathID').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('PaymentStatuDeleteID').addEventListener('click', copiarAlPortapapeles); 
 
 </script>
 </html>
