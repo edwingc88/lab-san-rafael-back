@@ -635,45 +635,55 @@
                 <button id="ExamOrderRelationGetID" class="btn">Copiar</button>
                 <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
                 <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
-            </li>
-          <li> 
-            <h2 class="negrita">
-                <span class="azul">POST :</span>
-                Devuelve todos los Examenes con Ordenes 
+              </li>
+              <li> 
+                <h2 class="negrita">
+                  <span class="verde">GET :</span>
+                  Devuelve todos los ExamenesOrdenesRelacion por ID de Orden
+                </h2>
+                <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/exams_orders_relations?orderId=1</p>
+                <button id="ExamOrderRelationGetByIdOrder" class="btn">Copiar</button>
+                <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
+                <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+              </li>
+              <li> 
+                <h2 class="negrita">
+                    <span class="azul">POST :</span>
+                    Devuelve todos los Examenes con Ordenes 
+                  </h2>
+                  <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/exams_orders_relations</p>
+                  <button id="ExamOrderRelationPost" class="btn">Copiar</button>
+                  <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
+                  <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+        <pre style="box-sizing: border-box;overflow-x: scroll;">
+        {
+          "id": 1,
+          "id_exam": 1,
+          "id_orders": 1,
+        }
+        </pre>
+              </li>
+              <li> 
+              <li> 
+              <h2 class="negrita">
+                <span class="amarillo">PATH :</span>
+                Devuelve todos los Examenescon sus categorias
               </h2>
               <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/exams_orders_relations</p>
-              <button id="ExamOrderRelationPost" class="btn">Copiar</button>
+              <button id="ExamOrderRelationPathID" class="btn">Copiar</button>
               <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
               <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
-    <pre style="box-sizing: border-box;overflow-x: scroll;">
-    {
-      "id": 1,
-      "id_exam": 1,
-      "id_orders": 1,
-    }
-    </pre>
-          </li>
-          <li> 
-          <li> 
+              </li>
+              <li> 
             <h2 class="negrita">
-              <span class="amarillo">PATH :</span>
+              <span class="rojo">DELETE :</span>
               Devuelve todos los Examenescon sus categorias
             </h2>
             <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/exams_orders_relations</p>
-            <button id="ExamOrderRelationPathID" class="btn">Copiar</button>
+            <button id="ExamOrderRelationDeleteID" class="btn">Copiar</button>
             <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
             <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
-        </li>
-        <li> 
-          <h2 class="negrita">
-            <span class="rojo">DELETE :</span>
-            Devuelve todos los Examenescon sus categorias
-          </h2>
-          <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/exams_orders_relations</p>
-          <button id="ExamOrderRelationDeleteID" class="btn">Copiar</button>
-          <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
-          <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
-      </li>
+              </li>
             </ul>
       </details>
   
@@ -696,19 +706,9 @@
           <li> 
             <h2 class="negrita">
                 <span class="verde">GET :</span>
-                Devuelve Ordenes por ID de usuario 
-            </h2>
-            <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/orders?id_user={1}</p>
-            <button id="OrderGetUserID" class="btn">Copiar</button>
-            <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
-            <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
-          </li>
-          <li> 
-            <h2 class="negrita">
-                <span class="verde">GET :</span>
                 Devuelve Orden por ID
             </h2>
-            <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/orders/{1}</p>
+            <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/orders/1</p>
             <button id="OrderGetID" class="btn">Copiar</button>
             <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
             <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
@@ -718,10 +718,44 @@
                 <span class="azul">POST :</span>
                 Devuelve Orden por ID
             </h2>
-            <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/orders/{1}</p>
+            <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/orders</p>
             <button id="OrderPost" class="btn">Copiar</button>
             <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
             <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+          </li>
+          <li> 
+            <h2 class="negrita">
+                <span class="azul">POST :</span>
+                Crar Nueva Orden con Examenes y cliente
+            </h2>
+            <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/orders/new/</p>
+            <button id="OrderNewPost" class="btn">Copiar</button>
+            <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
+            <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+            <pre style="box-sizing: border-box;overflow-x: scroll;">
+{
+        "idCustomer":1,
+        "exams":[
+          {
+              "id":"1"
+          },
+          {
+              "id":"2"
+          }
+        ],
+        "payment":{
+            "transferencia":
+            {
+              "bs":1200,
+              "ref":2233838
+            },
+            "divisas":
+            {
+              "dolar":20
+            }
+        }
+}
+            </pre>
           </li>
           <li> 
             <h2 class="negrita">
@@ -757,7 +791,7 @@
                       <span class="verde">GET :</span>
                       Devuelve todos los Estados disponible para las ordenes
                     </h2>
-                    <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/order_statu</p>
+                    <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/orders_status</p>
                     <button id="OrderStatuGet" class="btn">Copiar</button>
                     <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
                     <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
@@ -767,7 +801,7 @@
                     <span class="verde">GET :</span>
                     Devuelve Estado de orden por ID
                   </h2>
-                  <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/order_status/:id</p>
+                  <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/orders_status/:id</p>
                   <button id="OrderStatuGetID" class="btn">Copiar</button>
                   <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
                   <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
@@ -777,7 +811,7 @@
                     <span class="azul">POST :</span>
                     Crea Estado de la orden
                   </h2>
-                  <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/order_status</p>
+                  <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/orders_status</p>
                   <button id="OrderStatuPost" class="btn">Copiar</button>
                   <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
                   <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
@@ -793,7 +827,7 @@
                 <span class="amarillo">PATH :</span>
                 Actualiza Estado de la orden
               </h2>
-              <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/order_status/:id</p>
+              <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/orders_status/:id</p>
               <button id="OrderStatuPathID" class="btn">Copiar</button>
               <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
               <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
@@ -809,7 +843,7 @@
                     <span class="rojo">DELETE :</span>
                     Elimina Estado por ID de la orden
                   </h2>
-                  <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/order_status/:id</p>
+                  <p><span class="negrita">EndPoint : </span>https://lab-san-rafael-api.onrender.com/orders_status/:id</p>
                   <button id="OrderStatuDeleteID" class="btn">Copiar</button>
                   <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
                   <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
@@ -1194,6 +1228,7 @@ document.getElementById('ExamDeleteID').addEventListener('click', copiarAlPortap
 
 document.getElementById('ExamOrderRelationGet').addEventListener('click', copiarAlPortapapeles);
 document.getElementById('ExamOrderRelationGetID').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('ExamOrderRelationGetByIdOrder').addEventListener('click', copiarAlPortapapeles);
 document.getElementById('ExamOrderRelationPost').addEventListener('click', copiarAlPortapapeles);
 document.getElementById('ExamOrderRelationPathID').addEventListener('click', copiarAlPortapapeles);
 document.getElementById('ExamOrderRelationDeleteID').addEventListener('click', copiarAlPortapapeles);
@@ -1202,9 +1237,10 @@ document.getElementById('ExamOrderRelationDeleteID').addEventListener('click', c
 document.getElementById('OrderGet').addEventListener('click', copiarAlPortapapeles);
 document.getElementById('OrderGetID').addEventListener('click', copiarAlPortapapeles);
 document.getElementById('OrderPost').addEventListener('click', copiarAlPortapapeles);
+document.getElementById('OrderNewPost').addEventListener('click', copiarAlPortapapeles);
 document.getElementById('OrderPathID').addEventListener('click', copiarAlPortapapeles);
 document.getElementById('OrderDeleteID').addEventListener('click', copiarAlPortapapeles);
-document.getElementById('OrderGetUserID').addEventListener('click', copiarAlPortapapeles);
+
 
 
 document.getElementById('OrderStatuGet').addEventListener('click', copiarAlPortapapeles);

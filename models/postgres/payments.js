@@ -3,13 +3,13 @@ import conn from './db.js'
 export class PaymentModel {
   static async getAll (/* { _category } */) {
     try {
-      /*    if (_category) {
+      /* if (_category) {
         const loweCaseCategoryID = _category.toLowerCase()
         const res = await conn.query('SELECT * FROM payment WHERE payment_id_category = $1;', [loweCaseCategoryID])
         return res.rows
       }
-      const result = await conn.query('SELECT * FROM payment INNER JOIN category ON payment.payment_id_category = category.category_id INNER JOIN sub_category ON category.category_id_sub_category = sub_category.sub_category_id;') */
-      const result = await conn.query('SELECT * FROM payment INNER JOIN orders ON payment.payment_id_orders = orders.orders_id INNER JOIN states ON orders.orders_id_states = states.states_id;')
+      const result = await conn.query('SELECT * FROM payment') */
+      const result = await conn.query('SELECT * FROM payment INNER JOIN orders ON payment.payment_id_orders = orders.orders_id INNER JOIN order_statu ON orders.orders_id_order_statu = order_statu.order_statu_id;')
       console.log(result.rows)
       console.log('entro a Payment Model')
       return result.rows

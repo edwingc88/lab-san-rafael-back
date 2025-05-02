@@ -3,21 +3,21 @@ import multiparty from 'multiparty'
 
 export class PaymentController {
   constructor ({ paymentModel }) {
-    this.paymentsModel = paymentModel
+    this.paymentModel = paymentModel
   }
 
   getAll = async (req, res) => {
     const { _category } = req.query
     // console.log(_category)
 
-    const payments = await this.paymentsModel.getAll({ _category })
-    if (payments.length === 0) return res.status(404).json({ msj: 'Empty  paymentss' })
+    const payments = await this.paymentModel.getAll({ _category })
+    if (!payments) return res.status(404).json({ msj: 'Empty  paymentss' })
     res.json(payments)
   }
 
   getById = async (req, res) => {
     const { id } = req.params
-    const payments = await this.paymentsModel.getById(id)
+    const payments = await this.paymentModel.getById(id)
     if (payments) return res.json(payments)
     res.status(404).json({ error: 'Not found payments' })
   }
@@ -60,7 +60,7 @@ export class PaymentController {
       console.log(resultZod.data)
 
       /**  Registrar en Base de Datos **/
-      const newResult = await this.paymentsModel.create({ input: resultZod.data })
+      const newResult = await this.paymentModel.create({ input: resultZod.data })
       res.status(201).json(newResult)
     })
   }
@@ -106,7 +106,7 @@ export class PaymentController {
           return res.status(400).json({ error: JSON.parse(result.error.message) })
         }
 
-        const updatedlabResult = await this.paymentsModel.update({ idupdate: id, input: result.data })
+        const updatedlabResult = await this.paymentModel.update({ idupdate: id, input: result.data })
 
         /* if (updatedlabResult.length === 0) res.status(404).json({ error: 'Payment Error' }) */
 
@@ -119,7 +119,7 @@ export class PaymentController {
 
   delete = async (req, res) => {
     const { id } = req.params
-    const result = await this.paymentsModel.delete({ id })
+    const result = await this.paymentModel.delete({ id })
     if (result === false) return res.status(404).json({ error: 'Not found payments' })
     return res.json({ message: 'payments deleted' })
   }

@@ -37,7 +37,7 @@ export class ExamOrderResultModel {
 
   static async getById (id) {
     try {
-      const result = await conn.query('SELECT * FROM exam_order WHERE exam_order_id = $1;', [id])
+      const result = await conn.query('SELECT * FROM exam_order_relation WHERE exam_order_relation_id = $1;', [id])
       const [clients] = result.rows
 
       if (clients.length === 0) return null
@@ -53,7 +53,7 @@ export class ExamOrderResultModel {
 
     try {
       // eslint-disable-next-line camelcase
-      const resultID = await conn.query('INSERT INTO exam_orders_result( name ,id_category ) VALUES ($1, $2 ) RETURNING *;', [name, id_category])
+      const resultID = await conn.query('INSERT INTO exam_order_relation( name ,id_category ) VALUES ($1, $2 ) RETURNING *;', [name, id_category])
       return (resultID.rows)
     } catch (e) {
       throw new Error('Errro creating client')
@@ -65,14 +65,14 @@ export class ExamOrderResultModel {
     const { id, name } = input
 
     // eslint-disable-next-line camelcase
-    const result = await conn.query('UPDATE exam_orders_result SET id = $1, name = $2  WHERE id = $3 RETURNING *;', [id, name, idupdate])
+    const result = await conn.query('UPDATE exam_order_relation SET id = $1, name = $2  WHERE id = $3 RETURNING *;', [id, name, idupdate])
     console.log(result.rows)
     return result.rows
   }
 
   static async delete ({ id }) {
     console.log(id)
-    const result = await conn.query('DELETE FROM exam_orders_result WHERE id = $1 returning *;', [id])
+    const result = await conn.query('DELETE FROM exam_order_relation WHERE id = $1 returning *;', [id])
 
     console.log(result.rows)
 
