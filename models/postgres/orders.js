@@ -50,7 +50,7 @@ export class OrderModel {
   static async createOrdenDeUsuario ({ input }) {
     // eslint-disable-next-line camelcase
     const { idCustomer, date, observation, exams, payment, status } = input
-    const { total, change, depositBs, depositRef, dolar } = payment
+    const { total, change = 0, depositBs, depositRef, dolar } = payment
 
     console.log('Model creandoOrdenDeUsuario', idCustomer, observation, exams, total, depositBs, depositRef, dolar, status)
 

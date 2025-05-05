@@ -311,8 +311,8 @@ CREATE TABLE IF NOT EXISTS payment(
 );
 
 INSERT INTO payment (payment_id, payment_total, payment_change, payment_bs, payment_dolar, payment_reference, payment_id_payment_status, payment_id_orders) VALUES
-(1, 100.20, 100.20,0, '1623153215',1, 1),
-(2, 900,0, 10,'', 1, 2);
+(1, 100.20,0, 100.20,0, '1623153215',1, 1),
+(2, 900,0,0, 10,'', 1, 2);
 
 
 
