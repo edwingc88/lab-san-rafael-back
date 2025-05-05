@@ -716,7 +716,7 @@
           <li> 
             <h2 class="negrita">
                 <span class="azul">POST :</span>
-                Devuelve Orden por ID
+                Crear Orden 
             </h2>
             <p><span class="negrita">EndPoint : </span>http://localhost:1234/orders</p>
             <button id="OrderPost" class="btn">Copiar</button>
@@ -733,28 +733,23 @@
             <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
             <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
             <pre style="box-sizing: border-box;overflow-x: scroll;">
-{
-        "idCustomer":1,
-        "exams":[
-          {
-              "id":"1"
-          },
-          {
-              "id":"2"
-          }
-        ],
-        "payment":{
-            "transferencia":
-            {
-              "bs":1200,
-              "ref":2233838
-            },
-            "divisas":
-            {
-              "dolar":20
-            }
-        }
-}
+  {
+    "idCustomer":1,
+    "exams":[
+       {
+          "id":"1"
+       },
+       {
+          "id":"2"
+       }
+    ],
+    "payment":{
+       "total":2500,
+       "depositBs":2000,
+       "depositRef":3132133,
+       "dolar":26305
+    }
+ }
             </pre>
           </li>
           <li> 
@@ -783,7 +778,7 @@
       <!---------------------------- API ORDER STATUS ---------------------------------->  
       <details>
               <summary style="margin: 1rem; font-size: x-large; font-weight: 600;">
-                  API Order Statu <span class="amarillo">&#x2615;&#xfe0e;</span>
+                  API Order Status <span class="amarillo">&#x2615;&#xfe0e;</span>
               </summary>
               <ul style="padding-bottom: .5rem;">
                 <li > 
@@ -1093,7 +1088,7 @@
       <!---------------------------- API PAYMENT STATU ---------------------------------->
       <details>
             <summary style="margin: 1rem; font-size: x-large; font-weight: 600;">
-                API Payment Statu <span class="amarillo">&#x2615;&#xfe0e;</span>
+                API Payment Status <span class="amarillo">&#x2615;&#xfe0e;</span>
             </summary>
             <ul style="padding-bottom: .5rem;">
               <li > 

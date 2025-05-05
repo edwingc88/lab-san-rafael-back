@@ -25,13 +25,10 @@ export function validateOrdenDeUsuario (object) {
       id: z.string().min(1, { message: 'This field has to be filled.' })
     })),
     payment: z.object({
-      transferencia: z.object({
-        bs: z.number().min(1, { message: 'This field has to be filled.' }),
-        ref: z.number().min(1, { message: 'This field has to be filled.' }).optional()
-      }),
-      divisas: z.object({
-        dolar: z.number().min(1, { message: 'This field has to be filled.' })
-      })
+      total: z.number().min(1, { message: 'This field has to be filled.' }),
+      depositBs: z.number().min(1, { message: 'This field has to be filled.' }).default(0).optional(),
+      depositRef: z.number().min(1, { message: 'This field has to be filled.' }).default(0).optional(),
+      dolar: z.number().min(1, { message: 'This field has to be filled.' }).default(0)
     }),
     status: z.number().min(1, { message: 'This field has to be filled.' }).default(1)
   })

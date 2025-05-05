@@ -9,7 +9,7 @@ export class PaymentModel {
         return res.rows
       }
       const result = await conn.query('SELECT * FROM payment') */
-      const result = await conn.query('SELECT * FROM payment INNER JOIN orders ON payment.payment_id_orders = orders.orders_id INNER JOIN order_statu ON orders.orders_id_order_statu = order_statu.order_statu_id;')
+      const result = await conn.query('SELECT * FROM payment INNER JOIN orders ON payment.payment_id_orders = orders.orders_id INNER JOIN order_status ON orders.orders_id_order_status = order_status.order_status_id;')
       console.log(result.rows)
       console.log('entro a Payment Model')
       return result.rows
