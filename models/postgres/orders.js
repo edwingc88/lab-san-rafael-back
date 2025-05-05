@@ -50,7 +50,7 @@ export class OrderModel {
   static async createOrdenDeUsuario ({ input }) {
     // eslint-disable-next-line camelcase
     const { idCustomer, date, observation, exams, payment, status } = input
-    const { total, depositBs, depositRef, dolar } = payment
+    const { total, change, depositBs, depositRef, dolar } = payment
 
     console.log('Model creandoOrdenDeUsuario', idCustomer, observation, exams, total, depositBs, depositRef, dolar, status)
 
@@ -68,7 +68,7 @@ export class OrderModel {
         await conn.query('INSERT INTO exam_order_relation(exam_order_relation_id_exam, exam_order_relation_id_order ) VALUES ($1, $2);', [id, orders_id])
       }
       // eslint-disable-next-line camelcase
-      await conn.query('INSERT INTO payment( payment_total, payment_bs, payment_dolar, payment_reference, payment_id_payment_status, payment_id_orders ) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;', [total, depositBs, dolar, depositRef, 1, orders_id])
+      await conn.query('INSERT INTO payment( payment_total, payment_change, payment_bs, payment_dolar, payment_reference, payment_id_payment_status, payment_id_orders ) VALUES ($1, $2, $3, $4, $5, $6,$7) RETURNING *;', [total, change, depositBs, dolar, depositRef, 1, orders_id])
     }
 
     /*     console.log('Model creandoOrdenDeUsuario', idCustomer, exams, payment) */

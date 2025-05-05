@@ -300,8 +300,9 @@ INSERT INTO payment_status (payment_status_id, payment_status_name, payment_stat
 CREATE TABLE IF NOT EXISTS payment(
   payment_id serial PRIMARY KEY,
   payment_total NUMERIC,
-  payment_bs NUMERIC,
-  payment_dolar NUMERIC,
+  payment_change NUMERIC DEFAULT 0,
+  payment_bs NUMERIC DEFAULT 0,
+  payment_dolar NUMERIC DEFAULT 0,
   payment_reference VARCHAR(255) NULL,
   payment_id_payment_status INT NOT NULL,
   payment_id_orders INT NOT NULL,
@@ -309,7 +310,7 @@ CREATE TABLE IF NOT EXISTS payment(
   FOREIGN KEY (payment_id_orders) REFERENCES orders(orders_id) ON DELETE CASCADE
 );
 
-INSERT INTO payment (payment_id, payment_total, payment_bs, payment_dolar, payment_reference, payment_id_payment_status, payment_id_orders) VALUES
+INSERT INTO payment (payment_id, payment_total, payment_change, payment_bs, payment_dolar, payment_reference, payment_id_payment_status, payment_id_orders) VALUES
 (1, 100.20, 100.20,0, '1623153215',1, 1),
 (2, 900,0, 10,'', 1, 2);
 
