@@ -8,9 +8,9 @@ export class ParameterController {
 
   getAll = async (req, res, next) => {
     try {
-      const { exam } = req.query
-
-      const parameters = await this.parameterModel.getAll({ exam })
+      const { idExam } = req.query
+      console.log('Id del examen ', idExam)
+      const parameters = await this.parameterModel.getAll({ idExam })
       if (parameters.length === 0 || parameters.length == null || parameters.length === undefined) return res.status(201).json({ msj: 'Empty  parameters' })
       res.json(parameters)
     } catch (error) {
