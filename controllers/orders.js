@@ -8,7 +8,7 @@ export class OrderController {
 
   getAll = async (req, res, next) => {
     try {
-      const { id_user: idUser } = req.query
+      const { idUser } = req.query
       console.log('hola controller', idUser)
       const orders = await this.orderModel.getAll(idUser)
       if (!orders) return res.status(404).json({ error: 'Not found order' })

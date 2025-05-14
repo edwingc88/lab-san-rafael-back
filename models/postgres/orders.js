@@ -4,14 +4,15 @@ export class OrderModel {
     try {
       console.log('Entro en Model ', idUser)
       if (idUser) {
-        const loweCaseUserID = idUser.toLowerCase()
-        const res = await conn.query('SELECT * FROM orders WHERE orders_id_users = $1;', [loweCaseUserID])
+        /* const loweCaseUserID = idUser.toLowerCase() */
+        const res = await conn.query('SELECT * FROM orders WHERE orders_id_users = $1;', [idUser])
         //  const res = await conn.query('SELECT * FROM orders JOIN users ON users.users_id = orders.orders_id_users ;')
         return res.rows
       }
       // const result = await conn.query('SELECT * FROM orders INNER JOIN exam ON exam.exam_id = orders.orders_id_exam ;')
       /*       const result = await conn.query('SELECT * FROM orders;') */
-      const result = await conn.query('SELECT * FROM orders JOIN users ON users.users_id = orders.orders_id_users  JOIN order_statu ON order_statu.order_statu_id = orders.orders_id_order_statu ;')
+      console.log('Paso el primer filtro en Model ', idUser)
+      const result = await conn.query('SELECT * FROM orders JOIN users ON users.users_id = orders.orders_id_users  JOIN order_status ON order_status.order_status_id = orders.orders_id_order_status ;')
       console.log(result.rows)
       console.log('entro a order Model')
       return result.rows
@@ -50,9 +51,9 @@ export class OrderModel {
   static async createOrdenDeUsuario ({ input }) {
     // eslint-disable-next-line camelcase
     const { idCustomer, date, observation, exams, payment, status } = input
-    const { total, change = 0, depositBs, depositRef, dolar } = payment
+    const { total, change = 0, depositBs, depositRef, pos = 0, dolar } = payment
 
-    console.log('Model creandoOrdenDeUsuario', idCustomer, observation, exams, total, depositBs, depositRef, dolar, status)
+    console.log('Model creandoOrdenDeUsuario', idCustomer, observation, exams, total, depositBs, depositRef, pos, dolar, status)
 
     const results = await conn.query('INSERT INTO orders( orders_date, orders_observation, orders_id_users, orders_id_order_status ) VALUES ($1, $2,$3,$4) RETURNING *;', [date, observation, idCustomer, status])
 
@@ -68,7 +69,7 @@ export class OrderModel {
         await conn.query('INSERT INTO exam_order_relation(exam_order_relation_id_exam, exam_order_relation_id_order ) VALUES ($1, $2);', [id, orders_id])
       }
       // eslint-disable-next-line camelcase
-      await conn.query('INSERT INTO payment( payment_total, payment_change, payment_bs, payment_dolar, payment_reference, payment_id_payment_status, payment_id_orders ) VALUES ($1, $2, $3, $4, $5, $6,$7) RETURNING *;', [total, change, depositBs, dolar, depositRef, 1, orders_id])
+      await conn.query('INSERT INTO payment( payment_total, payment_change, payment_bs,payment_pos, payment_dolar, payment_reference, payment_id_payment_status, payment_id_orders ) VALUES ($1, $2, $3, $4, $5, $6,$7,$8) RETURNING *;', [total, change, depositBs, pos, dolar, depositRef, 1, orders_id])
     }
 
     /*     console.log('Model creandoOrdenDeUsuario', idCustomer, exams, payment) */

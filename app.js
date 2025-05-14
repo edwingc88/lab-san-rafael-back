@@ -36,13 +36,23 @@ export const createApp = ({ orderStatuModel, paymentStatuModel, userModel, roleM
   const app = express()
   app.set('pkg', pkg)
   app.use(json())
-  app.use(cors())
-  app.use(function (req, res, next) {
+
+  // Configuración de CORS
+  app.use(cors({
+    origin: ['http://localhost:3000', 'https://lab-san-rafael-api.onrender.com/'], // Permitir solicitudes desde este origen
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Métodos permitidos
+    allowedHeaders: ['Content-Type', 'Authorization']// Encabezados permitidos
+  }))
+
+  /*   app.use(cors()) */
+
+  /*   app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Origin', '*')
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
     res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE')
     next()
-  })
+  }) */
+
   // app.use(corsMiddleware())
   // app.use(express.static(join(__dirname, './public')))
   app.disable('x-powered-by')
