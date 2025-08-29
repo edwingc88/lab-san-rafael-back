@@ -38,13 +38,11 @@ export const createApp = ({ orderStatuModel, paymentStatuModel, userModel, roleM
   app.use(json())
 
   // Configuración de CORS
-  /*   app.use(cors({
-    origin: ['http://localhost:3000', 'https://lab-san-rafael-api.onrender.com/'], // Permitir solicitudes desde este origen
-    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Métodos permitidos
-    allowedHeaders: ['Content-Type', 'Authorization']// Encabezados permitidos
-  })) */
-
-  app.use(cors())
+  app.use(cors({
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+  }))
 
   /*   app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Origin', '*')

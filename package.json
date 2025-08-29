@@ -7,7 +7,8 @@
   "scripts": {
     "start:postgre": "node server-with-pg.js",
     "dev:postgre": "SET NODE_ENV=development & nodemon server-with-pg.js",
-    "test:client": "playwright test example.spec.cjs"
+    "test-play:client": "playwright test example.spec.cjs",
+    "test": "jest --verbose"
   },
   "keywords": [],
   "author": "GrupoTesis",
@@ -15,18 +16,21 @@
   "devDependencies": {
     "@playwright/test": "^1.40.1",
     "@types/node": "^20.10.6",
+    "jest": "^30.0.3",
     "nodemon": "^3.0.1",
-    "standard": "^17.1.0"
+    "standard": "^17.1.0",
+    "supertest": "^7.1.1"
   },
   "eslintConfig": {
     "extends": "standard",
     "env": {
-      "node": true
+      "node": true,
+      "jest": true
     }
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
-    "cors": "2.8.5",
+    "cors": "^2.8.5",
     "cross-env": "^7.0.3",
     "dotenv": "^16.3.1",
     "express": "4.18.2",
@@ -38,5 +42,15 @@
     "nodemailer": "^6.9.8",
     "pg": "^8.11.3",
     "zod": "3.22.1"
+  },
+  "jest": {
+    "testEnvironment": "node",
+      "testPathIgnorePatterns": [
+   "/node_modules/",
+    "/tests-examples/demo-todo-app.spec.js",
+    "/tests/client.test.js",
+    "/tests/example.spec.js"
+  ]
   }
+
 }

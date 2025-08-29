@@ -1,12 +1,12 @@
 // @ts-check
-const { test, expect } = require('@playwright/test')
+// const { test, expect } = require('@playwright/test')
 
 // import { test, expect } from '@playwright/test'
 
-test('Get request Example ', async ({ request }) => {
+/* test('Get request Example ', async ({ request }) => {
   const response = await request.get('/clients')
   expect(response.ok()).toBeDefined()
-})
+}) */
 
 /*
 test('has title', async ({ page }) => {
