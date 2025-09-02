@@ -44,24 +44,9 @@ export const createApp = ({ orderStatuModel, paymentStatuModel, userModel, roleM
     allowedHeaders: ['Content-Type', 'Authorization']
   }))
 
-  /*   app.use(function (req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*')
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
-    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE')
-    next()
-  }) */
-
   // app.use(corsMiddleware())
   // app.use(express.static(join(__dirname, './public')))
   app.disable('x-powered-by')
-  /* app.get('/', (req, res) => {
-    res.json({
-      name: app.get('pkg').name,
-      author: app.get('pkg').author,
-      description: app.get('pkg').description,
-      version: app.get('pkg').version
-    })
-  }) */
 
   const { NODE_ENV } = process.env
 
@@ -75,9 +60,6 @@ export const createApp = ({ orderStatuModel, paymentStatuModel, userModel, roleM
     })
   }
 
-  /* app.get('/public', (req, res) => {
-    res.sendFile(join(__dirname, 'public/images/ambulatorio.png'))
-  }) */
   app.use('/sources', createSourceRouter())
   app.use('/users', createUserRouter({ userModel }))
   app.use('/roles', createRoleRouter({ roleModel }))
@@ -92,10 +74,6 @@ export const createApp = ({ orderStatuModel, paymentStatuModel, userModel, roleM
   app.use('/labs', createLabRouter({ labModel }))
   app.use('/orders_status', createOrderStatuRouter({ orderStatuModel }))
   app.use('/payments_status', createPaymentStatuRouter({ paymentStatuModel }))
-
-  /* app.use((req, res) => {
-    res.status(404).json({ error: 'Error 404 not found' })
-  }) */
 
   app.use(notFound)
   app.use(errorHandler)

@@ -12,7 +12,7 @@
       padding: 0;
       box-sizing: border-box;
       overflow-x: hidden;
-      background-color: rgb(21, 46, 46);
+      background-color: rgb(40, 40, 40);
       color: white;
     }
 
@@ -59,9 +59,10 @@
       padding-top: 2px;
     }
 
-    li p:first-of-type   {
+     li p:first-of-type   {
       display: inline;
-    }
+    } 
+
 
     .copy {
       display: inline;
@@ -83,6 +84,10 @@
       flex-wrap: nowrap; 
     }
 
+    .note{
+      display: block;
+    }
+
     @media (width < 550px){
       section{
         display: flex;
@@ -100,10 +105,10 @@
   </style>
 </head>
 <body>
-  <h1 style="padding: .5rem;align-items: center; margin: 0 auto;text-align: center;"> API Local - Laboratorio Clinico <span style="color: green;">"San Rafael"</span></h1>
+  <h1 style="padding: .5rem;align-items: center; margin: 0 auto;text-align: center;"> API Local - Laboratorio Clinico <span style="color: rgb(255, 236, 27);">"San Rafael"</span></h1>
   <section style="align-content: center; padding: .5rem; gap: 2rem;border-top: 2px solid rgb(32, 32, 32);min-width: 1300px; margin: 0 auto; width: 1300px;">
     <!-- Lab, User , Patient , Role,  Auth, Imagenes -->
-    <article id="colum1" style="width: 650px;min-width:650px;border-right: 2px solid  rgb(11, 11, 11); overflow-x: hidden;">
+    <article id="colum1" style="width: 650px;min-width:650px;border-right: 2px solid  rgb(30, 30, 30); overflow-x: hidden;">
 
       <!--------------------------------- API Lab------------------------------------>
         
@@ -123,11 +128,14 @@
               <li>
                 <h2 class="negrita">
                     <span class="verde">GET :</span>
-                    Consulta laboratorio por ID
+                     Obtiene laboratorio según el ID .
                 </h2>
-                <p class="copy"><span class="negrita">EndPoint : </span>http://localhost:1234/labs/:id</p>
+
+                <p class="copy"><span class="negrita">EndPoint : </span>http://localhost:1234/labs/1</p>
                 <button id="LabGetID" class="btn">Copiar</button>
+                               <p class="note">El valor '1' es solo un ejemplo y debe coincidir con un id válido en la base de datos.</p>
             </li>
+   
               <li>
                   <h2 class="negrita"><span class="azul">POST : </span>Crear Un Laboratorio</h2> 
                   <p><span class="negrita">EndPoint : </span>http://localhost:1234/labs/</p>
@@ -173,6 +181,7 @@
                   <p><span class="negrita">EndPoint : </span>http://localhost:1234/labs/updateimg/:id</p>
                   <button id="LabPathIDimg" class="btn">Copiar</button>
                   <p><span class="negrita">Headers : </span> multipart/form-data;</p>
+                  
   <pre style="box-sizing: border-box;overflow-x: scroll;">
     {
     "logo": "04143859751129"
@@ -464,22 +473,22 @@
           <li> 
             <h2 class="negrita">
               <span class="verde">GET :</span>
-              Devuelve Categoria de examen por ID
+                    Obtiene los exámenes según el ID de categoría. <br><br>El valor '1' es solo un ejemplo y debe coincidir con un ID válido en la base de datos.
             </h2>
             <p><span class="negrita">EndPoint : </span>http://localhost:1234/categorys/:id</p>
             <button id="CategoryGetID" class="btn">Copiar</button>
-            <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
-            <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+             <p><span class="negrita">Content-Type:</span> application/json</p>
+                  <p><span class="negrita">Authorization:  </span>Bearer UseToken</p>
           </li>
           <li> 
             <h2 class="negrita">
               <span class="azul">POST :</span>
-              Devuelve Categoria de examen por ID
+        Permite registrar una nueva categoría de examen.<br><br> El campo id no se envía manualmente, ya que se genera automáticamente.
             </h2>
-            <p><span class="negrita">EndPoint : </span>http://localhost:1234/categorys/:id</p>
+            <p><span class="negrita">EndPoint : </span>http://localhost:1234/categorys</p>
             <button id="CategoryPost" class="btn">Copiar</button>
-            <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
-            <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+             <p><span class="negrita">Content-Type:</span> application/json</p>
+                  <p><span class="negrita">Authorization:  </span>Bearer UseToken</p>
 <pre style="box-sizing: border-box;overflow-x: scroll;">
   {
     "name": "Hemostasia y tromnbosis"
@@ -493,8 +502,8 @@
             </h2>
             <p><span class="negrita">EndPoint : </span>http://localhost:1234/categorys/:id</p>
             <button id="CategoryPathID" class="btn">Copiar</button>
-            <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
-            <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+             <p><span class="negrita">Content-Type:</span> application/json</p>
+                  <p><span class="negrita">Authorization:  </span>Bearer UseToken</p>
 <pre style="box-sizing: border-box;overflow-x: scroll;">
   {
     "name": "Perfil Alergias"
@@ -508,8 +517,8 @@
             </h2>
             <p><span class="negrita">EndPoint : </span>http://localhost:1234/categorys/:id</p>
             <button id="CategoryDeleteID" class="btn">Copiar</button>
-            <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
-            <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+             <p><span class="negrita">Content-Type:</span> application/json</p>
+                  <p><span class="negrita">Authorization:  </span>Bearer UseToken</p>
           </li>
         </ul>
       </details>
@@ -534,8 +543,8 @@
                   </h2>
                   <p><span class="negrita">EndPoint : </span>http://localhost:1234/exams</p>
                   <button id="ExamGet" class="btn">Copiar</button>
-                  <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
-                  <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+                  <p><span class="negrita">Content-Type:</span> application/json</p>
+                  <p><span class="negrita">Authorization:  </span>Bearer UseToken</p>
               </li>
               <li> 
                 <h2 class="negrita">
@@ -544,8 +553,8 @@
                   </h2>
                   <p><span class="negrita">EndPoint : </span>http://localhost:1234/exams?category=1</p>
                   <button id="ExamGetCategoryID" class="btn">Copiar</button>
-                  <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
-                  <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+                  <p><span class="negrita">Content-Type:</span> application/json</p>
+                  <p><span class="negrita">Authorization:  </span>Bearer UseToken</p>
               </li>
               <li> 
                 <h2 class="negrita">
@@ -554,8 +563,8 @@
                   </h2>
                   <p><span class="negrita">EndPoint : </span>http://localhost:1234/exams/:id</p>
                   <button id="ExamGetID" class="btn">Copiar</button>
-                  <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
-                  <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+                  <p><span class="negrita">Content-Type:</span> application/json</p>
+                  <p><span class="negrita">Authorization:  </span>Bearer UseToken</p>
               </li>
               <li> 
                 <h2 class="negrita">
@@ -564,8 +573,8 @@
                   </h2>
                   <p><span class="negrita">EndPoint : </span>http://localhost:1234/exams</p>
                   <button id="ExamPost" class="btn">Copiar</button>
-                  <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
-                  <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+                  <p><span class="negrita">Content-Type:</span> application/json</p>
+                  <p><span class="negrita">Authorization:  </span>Bearer UseToken</p>
   <pre style="box-sizing: border-box;overflow-x: scroll;">
     {
       "name": "Lymph#",
@@ -584,8 +593,8 @@
                   </h2>
                   <p><span class="negrita">EndPoint : </span>http://localhost:1234/exams/:id</p>
                   <button id="ExamPathID" class="btn">Copiar</button>
-                  <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
-                  <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+                  <p><span class="negrita">Content-Type:</span> application/json</p>
+                  <p><span class="negrita">Authorization:  </span>Bearer UseToken</p>
   <pre style="box-sizing: border-box;overflow-x: scroll;">
     {
       "exam_name": "Lymph#",
@@ -604,8 +613,8 @@
                   </h2>
                   <p><span class="negrita">EndPoint : </span>http://localhost:1234/exams/:id</p>
                   <button id="ExamDeleteID" class="btn">Copiar</button>
-                  <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
-                  <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+                  <p><span class="negrita">Content-Type:</span> application/json</p>
+                  <p><span class="negrita">Authorization:  </span>Bearer UseToken</p>
               </li>
             </ul>
       </details>
@@ -681,8 +690,8 @@
             </h2>
             <p><span class="negrita">EndPoint : </span>http://localhost:1234/exams_orders_relations</p>
             <button id="ExamOrderRelationDeleteID" class="btn">Copiar</button>
-            <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
-            <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+             <p><span class="negrita">Content-Type:</span> application/json</p>
+                  <p><span class="negrita">Authorization:  </span>Bearer UseToken</p>
               </li>
             </ul>
       </details>
@@ -700,8 +709,8 @@
             </h2>
             <p><span class="negrita">EndPoint : </span>http://localhost:1234/orders</p>
             <button id="OrderGet" class="btn">Copiar</button>
-            <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
-            <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+             <p><span class="negrita">Content-Type:</span> application/json</p>
+                  <p><span class="negrita">Authorization:  </span>Bearer UseToken</p>
           </li>
           <li> 
             <h2 class="negrita">
@@ -710,8 +719,8 @@
             </h2>
             <p><span class="negrita">EndPoint : </span>http://localhost:1234/orders/1</p>
             <button id="OrderGetID" class="btn">Copiar</button>
-            <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
-            <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+             <p><span class="negrita">Content-Type:</span> application/json</p>
+                  <p><span class="negrita">Authorization:  </span>Bearer UseToken</p>
           </li>
           <li> 
             <h2 class="negrita">
@@ -720,8 +729,8 @@
             </h2>
             <p><span class="negrita">EndPoint : </span>http://localhost:1234/orders</p>
             <button id="OrderPost" class="btn">Copiar</button>
-            <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
-            <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+             <p><span class="negrita">Content-Type:</span> application/json</p>
+                  <p><span class="negrita">Authorization:  </span>Bearer UseToken</p>
           </li>
           <li> 
             <h2 class="negrita">
@@ -730,8 +739,8 @@
             </h2>
             <p><span class="negrita">EndPoint : </span>http://localhost:1234/orders/new/</p>
             <button id="OrderNewPost" class="btn">Copiar</button>
-            <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
-            <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+             <p><span class="negrita">Content-Type:</span> application/json</p>
+                  <p><span class="negrita">Authorization:  </span>Bearer UseToken</p>
             <pre style="box-sizing: border-box;overflow-x: scroll;">
   {
     "idCustomer":1,
@@ -759,8 +768,8 @@
             </h2>
             <p><span class="negrita">EndPoint : </span>http://localhost:1234/orders/{1}</p>
             <button id="OrderPathID" class="btn">Copiar</button>
-            <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
-            <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+             <p><span class="negrita">Content-Type:</span> application/json</p>
+                  <p><span class="negrita">Authorization:  </span>Bearer UseToken</p>
           </li>
           <li> 
             <h2 class="negrita">
@@ -769,8 +778,8 @@
             </h2>
             <p><span class="negrita">EndPoint : </span>http://localhost:1234/orders/:id</p>
             <button id="OrderDeleteID" class="btn">Copiar</button>
-            <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
-            <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+             <p><span class="negrita">Content-Type:</span> application/json</p>
+                  <p><span class="negrita">Authorization:  </span>Bearer UseToken</p>
           </li>
         </ul>
       </details>
@@ -1030,8 +1039,8 @@
             </h2>
             <p><span class="negrita">EndPoint : </span>http://localhost:1234/payments/:id</p>
             <button id="PaymentGetID" class="btn">Copiar</button>
-            <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
-            <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+             <p><span class="negrita">Content-Type:</span> application/json</p>
+                  <p><span class="negrita">Authorization:  </span>Bearer UseToken</p>
         </li>
         <li > 
           <h2 class="negrita">
@@ -1134,8 +1143,8 @@
             </h2>
             <p><span class="negrita">EndPoint : </span>http://localhost:1234/payments_status/:id</p>
             <button id="PaymentStatuPathID" class="btn">Copiar</button>
-            <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
-            <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+             <p><span class="negrita">Content-Type:</span> application/json</p>
+                  <p><span class="negrita">Authorization:  </span>Bearer UseToken</p>
     <pre style="box-sizing: border-box;overflow-x: scroll;">
       {
         "name": "ESTADO ENTREGADO EDITADO",
@@ -1150,8 +1159,8 @@
             </h2>
             <p><span class="negrita">EndPoint : </span>http://localhost:1234/payments_status/:id</p>
             <button id="PaymentStatuDeleteID" class="btn">Copiar</button>
-            <p><span class="negrita">Headers : </span> Content-Type: FormData</p>
-            <p><span class="negrita">Bearer Token:  </span>"UseToken"</p>
+             <p><span class="negrita">Content-Type:</span> application/json</p>
+                  <p><span class="negrita">Authorization:  </span>Bearer UseToken</p>
             </li>
             </ul>
       </details>
