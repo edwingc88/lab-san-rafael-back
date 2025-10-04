@@ -43,7 +43,7 @@ export class UserController {
       const form = new multiparty.Form({ uploadDir: './' + IMAGEN_UPLOAD_DIR })
       form.parse(req, async (err, fields, files) => {
         if (err) return res.status(500).json({ error: 'Error msj formdata' })
-
+        const rutaDefault = process.env.WEB_URL + 'sources/images/public/noimage.jpg'
         let rutaDefaultFinalArchivo = process.env.WEB_URL + 'sources/images/public/default.jpg' // Obteniendo la ruta de la imagen por default
         let key = ''
         let rutaArchivo = ''
@@ -68,6 +68,9 @@ export class UserController {
         console.log('GG ruta Archivo:', rutaArchivo)
         console.log('GG ext Ruta Archivo:', extname(rutaArchivo))
 
+        let newvalue = {}
+        newvalue.abatar = rutaDefaultFinalArchivo
+
         if (extname(rutaArchivo) === '' && Object.keys(files)[0]) {
           fs.unlink(rutaArchivo, function (err) {
             if (err) {
@@ -80,7 +83,9 @@ export class UserController {
           })
         }
 
-        let newvalue = {}
+        if (extname(rutaArchivo) === '') {
+          newvalue.abatar = rutaDefault
+        }
 
         const claves = Object.keys(fields) // claves = ["nombre", "color", "macho", "edad"]
 
@@ -90,7 +95,7 @@ export class UserController {
           newvalue = { ...newvalue, ...valor }
         }
 
-        newvalue.abatar = rutaDefaultFinalArchivo
+        /*     newvalue.abatar = rutaDefaultFinalArchivo */
 
         console.log(newvalue)
 

@@ -49,7 +49,7 @@ export class LabController {
 
     form.parse(req, async (err, fields, files) => {
       if (err) return res.status(500).json({ error: 'Error msj formdata' })
-
+      const rutaDefault = process.env.WEB_URL + 'sources/images/public/noimage.jpg'
       let rutaDefaultFinalArchivo = process.env.WEB_URL + 'sources/images/public/noimage.jpg' // Obteniendo la ruta de la imagen por default
       let key = ''
       let rutaArchivo = ''
@@ -75,7 +75,13 @@ export class LabController {
 
       console.log('ext Ruta Archivo:', extname(rutaArchivo))
 
+      /** RECUPERANDO DATOS ITERANDO OBJETO **/
+      let newvalue = {}
+      newvalue.logo = rutaDefaultFinalArchivo
+
       if (extname(rutaArchivo) === '' && Object.keys(files)[0]) {
+        newvalue.logo = rutaDefault
+
         fs.unlink(rutaArchivo, function (err) {
           if (err) {
             fs.unlink(join('sources', 'public', 'images', nameImagenDefault), function (err) {
@@ -87,8 +93,9 @@ export class LabController {
         })
       }
 
-      /** RECUPERANDO DATOS ITERANDO OBJETO **/
-      let newvalue = {}
+      if (extname(rutaArchivo) === '') {
+        newvalue.logo = rutaDefault
+      }
 
       const claves = Object.keys(fields) // claves = ["nombre", "color", "macho", "edad"]
 
@@ -97,8 +104,6 @@ export class LabController {
         const valor = { [clave]: fields[clave][0] }
         newvalue = { ...newvalue, ...valor }
       }
-
-      newvalue.logo = rutaDefaultFinalArchivo
 
       /**  Validar Datos con Zot **/
       const result = validateLab(newvalue)
