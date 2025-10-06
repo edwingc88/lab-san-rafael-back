@@ -11,7 +11,7 @@ export const createExamOrderResultRouter = ({ examOrderResultModel }) => {
 
   examOrderResultsRouter.get('/', examOrderResultController.getAll)
 
-  examOrderResultsRouter.get('/:id', /*  [verifyToken],  */ examOrderResultController.getById)
+  examOrderResultsRouter.get('/:id', [verifyToken], examOrderResultController.getById)
 
   examOrderResultsRouter.post('/', examOrderResultController.create)
 
