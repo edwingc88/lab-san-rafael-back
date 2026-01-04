@@ -78,4 +78,18 @@ export class ExamOrderResultModel {
 
     return result.rows
   }
+
+    static async deleteExam ({ idOrder, idExam}) {
+    console.log(idOrder, idExam)
+    const result= await conn.query(
+  'DELETE FROM exam_order_relation WHERE exam_order_relation_id_order = $1 AND exam_order_relation_id_exam = $2 RETURNING *;',
+  [idOrder, idExam]
+);
+
+
+    console.log(result.rows)
+
+    return result.rows
+  }
 }
+

@@ -55,4 +55,11 @@ export class ExamOrderResultController {
     if (result === false) return res.status(404).json({ error: 'Not found exam' })
     return res.json({ message: 'exam deleted' })
   }
+
+    deleteExam = async (req, res) => {
+    const { idOrder, idExam } = req.params
+    const result = await this.examOrderResultModel.deleteExam({ idOrder, idExam })
+    if (result === false) return res.status(404).json({ error: 'Not found exam' })
+    return res.json({ message: 'exam relation order deleted' })
+  }
 }

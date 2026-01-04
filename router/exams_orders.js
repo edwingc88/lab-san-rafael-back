@@ -19,5 +19,7 @@ export const createExamOrderResultRouter = ({ examOrderResultModel }) => {
 
   examOrderResultsRouter.delete('/:id', [verifyToken, isAdmin], examOrderResultController.delete)
 
+  examOrderResultsRouter.delete('/order/:idOrder/exam/:idExam', examOrderResultController.deleteExam)
+
   return examOrderResultsRouter
 }

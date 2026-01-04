@@ -1,3 +1,4 @@
+import { console } from 'inspector'
 import conn from './db.js'
 export class OrderModel {
   static async getAll (idUser) {
@@ -98,4 +99,5 @@ export class OrderModel {
 
     return result.rows
   }
+
 }
